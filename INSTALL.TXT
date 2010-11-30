@@ -1,0 +1,20 @@
+HOW TO INSTALL SUCCESSWHALE
+---------------------------
+
+To run your own copy of SuccessWhale, unpack the ZIP file on a web
+server that supports PHP and, optionally, MySQL. Edit config.php
+with your own settings.
+
+As explained in config.php, you’ll need a Consumer Key and Consumer
+Secret – you’ll get those when you register your app with Twitter.
+Optionally, you can also enter details for a MySQL database. If you
+use a database, the app will remember users’ column setup, will
+cache expanded links (speeding up loads somewhat), and will allow
+users to cache their authentication tokens if they wish. The app will
+create the tables for you when you visit index.php for the first time.
+If you don’t want to use a database, just leave “DB_SERVER” blank.
+
+Then just navigate to index.php, log in with Twitter, and you should
+be up and running!
+
+Please see the file README.TXT for more information.

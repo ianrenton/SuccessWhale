@@ -1,0 +1,50 @@
+html, body {
+	background:black;
+	color:#cccccc;
+}
+
+h2 {
+	color:#999999;
+	background: #222222;
+	border: 1px solid #555555;
+}
+
+#statusformdiv {
+	background: #4f6992;
+	border-bottom: 1px solid #222222;
+}
+
+#links {
+	color:black;
+}
+
+input[name="status"] {
+	background:black;
+	color:#cccccc;
+}
+
+.tweet {
+	background: #222222;
+	border: 1px solid #555555;
+}
+
+.convotweet {
+	background: #111111;
+	border: 1px solid #333333;
+}
+
+.operations {
+	color:#777777;
+}
+
+.operations a {
+	color:#777777;
+}
+
+table .metatable {
+	border-bottom: 1px solid #555555;
+}
+
+.name a{
+	color:#aaaaaa;
+}
