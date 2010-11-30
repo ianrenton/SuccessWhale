@@ -18,13 +18,14 @@ back to me, though it's by no means essential.  If you've got any
 questions or feature requests, I'd love to hear from you - I'm
 @tsuki_chama on Twitter.
 
-You will always be able to find the latest version of SuccessWhale
-as a free download from:
+You will always be able to find the latest information and feature
+list for SuccessWhale here:
 
        http://www.onlydreaming.net/software/successwhale
 
-This page will also contain the latest information and feature list
-for the software.
+The source code is available on GitHub here:
+
+             https://github.com/tsuki/SuccessWhale
 
 A canonical version of SuccessWhale is available at:
 
