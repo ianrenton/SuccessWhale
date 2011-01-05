@@ -195,16 +195,18 @@ function parseLinks($html, &$numusers) {
 		"snipurl.com",
 		"goo.gl",
 		"zz.gd",
+		"t.co",
 	);
 	
 	// Modify links depending on their type: link up for normal, lengthen for short URLs, inline text for Twixts
-	preg_match_all('/\\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]/i', $html, $matches);
+	preg_match_all('/\\b(http[s]?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]/i', $html, $matches);
 	foreach($matches[0] as $match) {
 	    $wholeblock = false;
 		$replacetext = '';
 		
 	    // Check if it's cached
 	    if (DB_SERVER != '') {
+	        // No database, so it can't be cached
 	        $query = "SELECT * FROM linkcache WHERE url='" . $match . "'";
             $result = mysql_query($query);
         }
@@ -214,7 +216,7 @@ function parseLinks($html, &$numusers) {
 		    $replacetext = mysql_result($result,0,"replacetext");
         } else {
             // Not cached, so look it up.
-		    preg_match('/^(https?|ftp|file):\/\/([^\/]+)\/?(.*)$/', $match, $urlParts);
+		    preg_match('/^(http[s]?|ftp|file):\/\/([^\/]+)\/?(.*)$/', $match, $urlParts);
 		    $server = $urlParts[2];
 		    if(!in_array($server,$shortservers)) {
 			    // Not a shortened link, so give the URL text an a href
@@ -234,7 +236,7 @@ function parseLinks($html, &$numusers) {
 			        $replacetext = '<a href="' . $urlParts[0] . '" target="_blank">[' . $urlParts[2] . ']</a>';
 			    } elseif (!preg_match("~http://twixt.successwhale.com/(.+)~",$loc,$locationMatches)) {
 				    // Shortened link (but not Twixt), so replace the URL text with an an href to the real location
-				    preg_match('/^http:\/\/([^\/]+)\/?(.*)$/', $loc, $domainMatch);
+				    preg_match('/^http[s]?:\/\/([^\/]+)\/?(.*)$/', $loc, $domainMatch);
 				    $wholeblock = false;
 				    $replacetext = '<a href="' . $loc . '" target="_blank">[' . $domainMatch[1] . ']</a>';
 			    } else {
