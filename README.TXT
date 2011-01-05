@@ -5,7 +5,7 @@
  ____) | |_| | (__| (__|  __|__ \__ \ \  /\  /  | | | | (_| | |  __/
 |_____/ \__,_|\___|\___|\___|___/___/  \/  \/   |_| |_|\__,_|_|\___|
                                                                     
-                                                       VERSION 1.1.1
+                                                       VERSION 1.1.2
 
 
 Thank you for downloading SuccessWhale, a Twitter client written in
@@ -18,14 +18,13 @@ back to me, though it's by no means essential.  If you've got any
 questions or feature requests, I'd love to hear from you - I'm
 @tsuki_chama on Twitter.
 
-You will always be able to find the latest information and feature
-list for SuccessWhale here:
+You will always be able to find the latest version of SuccessWhale
+as a free download from:
 
        http://www.onlydreaming.net/software/successwhale
 
-The source code is available on GitHub here:
-
-             https://github.com/tsuki/SuccessWhale
+This page will also contain the latest information and feature list
+for the software.
 
 A canonical version of SuccessWhale is available at:
 
