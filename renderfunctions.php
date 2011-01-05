@@ -42,11 +42,16 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	if ($isDM == true) $userString = "sender";
 	for ($i=0; $i<count($data); $i++) {
 		
+		// Expand short URLs etc first, so we can apply the blocklist to real URLs.
+		// A bit of processing overhead, but it stops unwelcome URLs in tweets
+		// evading the blocker by using a URL shortener.
+		$tweetbody = parseLinks($data[$i]["text"], $numusers);
+			
 		// Check blocklist
 		$match = false;
 		foreach ($blocks as $blockstring) {
 			if ($blockstring != '') {
-				$pos = strpos($data[$i]["text"], $blockstring);
+				$pos = strpos($tweetbody, $blockstring);
 				if ($pos !== false) {
 					$match = true;
 				}
@@ -61,7 +66,6 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 			// We do this first so we know how many @users were linked up, if >0
 			// then we can do a reply-all.
 			$numusers = 0;
-			$tweetbody = parseLinks($data[$i]["text"], $numusers);
 		
 	    	if ($isConvo) {
 			    $content .= '<div class="convotweet">';
