@@ -9,7 +9,9 @@ $to = $_SESSION['to'];
 
 // Wrangles text through Twixt.
 function twixtify($status) {
-    preg_match_all('/^d\s(\w+)/', $status, $dMatches);
+	
+	// Old code that generates "@user @user2 http://is.gd/blah #tag #tag2"
+    /*preg_match_all('/^d\s(\w+)/', $status, $dMatches);
 	preg_match_all('/(^|\s)@(\w+)/', $status, $atMatches);
 	preg_match_all('/(^|\s)#(\w+)/', $status, $tagMatches);
 	$newstatus = '';
@@ -22,7 +24,13 @@ function twixtify($status) {
 	$newstatus .= file_get_contents('http://twixt.successwhale.com/index.php?tweet=' . urlencode($status));
 	for ($i=0; $i<count($tagMatches[2]); $i++) {
 		$newstatus .= ' #' . $tagMatches[2][$i];
-	}
+	}*/
+	
+	// New code that generates "@user My message including #tags but is too lo... http://is.gd/blah"
+	$newstatus = substr($status,0,125);
+	$newstatus .= "... ";
+	$newstatus .= file_get_contents('http://twixt.successwhale.com/index.php?tweet=' . urlencode($status));
+	
 	return $newstatus;
 }
 
