@@ -90,7 +90,9 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 			$content .= '<img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"><br/>';
 			$content .= '</a></td>';
 			$content .= '<td class="tweettextcell"><span class="tweettext">';
+			//$newtweetbody = "";
 			foreach(explode(" ", strip_tags($tweetbody)) as $key => $line) {
+				//$newtweetbody .= $line . " ";
 				if (strlen($line) > 30) $tweetbody = str_replace($line, wordwrap($line, 25, "- ", 1), $tweetbody);
 			} 
 			$content .= $tweetbody;
@@ -198,6 +200,7 @@ function parseLinks($html, &$numusers) {
 		"goo.gl",
 		"zz.gd",
 		"t.co",
+		"wp.me"
 	);
 	
 	// Modify links depending on their type: link up for normal, lengthen for short URLs, inline text for Twixts
