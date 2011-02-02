@@ -1,26 +1,20 @@
-var refreshId1 = 1;
-var refreshId2 = 2;
-var refreshId3 = 3;
+var refreshIDs = new Array();
 
 // Changes the content of one column, and re-sets its refresh.
-function changeColumn(div, url) {
-	startSpinner();
-    $("#" + div).load(url + "&updatedb=1");
-    if (div == 'column1') {
-        clearInterval(refreshId1);
-        refreshId1 = setInterval(function() {
-            $("#" + div).load(url);
-        }, 300000);
-    } else if (div == 'column2') {
-        clearInterval(refreshId2);
-        refreshId2 = setInterval(function() {
-            $("#" + div).load(url);
+function changeColumn(colnumber, url, updatedb) {
+    if (url.indexOf("----------") == -1) {
+        // Normal use
+	    startSpinner();
+        $("#column" + colnumber).load(url + "&updatedb=" + updatedb);
+        clearInterval(refreshIDs[colnumber]);
+        refreshIDs[colnumber] = setInterval(function() {
+            $("#column" + colnumber).load(url);
         }, 300000);
     } else {
-        clearInterval(refreshId3);
-        refreshId3 = setInterval(function() {
-            $("#" + div).load(url);
-        }, 300000);
+        // "Other" selected in dropdown
+        document.getElementById("customcolumnentry" + colnumber).disabled = false;
+        document.getElementById("customcolumnentry" + colnumber).value = '';
+        document.getElementById("customcolumnentry" + colnumber).focus();
     }
 }
 
@@ -131,10 +125,10 @@ $(function() {
     });
 });
 
-// Fix Enter-to-submit-form issue in IE
+// Enter to submit status form
 $(function() {
     $('.status').keydown(function(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode == 13 || e.keyCode == 10) {
             var status = $("input#status").val();
             var replyId = $("input#replyid").val();
             var dataString = 'status=' + encodeURIComponent(status) + "&replyid=" + replyId;
@@ -152,6 +146,20 @@ $(function() {
     });
 });
 
+// Enter to submit custom column forms
+function checkForSubmitCustomColumn(field, event, colNumber) {
+    var charCode;
+    if (event && event.which) {
+        charCode = event.which;
+    } else if (window.event) {
+        event = window.event;
+        charCode = event.keyCode;
+    }
+    if (charCode == 13 || charCode == 10) {
+        changeColumn(colNumber, "column.php?div=" + colNumber + "&column=" + escape(field.value) + "&count=20", 1);
+    }
+}
+
 // jQuery startup things (when DOM is avalable)
 $(document).ready(function() {
     // Load all columns
@@ -160,6 +168,20 @@ $(document).ready(function() {
 
 // Normal startup things (when the page has fully loaded)
 function init() {
+    // Set div size
+    var vpheight = 0;
+    if (typeof window.innerHeight == 'number') {
+        vpheight = window.innerHeight; // FF, Webkit, Opera
+    } else if (document.documentElement && document.documentElement.clientHeight) {
+        vpheight = document.documentElement.clientHeight; // IE 6+
+    } else if (document.body && document.body.clientHeight) {
+        vpheight = document.body.clientHeight; // IE 4
+    }
+    d = document.getElementById('mainarea');
+    //ds = document.getElementsByName('column');
+    //for (var i=0; i<ds.length; i++) {
+        d.style.height= "" + (vpheight-108) + "px";
+    //}
     // Focus status entry box
 	document.statusform.status.focus();
 }

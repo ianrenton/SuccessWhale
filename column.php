@@ -35,8 +35,19 @@ $paramArray["per_page"] = $paramArray["count"];
 if (DB_SERVER != '') {
 	// If updatedb=1, update the userprefs in the database with the new column info
     if (isset($_GET['column']) && isset($_GET['div']) && isset($_GET['updatedb']) && ($_GET['updatedb'] == '1')) {
-        $query = "UPDATE userprefs SET " . $_GET['div'] . " = '" . mysql_real_escape_string($_GET['column']) . "' WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
-        mysql_query($query);
+        //TODO replace column1 with column when renaming db field
+        $query = "SELECT column1 FROM userprefs WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
+        $result = mysql_query($query);
+        if (mysql_num_rows($result) > 0) {
+            $userprefrow = mysql_fetch_assoc($result);
+            //TODO replace column1 with column when renaming db field
+            $userCols = explode(";", $userprefrow['column1']);
+            $userCols[($_GET['div'])] = $_GET['column'];
+            $newColsString = implode (";", $userCols);
+            //TODO replace column1 with column when renaming db field
+            $query = "UPDATE userprefs SET column1 = '" . mysql_real_escape_string($newColsString) . "' WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
+            mysql_query($query);
+        }
     }
 
 	// Get blocklist
@@ -53,16 +64,42 @@ if (DB_SERVER != '') {
 // Get column-dependent data and render
 if (isset($_GET['column'])) {
 	$name = $_GET['column'];
-	$url = $columnOptions[$name];
+	
+	if (preg_match("/^@(\w+)$/", $name, $matches)) {
+	    // Matches @user
+	    $url = "statuses/user_timeline";
+	    $paramArray['screen_name'] = $matches[1];
+	} else if (preg_match("/^@(\w+)\/([\w\s-]+)$/", $name, $matches)) {
+	    // Matches @user/list
+	    $listStub = strtolower(str_replace(" ", "-", $matches[2]));
+	    $url = $matches[1] . "/lists/" . $listStub . "/statuses";
+	//} else if (preg_match("/^#(\w+)$/", $name, $matches)) {
+	    // Matches #tag
+	    // Don't know how to handle this, saved searches?
+	    //$url = $name;
+	} else {
+	    // Doesn't match, assume it's a real URL like "statuses/mentions".
+	    $url = $name;
+	}
+	
 	if ($to != null) {
 		$data = $to->get($url, $paramArray);
-		$content .= '<h2>' . $name . '</h2>';
+		
+		if ($columnOptions[$url] != "") {
+		    $content .= '<h2>' . $columnOptions[$name] . '</h2>';
+		} else {
+		    $content .= '<h2';
+		    if (strlen($name) > 20) {
+		        $content .= ' class="compact"';
+		    }
+		    $content .= '>' . $name . '</h2>';
+		}
 
 		$isMention = false;
 		$isDM = false;
-	    if ($name == 'Mentions') {
+	    if ($name == 'statuses/mentions') {
 			$isMention = true;
-		} elseif ($name == 'Direct Messages') {
+		} elseif ($name == 'direct_messages') {
 			$isDM = true;
 		}
 

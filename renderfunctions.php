@@ -192,7 +192,7 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 function parseLinks($html, &$numusers) {
 
 	$shortservers = array(
-		"is.gd",
+		//"is.gd",
 		"bit.ly",
 		"yfrom.com",
 		"tinyurl.com",
@@ -276,26 +276,46 @@ function parseLinks($html, &$numusers) {
 
 // Generates the pager
 function makeNavForm($count, $columnOptions, $thisColName) {
-	$content = '<div id="colswitcher">';
-	$content .= '<form name="colswitcherform">';
-	$content .= '<a href="#"><img src="images/top.png" alt="Back to Top"/></a>&nbsp;';
-	$content .= '<select name="colswitcherbox" onchange="changeColumn(\'' . $_GET['div'] . '\', \'column.php?div=' . $_GET['div'] . '&column=\' + escape(this.options[this.selectedIndex].value) + \'&count=' . $count . '\')">';
+    $thisColNumber = substr($_GET['div'], 0);
+	$content = '<div class="columnnav"><div class="backtotop">';
+	$content .= '<a href="#"><img src="images/top.png" alt="Back to Top" title="Back to Top"/></a></div>';
+	
+	$content .= '<div id="nav"><ul>';
+	if ($count > 20) {
+		$content .= '<li><a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\', 1)"><img src="images/less.png" alt="Show fewer tweets" title="Show fewer tweets"/></a></li>';
+	}
+	$content .= '<li><a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\', 1)"><img src="images/more.png" alt="Show more tweets" title="Show more tweets"/></a></li>';
+	$content .= '</ul></div>';
+	
+	$content .= '<div name="colswitcherform" class="colswitcherform">';
+	
+	// Dropdown
+	$content .= '<select name="colswitcherbox" onchange="changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=\' + escape(this.options[this.selectedIndex].value) + \'&count=' . $count . '\', 1)">';
+	
+	// Everything that is in columnOptions
 	foreach ($columnOptions as $key => $value) {
 		$content .= '<option value="' . $key . '"';
 		if ($key == $thisColName) {
 		    $content .= ' selected';
 		}
-		$content .= '>' . $key . '</option>';
+		$itemName = $columnOptions[$key];
+		$content .= '>' . $itemName . '</option>';
 	}
-    $content .= '</select></form>';
+		
+	// This column's name, if it's not in columnOptions
+	if (!array_key_exists($thisColName, $columnOptions)) {
+	    $content .= '<option value="' . $thisColName . '" selected>' . $thisColName . '</option>';
+	}
+	
+	// Other
+	$content .= '<option value="----------">(Custom)</option>';
+    $content .= '</select> ';
+    $content .= '<input id="customcolumnentry' . $thisColNumber . '" id="customcolumnentry" size="10" disabled="true" value="@usr, @usr/list" onKeyUp="checkForSubmitCustomColumn(this, event, ' . $thisColNumber . ');"/>';
+    
+    $content .= ' <a href="javascript:confirmAction(\'actions.php?delcol=' . $thisColNumber . '\')"><img src="images/delcolumn.png" title="Delete Column" alt="Delete Column"></a>';
 	$content .= '</div>';
 	
-	$content .= '<div id="nav"><ul>';
-	if ($count > 20) {
-		$content .= '<li><a href="javascript:changeColumn(\'' . $_GET['div'] . '\', \'column.php?div=' . $_GET['div'] . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\')"><img src="images/less.png" alt="Show fewer tweets"/></a></li>';
-	}
-	$content .= '<li><a href="javascript:changeColumn(\'' . $_GET['div'] . '\', \'column.php?div=' . $_GET['div'] . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\')"><img src="images/more.png" alt="Show more tweets"/></a></li>';
-	$content .= '</ul></div>';
+	$content .= '</div>';
 	return $content;
 }
 

@@ -17,13 +17,13 @@
   </head>
   <body>
 	<SCRIPT LANGUAGE="JavaScript" SRC="javascript.js"></SCRIPT>
-	
+	<div id="page">
 	<?php echo($content); ?>
-	
+	</div>
 	
     <SCRIPT LANGUAGE="JavaScript">
     // Trigger init
-    window.onload=init();
+    window.onload=init;
     </SCRIPT>
 
 <script type="text/javascript">

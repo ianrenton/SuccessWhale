@@ -3,7 +3,7 @@
  * A lightweight, standards-compliant Twitter client written in PHP
  * and JavaScript.
  * Based on Abraham's Twitter OAuth PHP example: http://twitter.abrah.am/
- * See http://www.onlydreaming.net/software/successwhale for details.
+ * See http://onlydreaming.net/software/successwhale for details.
 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,13 +77,18 @@ $_SESSION['thisUser'] = $auth['screen_name'];
 $_SESSION['utcOffset'] = $auth['utc_offset'];
 
 // Base column options, e.g. home timeline, mentions
-$columnOptions = array("Home Timeline" => "statuses/home_timeline", "Mentions" => "statuses/mentions", "Direct Messages" => "direct_messages");
+$columnOptions = array("statuses/home_timeline" => "Home Timeline",
+ "statuses/friends_timeline" => "Friends Only",
+ "statuses/public_timeline" => "All Tweets",
+ "statuses/mentions" => "Mentions",
+ "direct_messages" => "DMs Received",
+ "direct_messages/sent" => "DMs Sent");
 
 // Add lists to column options
 $listsFull = $to->get($auth['screen_name'] . '/lists', array());
 $lists = $listsFull["lists"];
 for ($i=0; $i<count($lists); $i++) {
-	$columnOptions[$lists[$i]["name"]] = $auth['screen_name'] . '/lists/' . $lists[$i]["slug"] . '/statuses';
+	$columnOptions[$auth['screen_name'] . '/lists/' . $lists[$i]["slug"] . '/statuses'] = $lists[$i]["name"];
 }
 
 // Session-global the column options (timelines, lists etc.)
@@ -99,7 +104,8 @@ if (DB_SERVER != '') {
     $query = "SELECT * FROM userprefs WHERE username='" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
     $result = mysql_query($query);
     if (!mysql_num_rows($result) ) {
-        $query = "INSERT INTO userprefs VALUES ('" . mysql_real_escape_string($_SESSION['thisUser']) . "','Home Timeline','Mentions','Direct Messages','')";
+        // TODO finish transition to n-columns by removing two of 3 blanks
+        $query = "INSERT INTO userprefs VALUES ('" . mysql_real_escape_string($_SESSION['thisUser']) . "','statuses/home_timeline;statuses/mentions;direct_messages','', '','')";
         mysql_query($query);
     }
 
@@ -115,32 +121,24 @@ if (DB_SERVER != '') {
     $query = "SELECT * FROM userprefs WHERE username='" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
     $result = mysql_query($query);
     $userprefs = mysql_fetch_assoc($result);
-    if ($userprefs != FALSE) {
-        $column1 = $userprefs["column1"];
-        $column2 = $userprefs["column2"];
-        $column3 = $userprefs["column3"];
-    } else {
-        $column1="Home Timeline";
-        $column2="Mentions";
-        $column3="Direct Messages";
-    }
+    // TODO finish transition to n-columns by renaming column1 to column
+    $columns = explode(";",$userprefs["column1"]);
 
     mysql_close();
 } else {
-    $column1="Home Timeline";
-    $column2="Mentions";
-    $column3="Direct Messages";
+    $columns=array("statuses/home_timeline","statuses/mentions","direct_messages");
 }
+$numColumns = count($columns);
 
 // Sets up the refreshAll() function to load the columns stored in the database.
 // This is called jQuery-style when the DOM is ready.  Because we need to
 // populate it with values from the DB, this can't sit in javascript.js.
 $content .= '<script language="javascript">
-function refreshAll() {
-    changeColumn("column1","column.php?div=column1&column=' . urlencode($column1) . '");
-    changeColumn("column2","column.php?div=column2&column=' . urlencode($column2) . '");
-    changeColumn("column3","column.php?div=column3&column=' . urlencode($column3) . '");
+function refreshAll() {';
+for ($i=0; $i<$numColumns; $i++) {
+$content .= 'changeColumn("' . $i . '","column.php?div=' . $i . '&column=' . urlencode($columns[$i]) . '", 0);';
 }
+$content .= '}
 </script>';
 
 
@@ -149,8 +147,9 @@ $content .= '<div id="header">';
 $content .= makeLinksForm();
 $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a></div>';
 if ($friends["error"] == null) {
+	$content .= generateAddColumnBox();
 	$content .= generateSendBoxes();
-	$content .= generateTweetTables();
+	$content .= generateTweetTables($numColumns);
 	$content .= '<div id="actionbox"></div>';
 } else if ($friends["error"] == '<') {
 	// Not sure what it is with the '<' error, but reloading seems to make it go away.
@@ -181,18 +180,23 @@ function generateSendBoxes() {
 }
 
 // Generates the three main tables of tweets
-function generateTweetTables() {
-	$content = '<table class="bigtable" border="0" width="100%"><tr>';
-	$content .= '<td width="25%" valign=top>';
-	$content .= '<div id="column1"><h2><img src="images/ajax-loader.gif" alt="Loading..."/></h2></div>';
-	$content .= '</td>';
-	$content .= '<td width="25%" valign=top>';
-	$content .= '<div id="column2"><h2><img src="images/ajax-loader.gif" alt="Loading..."/></h2></div>';
-	$content .= '</td>';
-	$content .= '<td width="25%" valign=top>';
-	$content .= '<div id="column3"><h2><img src="images/ajax-loader.gif" alt="Loading..."/></h2></div>';
-	$content .= '</td>';
+function generateTweetTables($numColumns) {
+	$content = '<div id="mainarea"><table class="bigtable" id="bigtable" border="0" width="' . ($numColumns*33+1) . '%"><tr>';
+	for ($i=0; $i<$numColumns; $i++) {
+	    $content .= '<td width="' . (100/$numColumns) . '%" valign=top>';
+	    $content .= '<div class="column" name="column" id="column' . $i . '"><h2><img src="images/ajax-loader.gif" alt="Loading..."/></h2></div>';
+	    $content .= '</td>';
+	}
 	$content .= '</tr></table>';
+	$content .= '</div>';
+	return $content;
+}
+
+// Generates the bottom box with the Add Column button
+function generateAddColumnBox() {
+	$content = '<div id="addcolumndiv">';
+    $content .= '<a href="javascript:doAction(\'actions.php?newcol=true\')"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
+	$content .= '</div>';
 	return $content;
 }
 
@@ -248,6 +252,7 @@ function createTablesIfFirstInstall() {
                   PRIMARY KEY  (`url`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;';
     mysql_query($query);
+    // TODO update column1=>column
     $query = '  CREATE TABLE IF NOT EXISTS `userprefs` (
                   `username` varchar(255) NOT NULL,
                   `column1` varchar(255) NOT NULL,

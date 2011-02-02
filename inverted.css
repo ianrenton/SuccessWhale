@@ -48,3 +48,8 @@ table .metatable {
 .name a{
 	color:#aaaaaa;
 }
+
+div.columnnav {
+	background: #222222;
+	border: 1px solid #555555;
+}

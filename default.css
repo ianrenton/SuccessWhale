@@ -4,6 +4,10 @@ html, body {
 	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
 }
 
+#page {
+	max-height: 100%;
+}
+
 h2 {
 	font-family:"Helvetica","Trebuchet MS",sans-serif;
 	font-size:100%;
@@ -15,6 +19,10 @@ h2 {
 	text-align:center;
 	text-transform: uppercase;
 	letter-spacing:4px;
+}
+
+h2.compact {
+	letter-spacing:2px;
 }
 
 #links {
@@ -76,6 +84,17 @@ p {
 
 input[name="status"] {
 	width:80%;
+}
+
+div#mainarea {
+    overflow-x: auto;
+    overflow-y: auto;
+    width: 100%;
+}
+
+div.column {
+	height: 100%;
+    overflow-y: auto;
 }
 
 .tweet {
@@ -167,15 +186,29 @@ td .tweettextcell {
 	clear:both;
 }
 
-#colswitcher {
+div.columnnav {
+    margin:5px;
+	padding:10px;
+	background: #eeeeee;
+	border: 1px solid #cccccc;
+}
+
+div.columnnav a {
+    position: relative;
+    top: 3px;
+}
+
+div.backtotop {
 	float:left;
-	margin-left: 5px;
+}
+
+div.colswitcherform {
+	text-align:center;
+	width:100%;
 }
 
 #nav {
-	text-align:right;
-	font-size: 90%;
-	margin-bottom:15px;
+	float:right;
 }
 
 #nav ul {
@@ -187,7 +220,6 @@ td .tweettextcell {
 #nav li {
 	list-style-type: none;
 	padding:0px;
-	padding-right:5px;
 	display: inline;
 }
 
@@ -202,4 +234,9 @@ td .tweettextcell {
 
 img {
 	border:0px;
+}
+
+#addcolumndiv {
+	float:right;
+	padding:15px 14px 14px 14px;
 }

@@ -6,25 +6,11 @@ require_once('config.php');
 session_start();
 
 $to = $_SESSION['to'];
+$thisUser = $_SESSION['thisUser'];
+$fullRefresh = false;
 
 // Wrangles text through Twixt.
 function twixtify($status) {
-	
-	// Old code that generates "@user @user2 http://is.gd/blah #tag #tag2"
-    /*preg_match_all('/^d\s(\w+)/', $status, $dMatches);
-	preg_match_all('/(^|\s)@(\w+)/', $status, $atMatches);
-	preg_match_all('/(^|\s)#(\w+)/', $status, $tagMatches);
-	$newstatus = '';
-	for ($i=0; $i<count($dMatches[1]); $i++) {
-		$newstatus .= 'd ' . $dMatches[1][$i] . ' ';
-	}
-	for ($i=0; $i<count($atMatches[2]); $i++) {
-		$newstatus .= '@' . $atMatches[2][$i] . ' ';
-	}
-	$newstatus .= file_get_contents('http://twixt.successwhale.com/index.php?tweet=' . urlencode($status));
-	for ($i=0; $i<count($tagMatches[2]); $i++) {
-		$newstatus .= ' #' . $tagMatches[2][$i];
-	}*/
 	
 	// New code that generates "@user My message including #tags but is too lo... http://is.gd/blah"
 	$newstatus = substr($status,0,116);
@@ -66,9 +52,60 @@ if (isset($_GET['retweet'])) {
 if (isset($_GET['report'])) {
 	$to->post('report_spam', array('screen_name' => $_GET['report']));
 }
-?>
 
-<script language="JavaScript">
-    // Refresh all columns whenever an action is performed.
-	window.onload=refreshAll();
-</script>
+// If we're adding a column, add it and set for full refresh
+if (isset($_GET['newcol'])) {
+    if (DB_SERVER != '') {
+        mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+        @mysql_select_db(DB_NAME) or die( "Unable to select database");
+        //TODO replace column1 with column when renaming db field
+        $query = "SELECT column1 FROM userprefs WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
+        $result = mysql_query($query);
+        if (mysql_num_rows($result) > 0) {
+            $userprefrow = mysql_fetch_assoc($result);
+            //TODO replace column1 with column when renaming db field
+            $newColsString = "" . $userprefrow['column1'] . ";New Column";
+            //TODO replace column1 with column when renaming db field
+            $query = "UPDATE userprefs SET column1 = '" . mysql_real_escape_string($newColsString) . "' WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
+            mysql_query($query);
+        }
+        $fullRefresh = true;
+    }
+}
+
+// If we're deleting a column, delete it and set for full refresh
+if (isset($_GET['delcol'])) {
+    if (DB_SERVER != '') {
+        mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+        @mysql_select_db(DB_NAME) or die( "Unable to select database");
+        //TODO replace column1 with column when renaming db field
+        $query = "SELECT column1 FROM userprefs WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
+        $result = mysql_query($query);
+        if (mysql_num_rows($result) > 0) {
+            $userprefrow = mysql_fetch_assoc($result);
+            //TODO replace column1 with column when renaming db field
+            $userCols = explode(";", $userprefrow['column1']);
+            unset($userCols[$_GET['delcol']]);
+            $newColsString = implode (";", array_values($userCols));
+            //TODO replace column1 with column when renaming db field
+            $query = "UPDATE userprefs SET column1 = '" . mysql_real_escape_string($newColsString) . "' WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
+            mysql_query($query);
+        }
+        $fullRefresh = true;
+    }
+}
+
+
+// Refresh according to whichever action is performed.
+if ($fullRefresh == true) {
+    echo ('<script language="JavaScript">
+        history.go(0);
+    </script>');
+} else {
+    echo ('<script language="JavaScript">
+	    window.onload=refreshAll();
+	</script>');
+}
+
+
+?>
