@@ -240,3 +240,21 @@ img {
 	float:right;
 	padding:15px 14px 14px 14px;
 }
+
+#addcolumndiv ul {
+	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
+}
+
+#addcolumndiv li {
+	list-style-type: none;
+	padding:0px;
+	padding-right:20px;
+	display: inline;
+}
+
+#addcolumndiv li input {
+	margin:0px;
+	padding:0px;
+}

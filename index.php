@@ -37,6 +37,21 @@ if (isset($_POST['theme'])) {
 	}
 }
 
+// If number of cols per screen has just been set, set a cookie and reload.
+// If no number of cols per screen has ever been set, set to 3 and reload.
+// In any eventuality, load the number.
+if (isset($_POST['colsperscreen'])) {
+	setcookie("colsperscreen", $_POST['colsperscreen'], time()+60*60*24*365);
+	$colsperscreen = $_POST['colsperscreen'];
+} else {
+	if (!isset($_COOKIE['colsperscreen'])) {
+		setcookie("colsperscreen", "3", time()+60*60*24*365);
+		$colsperscreen = 3;
+	} else {
+		$colsperscreen = $_COOKIE['colsperscreen'];
+	}
+}
+
 /* Load required lib files. */
 session_start();
 require_once('twitteroauth/twitteroauth.php');
@@ -147,9 +162,9 @@ $content .= '<div id="header">';
 $content .= makeLinksForm();
 $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a></div>';
 if ($friends["error"] == null) {
-	$content .= generateAddColumnBox();
+	$content .= generateAddColumnBox($colsperscreen);
 	$content .= generateSendBoxes();
-	$content .= generateTweetTables($numColumns);
+	$content .= generateTweetTables($numColumns, $colsperscreen);
 	$content .= '<div id="actionbox"></div>';
 } else if ($friends["error"] == '<') {
 	// Not sure what it is with the '<' error, but reloading seems to make it go away.
@@ -181,8 +196,8 @@ function generateSendBoxes() {
 
 // Generates the three main tables of tweets
 // TODO sort out scrolling vs squishing
-function generateTweetTables($numColumns) {
-	$content = '<div id="mainarea"><table class="bigtable" id="bigtable" border="0" style="min-width:' . ($numColumns*33+1) . '%; width:' . ($numColumns*33+1) . '%; max-width:' . ($numColumns*33+1) . '%; "><tr>';
+function generateTweetTables($numColumns, $colsperscreen) {
+	$content = '<div id="mainarea"><table class="bigtable" id="bigtable" border="0" style="min-width:' . ($numColumns*(100/$colsperscreen)+1) . '%; width:' . ($numColumns*(100/$colsperscreen)+1) . '%; max-width:' . ($numColumns*(100/$colsperscreen)+1) . '%; "><tr>';
 	for ($i=0; $i<$numColumns; $i++) {
 	    $content .= '<td width="' . (100/$numColumns) . '%" valign=top>';
 	    $content .= '<div class="column" name="column" id="column' . $i . '"><h2><img src="images/ajax-loader.gif" alt="Loading..."/></h2></div>';
@@ -194,10 +209,11 @@ function generateTweetTables($numColumns) {
 }
 
 // Generates the bottom box with the Add Column button
-function generateAddColumnBox() {
-	$content = '<div id="addcolumndiv">';
-    $content .= '<a href="javascript:doAction(\'actions.php?newcol=true\')"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
-	$content .= '</div>';
+function generateAddColumnBox($colsperscreen) {
+	$content = '<div id="addcolumndiv"><form name="colsperscreenselect" method="post" action="index.php">';
+	$content .= '<ul><li><input name="colsperscreen" id="colsperscreen" size="1" value="' . $colsperscreen . '" ><input type="submit" style="display:none"></li><li>';
+	$content .= '<a href="javascript:doAction(\'actions.php?newcol=true\')"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
+	$content .= '</li></ul></form></div>';
 	return $content;
 }
 
