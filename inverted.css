@@ -19,13 +19,13 @@ h2 {
 }
 
 input[name="status"] {
-	background:black;
+	background:#333333;
 	color:#cccccc;
 }
 
 .tweet {
 	background: #222222;
-	border: 1px solid #555555;
+	border: 1px solid #333333;
 }
 
 .convotweet {
@@ -42,7 +42,7 @@ input[name="status"] {
 }
 
 table .metatable {
-	border-bottom: 1px solid #555555;
+	border-bottom: 1px solid #333333;
 }
 
 .name a{
@@ -51,5 +51,5 @@ table .metatable {
 
 div.columnnav {
 	background: #222222;
-	border: 1px solid #555555;
+	border: 1px solid #333333;
 }
