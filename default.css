@@ -255,6 +255,9 @@ img {
 }
 
 #addcolumndiv li input {
+    position:relative;
+    top:-7px;
 	margin:0px;
 	padding:0px;
+	width:20px;
 }

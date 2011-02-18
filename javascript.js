@@ -164,7 +164,7 @@ function checkForSubmitCustomColumn(field, event, colNumber) {
 function setDivSize() {
     var vpheight = 0;
     if (typeof window.innerHeight == 'number') {
-        vpheight = window.innerHeight; // FF, Webkit, Opera
+        vpheight = window.innerHeight-2; // FF, Webkit, Opera
     } else if (document.documentElement && document.documentElement.clientHeight) {
         vpheight = document.documentElement.clientHeight+2; // IE 6+
     } else if (document.body && document.body.clientHeight) {

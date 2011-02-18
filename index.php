@@ -197,7 +197,7 @@ function generateSendBoxes() {
 // Generates the three main tables of tweets
 // TODO sort out scrolling vs squishing
 function generateTweetTables($numColumns, $colsperscreen) {
-	$content = '<div id="mainarea"><table class="bigtable" id="bigtable" border="0" style="min-width:' . ($numColumns*(100/$colsperscreen)+1) . '%; width:' . ($numColumns*(100/$colsperscreen)+1) . '%; max-width:' . ($numColumns*(100/$colsperscreen)+1) . '%; "><tr>';
+	$content = '<div id="mainarea"><table class="bigtable" id="bigtable" border="0" style="min-width:' . ($numColumns*(100/$colsperscreen)) . '%; width:' . ($numColumns*(100/$colsperscreen)) . '%; max-width:' . ($numColumns*(100/$colsperscreen)+1) . '%; "><tr>';
 	for ($i=0; $i<$numColumns; $i++) {
 	    $content .= '<td width="' . (100/$numColumns) . '%" valign=top>';
 	    $content .= '<div class="column" name="column" id="column' . $i . '"><h2><img src="images/ajax-loader.gif" alt="Loading..."/></h2></div>';
@@ -211,7 +211,7 @@ function generateTweetTables($numColumns, $colsperscreen) {
 // Generates the bottom box with the Add Column button
 function generateAddColumnBox($colsperscreen) {
 	$content = '<div id="addcolumndiv"><form name="colsperscreenselect" method="post" action="index.php">';
-	$content .= '<ul><li><input name="colsperscreen" id="colsperscreen" size="1" value="' . $colsperscreen . '" ><input type="submit" style="display:none"></li><li>';
+	$content .= '<ul><li><input name="colsperscreen" id="colsperscreen" size="1" value="' . $colsperscreen . '" alt="Columns per screen" title="Columns per screen"><input type="submit" style="display:none"></li><li>';
 	$content .= '<a href="javascript:doAction(\'actions.php?newcol=true\')"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
 	$content .= '</li></ul></form></div>';
 	return $content;
