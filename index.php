@@ -180,8 +180,9 @@ function generateSendBoxes() {
 }
 
 // Generates the three main tables of tweets
+// TODO sort out scrolling vs squishing
 function generateTweetTables($numColumns) {
-	$content = '<div id="mainarea"><table class="bigtable" id="bigtable" border="0" width="' . ($numColumns*33+1) . '%"><tr>';
+	$content = '<div id="mainarea"><table class="bigtable" id="bigtable" border="0" style="min-width:' . ($numColumns*33+1) . '%; width:' . ($numColumns*33+1) . '%; max-width:' . ($numColumns*33+1) . '%; "><tr>';
 	for ($i=0; $i<$numColumns; $i++) {
 	    $content .= '<td width="' . (100/$numColumns) . '%" valign=top>';
 	    $content .= '<div class="column" name="column" id="column' . $i . '"><h2><img src="images/ajax-loader.gif" alt="Loading..."/></h2></div>';

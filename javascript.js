@@ -160,28 +160,36 @@ function checkForSubmitCustomColumn(field, event, colNumber) {
     }
 }
 
+// Set the size of the mainarea div, so that we get h- and v-scroll of the tweet area.
+function setDivSize() {
+    var vpheight = 0;
+    if (typeof window.innerHeight == 'number') {
+        vpheight = window.innerHeight; // FF, Webkit, Opera
+    } else if (document.documentElement && document.documentElement.clientHeight) {
+        vpheight = document.documentElement.clientHeight+2; // IE 6+
+    } else if (document.body && document.body.clientHeight) {
+        vpheight = document.body.clientHeight+2; // IE 4
+    }
+    d = document.getElementById('mainarea');
+    d.style.height= "" + (vpheight-108) + "px";
+}
+
 // jQuery startup things (when DOM is avalable)
 $(document).ready(function() {
     // Load all columns
     refreshAll();
 });
 
+// jQuery onresize things
+var resizeTimer;
+$(window).resize(function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(setDivSize, 100);
+});
+
 // Normal startup things (when the page has fully loaded)
 function init() {
-    // Set div size
-    var vpheight = 0;
-    if (typeof window.innerHeight == 'number') {
-        vpheight = window.innerHeight; // FF, Webkit, Opera
-    } else if (document.documentElement && document.documentElement.clientHeight) {
-        vpheight = document.documentElement.clientHeight; // IE 6+
-    } else if (document.body && document.body.clientHeight) {
-        vpheight = document.body.clientHeight; // IE 4
-    }
-    d = document.getElementById('mainarea');
-    //ds = document.getElementsByName('column');
-    //for (var i=0; i<ds.length; i++) {
-        d.style.height= "" + (vpheight-108) + "px";
-    //}
+    setDivSize();
     // Focus status entry box
 	document.statusform.status.focus();
 }
