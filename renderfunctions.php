@@ -278,7 +278,7 @@ function parseLinks($html, &$numusers) {
 function makeNavForm($count, $columnOptions, $thisColName) {
     $thisColNumber = substr($_GET['div'], 0);
 	$content = '<div class="columnnav"><div class="backtotop">';
-	$content .= '<a href="#"><img src="images/top.png" alt="Back to Top" title="Back to Top"/></a></div>';
+	$content .= '<a href="#column' . $thisColNumber . '"><img src="images/top.png" alt="Back to Top" title="Back to Top"/></a></div>';
 	
 	$content .= '<div id="nav"><ul>';
 	if ($count > 20) {
