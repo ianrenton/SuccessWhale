@@ -75,29 +75,34 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 			    $content .= '<div class="tweet">';
 			}
 			$content .= '<div class="text">';
-			$content .= '<table class="metatable"><tr><td>';
-			$content .= '<div class="metatext"><span class="name">';
-			$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-			$content .= $data[$i][$userString]["name"];
-			$content .= '</a></span>';
-			$content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-			$content .= '</div>';
-			$content .= '</td><td>';
-			$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-			$content .= '</td></tr></table>';
-			$content .= '<table><tr><td>';
-			$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-			$content .= '<img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"><br/>';
-			$content .= '</a></td>';
-			$content .= '<td class="tweettextcell"><span class="tweettext">';
-			//$newtweetbody = "";
-			foreach(explode(" ", strip_tags($tweetbody)) as $key => $line) {
-				//$newtweetbody .= $line . " ";
-				if (strlen($line) > 30) $tweetbody = str_replace($line, wordwrap($line, 25, "- ", 1), $tweetbody);
-			} 
-			$content .= $tweetbody;
-			$content .= '</span>';
-			$content .= '</td></tr></table></div><div class="clear"></div></div>';
+			if (strtotime($data[$i]["created_at"]) == 0) {
+                $content .= '<div class="metatext"><span class="name">Protected or deleted tweet.</span></div>';
+			} else {
+                $content .= '<table class="metatable"><tr><td>';
+                $content .= '<div class="metatext"><span class="name">';
+                $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+                $content .= $data[$i][$userString]["name"];
+                $content .= '</a></span>';
+                $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+                $content .= '</div>';
+                $content .= '</td><td>';
+                $content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+                $content .= '</td></tr></table>';
+                $content .= '<table><tr><td>';
+                $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+                $content .= '<img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"><br/>';
+                $content .= '</a></td>';
+                $content .= '<td class="tweettextcell"><span class="tweettext">';
+                //$newtweetbody = "";
+                foreach(explode(" ", strip_tags($tweetbody)) as $key => $line) {
+                    //$newtweetbody .= $line . " ";
+                    if (strlen($line) > 30) $tweetbody = str_replace($line, wordwrap($line, 25, "- ", 1), $tweetbody);
+                }
+                $content .= $tweetbody;
+                $content .= '</span>';
+                $content .= '</td></tr></table>';
+			}
+			$content .= '</div><div class="clear"></div></div>';
 			if (!$isConvo) {
 			    $content .= '<div id="' . $_GET['div'] . '-box' . $i . '-below"></div>';
 			}
