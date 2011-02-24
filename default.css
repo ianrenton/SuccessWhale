@@ -111,6 +111,12 @@ div.column {
 	border: 1px solid #d7d7d7;
 }
 
+.convohider {
+    float:left;
+    position:relative;
+    left:4px;
+}
+
 .operations {
 	float:right;
 	font-size:80%;

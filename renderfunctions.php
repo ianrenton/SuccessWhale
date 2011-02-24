@@ -322,7 +322,7 @@ function makeNavForm($count, $columnOptions, $thisColName) {
 
 // Generates the convo hider at the left
 function makeConvoHider($div) {
-	$content = '<div id="colswitcher">';
+	$content = '<div class="convohider">';
 	$content .= '<a href="javascript:hideConvo(\'' . $div . '\');"><img src="images/hideconvo.png" alt="Hide Conversation"/></a>';
 	$content .= '</div>';
 	return $content;
