@@ -34,8 +34,10 @@ function countText(field) {
 	document.getElementById('charsLeft').innerHTML = 140 - field.value.length;
 	if (field.value.length > 140) {
 		document.statusform.submit.value = "Post with Twixt";
+		document.getElementById('charsLeft').style.color="red";
 	} else {
 		document.statusform.submit.value = "Post";
+		document.getElementById('charsLeft').style.color="black";
 	}
 	if (field.value.length == 0) {
 		document.statusform.replyid.value = '';
