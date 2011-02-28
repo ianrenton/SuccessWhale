@@ -22,72 +22,45 @@
 
 date_default_timezone_set('UTC');
 
-// If a theme has just been selected, set a cookie and reload.
-// If no theme has ever been set, set default.css and reload.
-// Otherwise do nothing, keep the user's theme.
-if (isset($_POST['theme'])) {
-	setcookie("theme", $_POST['theme'], time()+60*60*24*365);
-	header('Location: ' . htmlentities($_SERVER['PHP_SELF']) );
-	die();
-} else {
-	if (!isset($_COOKIE['theme'])) {
-		setcookie("theme", "default.css", time()+60*60*24*365);
-		header('Location: ' . htmlentities($_SERVER['PHP_SELF']) );
-		die();
-	}
-}
-
-// If number of cols per screen has just been set, set a cookie and reload.
-// If no number of cols per screen has ever been set, set to 3 and reload.
-// In any eventuality, load the number.
-if (isset($_POST['colsperscreen'])) {
-	setcookie("colsperscreen", $_POST['colsperscreen'], time()+60*60*24*365);
-	$colsperscreen = $_POST['colsperscreen'];
-} else {
-	if (!isset($_COOKIE['colsperscreen'])) {
-		setcookie("colsperscreen", "3", time()+60*60*24*365);
-		$colsperscreen = 3;
-	} else {
-		$colsperscreen = $_COOKIE['colsperscreen'];
-	}
-}
-
-/* Load required lib files. */
+require_once('common.php');
 session_start();
-require_once('twitteroauth/twitteroauth.php');
-require_once('config.php');
 
-// Create tables if they don't exist.
-if (DB_SERVER != '') {
+// Check for conditions that are POSTed to index.php
+checkAndSetTheme();
+$colsperscreen = checkAndSetColsPerScreen();
+
+// Create database tables if they don't exist.
+if (DB_ENABLED) {
     mysql_connect(DB_SERVER,DB_USER,DB_PASS);
     @mysql_select_db(DB_NAME) or die( "Unable to select database");
-
     createTablesIfFirstInstall();
     mysql_close();
 }
 
-// Bring in access token from cookie if it exists.
-if (!empty($_COOKIE['access_token'])) {
-	$_SESSION['access_token'] = unserialize($_COOKIE['access_token']);
+// ENTRY POINT 1: User has a cookie, visits index.php directly.
+// Bring in access token from cookie if it exists, and create and save a 
+// connection
+if (TWITTER_ENABLED && (!isset($twitter)) && (!empty($_COOKIE['access_token']))) {
+	$access_token = unserialize($_COOKIE['access_token']);
+    $twitter = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
+    $_SESSION['twitter'] = $twitter;
+}
+if (FACEBOOK_ENABLED && (!isset($facebook)) && (!empty($_COOKIE['facebook']))) {
+	$facebook = $_COOKIE['facebook'];
+    $_SESSION['facebook'] = $facebook;
 }
 
-/* If access tokens are not available redirect to connect page. */
-if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
+// If no connectivity-providing objects exist, clear out sessions drop back to the front page.
+// This gets hit when a user visits index.php for the first time without logging in or having
+// any cookies.
+// We need at least one authenticated service, represented by one of these objects,
+// in order to carry on.
+if ((!isset($twitter)) && (!isset($facebook))) {
     header('Location: ./clearsessions.php');
-	die();
 }
-
-/* Get user access tokens out of the session. */
-$access_token = $_SESSION['access_token'];
-
-/* Create a TwitterOauth object with consumer/user tokens. */
-$to = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
-
-// Session-global the twitterOAuth object so jQuery-called PHP scripts can see it.
-$_SESSION['to'] = $to;
 
 // Session-global the stuff that doesn't depend on which column we're rendering
-$auth = $to->get('account/verify_credentials', array());
+$auth = $twitter->get('account/verify_credentials', array());
 $_SESSION['thisUser'] = $auth['screen_name'];
 $_SESSION['utcOffset'] = $auth['utc_offset'];
 
@@ -100,10 +73,10 @@ $columnOptions = array("statuses/home_timeline" => "Home Timeline",
  "direct_messages/sent" => "DMs Sent");
 
 // Add lists to column options
-$listsFull = $to->get($auth['screen_name'] . '/lists', array());
+$listsFull = $twitter->get($auth['screen_name'] . '/lists', array());
 $lists = $listsFull["lists"];
 for ($i=0; $i<count($lists); $i++) {
-	$columnOptions[$auth['screen_name'] . '/lists/' . $lists[$i]["slug"] . '/statuses'] = $lists[$i]["name"];
+    $columnOptions[$auth['screen_name'] . '/lists/' . $lists[$i]["slug"] . '/statuses'] = $lists[$i]["name"];
 }
 
 // Session-global the column options (timelines, lists etc.)
@@ -111,7 +84,7 @@ $_SESSION['columnOptions'] = $columnOptions;
 
 
 // Load/setup user prefs in database
-if (DB_SERVER != '') {
+if (DB_ENABLED) {
     mysql_connect(DB_SERVER,DB_USER,DB_PASS);
     @mysql_select_db(DB_NAME) or die( "Unable to select database");
 
@@ -124,12 +97,16 @@ if (DB_SERVER != '') {
         mysql_query($query);
     }
 
-    // If user is in the users table, update their access token
+    // If user is in the users table, update their access tokens
     $query = "SELECT * FROM users WHERE username='" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
     $result = mysql_query($query);
     if (mysql_num_rows($result) > 0) {
         $query = "UPDATE users SET auth_token = '" . mysql_real_escape_string(serialize($access_token)) . "' WHERE username = '" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
         mysql_query($query);
+        if (isset($facebook)) {
+            $query = "UPDATE users SET fb_session = '" . mysql_real_escape_string(serialize($facebook)) . "' WHERE username = '" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
+            mysql_query($query);
+        }
     }
 
     // Get user column setup
@@ -159,7 +136,7 @@ $content .= '}
 
 // Build the main display
 $content .= '<div id="header">';
-$content .= makeLinksForm();
+$content .= makeLinksForm((TWITTER_ENABLED && !isset($twitter)), (FACEBOOK_ENABLED && !isset($facebook)));
 $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a></div>';
 if ($friends["error"] == null) {
 	$content .= generateAddColumnBox($colsperscreen);
@@ -189,6 +166,9 @@ function generateSendBoxes() {
 	$content .= '&nbsp;&nbsp;<b id="charsLeft">140</b>&nbsp;&nbsp;';
     $content .= '<input type="hidden" name="replyid" id="replyid" value="" />';
     $content .= '<input type="submit" name="submit" class="submitbutton" value="Post" />';
+    if (!empty($_SESSION['facebook'])) {
+        $content .= '<input type="checkbox" name="postToFacebook" id="postToFacebook" value="true"><label id="postToFacebookLabel" name="postToFacebookLabel" for="postToFacebook"> Facebook too</label>';
+    }
     $content .= '</form>';
 	$content .= '</div>';
 	return $content;
@@ -218,8 +198,8 @@ function generateAddColumnBox($colsperscreen) {
 }
 
 // Generates the top-right config area
-function makeLinksForm() {
-    $dir = opendir('.');
+function makeLinksForm($showTwitterLink, $showFacebookLink) {
+    $dir = opendir('./css');
     
 	$content = '<div id="links"><form name="themeselect" method="post" action="index.php">';
 	$content .= '<ul><li>Theme: <select name="theme" onchange="this.form.submit()">';
@@ -237,6 +217,17 @@ function makeLinksForm() {
     }
     closedir($dir);
 	$content .= '</select></li>';
+	
+	// Add Twitter/Facebook/etc accounts to SuccessWhale.  Only shows ones you're
+	// missing.
+	if ($showTwitterLink) {
+	    $content .= '<li><a href="./twitter-callback/redirect.php">Add Twitter</a></li>';
+	}
+	if ($showFacebookLink) {
+	    $content .= '<li><a href="./facebook-callback/redirect.php">Add Facebook</a></li>';
+	}
+
+    
 	
 	// Cache tokens item
 	if (DB_SERVER != '') {
@@ -287,3 +278,41 @@ function createTablesIfFirstInstall() {
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;';
     mysql_query($query);
 }
+
+
+// If a theme has just been selected, set a cookie and reload.
+// If no theme has ever been set, set default.css and reload.
+// Otherwise do nothing, keep the user's theme.
+function checkAndSetTheme() {
+    if (isset($_POST['theme'])) {
+	    setcookie("theme", $_POST['theme'], time()+60*60*24*365);
+	    header('Location: ' . htmlentities($_SERVER['PHP_SELF']) );
+	    die();
+    } else {
+	    if (!isset($_COOKIE['theme'])) {
+		    setcookie("theme", "default.css", time()+60*60*24*365);
+		    header('Location: ' . htmlentities($_SERVER['PHP_SELF']) );
+		    die();
+	    }
+    }
+}
+
+// If number of cols per screen has just been set, set a cookie and reload.
+// If no number of cols per screen has ever been set, set to 3 and reload.
+// In any eventuality, load the number.
+function checkAndSetColsPerScreen() {
+    if (isset($_POST['colsperscreen'])) {
+	    setcookie("colsperscreen", $_POST['colsperscreen'], time()+60*60*24*365);
+	    $colsperscreen = $_POST['colsperscreen'];
+    } else {
+	    if (!isset($_COOKIE['colsperscreen'])) {
+		    setcookie("colsperscreen", "3", time()+60*60*24*365);
+		    $colsperscreen = 3;
+	    } else {
+		    $colsperscreen = $_COOKIE['colsperscreen'];
+	    }
+    }
+    return $colsperscreen;
+}
+
+?>

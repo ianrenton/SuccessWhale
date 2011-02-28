@@ -1,12 +1,10 @@
 <?php
 
-/* Start session and load lib */
+require_once('common.php');
 session_start();
-require_once('twitteroauth/twitteroauth.php');
-require_once('config.php');
 
 if ((isset($_POST['username'])) && (isset($_POST['password']))) {
-    if (DB_SERVER != '') {
+    if (DB_ENABLED) {
         mysql_connect(DB_SERVER,DB_USER,DB_PASS);
         @mysql_select_db(DB_NAME) or die( "Unable to select database");
         
@@ -20,14 +18,19 @@ if ((isset($_POST['username'])) && (isset($_POST['password']))) {
             $storedPassword = mysql_result($result, 0, "password");
             if (strcmp($storedPassword, md5($_POST['password'])) == 0) {
                 
-                // Password match, so get access token
+                // Password match, so get access tokens
                 $access_token = unserialize(mysql_result($result, 0, "auth_token"));
+                $fb_session = unserialize(mysql_result($result, 0, "fb_session"));
 
-                /* Save the access tokens. Normally these would be saved in a database for future use. */
-                $_SESSION['access_token'] = $access_token;
+                // ENTRY POINT 3: Loading stored tokens from DB, create objects with them
+                // Save the twitter/facebook objects
+                $twitter = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
+                $_SESSION['twitter'] = $twitter;
+                $_SESSION['facebook'] = $fb_session;
 
                 // Save accesstoken cookie
                 setcookie('access_token', serialize($access_token), mktime()+86400*365);
+                setcookie('facebook', serialize($facebook), mktime()+86400*365);
 
                 $_SESSION['status'] = 'verified';
                 header('Location: ./index.php');

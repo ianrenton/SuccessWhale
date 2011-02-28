@@ -1,11 +1,9 @@
 <?php
 
-/* Load required lib files. */
-require_once('twitteroauth/twitteroauth.php');
-require_once('config.php');
+require_once('common.php');
 session_start();
 
-$to = $_SESSION['to'];
+$to = $_SESSION['twitter'];
 $thisUser = $_SESSION['thisUser'];
 $fullRefresh = false;
 
@@ -32,6 +30,11 @@ if (isset($_POST['status'])) {
 		$replyid = $_POST['replyid'];
 	}
 	$to->post('statuses/update', array('status' => $status, 'in_reply_to_status_id' => $replyid));
+	//TODO FB stuff
+    if ((isset($_POST['postToFacebook'])) && ($_POST['postToFacebook'] == "true") && (empty($replyid)) && (!empty($_SESSION['facebook']))) {
+        $facebook = $_SESSION['facebook'];
+        $facebook->api('/me/feed', 'POST', array('message'=> $status, 'cb' => ''));
+    }
 }
 
 // If we're GETing with a destroy, send the request to Twitter.

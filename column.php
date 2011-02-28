@@ -2,10 +2,7 @@
 
 date_default_timezone_set('UTC');
 
-/* Load required lib files. */
-require_once('twitteroauth/twitteroauth.php');
-require_once('config.php');
-require_once('renderfunctions.php');
+require_once('common.php');
 session_start();
 
 if (DB_SERVER != '') {
@@ -17,7 +14,7 @@ if (DB_SERVER != '') {
 $content = '';
 
 // Get session vars
-$to = $_SESSION['to'];
+$to = $_SESSION['twitter'];
 $thisUser = $_SESSION['thisUser'];
 $utcOffset = $_SESSION['utcOffset'];
 $columnOptions = $_SESSION['columnOptions'];

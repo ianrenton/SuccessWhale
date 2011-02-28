@@ -14,7 +14,7 @@ if ((isset($_POST['username'])) && (isset($_POST['password']))) {
         $query = "SELECT * FROM users WHERE username='" . mysql_real_escape_string($_POST['username']) . "'";
         $result = mysql_query($query);
         if (!mysql_num_rows($result) ) {
-            $query = "INSERT INTO users VALUES ('" . mysql_real_escape_string($_POST['username']) . "','" . mysql_real_escape_string(md5($_POST['password'])) . "','')";
+            $query = "INSERT INTO users VALUES ('" . mysql_real_escape_string($_POST['username']) . "','" . mysql_real_escape_string(md5($_POST['password'])) . "','','')";
             mysql_query($query);
             header('Location: ./index.php');
             die();

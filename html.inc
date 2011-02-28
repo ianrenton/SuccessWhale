@@ -5,18 +5,18 @@
   <head>
     <title>SuccessWhale</title>
 	<link rel="shortcut icon" href="favicon.ico">
-	<link type="text/css" rel="stylesheet" media="all" href="default.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="<?php echo($_COOKIE['theme']) ?>" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/default.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/<?php echo($_COOKIE['theme']) ?>" />
 	<!--[if lt IE 7]>
       	<link type="text/css" rel="stylesheet" media="all" href="ie/ie.css" />
       <![endif]-->
-	<script type="text/javascript" src="jquery.min.js"></script>
-	<script type="text/javascript" src="jquery.form.js"></script>
-	<script type="text/javascript" src="jquery.blockUI.js"></script>
+	<script type="text/javascript" src="javascript/jquery.min.js"></script>
+	<script type="text/javascript" src="javascript/jquery.form.js"></script>
+	<script type="text/javascript" src="javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="javascript/javascript.js"></script>
 
   </head>
   <body>
-	<SCRIPT LANGUAGE="JavaScript" SRC="javascript.js"></SCRIPT>
 	<div id="page">
 	<?php echo($content); ?>
 	</div>
@@ -26,14 +26,17 @@
     window.onload=init;
     </SCRIPT>
 
+<?php if (ANALYTICS_ENABLED) { ?>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 </script>
 <script type="text/javascript">
 try {
-var pageTracker = _gat._getTracker("UA-8537137-2");
+var pageTracker = _gat._getTracker("<?php echo(ANALYTICS_ID); ?>");
 pageTracker._trackPageview();
 } catch(err) {}</script>
+
+<?php } ?>
 
 </body></html>

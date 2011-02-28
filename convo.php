@@ -1,13 +1,9 @@
 <?php
 
-/* Load required lib files. */
-require_once('twitteroauth/twitteroauth.php');
-require_once('config.php');
-require_once('renderfunctions.php');
+require_once('common.php');
 session_start();
 
-if (DB_SERVER != '') {
-    // Connect to DB, we will be using this a lot!
+if (DB_ENABLED) {
     mysql_connect(DB_SERVER,DB_USER,DB_PASS);
     @mysql_select_db(DB_NAME) or die( "Unable to select database");
 }
@@ -15,7 +11,7 @@ if (DB_SERVER != '') {
 $content = '';
 
 // Get session vars
-$to = $_SESSION['to'];
+$to = $_SESSION['twitter'];
 $thisUser = $_SESSION['thisUser'];
 $utcOffset = $_SESSION['utcOffset'];
 $columnOptions = $_SESSION['columnOptions'];
@@ -42,7 +38,7 @@ $content .= generateTweetList($data, false, false, true, $thisUser, '', $utcOffs
 echo $content;
 
 // End of script, close DB.
-if (DB_SERVER != '') {
+if (DB_ENABLED) {
     mysql_close();
 }
 
