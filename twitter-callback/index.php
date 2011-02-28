@@ -15,7 +15,7 @@ if (TWITTER_ENABLED) {
 
     // Request access tokens from twitter
     $access_token = $twitter->getAccessToken($_REQUEST['oauth_verifier']);
-
+    
     // Save the access token as a cookie and in the database
     setcookie('access_token', serialize($access_token), mktime()+86400*365);
     if (isset($_SESSION['thisUser'])) {
@@ -30,6 +30,7 @@ if (TWITTER_ENABLED) {
     // ENTRY POINT 2a: User has just connected via the Twitter callback.
     // Store the twitter object.
     $_SESSION['twitter'] = $twitter;
+    $_SESSION['twitter_access_token'] = $access_token;
 
     // Remove no longer needed request tokens
     unset($_SESSION['oauth_token']);

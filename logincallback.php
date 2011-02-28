@@ -26,6 +26,9 @@ if ((isset($_POST['username'])) && (isset($_POST['password']))) {
                 // Save the twitter/facebook objects
                 $twitter = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
                 $_SESSION['twitter'] = $twitter;
+                $_SESSION['twitter_access_token'] = $access_token;
+                $auth = $twitter->get('account/verify_credentials', array());
+                
                 $_SESSION['facebook'] = $fb_session;
 
                 // Save accesstoken cookie

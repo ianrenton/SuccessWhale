@@ -1,6 +1,6 @@
 <?php
 
-require_once('common.php');
+require_once('../common.php');
 session_start();
 
 // Create TwitterOAuth object and get request token
