@@ -1,20 +1,34 @@
 HOW TO INSTALL SUCCESSWHALE
 ---------------------------
 
-To run your own copy of SuccessWhale, unpack the ZIP file on a web
-server that supports PHP and, optionally, MySQL. Edit config.php
-with your own settings.
+To run your own copy of SuccessWhale, unpack the ZIP file or clone the github
+repository onto a web server that supports PHP and, optionally, MySQL.  Once
+complete, edit config.php with your own settings.
 
-As explained in config.php, you’ll need a Consumer Key and Consumer
-Secret – you’ll get those when you register your app with Twitter.
-Optionally, you can also enter details for a MySQL database. If you
-use a database, the app will remember users’ column setup, will
-cache expanded links (speeding up loads somewhat), and will allow
-users to cache their authentication tokens if they wish. The app will
-create the tables for you when you visit index.php for the first time.
-If you don’t want to use a database, just leave “DB_SERVER” blank.
+As explained in config.php, you’ll need a variety of bits of information to get
+SuccessWhale up and running.
 
-Then just navigate to index.php, log in with Twitter, and you should
-be up and running!
+Each service that SuccessWhale supports has a "x_ENABLED" parameter that sets
+whether or not SuccessWhale expects to use it.  You'll need to enable at least
+one core service (e.g. Twitter, Facebook) to make your SuccessWhale clone
+useful.  As well as setting ENABLED to true, enter the other required
+information (this will be given to you when you register your new app with
+Twitter/Facebook/whatever).
+
+Optionally, you can also enter details for a MySQL database. If you use a
+database, the app will remember users’ column setup, will cache expanded links
+(speeding up loads somewhat), and will allow users to cache their authentication
+tokens (for example, users will be able to log in with a SuccessWhale password
+and have SuccessWhale manage their authentication with Twitter and Facebook. The
+app will create DB tables for you when you visit index.php for the first time.
+
+Google Analytics is also supported, and you can enter your ID in config.php.
+
+The final setting is DEBUG - enable this to get printouts of various errors you
+may encounter when setting up the software, but remember to disable it again
+before going live.
+
+Once config.php is set up just navigate to index.php, log in with your service
+of choice, and you should be up and running!
 
 Please see the file README.TXT for more information.

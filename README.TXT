@@ -5,7 +5,7 @@
  ____) | |_| | (__| (__|  __|__ \__ \ \  /\  /  | | | | (_| | |  __/
 |_____/ \__,_|\___|\___|\___|___/___/  \/  \/   |_| |_|\__,_|_|\___|
                                                                     
-                                                       VERSION 1.2.0
+                                               VERSION 2.0 pre-alpha
 
 
 Thank you for downloading SuccessWhale, a Twitter client written in
