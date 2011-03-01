@@ -58,44 +58,34 @@ if (isset($_GET['report'])) {
 
 // If we're adding a column, add it and set for full refresh
 if (isset($_GET['newcol'])) {
-    if (DB_SERVER != '') {
-        mysql_connect(DB_SERVER,DB_USER,DB_PASS);
-        @mysql_select_db(DB_NAME) or die( "Unable to select database");
-        //TODO replace column1 with column when renaming db field
-        $query = "SELECT column1 FROM userprefs WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
-        $result = mysql_query($query);
-        if (mysql_num_rows($result) > 0) {
-            $userprefrow = mysql_fetch_assoc($result);
-            //TODO replace column1 with column when renaming db field
-            $newColsString = "" . $userprefrow['column1'] . ";New Column";
-            //TODO replace column1 with column when renaming db field
-            $query = "UPDATE userprefs SET column1 = '" . mysql_real_escape_string($newColsString) . "' WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
-            mysql_query($query);
-        }
-        $fullRefresh = true;
+    mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+    @mysql_select_db(DB_NAME) or die( "Unable to select database");
+    $query = "SELECT columns FROM sw_users WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+    $result = mysql_query($query);
+    if (mysql_num_rows($result) > 0) {
+        $row = mysql_fetch_assoc($result);
+        $newColsString = "" . $row['columns'] . ";New Column";
+        $query = "UPDATE sw_users SET columns = '" . mysql_real_escape_string($newColsString) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+        mysql_query($query);
     }
+    $fullRefresh = true;
 }
 
 // If we're deleting a column, delete it and set for full refresh
 if (isset($_GET['delcol'])) {
-    if (DB_SERVER != '') {
-        mysql_connect(DB_SERVER,DB_USER,DB_PASS);
-        @mysql_select_db(DB_NAME) or die( "Unable to select database");
-        //TODO replace column1 with column when renaming db field
-        $query = "SELECT column1 FROM userprefs WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
-        $result = mysql_query($query);
-        if (mysql_num_rows($result) > 0) {
-            $userprefrow = mysql_fetch_assoc($result);
-            //TODO replace column1 with column when renaming db field
-            $userCols = explode(";", $userprefrow['column1']);
-            unset($userCols[$_GET['delcol']]);
-            $newColsString = implode (";", array_values($userCols));
-            //TODO replace column1 with column when renaming db field
-            $query = "UPDATE userprefs SET column1 = '" . mysql_real_escape_string($newColsString) . "' WHERE username = '" . mysql_real_escape_string($thisUser) . "'";
-            mysql_query($query);
-        }
-        $fullRefresh = true;
+    mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+    @mysql_select_db(DB_NAME) or die( "Unable to select database");
+    $query = "SELECT columns FROM sw_users WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+    $result = mysql_query($query);
+    if (mysql_num_rows($result) > 0) {
+        $row = mysql_fetch_assoc($result);
+        $userCols = explode(";", $row['columns']);
+        unset($userCols[$_GET['delcol']]);
+        $newColsString = implode (";", array_values($userCols));
+        $query = "UPDATE sw_users SET columns = '" . mysql_real_escape_string($newColsString) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+        mysql_query($query);
     }
+    $fullRefresh = true;
 }
 
 
