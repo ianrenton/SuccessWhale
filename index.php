@@ -76,10 +76,9 @@ if (FACEBOOK_ENABLED) {
          $_SESSION['facebook'] = $facebook;
         }
          catch (Exception $e) {
-           # We don't have a good session so
-           die("FB connect failed.");
           $res = mysql_query('DELETE FROM facebook_users WHERE expires=0');
-          return;
+          // We don't have a good session, so let's get one!
+          header('Location: ./facebook-callback/');
         }
     }
 }
