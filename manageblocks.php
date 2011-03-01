@@ -1,13 +1,12 @@
 <?php
-require_once('config.php');
+require_once('common.php');
 session_start();
 
-// Connect to DB, we will be using this a lot!
 mysql_connect(DB_SERVER,DB_USER,DB_PASS);
 @mysql_select_db(DB_NAME) or die( "Unable to select database");
 
 // Get blocklist
-$query = "SELECT * FROM userprefs WHERE username='" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
+$query = "SELECT * FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
 $result = mysql_query($query);
 $blocklist = mysql_result($result,0,"blocklist");
 
