@@ -3,6 +3,9 @@
 require_once('../common.php');
 session_start();
 
+mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+@mysql_select_db(DB_NAME) or die( "Unable to select database");
+
 if (TWITTER_ENABLED) {
     // If the oauth_token is old log out and try again.  This probably never happens.
     if (isset($_REQUEST['oauth_token']) && $_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
@@ -16,41 +19,61 @@ if (TWITTER_ENABLED) {
     // Request access tokens from twitter
     $access_token = $twitter->getAccessToken($_REQUEST['oauth_verifier']);
     
-    // Save the access token as a cookie and in the database
-    setcookie('access_token', serialize($access_token), mktime()+86400*365);
-    if (isset($_SESSION['thisUser'])) {
-        $query = "SELECT * FROM users WHERE username='" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
-        $result = mysql_query($query);
-        if (mysql_num_rows($result) > 0) {
-            $query = "UPDATE users SET auth_token = '" . mysql_real_escape_string(serialize($access_token)) . "' WHERE username = '" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
-            mysql_query($query);
-        }
-    }
-
-    // ENTRY POINT 2a: User has just connected via the Twitter callback.
-    // Store the twitter object.
-    $_SESSION['twitter'] = $twitter;
-    $_SESSION['twitter_access_token'] = $access_token;
-
-    // Remove no longer needed request tokens
-    unset($_SESSION['oauth_token']);
-    unset($_SESSION['oauth_token_secret']);
-
     // If HTTP response is 200 continue otherwise send to connect page to retry
     if (200 == $twitter->http_code) {
-      // The user has been verified and the access tokens can be saved for future use
-      $_SESSION['status'] = 'verified';
-      header('Location: ../index.php');
+        // The user has been verified and the access tokens can be saved for future use
+        // Figure out if the Twitter details are already in the database
+        $query = "SELECT COUNT(*) FROM twitter_users WHERE uid='" . $access_token['user_id'] . "';";
+        $result = mysql_query($query) or die (mysql_error());
+        $row = mysql_fetch_assoc($result);
+        if ($row['COUNT(*)'] == 0) {
+            // This Twitter account is new to SuccessWhale
+            if (!isset($_SESSION['sw_uid'])) {
+                // No user is logged in, so make a new one.
+                logInUser(addSWUser());
+            }
+            // The user is now logged in, so record their Twitter details alongside
+            // their other details.
+            $query="INSERT INTO twitter_users (sw_uid,uid,username,access_token)
+                    VALUES ('" . mysql_real_escape_string($_SESSION['sw_uid']) . "', '".
+                                mysql_real_escape_string($access_token['user_id'])."','".
+                                mysql_real_escape_string($access_token['screen_name'])."','".
+                                mysql_real_escape_string(serialize($access_token))."');";
+            mysql_query($query) or die(mysql_error());
+        } else {
+            // This Twitter account has been seen before, so update details.
+            $query = "UPDATE twitter_users SET username='" . mysql_real_escape_string($access_token['screen_name']) . 
+                                                "', access_token='" . mysql_real_escape_string(serialize($access_token)) . 
+                                                "' WHERE uid='" . mysql_real_escape_string($access_token['user_id']) . "';";
+            mysql_query($query) or die (mysql_error());
+            // Now log in the appropriate user to SuccessWhale
+            $query = "SELECT sw_uid FROM twitter_users WHERE uid='" . $access_token['user_id'] . "';";
+            $result = mysql_query($query) or die (mysql_error());
+            $row = mysql_fetch_assoc($result);
+            logInUser($row['sw_uid']);
+        }
+        
+        // The Facebook account is now up-to-date in the database and the user
+        // is logged in, so head back to index.php.
+        header('Location: ../index.php');
+        
     } else {
-      header('Location: ../clearsessions.php');
+        // HTTP response not 200, something has gone wrong.
+        if (DEBUG) {
+            die("HTTP response from Twitter was:<br>" . $connection);
+        } else {
+            header('Location: ../clearsessions.php');
+        }
     }
 } else {
     // Twitter is disabled
     if (DEBUG) {
-        echo("Attempted to use a Twitter callback when Twitter integration is disabled.");
+        die("Attempted to use a Twitter callback when Twitter integration is disabled.");
     } else {
         header('Location: ../index.php');
     }
 }
+
+mysql_close();
 
 ?>

@@ -3,6 +3,9 @@
 require_once('../common.php');
 session_start();
 
+mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+@mysql_select_db(DB_NAME) or die( "Unable to select database");
+
 // Create our Application instance.
 $facebook = new Facebook(array(
   'appId' => FACEBOOK_APP_ID,
@@ -16,6 +19,7 @@ $session = $facebook->getSession();
 
 if (FACEBOOK_ENABLED) {
     if ($session) {
+      // Session is present, so we are being callbacked from Facebook
       try {
         // Attempt to get data for which authentication is required.  This is another
         // check to make sure that authentication happened correctly.
@@ -23,26 +27,50 @@ if (FACEBOOK_ENABLED) {
         $uid = $facebook->getUser();
         $me = $facebook->api('/me');
         
-        // Save the access token as a cookie and in the database
-        setcookie('facebook', serialize($facebook), mktime()+86400*365);
-        if (isset($_SESSION['thisUser'])) {
-            $query = "SELECT * FROM users WHERE username='" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
-            $result = mysql_query($query);
-            if (mysql_num_rows($result) > 0) {
-                $query = "UPDATE users SET facebook = '" . mysql_real_escape_string(serialize($facebook)) . "' WHERE username = '" . mysql_real_escape_string($_SESSION['thisUser']) . "'";
-                mysql_query($query);
+        // Figure out if the Facebook details are already in the database
+        $query = "SELECT COUNT(*) FROM facebook_users WHERE uid='" . $session['uid'] . "';";
+        $result = mysql_query($query) or die (mysql_error());
+        $row = mysql_fetch_assoc($result);
+        if ($row['COUNT(*)'] == 0) {
+            // This Facebook account is new to SuccessWhale
+            if (!isset($_SESSION['sw_uid'])) {
+                // No user is logged in, so make a new one and log them in.
+                logInUser(addSWUser());
             }
+            // The user is now logged in, so record their Facebook details alongside
+            // their other details.
+            $query="INSERT INTO facebook_users (sw_uid,session_key,uid,expires,secret,access_token,sig)
+                    VALUES ('" . mysql_real_escape_string($_SESSION['sw_uid']) . "', '".
+                                mysql_real_escape_string($session['session_key'])."','".
+                                mysql_real_escape_string($session['uid'])."','".
+                                mysql_real_escape_string($session['expires'])."','".
+                                mysql_real_escape_string($session['secret']) ."','".
+                                mysql_real_escape_string($session['access_token'])."','".
+                                mysql_real_escape_string($session['sig'])."');";
+            mysql_query($query) or die(mysql_error());
+        } else {
+            // This Facebook account has been seen before, so update details.
+            $query = "UPDATE facebook_users SET session_key='" . mysql_real_escape_string($session['session_key']) . 
+                                                "', expires='" . mysql_real_escape_string($session['expires']) . 
+                                                "', secret='" . mysql_real_escape_string($session['secret']) . 
+                                                "', access_token='" . mysql_real_escape_string($session['access_token']) . 
+                                                "', sig='" . mysql_real_escape_string($session['sig']) . 
+                                                "' WHERE uid='" . mysql_real_escape_string($session['uid']) . "';";
+            mysql_query($query) or die (mysql_error());
+            // Now log in the appropriate user to SuccessWhale
+            $query = "SELECT sw_uid FROM facebook_users WHERE uid='" . $session['uid'] . "';";
+            $result = mysql_query($query) or die (mysql_error());
+            $row = mysql_fetch_assoc($result);
+            logInUser($row['sw_uid']);
         }
-       
-        // ENTRY POINT 2b: User has just connected via the Facebook callback.
-        // User is authenticated with Facebook, so store the facebook object and
-        // head back to index.php
-        $_SESSION['facebook'] = $facebook;
+        
+        // The Facebook account is now up-to-date in the database and the user
+        // is logged in, so head back to index.php.
         header('Location: ../index.php');
 
       } catch (FacebookApiException $e) {
         if (DEBUG) {
-	        echo($e);
+	        die($e);
         }
       }
     } else {
@@ -56,10 +84,12 @@ if (FACEBOOK_ENABLED) {
 } else {
     // Facebook is disabled
     if (DEBUG) {
-        echo("Attempted to use a Facebook callback when Facebook integration is disabled.");
+        die("Attempted to use a Facebook callback when Facebook integration is disabled.");
     } else {
         header('Location: ../index.php');
     }
 }
+
+mysql_close();
 
 ?>
