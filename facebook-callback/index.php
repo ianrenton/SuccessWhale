@@ -76,7 +76,7 @@ if (FACEBOOK_ENABLED) {
     } else {
         // No session, redirect to Facebook to get one
         $params = array();
-        $params['req_perms'] = 'status_update,read_stream';
+        $params['req_perms'] = 'status_update,read_stream,offline_access';
         $loginUrl = $facebook->getLoginUrl($params);
          
         header('Location: ' . $loginUrl);

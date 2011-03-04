@@ -3,8 +3,8 @@
 require_once('common.php');
 session_start();
 
-$to = $_SESSION['twitter'];
-$thisUser = $_SESSION['thisUser'];
+$twitters = $_SESSION['twitters'];
+$facebooks = $_SESSION['facebooks'];
 $fullRefresh = false;
 
 // Wrangles text through Twixt.
@@ -18,42 +18,69 @@ function twixtify($status) {
 	return $newstatus;
 }
 
-// If we're POSTing with a status, send it to Twitter and reload.  Pass it
+// If we're POSTing with a status, send it to services and reload.  Pass it
 // through Twixt if necessary.
 if (isset($_POST['status'])) {
-        $status = stripslashes($_POST['status']);
+    $status = stripslashes($_POST['status']);
 	if (strlen($status) > 140) {
-		$status = twixtify($status);
+		$statusForTwitter = twixtify($status);
+	} else {
+	    $statusForTwitter = $status;
 	}
 	$replyid = '';
 	if (isset($_POST['replyid'])) {
 		$replyid = $_POST['replyid'];
 	}
-	$to->post('statuses/update', array('status' => $status, 'in_reply_to_status_id' => $replyid));
-	//TODO FB stuff
-    if ((isset($_POST['postToFacebook'])) && ($_POST['postToFacebook'] == "true") && (empty($replyid)) && (!empty($_SESSION['facebook']))) {
-        $facebook = $_SESSION['facebook'];
-        $facebook->api('/me/feed', 'POST', array('message'=> $status, 'cb' => ''));
-    }
+	if (isset($_POST['postToAccounts'])) {
+	    $accounts = explode(";", $_POST['postToAccounts']);
+	    foreach ($accounts as $account) {
+	        $parts = explode(":", $account);
+	        $service = $parts[0];
+	        $username = $parts[1];
+	        if ($service == "twitter") {
+	            $twitter = $twitters[$username];
+	            if ($twitter != null) {
+	                $twitter->post('statuses/update', array('status' => $statusForTwitter, 'in_reply_to_status_id' => $replyid));
+	            }
+	        } elseif ($service == "facebook") {
+	            $facebook = $facebooks[$username];
+	            if ($facebook != null) {
+	                $facebook->api('/me/feed', 'POST', array('message'=> $status, 'cb' => ''));
+	            }
+	        }
+	    }
+	}
 }
 
-// If we're GETing with a destroy, send the request to Twitter.
-if (isset($_GET['destroystatus'])) {
-	$to->post('statuses/destroy', array('id' => $_GET['destroystatus']));
+// If we're GETing with a destroy tweet, send the request to Twitter.
+if (isset($_GET['destroystatus']) && isset($_GET['thisUser'])) {
+    $twitter = $twitters[$_GET['thisUser']];
+    if ($twitter != null) {
+	    $twitter->post('statuses/destroy', array('id' => $_GET['destroystatus']));
+	}
 }
-// If we're GETing with a destroy DM, send the request to Twitter.
-if (isset($_GET['destroydm'])) {
-	$to->post('direct_messages/destroy', array('id' => $_GET['destroydm']));
+// If we're GETing with a destroy Twitter DM, send the request to Twitter.
+if (isset($_GET['destroydm']) && isset($_GET['thisUser'])) {
+    $twitter = $twitters[$_GET['thisUser']];
+    if ($twitter != null) {
+	    $twitter->post('direct_messages/destroy', array('id' => $_GET['destroydm']));
+	}
 }
 // If we're GETing with an RT, send the request to Twitter.
-if (isset($_GET['retweet'])) {
-	$retweet = "statuses/retweet/".$_GET['retweet'];
-	$response = $to->post($retweet);
+if (isset($_GET['retweet']) && isset($_GET['thisUser'])) {
+    $twitter = $twitters[$_GET['thisUser']];
+    if ($twitter != null) {
+	    $retweet = "statuses/retweet/".$_GET['retweet'];
+	    $response = $twitter->post($retweet);
+	}
 			
 }
-// If we're GETing with a report, send the request to Twitter.
-if (isset($_GET['report'])) {
-	$to->post('report_spam', array('screen_name' => $_GET['report']));
+// If we're GETing with a Twitter report, send the request to Twitter.
+if (isset($_GET['report']) && isset($_GET['thisUser'])) {
+    $twitter = $twitters[$_GET['thisUser']];
+    if ($twitter != null) {
+	    $twitter->post('report_spam', array('screen_name' => $_GET['report']));
+	}
 }
 
 // If we're adding a column, add it and set for full refresh

@@ -11,7 +11,7 @@ if (DB_ENABLED) {
 $content = '';
 
 // Get session vars
-$to = $_SESSION['twitter'];
+$to = $_SESSION['twitters'][0];
 $thisUser = $_SESSION['thisUser'];
 $utcOffset = $_SESSION['utcOffset'];
 $columnOptions = $_SESSION['columnOptions'];

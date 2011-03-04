@@ -11,8 +11,8 @@ mysql_connect(DB_SERVER,DB_USER,DB_PASS);
 $content = '';
 
 // Get session vars
-$to = $_SESSION['twitter'];
-$thisUser = $_SESSION['thisUser'];
+$twitters = $_SESSION['twitters'];
+$facebooks = $_SESSION['facebooks'];
 $utcOffset = $_SESSION['utcOffset'];
 $columnOptions = $_SESSION['columnOptions'];
 
@@ -45,7 +45,7 @@ $query = "SELECT blocklist FROM sw_users WHERE sw_uid='" . mysql_real_escape_str
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
 if ($row != FALSE) {
-    $blocklist = $userprefs["blocklist"];
+    $blocklist = $row["blocklist"];
 } else {
     $blocklist = "";
 }
@@ -53,7 +53,12 @@ if ($row != FALSE) {
 
 // Get column-dependent data and render
 if (isset($_GET['column'])) {
-	$name = $_GET['column'];
+    // Column identifiers are in three colon-separate bits, e.g.
+    // twitter:tsuki_chama:statuses/user_timeline
+	$columnIdentifiers = explode(":", $_GET['column']);
+	$service = $columnIdentifiers[0];
+	$username = $columnIdentifiers[1];
+	$name = $columnIdentifiers[2];
 	
 	if (preg_match("/^@(\w+)$/", $name, $matches)) {
 	    // Matches @user
@@ -72,33 +77,56 @@ if (isset($_GET['column'])) {
 	    $url = $name;
 	}
 	
-	if ($to != null) {
-		$data = $to->get($url, $paramArray);
+	if ($service == "twitter") {
+	    $twitter = $twitters[$username];
+	    if ($twitter != null) {
+		    $data = $twitter->get($url, $paramArray);
 		
-		if ($columnOptions[$url] != "") {
-		    $content .= '<h2>' . $columnOptions[$name] . '</h2>';
-		} else {
-		    $content .= '<h2';
-		    if (strlen($name) > 20) {
-		        $content .= ' class="compact"';
+		    if ($columnOptions[$_GET['column']] != "") {
+		        $content .= '<h2>' . $columnOptions[$_GET['column']] . '</h2>';
+		    } else {
+		        $content .= '<h2';
+		        if (strlen($name) > 20) {
+		            $content .= ' class="compact"';
+		        }
+		        $content .= '>' . $name . '</h2>';
 		    }
-		    $content .= '>' . $name . '</h2>';
-		}
 
-		$isMention = false;
-		$isDM = false;
-	    if ($name == 'statuses/mentions') {
-			$isMention = true;
-		} elseif ($name == 'direct_messages') {
-			$isDM = true;
-		}
+		    $isMention = false;
+		    $isDM = false;
+	        if ($name == 'statuses/mentions') {
+			    $isMention = true;
+		    } elseif ($name == 'direct_messages') {
+			    $isDM = true;
+		    }
 
-		$content .= generateTweetList($data, $isMention, $isDM, false, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-		$content .= makeNavForm($paramArray["count"], $columnOptions, $name);
-	} else {	
-		$content .= '<h2>Error</h2><div class="tweet">Failwhale sighted off the port bow, cap\'n!  Please try refreshing this page.</div>';
-		
-	}	
+		    $content .= generateTweetList($data, $isMention, $isDM, false, $username, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+		    $content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
+	    } else {	
+		    $content .= '<h2>Error</h2><div class="tweet">Failwhale sighted off the port bow, cap\'n!  Please try refreshing this page.</div>';
+	    }
+	    
+	} elseif ($service == "facebook") {
+	    $facebook = $facebooks[$username];
+	    if ($facebook != null) {
+		    // TODO get Facebook column $data = $twitter->get($url, $paramArray);
+		    
+		    if ($columnOptions[$_GET['column']] != "") {
+		        $content .= '<h2>' . $columnOptions[$_GET['column']] . '</h2>';
+		    } else {
+		        $content .= '<h2';
+		        if (strlen($name) > 20) {
+		            $content .= ' class="compact"';
+		        }
+		        $content .= '>' . $name . '</h2>';
+		    }
+
+		    // TODO render facebook column $content .= generateTweetList($data, $isMention, $isDM, false, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+		    $content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
+	    } else {	
+		    $content .= '<h2>Error</h2><div class="tweet">Failwhale sighted off the port bow, cap\'n!  Please try refreshing this page.</div>';
+	    }
+	}
     
     echo $content;
 }

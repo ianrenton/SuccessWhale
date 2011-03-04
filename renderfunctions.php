@@ -149,9 +149,9 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 	$content = '<div class="operations">';
 	if ($isDM == true)  {
 		if ($username != $thisUser) {
-			$content .= '<a href="javascript:setStatusField(\'d ' . $username . ' \', \'' . $tweetid . ' \')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
+			$content .= '<a href="javascript:setStatusField(\'d ' . $username . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
 		} else {
-			$content .= '<a href="javascript:confirmAction(\'actions.php?destroydm=' . $tweetid . '\')"><img src="images/delete.png" alt="Delete this DM" title="Delete this DM"></a>';
+			$content .= '<a href="javascript:confirmAction(\'actions.php?destroydm=' . $tweetid . '&thisUser=' . $thisUser . '\')"><img src="images/delete.png" alt="Delete this DM" title="Delete this DM"></a>';
 		}
 	} else {
 	    if ((!$isConvoTweet) && ($replyToID > 0)) {
@@ -160,7 +160,7 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 	        $content .= '<a href="' . $replyURL . '" target="convo" onClick="expandConvo(\'' . $targetDiv . '\'); return false;"><img src="images/thread.png" alt="View Conversaion" title="View Conversation"></a>&nbsp;';
 	    }
 		if ($username != $thisUser) {
-			$content .= '<a href="javascript:setStatusField(\'@' . $username . ' \', \'' . $tweetid . ' \')"><img src="images/reply.png" alt="@-reply to this user" title="@-reply to this user"></a>&nbsp;';	
+			$content .= '<a href="javascript:setStatusField(\'@' . $username . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/reply.png" alt="@-reply to this user" title="@-reply to this user"></a>&nbsp;';	
 			
 			// Reply-all
 			if ($numusers > 0) {
@@ -173,18 +173,18 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 					}
 				}
 				if ($matchString != "") {
-					$content .= '<a href="javascript:setStatusField(\'@' . $username . $matchString . ' \', \'' . $tweetid . ' \')"><img src="images/replyall.png" alt="@-reply to all users" title="@-reply to all users"></a>&nbsp;';	
+					$content .= '<a href="javascript:setStatusField(\'@' . $username . $matchString . ' \', \'' . $tweetid . '\', \'twitter:' . $thisUser . ' \')"><img src="images/replyall.png" alt="@-reply to all users" title="@-reply to all users"></a>&nbsp;';	
 				}
 			}
 			
-			$content .= '<a href="javascript:doAction(\'actions.php?retweet=' . $tweetid . '\')"><img src="images/retweet.png" alt="Retweet this" title="Retweet this"></a>&nbsp;';
-			$content .= '<a href="javascript:setStatusField(\'RT @' . $username . ': ' . str_replace("'","\\'",str_replace('"','&quot;',$tweet)) . ' \', \'' . $tweetid . ' \')"><img src="images/oldretweet.png" alt="Old-style Retweet" title="Old-style Retweet"></a>&nbsp;';
-			$content .= '<a href="javascript:setStatusField(\'d ' . $username . ' \', \'' . $tweetid . ' \')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
+			$content .= '<a href="javascript:doAction(\'actions.php?retweet=' . $tweetid . '&thisUser=' . $thisUser . '\')"><img src="images/retweet.png" alt="Retweet this" title="Retweet this"></a>&nbsp;';
+			$content .= '<a href="javascript:setStatusField(\'RT @' . $username . ': ' . str_replace("'","\\'",str_replace('"','&quot;',$tweet)) . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/oldretweet.png" alt="Old-style Retweet" title="Old-style Retweet"></a>&nbsp;';
+			$content .= '<a href="javascript:setStatusField(\'d ' . $username . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
 			if ($isMention == true) {
-				$content .= '<a href="javascript:confirmAction(\'actions.php?report=' . $username . '\')"><img src="images/report.png" alt="Report this user as a spammer" title="Report this user as a spammer"></a>';
+				$content .= '<a href="javascript:confirmAction(\'actions.php?report=' . $username . '&thisUser=' . $thisUser . '\')"><img src="images/report.png" alt="Report this user as a spammer" title="Report this user as a spammer"></a>';
 			}
 		} else {
-			$content .= '<a href="javascript:confirmAction(\'actions.php?destroystatus=' . $tweetid . '\')"><img src="images/delete.png" alt="Delete this Tweet" title="Delete this Tweet"></a>';
+			$content .= '<a href="javascript:confirmAction(\'actions.php?destroystatus=' . $tweetid . '&thisUser=' . $thisUser . '\')"><img src="images/delete.png" alt="Delete this Tweet" title="Delete this Tweet"></a>';
 		}
 	}
 	$content .= '</div>';

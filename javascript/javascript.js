@@ -1,4 +1,5 @@
 var refreshIDs = new Array();
+var normallySelectedAccounts = new Array();
 
 // Changes the content of one column, and re-sets its refresh.
 function changeColumn(colnumber, url, updatedb) {
@@ -29,7 +30,8 @@ function hideConvo(div) {
     $("#" + div).html("");
 }
 
-// Updates the Chars Left counter
+// Updates the Chars Left counter, switches chars left style and button text
+// at 140 chars, clears replyID and restores account selection to normal at zero.
 function countText(field) {
 	document.getElementById('charsLeft').innerHTML = 140 - field.value.length;
 	if (field.value.length > 140) {
@@ -41,20 +43,40 @@ function countText(field) {
 	}
 	if (field.value.length == 0) {
 		document.statusform.replyid.value = '';
-		document.statusform.postToFacebook.style.visibility='visible';
-		document.getElementById('postToFacebookLabel').style.visibility='visible';
+		$('.accountSelector').each(function() {
+		    var $box = $(this);
+		    if (normallySelectedAccounts[$box.val()] != null) {
+                $box.attr('checked', normallySelectedAccounts[$box.val()]);
+            } else {
+                $box.attr('checked', true);
+            }
+            $box.attr('disabled', false);
+        });
+        recheckAccountsSelected();
 	}
 }
 
 // Sets the contents of the status field, so clicking the "@" link on a tweet
 // auto-fills the box with "@username ", etc.  We also use this to blank the box.
-function setStatusField(text, id) {
+// If we're not blanking the box, we're about to do an account-specific action,
+// so disable all the account checkboxes and only check the relevant one.
+function setStatusField(text, id, sendAccount) {
 	document.statusform.status.value = text;
 	document.statusform.replyid.value = id;
-	if (id != '') {
-		document.statusform.postToFacebook.style.visibility='hidden';
-		document.getElementById('postToFacebookLabel').style.visibility='hidden';	    
-	}
+	if (sendAccount != '') {
+	    $('.accountSelector').each(function() {
+            var $box = $(this);
+            normallySelectedAccounts[$box.val()] = $box.attr('checked');
+            $box.attr('disabled', true);
+            if ($box.val() == sendAccount) {
+                $box.attr('checked', true);
+                normallySelectedAccounts[$box.val()] = $box.attr('checked');
+            } else {
+                $box.attr('checked', false);
+            }
+        });
+        recheckAccountsSelected();
+    }
 	document.statusform.status.focus();
 	countText(document.statusform.status, document.statusform.charsLeft);
 }
@@ -71,18 +93,6 @@ function confirmAction(link) {
 function doAction(link) {
 	startSpinner();
 	$("#actionbox").load(link);
-}
-
-function newWindow(url, name, w, h) {
-    w += 32;
-    h += 96;
-    var win = window.open(url,
-      name, 
-      'width=' + w + ', height=' + h + ', ' +
-      'location=no, menubar=no, ' +
-      'status=no, toolbar=no, scrollbars=no, resizable=no');
-    win.resizeTo(w, h);
-    win.focus();
 }
 
 function startSpinner() {
@@ -118,14 +128,15 @@ $(document).ajaxStart(function() {
 function submitStatus() {
     var status = $("input#status").val();
     var replyId = $("input#replyid").val();
-    var postToFacebook = $("input#postToFacebook").val();
-    var dataString = 'status=' + encodeURIComponent(status) + "&replyid=" + replyId + "&postToFacebook=" + postToFacebook;
+    var postToAccounts = $("input#postToAccounts").val();
+    //alert(postToAccounts);
+    var dataString = 'status=' + encodeURIComponent(status) + "&replyid=" + replyId + "&postToAccounts=" + postToAccounts;
     $.ajax({
         type: "POST",
         url: "actions.php",
         data: dataString,
         success: function() {
-            setStatusField('', 0);
+            setStatusField('', 0, '');
             setTimeout('refreshAll()', 3000);
         }
     });
@@ -146,6 +157,32 @@ $(function() {
             submitStatus();
             return false;
         }
+    });
+});
+
+// Fills in the hidden "postToAccounts" field based on which account checkboxes
+// are ticked.  Must be called every time a human or CPU alters those checkboxes.
+function recheckAccountsSelected() {
+    var $servicesEnabled = "";
+    $('.accountSelector').each(function() {
+        var $box = $(this);
+        if ($box.attr("checked")) {
+            $servicesEnabled += $box.val() + ";";
+        }
+    });
+    $('input#postToAccounts').val($servicesEnabled);
+    return true;
+}
+
+// User Checks/unchecks services to post to, updating the current knowledge of
+// the user's preferences.
+$(function() {
+    $('.accountSelector').click(function() {
+        $('.accountSelector').each(function() {
+            var $box = $(this);
+            normallySelectedAccounts[$box.val()] =  $box.attr("checked");
+        });
+        recheckAccountsSelected();
     });
 });
 
@@ -174,7 +211,7 @@ function setDivSize() {
         vpheight = document.body.clientHeight; // IE 4
     }
     d = document.getElementById('mainarea');
-    d.style.height= "" + (vpheight-108) + "px";
+    d.style.height= "" + (vpheight-125) + "px";
 }
 
 // jQuery startup things (when DOM is avalable)
@@ -193,6 +230,7 @@ $(window).resize(function() {
 // Normal startup things (when the page has fully loaded)
 function init() {
     setDivSize();
+    recheckAccountsSelected();
     // Focus status entry box
 	document.statusform.status.focus();
 }

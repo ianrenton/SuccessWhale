@@ -50,61 +50,73 @@ if (!isset($_SESSION['sw_uid'])) {
 }
 
 // Grab appropriate auth tokens from the database, and build objects with them.
+$twitters = array();
 if (TWITTER_ENABLED) {
     $query = "SELECT access_token FROM twitter_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
     $result = mysql_query($query) or die (mysql_error());
-    if (mysql_num_rows($result) > 0) {
-        $row = mysql_fetch_assoc($result);
+    while ($row = mysql_fetch_assoc($result)) {
         $twitter_access_token = unserialize($row['access_token']);
         $twitter = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $twitter_access_token['oauth_token'], $twitter_access_token['oauth_token_secret']);
-        $_SESSION['twitter'] = $twitter;
+        $auth = $twitter->get('account/verify_credentials', array());
+        $name = $auth['screen_name'];
+        $twitters[$name] = $twitter;
     }
+    $_SESSION['twitters'] = $twitters;
 }
+$facebooks = array();
 if (FACEBOOK_ENABLED) {
     $query = "SELECT access_token FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
     $result = mysql_query($query) or die (mysql_error());
-    $row = mysql_fetch_row($result);
-    if (mysql_num_rows($result) > 0) {
+    while ($row = mysql_fetch_assoc($result)) {
         $facebook = new Facebook(array(
           'appId' => FACEBOOK_APP_ID,
           'secret' => FACEBOOK_SECRET,
           'cookie' => true,
         ));
         try {
-         $attachment =  array('access_token' => $row[0],);
-         $ret_code=$facebook->api('/me', 'GET', $attachment);
-         $_SESSION['facebook'] = $facebook;
+         $attachment =  array('access_token' => $row['access_token']);
+         $me = $facebook->api('/me', 'GET', $attachment);
+         $name = $me['name'];
+         $facebooks[$name] = $facebook;
         }
          catch (Exception $e) {
-          $res = mysql_query('DELETE FROM facebook_users WHERE expires=0');
+          //$res = mysql_query('DELETE FROM facebook_users WHERE expires=0');
           // We don't have a good session, so let's get one!
-          header('Location: ./facebook-callback/');
+          //TODO re-implement once offline support is sorted: header('Location: ./facebook-callback/');
         }
     }
+    $_SESSION['facebooks'] = $facebooks;
 }
 
-// Session-global the stuff that doesn't depend on which column we're rendering
-$auth = $twitter->get('account/verify_credentials', array());
-$_SESSION['thisUser'] = $auth['screen_name'];
-$_SESSION['utcOffset'] = $auth['utc_offset'];
-
-// Base column options, e.g. home timeline, mentions
-$columnOptions = array("statuses/home_timeline" => "Home Timeline",
- "statuses/friends_timeline" => "Friends Only",
- "statuses/public_timeline" => "All Tweets",
- "statuses/mentions" => "Mentions",
- "direct_messages" => "DMs Received",
- "direct_messages/sent" => "DMs Sent");
-
-// Add lists to column options
-$listsFull = $twitter->get($auth['screen_name'] . '/lists', array());
-$lists = $listsFull["lists"];
-for ($i=0; $i<count($lists); $i++) {
-    $columnOptions[$auth['screen_name'] . '/lists/' . $lists[$i]["slug"] . '/statuses'] = $lists[$i]["name"];
+// Build column options list
+$columnOptions = array();
+foreach ($twitters as $name => $twitter) {
+    // Twitter basics
+    $columnOptions["twitter:" . $name] = "-- Twitter: @" . $name . " --";
+    $columnOptions["twitter:" . $name . ":statuses/home_timeline"] = "Home Timeline";
+    $columnOptions["twitter:" . $name . ":statuses/friends_timeline"] = "Friends Only";
+    $columnOptions["twitter:" . $name . ":statuses/public_timeline"] = "All Tweets";
+    $columnOptions["twitter:" . $name . ":statuses/mentions"] = "Mentions";
+    $columnOptions["twitter:" . $name . ":direct_messages"] = "DMs Received";
+    $columnOptions["twitter:" . $name . ":direct_messages/sent"] = "DMs Sent";
+    // Twitter lists
+    $listsFull = $twitter->get($name . '/lists', array());
+    $lists = $listsFull["lists"];
+    for ($i=0; $i<count($lists); $i++) {
+        $columnOptions["twitter:" . $name . ":" . $name . '/lists/' . $lists[$i]["slug"] . '/statuses'] = $lists[$i]["name"];
+    }
 }
-
+foreach ($facebooks as $name => $facebook) {
+    // Facebook basics TODO
+    $columnOptions[("facebook:" . $name)] = "-- Facebook: " . $name . " --";
+    $columnOptions["facebook:" . $name . ":blah"] = "Feed";
+}
 // Session-global the column options (timelines, lists etc.)
 $_SESSION['columnOptions'] = $columnOptions;
+
+/* TODO put this somewhere
+$_SESSION['utcOffset'] = $auth['utc_offset'];*/
+
 
 // Get user column setup
 $query = "SELECT columns FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
@@ -159,10 +171,23 @@ function generateSendBoxes() {
     $content .= '<input type="text" size="140" autocomplete="off" name="status" id="status" class="status" onKeyDown="countText(this.form.status);" onKeyUp="countText(this.form.status);">';
 	$content .= '&nbsp;&nbsp;<b id="charsLeft">140</b>&nbsp;&nbsp;';
     $content .= '<input type="hidden" name="replyid" id="replyid" value="" />';
-    $content .= '<input type="submit" name="submit" class="submitbutton" value="Post" />';
-    if (!empty($_SESSION['facebook'])) {
-        $content .= '<input type="checkbox" name="postToFacebook" id="postToFacebook" value="true"><label id="postToFacebookLabel" name="postToFacebookLabel" for="postToFacebook"> Facebook too</label>';
+    $content .= '<input type="submit" name="submit" class="submitbutton" value="Post" /><br/>';
+
+    foreach ($_SESSION['twitters'] as $username => $twitter) {
+        $content .= '<input type="checkbox" class="accountSelector" id="twitter:' . $username . '" value="twitter:' . $username . '" checked />';
+        $content .= '<label for="twitter:' . $username . '">twitter:' . $username . '</label>';
     }
+    foreach ($_SESSION['facebooks'] as $username => $facebook) {
+        $content .= '<input type="checkbox" class="accountSelector" id="facebook:' . $username . '" value="facebook:' . $username . '" checked />';
+        $content .= '<label for="facebook:' . $username . '">facebook:' . $username . '</label>';
+    }
+    $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" />';
+    
+    
+	// Add Twitter/Facebook/etc accounts.
+    $content .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./twitter-callback/redirect.php">+ Twitter</a>&nbsp;&nbsp;&nbsp;';
+    $content .= '<a href="./facebook-callback/">+ Facebook</a>';
+
     $content .= '</form>';
 	$content .= '</div>';
 	return $content;
@@ -191,7 +216,7 @@ function generateAddColumnBox($colsperscreen) {
 }
 
 // Generates the top-right config area
-function makeLinksForm($showTwitterLink, $showFacebookLink) {
+function makeLinksForm() {
     $dir = opendir('./css');
     
 	$content = '<div id="links"><form name="themeselect" method="post" action="index.php">';
@@ -210,15 +235,6 @@ function makeLinksForm($showTwitterLink, $showFacebookLink) {
     }
     closedir($dir);
 	$content .= '</select></li>';
-	
-	// Add Twitter/Facebook/etc accounts to SuccessWhale.  Only shows ones you're
-	// missing.
-	if ($showTwitterLink) {
-	    $content .= '<li><a href="./twitter-callback/redirect.php">Add Twitter</a></li>';
-	}
-	if ($showFacebookLink) {
-	    $content .= '<li><a href="./facebook-callback/">Add Facebook</a></li>';
-	}
 	
 	// Cache tokens item
     $query = "SELECT * FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
