@@ -41,7 +41,13 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	$userString = "user";
 	if ($isDM == true) $userString = "sender";
 	for ($i=0; $i<count($data); $i++) {
-		
+	
+	    // Spot truncated RTs and expand them
+	    if ($data[$i]["truncated"] == true) {
+	        $tweetbody = "RT @" . $data[$i]["retweeted_status"][$userString]["screen_name"] . " " . $data[$i]["retweeted_status"]["text"];
+	    } else {
+	        $tweetbody = $data[$i]["text"];
+	    }
 			
 		// We do this first so we know how many @users were linked up, if >0
 		// then we can do a reply-all.  User counting happens in parseLinks(),
@@ -51,7 +57,7 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 		// Expand short URLs etc first, so we can apply the blocklist to real URLs.
 		// A bit of processing overhead, but it stops unwelcome URLs in tweets
 		// evading the blocker by using a URL shortener.
-		$tweetbody = parseLinks($data[$i]["text"], $numusers);
+		$tweetbody = parseLinks($tweetbody, $numusers);
 			
 		// Check blocklist
 		$match = false;
@@ -70,7 +76,7 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 		if ((!$match) || ($isConvo)) {
 		
 	    	if ($isConvo) {
-			    $content .= '<div class="convotweet">';
+			    $content .= '<div class="item twitterstatus convo">';
 			} else {
 			    $content .= '<div class="item twitterstatus">';
 			}
@@ -219,20 +225,20 @@ function makeFriendlyTime($time, $midnightYesterday, $oneWeekAgo, $janFirst) {
 // $numusers > 0 means we need to do a reply-all button
 function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isDM, $isConvoTweet, $i, $replyToUser, $replyToID, $numusers) {
 	$content = '<div class="operations">';
+	$divUnderneath = $replyURL . '\', \'' . $_GET['div'] . '-box' . $i . '-below';
 	if ($isDM == true)  {
 		if ($username != $thisUser) {
-			$content .= '<a href="javascript:setStatusField(\'d ' . $username . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
+			$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'d ' . $username . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
 		} else {
 			$content .= '<a href="javascript:confirmAction(\'actions.php?destroydm=' . $tweetid . '&thisUser=' . $thisUser . '\')"><img src="images/delete.png" alt="Delete this DM" title="Delete this DM"></a>';
 		}
 	} else {
 	    if ((!$isConvoTweet) && ($replyToID > 0)) {
 	        $replyURL = 'convo.php?thisUser=' . $thisUser . '&status=' . $tweetid;
-	        $targetDiv = $replyURL . '\', \'' . $_GET['div'] . '-box' . $i . '-below';
-	        $content .= '<a href="' . $replyURL . '" target="convo" onClick="expandConvo(\'' . $targetDiv . '\'); return false;"><img src="images/thread.png" alt="View Conversaion" title="View Conversation"></a>&nbsp;';
+	        $content .= '<a href="javascript:expandConvo(\'' . $replyURL . '\', \'' . $divUnderneath . '\');"><img src="images/thread.png" alt="View Conversaion" title="View Conversation"></a>&nbsp;';
 	    }
 		if ($username != $thisUser) {
-			$content .= '<a href="javascript:setStatusField(\'@' . $username . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/reply.png" alt="@-reply to this user" title="@-reply to this user"></a>&nbsp;';	
+			$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'@' . $username . '\', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/reply.png" alt="@-reply to this user" title="@-reply to this user"></a>&nbsp;';
 			
 			// Reply-all
 			if ($numusers > 0) {
@@ -245,13 +251,13 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 					}
 				}
 				if ($matchString != "") {
-					$content .= '<a href="javascript:setStatusField(\'@' . $username . $matchString . ' \', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/replyall.png" alt="@-reply to all users" title="@-reply to all users"></a>&nbsp;';	
+					$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'@' . $username . $matchString . '\', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/replyall.png" alt="@-reply to all users" title="@-reply to all users"></a>&nbsp;';	
 				}
 			}
 			
 			$content .= '<a href="javascript:doAction(\'actions.php?retweet=' . $tweetid . '&thisUser=' . $thisUser . '\')"><img src="images/retweet.png" alt="Retweet this" title="Retweet this"></a>&nbsp;';
-			$content .= '<a href="javascript:setStatusField(\'RT @' . $username . ': ' . str_replace("'","\\'",str_replace('"','&quot;',$tweet)) . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/oldretweet.png" alt="Old-style Retweet" title="Old-style Retweet"></a>&nbsp;';
-			$content .= '<a href="javascript:setStatusField(\'d ' . $username . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
+			$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'RT @' . $username . ': ' . str_replace("'","\\'",str_replace('"','&quot;',$tweet)) . '\', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/oldretweet.png" alt="Old-style Retweet" title="Old-style Retweet"></a>&nbsp;';
+			$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'d ' . $username . '\', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
 			if ($isMention == true) {
 				$content .= '<a href="javascript:confirmAction(\'actions.php?report=' . $username . '&thisUser=' . $thisUser . '\')"><img src="images/report.png" alt="Report this user as a spammer" title="Report this user as a spammer"></a>';
 			}

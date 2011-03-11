@@ -27,6 +27,7 @@ if (isset($_POST['status'])) {
 	} else {
 	    $statusForTwitter = $status;
 	}
+	
 	$replyid = '';
 	if (isset($_POST['replyid'])) {
 		$replyid = $_POST['replyid'];
@@ -37,6 +38,7 @@ if (isset($_POST['status'])) {
 	        $parts = explode(":", $account);
 	        $service = $parts[0];
 	        $username = $parts[1];
+	        
 	        if ($service == "twitter") {
 	            $twitter = $twitters[$username];
 	            if ($twitter != null) {
@@ -96,6 +98,7 @@ if (isset($_GET['newcol'])) {
         mysql_query($query);
     }
     $fullRefresh = true;
+    mysql_close();
 }
 
 // If we're deleting a column, delete it and set for full refresh
@@ -113,6 +116,36 @@ if (isset($_GET['delcol'])) {
         mysql_query($query);
     }
     $fullRefresh = true;
+}
+
+
+// Set the theme
+if (isset($_POST['theme'])) {
+    mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+    @mysql_select_db(DB_NAME) or die( "Unable to select database");
+    $query = "UPDATE sw_users SET theme = '" . mysql_real_escape_string($_POST['theme']) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+    mysql_query($query);
+    mysql_close();
+}
+
+
+// Set the number of columns per screen
+if (isset($_POST['colsperscreen'])) {
+    mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+    @mysql_select_db(DB_NAME) or die( "Unable to select database");
+    $query = "UPDATE sw_users SET colsperscreen = '" . mysql_real_escape_string($_POST['colsperscreen']) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+    mysql_query($query);
+    mysql_close();
+}
+
+
+// Set the default services to post to
+if (isset($_POST['posttoservices'])) {
+    mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+    @mysql_select_db(DB_NAME) or die( "Unable to select database");
+    $query = "UPDATE sw_users SET posttoservices = '" . mysql_real_escape_string($_POST['posttoservices']) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+    mysql_query($query);
+    mysql_close();
 }
 
 

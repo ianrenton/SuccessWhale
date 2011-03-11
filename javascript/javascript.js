@@ -20,14 +20,18 @@ function changeColumn(colnumber, url, updatedb) {
 }
 
 // Expands a conversation.
-function expandConvo(url, div) {
-    startSpinner();
+function expandConvo(url, dummy, div) {
     $("#" + div).load(url + "&div=" + div);
 }
 
-// Hides a conversation.
+// Hides a conversation or reply box.
 function hideConvo(div) {
     $("#" + div).html("");
+}
+
+// Expands a reply box.
+function showReplyBox(dummy, div, initialtext, replyid, account) {
+    $("#" + div).load("replybox.php?div=" + div + "&initialtext=" + escape(initialtext) + "&replyid=" + replyid + "&account=" + escape(account));
 }
 
 // Updates the Chars Left counter, switches chars left style and button text
@@ -43,42 +47,7 @@ function countText(field) {
 	}
 	if (field.value.length == 0) {
 		document.statusform.replyid.value = '';
-		$('.accountSelector').each(function() {
-		    var $box = $(this);
-		    if (normallySelectedAccounts[$box.val()] != null) {
-                $box.attr('checked', normallySelectedAccounts[$box.val()]);
-            } else {
-                $box.attr('checked', true);
-            }
-            $box.attr('disabled', false);
-        });
-        recheckAccountsSelected();
 	}
-}
-
-// Sets the contents of the status field, so clicking the "@" link on a tweet
-// auto-fills the box with "@username ", etc.  We also use this to blank the box.
-// If we're not blanking the box, we're about to do an account-specific action,
-// so disable all the account checkboxes and only check the relevant one.
-function setStatusField(text, id, sendAccount) {
-	document.statusform.status.value = text;
-	document.statusform.replyid.value = id;
-	if (sendAccount != '') {
-	    $('.accountSelector').each(function() {
-            var $box = $(this);
-            normallySelectedAccounts[$box.val()] = $box.attr('checked');
-            $box.attr('disabled', true);
-            if ($box.val() == sendAccount) {
-                $box.attr('checked', true);
-                normallySelectedAccounts[$box.val()] = $box.attr('checked');
-            } else {
-                $box.attr('checked', false);
-            }
-        });
-        recheckAccountsSelected();
-    }
-	document.statusform.status.focus();
-	countText(document.statusform.status, document.statusform.charsLeft);
 }
 
 // Requests confirmation for an action to be performed via the actionbox.
@@ -113,8 +82,7 @@ function startSpinner() {
 			'-webkit-border-radius': '10px', 
 			'-moz-border-radius': '10px', 
 			opacity: .6, 
-			color: '#000',
-			fontSize: '80%'
+			color: '#000'
 		} 
 	});
 }
@@ -125,38 +93,57 @@ $(document).ajaxStart(function() {
 }).ajaxStop($.unblockUI);
 
 // Submit status
-function submitStatus() {
-    var status = $("input#status").val();
-    var replyId = $("input#replyid").val();
-    var postToAccounts = $("input#postToAccounts").val();
-    //alert(postToAccounts);
-    var dataString = 'status=' + encodeURIComponent(status) + "&replyid=" + replyId + "&postToAccounts=" + postToAccounts;
+function submitStatus(status, replyId, postToAccounts) {
+    var dataString = 'status=' + encodeURIComponent(status) + "&replyid=" + replyId + "&postToAccounts=" + encodeURIComponent(postToAccounts);
     $.ajax({
         type: "POST",
         url: "actions.php",
         data: dataString,
         success: function() {
-            setStatusField('', 0, '');
+            document.statusform.status.value = '';
+	        document.statusform.replyid.value = '';
+	        document.statusform.status.focus();
+	        countText(document.statusform.status);
             setTimeout('refreshAll()', 3000);
         }
     });
 }
 
-// Click to submit status form
+
+// Enter to submit cols per screen form
 $(function() {
-    $('.submitbutton').click(function() {
-        submitStatus();
-        return false;
+    $('input#colsperscreen').keydown(function(e) {
+        if (e.keyCode == 13 || e.keyCode == 10) {
+            var colsperscreen = $("input#colsperscreen").val();
+            var dataString = 'colsperscreen=' + colsperscreen;
+            $.ajax({
+                type: "POST",
+                url: "actions.php",
+                data: dataString,
+                success: function() {
+                    window.location.reload();
+                }
+            });
+            return false;
+        }
     });
 });
 
-// Enter to submit status form
+
+// Change submit theme form
 $(function() {
-    $('.status').keydown(function(e) {
-        if (e.keyCode == 13 || e.keyCode == 10) {
-            submitStatus();
-            return false;
-        }
+    $('select#theme').change(function(e) {
+        var theme = $("select#theme").val();
+        var dataString = 'theme=' + theme;
+        $.ajax({
+            type: "POST",
+            url: "actions.php",
+            data: dataString,
+            success: function() {
+                window.location.reload();
+            }
+        });
+        return false;
     });
 });
 
@@ -164,24 +151,26 @@ $(function() {
 // are ticked.  Must be called every time a human or CPU alters those checkboxes.
 function recheckAccountsSelected() {
     var $servicesEnabled = "";
-    $('.accountSelector').each(function() {
+    $('input.accountSelector').each(function() {
         var $box = $(this);
         if ($box.attr("checked")) {
             $servicesEnabled += $box.val() + ";";
         }
     });
     $('input#postToAccounts').val($servicesEnabled);
+    var dataString = 'posttoservices=' + $servicesEnabled;
+    $.ajax({
+        type: "POST",
+        url: "actions.php",
+        data: dataString
+    });
     return true;
 }
 
 // User Checks/unchecks services to post to, updating the current knowledge of
 // the user's preferences.
 $(function() {
-    $('.accountSelector').click(function() {
-        $('.accountSelector').each(function() {
-            var $box = $(this);
-            normallySelectedAccounts[$box.val()] =  $box.attr("checked");
-        });
+    $('input.accountSelector').click(function() {
         recheckAccountsSelected();
     });
 });
@@ -216,8 +205,55 @@ function setDivSize() {
 
 // jQuery startup things (when DOM is avalable)
 $(document).ready(function() {
+    // Clicking main Submit button posts status
+    $('input#submitbutton').unbind("click");
+    $('input#submitbutton').live("click", function() {
+        submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
+        return false;
+    });
+    
+    // Typing in main box updates the counter.
+    // Enter in main Text input posts status
+    $('input#status').unbind("keydown");
+    $('input#status').live("keydown", function(e) {
+        countText(e.target);
+        if (e.keyCode == 13 || e.keyCode == 10) {
+            submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
+            return false;
+        }
+    });
+    
+    // Click to submit reply form
+    $('input.replybutton').unbind("click");
+    $('input.replybutton').live("click", function(e) {
+        $boxname = e.target.name;
+        submitStatus($("input#"+$boxname+"-reply").val(), $("input#"+$boxname+"-reply").val(), $("input#"+$boxname+"-replyaccount").val());
+        hideConvo($boxname);
+        return false;
+    });
+
+    // Enter to submit reply form
+    $('input.reply').unbind("keydown");
+    $('input.reply').live("keydown", function(e) {
+        if (e.keyCode == 13 || e.keyCode == 10) {
+            $boxname = e.target.name;
+            submitStatus($("input#"+$boxname+"-reply").val(), $("input#"+$boxname+"-reply").val(), $("input#"+$boxname+"-replyaccount").val());
+            hideConvo($boxname);
+            return false;
+        }
+    });
+    
+    // User Checks/unchecks services to post to, updating the current knowledge of
+    // the user's preferences.
+    $('input.accountSelector').unbind("click");
+    $('input.accountSelector').live("click", function() {
+        recheckAccountsSelected();
+    });
+    
     // Load all columns
     refreshAll();
+    
+    //$("select, input[type=checkbox], input[type=radio], input[type=file], input[type=submit], a.button, button").uniform();
 });
 
 // jQuery onresize things
@@ -230,7 +266,6 @@ $(window).resize(function() {
 // Normal startup things (when the page has fully loaded)
 function init() {
     setDivSize();
-    recheckAccountsSelected();
     // Focus status entry box
 	document.statusform.status.focus();
 }
