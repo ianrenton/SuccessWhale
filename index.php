@@ -109,7 +109,7 @@ foreach ($twitters as $name => $twitter) {
 foreach ($facebooks as $name => $facebook) {
     // Facebook basics TODO
     $columnOptions[("facebook:" . $name)] = "-- Facebook: " . $name . " --";
-    $columnOptions["facebook:" . $name . ":blah"] = "Feed";
+    $columnOptions["facebook:" . $name . ":blah"] = "Friends Status Feed";
 }
 // Session-global the column options (timelines, lists etc.)
 $_SESSION['columnOptions'] = $columnOptions;
@@ -140,10 +140,10 @@ $content .= '}
 
 // Build the main display
 $content .= '<div id="header">';
+$content .= generateAddColumnBox($colsperscreen);
 $content .= makeLinksForm((TWITTER_ENABLED && !isset($twitter)), (FACEBOOK_ENABLED && !isset($facebook)));
 $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a></div>';
 if ($friends["error"] == null) {
-	$content .= generateAddColumnBox($colsperscreen);
 	$content .= generateSendBoxes();
 	$content .= generateTweetTables($numColumns, $colsperscreen);
 	$content .= '<div id="actionbox"></div>';
@@ -169,9 +169,9 @@ function generateSendBoxes() {
 	$content = '<div id="statusformdiv">';
     $content .= '<form id="statusform" name="statusform" method="" action="">';
     $content .= '<input type="text" size="140" autocomplete="off" name="status" id="status" class="status" onKeyDown="countText(this.form.status);" onKeyUp="countText(this.form.status);">';
-	$content .= '&nbsp;&nbsp;<b id="charsLeft">140</b>&nbsp;&nbsp;';
     $content .= '<input type="hidden" name="replyid" id="replyid" value="" />';
-    $content .= '<input type="submit" name="submit" class="submitbutton" value="Post" /><br/>';
+    $content .= '<input type="submit" name="submit" class="submitbutton" value="Post" />';
+	$content .= '&nbsp;&nbsp;<span id="chars">This post is 0 characters long</span><br/>';
 
     foreach ($_SESSION['twitters'] as $username => $twitter) {
         $content .= '<input type="checkbox" class="accountSelector" id="twitter:' . $username . '" value="twitter:' . $username . '" checked />';
@@ -208,7 +208,7 @@ function generateTweetTables($numColumns, $colsperscreen) {
 
 // Generates the bottom box with the Add Column button
 function generateAddColumnBox($colsperscreen) {
-	$content = '<div id="addcolumndiv"><form name="colsperscreenselect" method="post" action="index.php">';
+	$content = '<div class="links"><form name="colsperscreenselect" method="post" action="index.php">';
 	$content .= '<ul><li><input name="colsperscreen" id="colsperscreen" size="1" value="' . $colsperscreen . '" alt="Columns per screen" title="Columns per screen"><input type="submit" style="display:none"></li><li>';
 	$content .= '<a href="javascript:doAction(\'actions.php?newcol=true\')"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
 	$content .= '</li></ul></form></div>';
@@ -219,7 +219,7 @@ function generateAddColumnBox($colsperscreen) {
 function makeLinksForm() {
     $dir = opendir('./css');
     
-	$content = '<div id="links"><form name="themeselect" method="post" action="index.php">';
+	$content = '<div class="links"><form name="themeselect" method="post" action="index.php">';
 	$content .= '<ul><li>Theme: <select name="theme" onchange="this.form.submit()">';
 	
     while($file = readdir($dir)) {

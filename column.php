@@ -77,20 +77,16 @@ if (isset($_GET['column'])) {
 	    $url = $name;
 	}
 	
+	if ($columnOptions[$_GET['column']] != "") {
+        $content .= '<div class="columnheading">' . $columnOptions[$_GET['column']] . '</div>';
+    } else {
+        $content .= '<div class="columnheading">' . $name . '</div>';
+    }
+	
 	if ($service == "twitter") {
 	    $twitter = $twitters[$username];
 	    if ($twitter != null) {
 		    $data = $twitter->get($url, $paramArray);
-		
-		    if ($columnOptions[$_GET['column']] != "") {
-		        $content .= '<h2>' . $columnOptions[$_GET['column']] . '</h2>';
-		    } else {
-		        $content .= '<h2';
-		        if (strlen($name) > 20) {
-		            $content .= ' class="compact"';
-		        }
-		        $content .= '>' . $name . '</h2>';
-		    }
 
 		    $isMention = false;
 		    $isDM = false;
@@ -109,23 +105,17 @@ if (isset($_GET['column'])) {
 	} elseif ($service == "facebook") {
 	    $facebook = $facebooks[$username];
 	    if ($facebook != null) {
-		    // TODO get Facebook column $data = $twitter->get($url, $paramArray);
-		    
-		    if ($columnOptions[$_GET['column']] != "") {
-		        $content .= '<h2>' . $columnOptions[$_GET['column']] . '</h2>';
-		    } else {
-		        $content .= '<h2';
-		        if (strlen($name) > 20) {
-		            $content .= ' class="compact"';
-		        }
-		        $content .= '>' . $name . '</h2>';
-		    }
+	        $attachment =  array('access_token' => $facebook->getAccessToken());
+		    $data = $facebook->api("/me/home", $attachment);
 
-		    // TODO render facebook column $content .= generateTweetList($data, $isMention, $isDM, false, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+		    $content .= generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
 		    $content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
 	    } else {	
 		    $content .= '<h2>Error</h2><div class="tweet">Failwhale sighted off the port bow, cap\'n!  Please try refreshing this page.</div>';
 	    }
+	} elseif ($service == "New Column") {
+    	$content .= '<h2>New Column</h2>';
+		$content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
 	}
     
     echo $content;

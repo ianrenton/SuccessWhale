@@ -33,13 +33,13 @@ function hideConvo(div) {
 // Updates the Chars Left counter, switches chars left style and button text
 // at 140 chars, clears replyID and restores account selection to normal at zero.
 function countText(field) {
-	document.getElementById('charsLeft').innerHTML = 140 - field.value.length;
+	document.getElementById('chars').innerHTML = "This post is " + field.value.length + " characters long";
 	if (field.value.length > 140) {
 		document.statusform.submit.value = "Post with Twixt";
-		document.getElementById('charsLeft').style.color="red";
+		document.getElementById('chars').style.color="red";
 	} else {
 		document.statusform.submit.value = "Post";
-		document.getElementById('charsLeft').style.color="black";
+		document.getElementById('chars').style.color="black";
 	}
 	if (field.value.length == 0) {
 		document.statusform.replyid.value = '';
@@ -211,7 +211,7 @@ function setDivSize() {
         vpheight = document.body.clientHeight; // IE 4
     }
     d = document.getElementById('mainarea');
-    d.style.height= "" + (vpheight-125) + "px";
+    d.style.height= "" + (vpheight-132) + "px";
 }
 
 // jQuery startup things (when DOM is avalable)

@@ -1,49 +1,12 @@
 html, body {
 	margin:0px;
 	padding:0px;
-	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
+	font-family:"Ubuntu","Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
+	font-size:90%;
 }
 
 #page {
 	max-height: 100%;
-}
-
-h2 {
-	font-family:"Helvetica","Trebuchet MS",sans-serif;
-	font-size:100%;
-	color:#666666;
-	margin:5px;
-	padding:5px;
-	background: #eeeeee;
-	border: 1px solid #cccccc;
-	text-align:center;
-	text-transform: uppercase;
-	letter-spacing:4px;
-}
-
-h2.compact {
-	letter-spacing:2px;
-}
-
-#links {
-	margin:17px 0px 0px 0px;
-}
-
-form {
-	padding:0px;
-	margin:0px;
-}
-
-#statusformdiv {
-	padding:15px 14px 14px 14px;
-	background: #cfe2ff;
-	border-bottom: 1px solid #cccccc;
-}
-
-p {
-	font-family: "Georgia", serif;
-	margin-left:10px;
-	margin-right:10px;
 }
 
 #header {
@@ -52,34 +15,47 @@ p {
 	width:100%;
 	padding:0px;
 	margin:0px;
+	border-bottom: 1px solid #6a95c9;
 }
 
-#links {
+div.links {
+	margin:4px 0px 0px 0px;
 	float:right;
 	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
-	font-size:80%;
 }
 
-#links ul {
+div.links ul {
 	margin: 0px;
 	padding: 0px;
 	white-space: nowrap;
 }
 
-#links li {
+div.links li {
 	list-style-type: none;
 	padding:0px;
 	padding-right:20px;
 	display: inline;
 }
 
-#links a {
+div.links a {
 	color:black;
 	text-decoration:none;
 }
 
-#links a.hover {
+div.links a.hover {
 	text-decoration:underline;
+}
+
+#statusformdiv {
+    height:55px;
+    width:100%;
+	padding:0px 14px 14px 14px;
+	background: white;
+}
+
+form {
+	padding:10px 0 0 0;
+	margin:0px;
 }
 
 input[name="status"] {
@@ -93,22 +69,35 @@ div#mainarea {
 }
 
 div.column {
+    margin:0px;
 	height: 100%;
     overflow-y: auto;
+    border: 1px solid #bbbbbb;
+    background-color:#fafafa;
 }
 
-.tweet {
-	margin:5px;
+div.columnheading {
+	color:#666666;
 	padding:5px;
+	text-align:center;
+	text-transform: uppercase;
+	font-size: 120%;
 	background: #eeeeee;
-	border: 1px solid #cccccc;
+    background: -moz-linear-gradient(top, #ffffff, #eeeeee);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#ffffff), to(#000000));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#ffffff', EndColorStr='#eeeeee', GradientType=0);
+    border-bottom: 1px solid #bbbbbb;
+}
+
+.item {
+	margin:20px;
+	color:#888888;
 }
 
 .convotweet {
-	margin:5px 5px 5px 25px;
-	padding:5px;
-	background: #f7f7f7;
-	border: 1px solid #d7d7d7;
+	margin:10px 20px 10px 35px;
 }
 
 .convohider {
@@ -119,8 +108,6 @@ div.column {
 
 .operations {
 	float:right;
-	font-size:80%;
-	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
 	color:#888888;
 }
 
@@ -134,8 +121,6 @@ div.column {
 }
 
 .metatext {
-	font-size:80%;
-	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
 	color:#888888;
 	width:100%;
 }
@@ -151,7 +136,7 @@ table .bigtable {
 table .metatable {
 	width:100%;
 	padding:0px;
-	border-bottom: 1px solid #cccccc;
+	/*border-bottom: 1px solid #cccccc;*/
 	margin-bottom:3px;
 }
 
@@ -175,13 +160,13 @@ td .tweettextcell {
 	text-decoration:none;
 }
 
-.tweettext {
-	font-family: "Georgia", serif;
-}
-
 .tweettext a {
 	color:#7aa5d9;
 	text-decoration:none;
+}
+
+.facebookstatus .tweettext a {
+	color: #6666ff;
 }
 
 .tweettext a.hover {
@@ -190,18 +175,6 @@ td .tweettextcell {
 
 .clear {
 	clear:both;
-}
-
-div.columnnav {
-    margin:5px;
-	padding:10px;
-	background: #eeeeee;
-	border: 1px solid #cccccc;
-}
-
-div.columnnav a {
-    position: relative;
-    top: 3px;
 }
 
 div.backtotop {

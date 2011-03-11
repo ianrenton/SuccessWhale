@@ -72,7 +72,7 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	    	if ($isConvo) {
 			    $content .= '<div class="convotweet">';
 			} else {
-			    $content .= '<div class="tweet">';
+			    $content .= '<div class="item twitterstatus">';
 			}
 			$content .= '<div class="text">';
 			if (strtotime($data[$i]["created_at"]) == 0) {
@@ -110,6 +110,78 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	}
 	return $content;
 }
+
+
+// Generates an individual facebook status list
+function generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst) {
+	
+	//Unpack blocklist
+	$blocks = explode(";", $blocklist);
+	
+	$data = $data['data'];
+	for ($i=0; $i<count($data); $i++) {
+			
+		// Get the status body based on what the data contains
+		if ($data[$i]["type"] == "status") {
+		    $statusbody = $data[$i]["message"];
+		} elseif ($data[$i]["type"] == "link") {
+		    $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["description"];
+		} elseif ($data[$i]["type"] == "photo") {
+		    $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["message"];
+		} elseif ($data[$i]["type"] == "video") {
+		    $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["message"];
+		} else {
+		    $statusbody = "";
+		}
+			
+		// Check blocklist
+		$match = false;
+		foreach ($blocks as $blockstring) {
+			if ($blockstring != '') {
+				$pos = strpos($statusbody, $blockstring);
+				if ($pos !== false) {
+					$match = true;
+				}
+			}
+		}
+		
+		// Display tweet if it didn't match, of if it's part of a convo
+		// (Convos explicitly request a thread, it would look weird if
+		// we hid parts of it.)
+		if (!$match) {
+			$content .= '<div class="item facebookstatus">';
+			$content .= '<div class="text">';
+            $content .= '<table class="metatable"><tr><td>';
+            $content .= '<div class="metatext"><span class="name">';
+            //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+            $content .= $data[$i]["from"]["name"];
+            $content .= /*</a>*/'</span>';
+            $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_time"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+            $content .= '</div>';
+            $content .= '</td><td>';
+            //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+            $content .= '</td></tr></table>';
+            $content .= '<table><tr><td>';
+            //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+            $content .= '<img class="avatar" src="http://graph.facebook.com/' .$data[$i]["from"]["id"] . '/picture" alt="' . $data[$i]["from"]["name"] . '" title="' . $data[$i]["from"]["name"] . '" border="0" width="48" height="48"><br/>';
+            $content .= /*</a>*/'</td>';
+            $content .= '<td class="tweettextcell"><span class="tweettext">';
+            foreach(explode(" ", strip_tags($statusbody)) as $key => $line) {
+                if (strlen($line) > 30) $statusbody = str_replace($line, wordwrap($line, 25, "- ", 1), $statusbody);
+            }
+            $content .= $statusbody;
+            //if (empty($statusbody)) { var_dump($data); }
+            $content .= '</span>';
+            $content .= '</td></tr></table>';
+			$content .= '</div><div class="clear"></div></div>';
+			if (!$isConvo) {
+			    $content .= '<div id="' . $_GET['div'] . '-box' . $i . '-below"></div>';
+			}
+		}
+	}
+	return $content;
+}
+
 
 
 // Turns a UNIX time into a friendly time string, form depending on how
@@ -155,7 +227,7 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 		}
 	} else {
 	    if ((!$isConvoTweet) && ($replyToID > 0)) {
-	        $replyURL = 'convo.php?status=' . $tweetid;
+	        $replyURL = 'convo.php?thisUser=' . $thisUser . '&status=' . $tweetid;
 	        $targetDiv = $replyURL . '\', \'' . $_GET['div'] . '-box' . $i . '-below';
 	        $content .= '<a href="' . $replyURL . '" target="convo" onClick="expandConvo(\'' . $targetDiv . '\'); return false;"><img src="images/thread.png" alt="View Conversaion" title="View Conversation"></a>&nbsp;';
 	    }
@@ -173,7 +245,7 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 					}
 				}
 				if ($matchString != "") {
-					$content .= '<a href="javascript:setStatusField(\'@' . $username . $matchString . ' \', \'' . $tweetid . '\', \'twitter:' . $thisUser . ' \')"><img src="images/replyall.png" alt="@-reply to all users" title="@-reply to all users"></a>&nbsp;';	
+					$content .= '<a href="javascript:setStatusField(\'@' . $username . $matchString . ' \', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/replyall.png" alt="@-reply to all users" title="@-reply to all users"></a>&nbsp;';	
 				}
 			}
 			
@@ -258,10 +330,8 @@ function parseLinks($html, &$numusers) {
 			    }
 		    }
 		    // As it wasn't cached, cache it now.
-		    if (DB_SERVER != '') {
-		        $query = "INSERT INTO linkcache VALUES ('" . mysql_real_escape_string($match) . "','" . mysql_real_escape_string($replacetext) . "','" . $wholeblock . "')";
-                mysql_query($query);
-            }
+	        $query = "INSERT INTO linkcache VALUES ('" . mysql_real_escape_string($match) . "','" . mysql_real_escape_string($replacetext) . "','" . $wholeblock . "')";
+            mysql_query($query);
 		}
 		// Do the replacement
 		if ($wholeblock) {
@@ -303,16 +373,25 @@ function makeNavForm($count, $columnOptions, $thisColName) {
 		if ($key == $thisColName) {
 		    $content .= ' selected';
 		}
+		if (strpos($value, "--") !== FALSE) {
+		    $content .= ' disabled="disabled"';
+		}
 		$itemName = $columnOptions[$key];
 		$content .= '>' . $itemName . '</option>';
 	}
+	
+	// Other
+	$content .= '<option value="--" disabled="disabled">Miscellaneous</option>';
 		
 	// This column's name, if it's not in columnOptions
 	if (!array_key_exists($thisColName, $columnOptions)) {
-	    $content .= '<option value="' . $thisColName . '" selected>' . $thisColName . '</option>';
+	    // Column identifiers are in three colon-separate bits, e.g.
+        // twitter:tsuki_chama:statuses/user_timeline, just grab the last bit
+        // as it's friendlier.
+	    $thisColNameBits = explode(":", $thisColName);
+	    $content .= '<option value="' . $thisColName . '" selected>' . $thisColNameBits[2] . '</option>';
 	}
 	
-	// Other
 	$content .= '<option value="----------">(Custom)</option>';
     $content .= '</select> ';
     $content .= '<input id="customcolumnentry' . $thisColNumber . '" id="customcolumnentry" size="10" disabled="true" value="@usr, @usr/list" onKeyUp="checkForSubmitCustomColumn(this, event, ' . $thisColNumber . ');"/>';
