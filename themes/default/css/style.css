@@ -1,0 +1,236 @@
+html, body {
+	margin:0px;
+	padding:0px;
+	font-family:"Ubuntu","Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
+	font-size:90%;
+}
+
+#page {
+	max-height: 100%;
+}
+
+#header {
+	background:#7aa5d9;
+	height:50px;
+	width:100%;
+	padding:0px;
+	margin:0px;
+	border-bottom: 1px solid #6a95c9;
+}
+
+div.links {
+	margin:4px 0px 0px 0px;
+	float:right;
+	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
+}
+
+div.links ul {
+	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
+}
+
+div.links li {
+	list-style-type: none;
+	padding:0px;
+	padding-right:20px;
+	display: inline;
+}
+
+div.links a {
+	color:black;
+	text-decoration:none;
+}
+
+div.links a.hover {
+	text-decoration:underline;
+}
+
+#statusformdiv {
+    height:50px;
+	padding:10px;
+	background: white;
+}
+
+input[name="status"] {
+	width:70%;
+}
+
+div#mainarea {
+    overflow-x: auto;
+    overflow-y: auto;
+    width: 100%;
+}
+
+div.column {
+    margin:0px;
+	height: 100%;
+    overflow-y: auto;
+    border: 1px solid #bbbbbb;
+    background-color:#fafafa;
+}
+
+div.columnheading {
+	color:#666666;
+	padding:5px;
+	text-align:center;
+	text-transform: uppercase;
+	font-size: 120%;
+	background: #eeeeee;
+    background: -moz-linear-gradient(top, #ffffff, #eeeeee);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#ffffff), to(#000000));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#ffffff', EndColorStr='#eeeeee', GradientType=0);
+    border-bottom: 1px solid #bbbbbb;
+}
+
+.item {
+	margin:20px;
+	color:#888888;
+}
+
+div.convo {
+	margin:10px 20px 10px 35px;
+}
+
+div.reply {
+	margin:10px 20px 10px 45px;
+}
+
+div.convohider {
+    float:left;
+    position:relative;
+    left:4px;
+}
+
+.operations {
+	float:right;
+	color:#888888;
+}
+
+.operations a {
+	color:#888888;
+	text-decoration:none;
+}
+
+.operations a.hover {
+	text-decoration:underline;
+}
+
+.metatext {
+	color:#888888;
+	width:100%;
+}
+
+table {
+	margin:0px;
+}
+
+table .bigtable {
+	margin:5px;
+}
+
+table .metatable {
+	width:100%;
+	padding:0px;
+	/*border-bottom: 1px solid #cccccc;*/
+	margin-bottom:3px;
+}
+
+tr {
+	margin: 0px;
+	padding: 0px;
+}
+
+td {
+	vertical-align: top;
+	margin: 0px;
+	padding: 0px;
+}
+
+td .tweettextcell {
+	padding-left: 5px;
+}
+
+.name a{
+	color:#444444;
+	text-decoration:none;
+}
+
+.tweettext a {
+	color:#7aa5d9;
+	text-decoration:none;
+}
+
+.tweettext a.hover {
+	text-decoration:underline;
+}
+
+.clear {
+	clear:both;
+}
+
+div.backtotop {
+	float:left;
+}
+
+div.colswitcherform {
+	text-align:center;
+	width:100%;
+}
+
+#nav {
+	float:right;
+}
+
+#nav ul {
+	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
+}
+
+#nav li {
+	list-style-type: none;
+	padding:0px;
+	display: inline;
+}
+
+#nav a {
+	color:#7aa5d9;
+	text-decoration:none;
+}
+
+#nav a.hover {
+	text-decoration:underline;
+}
+
+img {
+	border:0px;
+}
+
+#addcolumndiv {
+	float:right;
+	padding:15px 14px 14px 14px;
+}
+
+#addcolumndiv ul {
+	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
+}
+
+#addcolumndiv li {
+	list-style-type: none;
+	padding:0px;
+	padding-right:20px;
+	display: inline;
+}
+
+#addcolumndiv li input {
+    position:relative;
+    top:-7px;
+	margin:0px;
+	padding:0px;
+	width:20px;
+}
