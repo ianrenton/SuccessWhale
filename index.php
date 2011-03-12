@@ -185,7 +185,7 @@ function generateSendBoxes($posttoservices) {
         $content .= '/>';
         $content .= '<label for="facebook:' . $username . '">facebook:' . $username . '</label>';
     }
-    $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" />';
+    $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     
     
 	// Add Twitter/Facebook/etc accounts.

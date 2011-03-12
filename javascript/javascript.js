@@ -208,6 +208,7 @@ $(document).ready(function() {
     // Clicking main Submit button posts status
     $('input#submitbutton').unbind("click");
     $('input#submitbutton').live("click", function() {
+        recheckAccountsSelected();
         submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
         return false;
     });
@@ -218,6 +219,7 @@ $(document).ready(function() {
     $('input#status').live("keydown", function(e) {
         countText(e.target);
         if (e.keyCode == 13 || e.keyCode == 10) {
+            recheckAccountsSelected();
             submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
             return false;
         }
