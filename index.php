@@ -214,7 +214,7 @@ function makeLinksForm($theme, $colsperscreen) {
     
 	$content = '<div class="links">';
 	$content .= '<ul><li><input name="colsperscreen" id="colsperscreen" size="1" value="' . $colsperscreen . '" alt="Columns per screen" title="Columns per screen"><input type="submit" style="display:none"></li><li>';
-	$content .= '<a href="javascript:doAction(\'actions.php?newcol=true\')"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
+	$content .= '<a class="doactionbutton" href="actions.php?newcol=true"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
 	$content .= '</li><li>Theme: <select name="theme">';
 	
     $dir = opendir('./themes');

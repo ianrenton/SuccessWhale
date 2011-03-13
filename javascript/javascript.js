@@ -49,52 +49,10 @@ function submitStatus(status, replyId, postToAccounts) {
         url: "actions.php",
         data: dataString,
         success: function() {
-            document.statusform.status.value = '';
-	        document.statusform.replyid.value = '';
-	        document.statusform.status.focus();
-	        countText(document.statusform.status);
             setTimeout('refreshAll()', 3000);
         }
     });
 }
-
-
-// Enter to submit cols per screen form
-$(function() {
-    $('input#colsperscreen').keydown(function(e) {
-        if (e.keyCode == 13 || e.keyCode == 10) {
-            var colsperscreen = $("input#colsperscreen").val();
-            var dataString = 'colsperscreen=' + colsperscreen;
-            $.ajax({
-                type: "POST",
-                url: "actions.php",
-                data: dataString,
-                success: function() {
-                    window.location.reload();
-                }
-            });
-            return false;
-        }
-    });
-});
-
-
-// Change submit theme form
-$(function() {
-    $('select#theme').change(function(e) {
-        var theme = $("select#theme").val();
-        var dataString = 'theme=' + theme;
-        $.ajax({
-            type: "POST",
-            url: "actions.php",
-            data: dataString,
-            success: function() {
-                window.location.reload();
-            }
-        });
-        return false;
-    });
-});
 
 // Fills in the hidden "postToAccounts" field based on which account checkboxes
 // are ticked.  Must be called every time a human or CPU alters those checkboxes.
@@ -116,13 +74,6 @@ function recheckAccountsSelected() {
     return true;
 }
 
-// User Checks/unchecks services to post to, updating the current knowledge of
-// the user's preferences.
-$(function() {
-    $('input.accountSelector').click(function() {
-        recheckAccountsSelected();
-    });
-});
 
 // Enter to submit custom column forms
 function checkForSubmitCustomColumn(field, event, colNumber) {
@@ -159,6 +110,7 @@ $(document).ready(function() {
     $('input#submitbutton').live("click", function() {
         recheckAccountsSelected();
         submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
+        $("input#status").val('');
         return false;
     });
     
@@ -169,7 +121,7 @@ $(document).ready(function() {
         if (e.keyCode == 13 || e.keyCode == 10) {
             recheckAccountsSelected();
             submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
-            return false;
+            $("input#status").val('');
         }
         $(this).parent().children('span.counter').html("This post is " + $(this).val().length + " characters long.");
 	    if ($(this).val().length > 140) {
@@ -179,6 +131,7 @@ $(document).ready(function() {
 	        $(this).parent().children('span.counter').css("color", "black");
 	        $(this).parent().children('input#submitbutton').attr('disabled', false);
 	    }
+        return false;
     });
     
     // Click to submit reply form
@@ -196,7 +149,6 @@ $(document).ready(function() {
         if (e.keyCode == 13 || e.keyCode == 10) {
             submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
             $(this).parents('div.reply').hide();
-            return false;
         }
         $(this).parent().children('span.counter').html($(this).val().length);
 	    if ($(this).val().length > 140) {
@@ -204,6 +156,7 @@ $(document).ready(function() {
 	    } else {
 	        $(this).parent().children('input.replybutton').val("Post");
 	    }
+        return false;
     });
     
     // User Checks/unchecks services to post to, updating the current knowledge of
@@ -220,7 +173,14 @@ $(document).ready(function() {
         return false;
     });
     
-    // Convo buttons hide/show conversations
+    // Nav form buttons show/hide column options
+    $('a.navformbutton').unbind("click");
+    $('a.navformbutton').live("click", function(e) {
+        $(this).parents('div.columnheading').find('div.columnnav').toggle();
+        return false;
+    });
+    
+    // Convo buttons show/hide conversations
     $('a.convobutton').unbind("click");
     $('a.convobutton').live("click", function(e) {
         $url = $(this).attr('href');
@@ -229,7 +189,7 @@ $(document).ready(function() {
         return false;
     });
     
-    // Reply buttons show the reply box
+    // Reply buttons show/hide the reply box
     $('a.replybutton').unbind("click");
     $('a.replybutton').live("click", function(e) {
         $url = $(this).attr('href');
@@ -241,7 +201,7 @@ $(document).ready(function() {
     // "Do action"
     $('a.doactionbutton').unbind("click");
     $('a.doactionbutton').live("click", function(e) {
-        $.load($(this).attr('href'));
+        $.ajax($(this).attr('href'));
         return false;
     });
     
@@ -249,9 +209,46 @@ $(document).ready(function() {
     $('a.confirmactionbutton').unbind("click");
     $('a.confirmactionbutton').live("click", function(e) {
         if (confirm("Are you really sure about that?")) {
-        	$.load($(this).attr('href'));
+        	$.ajax($(this).attr('href'));
 	    }
         return false;
+    });
+    
+    // Enter submits cols-per-screen form
+    $('input#colsperscreen').live("keydown", function(e) {
+        if (e.keyCode == 13 || e.keyCode == 10) {
+            var dataString = 'colsperscreen=' + $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "actions.php",
+                data: dataString,
+                success: function() {
+                    window.location.reload();
+                }
+            });
+            return false;
+        }
+    });
+    
+    // Change submits theme form
+    $('select#theme').live("change", function(e) {
+        var theme = $("select#theme").val();
+        var dataString = 'theme=' + theme;
+        $.ajax({
+            type: "POST",
+            url: "actions.php",
+            data: dataString,
+            success: function() {
+                window.location.reload();
+            }
+        });
+        return false;
+    });
+    
+    // User Checks/unchecks services to post to, updating the current knowledge of
+    // the user's preferences.
+    $('input.accountSelector').live("click", function() {
+        recheckAccountsSelected();
     });
     
     // Load all columns

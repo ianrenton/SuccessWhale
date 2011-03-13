@@ -404,7 +404,7 @@ function makeNavForm($count, $columnOptions, $thisColName) {
     $content .= '</select> ';
     $content .= '<input id="customcolumnentry' . $thisColNumber . '" id="customcolumnentry" size="10" disabled="true" value="@usr, @usr/list" onKeyUp="checkForSubmitCustomColumn(this, event, ' . $thisColNumber . ');"/>';
     
-    $content .= ' <a href="javascript:confirmAction(\'actions.php?delcol=' . $thisColNumber . '\')"><img src="images/delcolumn.png" title="Delete Column" alt="Delete Column"></a>';
+    $content .= '<a class="confirmactionbutton" href="actions.php?delcol=' . $thisColNumber . '"><img src="images/delcolumn.png" title="Delete Column" alt="Delete Column"></a>';
 	$content .= '</div>';
 	
 	$content .= '</div>';

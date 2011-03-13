@@ -89,6 +89,23 @@ div.columnheading {
     border-bottom: 1px solid #bbbbbb;
 }
 
+a.navformbutton {
+    float:right;
+    position:relative;
+    top:-1px;
+	color:#cccccc;
+	border: 1px solid #cccccc;
+	padding:0 3px 1px 3px;
+	border-radius:2px;
+	-moz-border-radius:2px;
+    -webkit-border-radius:2px;
+	text-decoration:none;
+}
+
+div.columnnav {
+    display:none;
+}
+
 .item {
 	margin:20px;
 	color:#888888;
