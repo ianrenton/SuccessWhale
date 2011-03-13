@@ -84,16 +84,6 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 			if (strtotime($data[$i]["created_at"]) == 0) {
                 $content .= '<div class="metatext"><span class="name">Protected or deleted tweet.</span></div>';
 			} else {
-                $content .= '<table class="metatable"><tr><td>';
-                $content .= '<div class="metatext"><span class="name">';
-                $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-                $content .= $data[$i][$userString]["name"];
-                $content .= '</a></span>';
-                $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-                $content .= '</div>';
-                $content .= '</td><td>';
-                $content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-                $content .= '</td></tr></table>';
                 $content .= '<table><tr><td>';
                 $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
                 $content .= '<img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"><br/>';
@@ -107,11 +97,23 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
                 $content .= $tweetbody;
                 $content .= '</span>';
                 $content .= '</td></tr></table>';
+                $content .= '<table class="metatable" id="' . $_GET['div'] . '-box' . $i . '-metatable"><tr><td>';
+                $content .= '<div class="metatext"><span class="name">';
+                $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+                $content .= $data[$i][$userString]["name"];
+                $content .= '</a></span>';
+                $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+                $content .= '</div>';
+                $content .= '</td><td>';
+                $content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+                $content .= '</td></tr></table>';
 			}
-			$content .= '</div><div class="clear"></div></div>';
+			$content .= '</div><div class="clear"></div>';
+			$content .= '<div class="replyarea"></div>';
 			if (!$isConvo) {
-			    $content .= '<div id="' . $_GET['div'] . '-box' . $i . '-below"></div>';
+			    $content .= '<div class="convoarea"></div>';
 			}
+			$content .= '</div>';
 		}
 	}
 	return $content;
@@ -157,16 +159,6 @@ function generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnigh
 		if (!$match) {
 			$content .= '<div class="item facebookstatus">';
 			$content .= '<div class="text">';
-            $content .= '<table class="metatable"><tr><td>';
-            $content .= '<div class="metatext"><span class="name">';
-            //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-            $content .= $data[$i]["from"]["name"];
-            $content .= /*</a>*/'</span>';
-            $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_time"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-            $content .= '</div>';
-            $content .= '</td><td>';
-            //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-            $content .= '</td></tr></table>';
             $content .= '<table><tr><td>';
             //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
             $content .= '<img class="avatar" src="http://graph.facebook.com/' .$data[$i]["from"]["id"] . '/picture" alt="' . $data[$i]["from"]["name"] . '" title="' . $data[$i]["from"]["name"] . '" border="0" width="48" height="48"><br/>';
@@ -179,10 +171,22 @@ function generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnigh
             //if (empty($statusbody)) { var_dump($data); }
             $content .= '</span>';
             $content .= '</td></tr></table>';
-			$content .= '</div><div class="clear"></div></div>';
+            $content .= '<table class="metatable" id="' . $_GET['div'] . '-box' . $i . '-metatable"><tr><td>';
+            $content .= '<div class="metatext"><span class="name">';
+            //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+            $content .= $data[$i]["from"]["name"];
+            $content .= /*</a>*/'</span>';
+            $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_time"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+            $content .= '</div>';
+            $content .= '</td><td>';
+            //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+            $content .= '</td></tr></table>';
+			$content .= '</div><div class="clear"></div>';
 			if (!$isConvo) {
-			    $content .= '<div id="' . $_GET['div'] . '-box' . $i . '-below"></div>';
+			    $content .= '<div class="convoarea"></div>';
 			}
+			$content .= '<div class="replyarea"></div>';
+			$content .= '</div>';
 		}
 	}
 	return $content;
@@ -225,21 +229,19 @@ function makeFriendlyTime($time, $midnightYesterday, $oneWeekAgo, $janFirst) {
 // $numusers > 0 means we need to do a reply-all button
 function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isDM, $isConvoTweet, $i, $replyToUser, $replyToID, $numusers) {
 	$content = '<div class="operations">';
-	$divUnderneath = $replyURL . '\', \'' . $_GET['div'] . '-box' . $i . '-below';
 	if ($isDM == true)  {
 		if ($username != $thisUser) {
-			$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'d ' . $username . ' \', \'' . $tweetid . ' \', \'twitter:' . $thisUser . '\')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
+			$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('d '.$username) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">d</a>&nbsp;';
 		} else {
-			$content .= '<a href="javascript:confirmAction(\'actions.php?destroydm=' . $tweetid . '&thisUser=' . $thisUser . '\')"><img src="images/delete.png" alt="Delete this DM" title="Delete this DM"></a>';
+			$content .= '<a class="confirmactionbutton" href="actions.php?destroydm=' . $tweetid . '&thisUser=' . urlencode($thisUser) . '">del</a>&nbsp;';
 		}
 	} else {
 	    if ((!$isConvoTweet) && ($replyToID > 0)) {
-	        $replyURL = 'convo.php?thisUser=' . $thisUser . '&status=' . $tweetid;
-	        $content .= '<a href="javascript:expandConvo(\'' . $replyURL . '\', \'' . $divUnderneath . '\');"><img src="images/thread.png" alt="View Conversaion" title="View Conversation"></a>&nbsp;';
+	        $content .= '<a class="convobutton" href="convo.php?thisUser=' . $thisUser . '&status=' . $tweetid . '">convo</a>&nbsp;';
 	    }
 		if ($username != $thisUser) {
-			$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'@' . $username . '\', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/reply.png" alt="@-reply to this user" title="@-reply to this user"></a>&nbsp;';
-			
+			$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('@'.$username) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">@</a>&nbsp;';
+		
 			// Reply-all
 			if ($numusers > 0) {
 				$matches = array();
@@ -251,18 +253,18 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 					}
 				}
 				if ($matchString != "") {
-					$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'@' . $username . $matchString . '\', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/replyall.png" alt="@-reply to all users" title="@-reply to all users"></a>&nbsp;';	
+					$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('@'.$username . $matchString) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">@*</a>&nbsp;';
 				}
 			}
 			
-			$content .= '<a href="javascript:doAction(\'actions.php?retweet=' . $tweetid . '&thisUser=' . $thisUser . '\')"><img src="images/retweet.png" alt="Retweet this" title="Retweet this"></a>&nbsp;';
-			$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'RT @' . $username . ': ' . str_replace("'","\\'",str_replace('"','&quot;',$tweet)) . '\', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/oldretweet.png" alt="Old-style Retweet" title="Old-style Retweet"></a>&nbsp;';
-			$content .= '<a href="javascript:showReplyBox(\'' . $divUnderneath . '\', \'d ' . $username . '\', \'' . $tweetid . '\', \'twitter:' . $thisUser . '\')"><img src="images/dm.png" alt="DM this user" title="DM this user"></a>&nbsp;';
+			$content .= '<a class="doactionbutton" href="actions.php?retweet=' . $tweetid . '&thisUser=' . urlencode($thisUser) . '">rt</a>&nbsp;';
+			$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('RT @'.$username) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">rt:</a>&nbsp;';
+			$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('d '.$username) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">d</a>&nbsp;';
 			if ($isMention == true) {
-				$content .= '<a href="javascript:confirmAction(\'actions.php?report=' . $username . '&thisUser=' . $thisUser . '\')"><img src="images/report.png" alt="Report this user as a spammer" title="Report this user as a spammer"></a>';
+				$content .= '<a class="confirmactionbutton" href="actions.php?report=' . urlencode($username) . '&thisUser=' . urlencode($thisUser) . '">b&</a>&nbsp;';
 			}
 		} else {
-			$content .= '<a href="javascript:confirmAction(\'actions.php?destroystatus=' . $tweetid . '&thisUser=' . $thisUser . '\')"><img src="images/delete.png" alt="Delete this Tweet" title="Delete this Tweet"></a>';
+			$content .= '<a class="confirmactionbutton" href="actions.php?destroystatus=' . $tweetid . '&thisUser=' . urlencode($thisUser) . '">del</a>&nbsp;';
 		}
 	}
 	$content .= '</div>';
@@ -406,23 +408,6 @@ function makeNavForm($count, $columnOptions, $thisColName) {
 	$content .= '</div>';
 	
 	$content .= '</div>';
-	return $content;
-}
-
-
-// Generates the convo hider at the left
-function makeConvoHider($div) {
-	$content = '<div class="convohider">';
-	$content .= '<a href="javascript:hideConvo(\'' . $div . '\');"><img src="images/hideconvo.png" alt="Hide Conversation"/></a>';
-	$content .= '</div>';
-	return $content;
-}
-
-// Generates the convo hider at the bottom
-function makeConvoHiderLower($div) {
-	$content = '<div id="nav"><ul>';
-	$content .= '<li><a href="javascript:hideConvo(\'' . $div . '\');"><img src="images/hideconvo.png" alt="Hide Conversation"/></a></li>';
-	$content .= '</ul></div>';
 	return $content;
 }
 

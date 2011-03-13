@@ -56,6 +56,10 @@ input[name="status"] {
 	width:70%;
 }
 
+input.reply {
+	width:70%;
+}
+
 div#mainarea {
     overflow-x: auto;
     overflow-y: auto;
@@ -106,20 +110,20 @@ div.convohider {
 
 .operations {
 	float:right;
-	color:#888888;
 }
 
 .operations a {
-	color:#888888;
+	color:#cccccc;
+	border: 1px solid #cccccc;
+	padding:0 3px 1px 3px;
+	border-radius:2px;
+	-moz-border-radius:2px;
+    -webkit-border-radius:2px;
 	text-decoration:none;
 }
 
-.operations a.hover {
-	text-decoration:underline;
-}
-
 .metatext {
-	color:#888888;
+	color:#cccccc;
 	width:100%;
 }
 
@@ -136,8 +140,17 @@ table .metatable {
 	padding:0px;
 	/*border-bottom: 1px solid #cccccc;*/
 	margin-bottom:3px;
+	display:none;
 }
 
+div.convoarea {
+    display:none;
+}
+
+div.replyarea {
+    display:none;
+}
+    
 tr {
 	margin: 0px;
 	padding: 0px;
@@ -154,7 +167,7 @@ td .tweettextcell {
 }
 
 .name a{
-	color:#444444;
+	color:#cccccc;
 	text-decoration:none;
 }
 

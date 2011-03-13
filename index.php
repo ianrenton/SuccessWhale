@@ -165,9 +165,8 @@ function generateSendBoxes($posttoservices) {
 	$content = '<div id="statusformdiv">';
     $content .= '<form id="statusform" name="statusform">';
     $content .= '<input type="text" autocomplete="off" name="status" id="status" class="status">';
-    $content .= '<input type="hidden" name="replyid" id="replyid" value="" />';
     $content .= '<input type="submit" name="submit" id="submitbutton" value="Post" />';
-	$content .= '&nbsp;&nbsp;<span id="chars">This post is 0 characters long</span><br/>';
+	$content .= '&nbsp;&nbsp;<span class="counter">This post is 0 characters long</span><br/>';
 
     foreach ($_SESSION['twitters'] as $username => $twitter) {
         $content .= '<input type="checkbox" class="accountSelector" id="twitter:' . $username . '" value="twitter:' . $username . '" ';

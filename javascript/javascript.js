@@ -1,11 +1,9 @@
 var refreshIDs = new Array();
-var normallySelectedAccounts = new Array();
 
 // Changes the content of one column, and re-sets its refresh.
 function changeColumn(colnumber, url, updatedb) {
     if (url.indexOf("----------") == -1) {
         // Normal use
-	    startSpinner();
         $("#column" + colnumber).load(url + "&updatedb=" + updatedb);
         clearInterval(refreshIDs[colnumber]);
         refreshIDs[colnumber] = setInterval(function() {
@@ -19,52 +17,8 @@ function changeColumn(colnumber, url, updatedb) {
     }
 }
 
-// Expands a conversation.
-function expandConvo(url, dummy, div) {
-    $("#" + div).load(url + "&div=" + div);
-}
-
-// Hides a conversation or reply box.
-function hideConvo(div) {
-    $("#" + div).html("");
-}
-
-// Expands a reply box.
-function showReplyBox(dummy, div, initialtext, replyid, account) {
-    $("#" + div).load("replybox.php?div=" + div + "&initialtext=" + escape(initialtext) + "&replyid=" + replyid + "&account=" + escape(account));
-}
-
-// Updates the Chars Left counter, switches chars left style and button text
-// at 140 chars, clears replyID and restores account selection to normal at zero.
-function countText(field) {
-	document.getElementById('chars').innerHTML = "This post is " + field.value.length + " characters long";
-	if (field.value.length > 140) {
-		document.statusform.submit.value = "Post with Twixt";
-		document.getElementById('chars').style.color="red";
-	} else {
-		document.statusform.submit.value = "Post";
-		document.getElementById('chars').style.color="black";
-	}
-	if (field.value.length == 0) {
-		document.statusform.replyid.value = '';
-	}
-}
-
-// Requests confirmation for an action to be performed via the actionbox.
-function confirmAction(link) {
-	if (confirm("Are you really sure about that?")) {
-    	startSpinner();
-		$("#actionbox").load(link);
-	}
-}
-
-// Performs an action via the actionbox without confirmation
-function doAction(link) {
-	startSpinner();
-	$("#actionbox").load(link);
-}
-
-function startSpinner() {
+// BlockUI
+$(document).ajaxStart(function() {
 	$.blockUI({ 
 		message: '<img src="images/ajax-loader.gif" alt="Loading..."/> Thinking...', 
 		timeout: 12000,
@@ -85,11 +39,6 @@ function startSpinner() {
 			color: '#000'
 		} 
 	});
-}
-
-// BlockUI
-$(document).ajaxStart(function() {
-	startSpinner();
 }).ajaxStop($.unblockUI);
 
 // Submit status
@@ -215,34 +164,46 @@ $(document).ready(function() {
     
     // Typing in main box updates the counter.
     // Enter in main Text input posts status
-    $('input#status').unbind("keydown");
-    $('input#status').live("keydown", function(e) {
-        countText(e.target);
+    $('input#status').unbind("keyup");
+    $('input#status').live("keyup", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
             recheckAccountsSelected();
             submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
             return false;
         }
+        $(this).parent().children('span.counter').html("This post is " + $(this).val().length + " characters long.");
+	    if ($(this).val().length > 140) {
+	        $(this).parent().children('span.counter').css("color", "red");
+	        $(this).parent().children('input#submitbutton').attr('disabled', true);
+	    } else {
+	        $(this).parent().children('span.counter').css("color", "black");
+	        $(this).parent().children('input#submitbutton').attr('disabled', false);
+	    }
     });
     
     // Click to submit reply form
     $('input.replybutton').unbind("click");
     $('input.replybutton').live("click", function(e) {
-        $boxname = e.target.name;
-        submitStatus($("input#"+$boxname+"-reply").val(), $("input#"+$boxname+"-reply").val(), $("input#"+$boxname+"-replyaccount").val());
-        hideConvo($boxname);
+        submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
+        $(this).parents('div.reply').hide();
         return false;
     });
 
     // Enter to submit reply form
-    $('input.reply').unbind("keydown");
-    $('input.reply').live("keydown", function(e) {
+    // Typing in reply form updates the counter
+    $('input.reply').unbind("keyup");
+    $('input.reply').live("keyup", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
-            $boxname = e.target.name;
-            submitStatus($("input#"+$boxname+"-reply").val(), $("input#"+$boxname+"-reply").val(), $("input#"+$boxname+"-replyaccount").val());
-            hideConvo($boxname);
+            submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
+            $(this).parents('div.reply').hide();
             return false;
         }
+        $(this).parent().children('span.counter').html($(this).val().length);
+	    if ($(this).val().length > 140) {
+	        $(this).parent().children('input.replybutton').val("Twixt");
+	    } else {
+	        $(this).parent().children('input.replybutton').val("Post");
+	    }
     });
     
     // User Checks/unchecks services to post to, updating the current knowledge of
@@ -250,6 +211,47 @@ $(document).ready(function() {
     $('input.accountSelector').unbind("click");
     $('input.accountSelector').live("click", function() {
         recheckAccountsSelected();
+    });
+    
+    // Mouseover statuses to show the metadata below
+    $('div.item').unbind("hover");
+    $('div.item').live("hover", function(e) {
+        $(this).find('table.metatable').toggle();
+        return false;
+    });
+    
+    // Convo buttons hide/show conversations
+    $('a.convobutton').unbind("click");
+    $('a.convobutton').live("click", function(e) {
+        $url = $(this).attr('href');
+        $(this).parents('div.item').find('div.convoarea').toggle();
+        $(this).parents('div.item').find('div.convoarea').load($url);
+        return false;
+    });
+    
+    // Reply buttons show the reply box
+    $('a.replybutton').unbind("click");
+    $('a.replybutton').live("click", function(e) {
+        $url = $(this).attr('href');
+        $(this).parents('div.item').find('div.replyarea').load($url);
+        $(this).parents('div.item').find('div.replyarea').toggle();
+        return false;
+    });
+    
+    // "Do action"
+    $('a.doactionbutton').unbind("click");
+    $('a.doactionbutton').live("click", function(e) {
+        $.load($(this).attr('href'));
+        return false;
+    });
+    
+    // "Confirm action"
+    $('a.confirmactionbutton').unbind("click");
+    $('a.confirmactionbutton').live("click", function(e) {
+        if (confirm("Are you really sure about that?")) {
+        	$.load($(this).attr('href'));
+	    }
+        return false;
     });
     
     // Load all columns

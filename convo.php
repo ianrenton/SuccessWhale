@@ -28,7 +28,6 @@ if (isset($_GET['thisUser']) && isset($_GET['status'])) {
         $statusID = $thisItem['in_reply_to_status_id'];
     }
 
-    $content .= makeConvoHider($_GET['div']);
     // Blank string is for the blocklist. Blocklists aren't obeyed in convo threads anyway.
     $content .= generateTweetList($data, false, false, true, $thisUser, '', $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
 
