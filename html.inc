@@ -5,12 +5,14 @@
   <head>
     <title>SuccessWhale</title>
 	<link rel="shortcut icon" href="favicon.ico">
-	<link type="text/css" rel="stylesheet" media="all" href="themes/<?php echo($_COOKIE['theme']) ?>/css/style.css" />
-    <link rel="stylesheet" href="themes/<?php echo($_COOKIE['theme']) ?>/css/uniform.css" type="text/css" media="screen" charset="utf-8" />
+	<link type="text/css" rel="stylesheet" media="all" href="themes/<?php echo($theme) ?>/css/style.css" />
+    <link rel="stylesheet" href="themes/<?php echo($theme) ?>/css/uniform.css" type="text/css" media="screen" charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<script type="text/javascript" src="javascript/jquery.min.js"></script>
 	<script type="text/javascript" src="javascript/jquery.form.js"></script>
 	<script type="text/javascript" src="javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript" src="javascript/jquery.uniform.min.js"></script>
+	<script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 	
 	<script type="text/javascript" src="javascript/javascript.js"></script>
 

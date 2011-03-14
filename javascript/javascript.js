@@ -245,6 +245,24 @@ $(document).ready(function() {
         return false;
     });
     
+    // Fancybox images
+    $("a.fancybox").live("click", function() {
+        var twitpicRegex = new RegExp("twitpic.com\/([\\w\\n]+)", "i");
+        var yfrogRegex = new RegExp("yfrog.com\/([\\w\\n]+)", "i");
+        if ($(this).attr('href').match(twitpicRegex)) {
+            var imageurl = $(this).attr('href').replace(twitpicRegex, 'twitpic.com/show/large/$1.jpg');
+            $.fancybox({ 'href': imageurl });
+            return false;
+        } else if ($(this).attr('href').match(yfrogRegex)) {
+            var imageurl = $(this).attr('href') + ":iphone";
+            alert(imageurl);
+            $.fancybox({ 'href': imageurl });
+            return false;
+        } else {
+            return true;
+        }
+    });
+    
     // User Checks/unchecks services to post to, updating the current knowledge of
     // the user's preferences.
     $('input.accountSelector').live("click", function() {

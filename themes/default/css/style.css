@@ -74,6 +74,7 @@ div#mainarea {
     overflow-x: auto;
     overflow-y: auto;
     width: 100%;
+    padding:0;
 }
 
 div.column {
@@ -159,7 +160,7 @@ table {
 }
 
 table.bigtable {
-	margin:5px;
+	margin-top:5px;
 }
 
 div.metatable {
@@ -174,10 +175,16 @@ div.metatable {
 
 div.convoarea {
     display:none;
+    margin-top:30px;
+    float:left;
+    position:relative;
 }
 
 div.replyarea {
     display:none;
+    margin-top:30px;
+    float:left;
+    position:relative;
 }
     
 tr {

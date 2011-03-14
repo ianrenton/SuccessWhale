@@ -97,22 +97,24 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
                 $content .= $tweetbody;
                 $content .= '</span>';
                 $content .= '</td></tr></table>';
-                $content .= '<div class="metatable">';
-                $content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-                $content .= '<div class="metatext"><span class="name">';
-                $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-                $content .= $data[$i][$userString]["name"];
-                $content .= '</a></span>';
-                $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-                $content .= '</div>';
-                $content .= '</div>';
+                if (!$isConvo) {
+                    $content .= '<div class="metatable">';
+                    $content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+                    $content .= '<div class="metatext"><span class="name">';
+                    $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+                    $content .= $data[$i][$userString]["name"];
+                    $content .= '</a></span>';
+                    $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+                    $content .= '</div>';
+                    $content .= '</div>';
+                }
 			}
 			$content .= '</div>';
 			$content .= '<div class="replyarea"></div>';
 			if (!$isConvo) {
 			    $content .= '<div class="convoarea"></div>';
 			}
-			$content .= '</div>';
+			$content .= '</div><div class="clear"></div>';
 		}
 	}
 	return $content;
@@ -170,21 +172,23 @@ function generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnigh
             //if (empty($statusbody)) { var_dump($data); }
             $content .= '</span>';
             $content .= '</td></tr></table>';
-            $content .= '<div class="metatable">';
-            //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-            $content .= '<div class="metatext"><span class="name">';
-            //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-            $content .= $data[$i]["from"]["name"];
-            $content .= /*</a>*/'</span>';
-            $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_time"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-            $content .= '</div>';
-            $content .= '</div>';
+            if (!$isConvo) {
+                $content .= '<div class="metatable">';
+                //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+                $content .= '<div class="metatext"><span class="name">';
+                //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+                $content .= $data[$i]["from"]["name"];
+                $content .= /*</a>*/'</span>';
+                $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_time"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+                $content .= '</div>';
+                $content .= '</div>';
+            }
 			$content .= '</div>';
 			if (!$isConvo) {
 			    $content .= '<div class="convoarea"></div>';
 			}
 			$content .= '<div class="replyarea"></div>';
-			$content .= '</div>';
+			$content .= '</div><div class="clear"></div>';
 		}
 	}
 	return $content;
@@ -275,7 +279,6 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 function parseLinks($html, &$numusers) {
 
 	$shortservers = array(
-		//"is.gd",
 		"bit.ly",
 		"yfrom.com",
 		"tinyurl.com",
@@ -283,7 +286,12 @@ function parseLinks($html, &$numusers) {
 		"goo.gl",
 		"zz.gd",
 		"t.co",
-		"wp.me"
+		"wp.me",
+		"digs.by"
+	);
+	$picservers = array(
+		"twitpic.com",
+		"yfrog.com"
 	);
 	
 	// Modify links depending on their type: link up for normal, lengthen for short URLs, inline text for Twixts
@@ -307,10 +315,15 @@ function parseLinks($html, &$numusers) {
 		    preg_match('/^(http[s]?|ftp|file):\/\/([^\/]+)\/?(.*)$/', $match, $urlParts);
 		    $server = $urlParts[2];
 		    if(!in_array($server,$shortservers)) {
-			    // Not a shortened link, so give the URL text an a href
+			    // Not a shortened or image server link, so give the URL text an a href
 			    $wholeblock = false;
-			    $replacetext = '<a href="' . $urlParts[0] . '" target="_blank">[' . $urlParts[2] . ']</a>';
+			    if(in_array($server,$picservers)) {
+			        $replacetext = '<a href="' . $urlParts[0] . '" class="fancybox">[' . $urlParts[2] . ']</a>';
+			    } else {
+			        $replacetext = '<a href="' . $urlParts[0] . '" target="_blank">[' . $urlParts[2] . ']</a>';
+			    }
 		    } else {
+		        // Shortened link, so let's follow it and see what we get
 			    $id = preg_replace("~[^A-Za-z0-9]+~","",$urlParts[3]);
 			    $result = grab($server,$id);
 			    $loc = false;
@@ -324,9 +337,14 @@ function parseLinks($html, &$numusers) {
 			        $replacetext = '<a href="' . $urlParts[0] . '" target="_blank">[' . $urlParts[2] . ']</a>';
 			    } elseif (!preg_match("~http://twixt.successwhale.com/(.+)~",$loc,$locationMatches)) {
 				    // Shortened link (but not Twixt), so replace the URL text with an an href to the real location
-				    preg_match('/^http[s]?:\/\/([^\/]+)\/?(.*)$/', $loc, $domainMatch);
-				    $wholeblock = false;
-				    $replacetext = '<a href="' . $loc . '" target="_blank">[' . $domainMatch[1] . ']</a>';
+			        preg_match('/^http[s]?:\/\/([^\/]+)\/?(.*)$/', $loc, $domainMatch);
+				        $wholeblock = false;
+				    if(in_array($domainMatch[1],$picservers)) {
+			            // Image server link, so give the URL text an a href and a fancybox class
+				        $replacetext = '<a href="' . $loc . '" class="fancybox">[' . $domainMatch[1] . ']</a>';
+		            } else {
+				        $replacetext = '<a href="' . $loc . '" target="_blank">[' . $domainMatch[1] . ']</a>';
+				    }
 			    } else {
 				    // Must be Twixt, so replace the whole text with the twixt data.
 				    $wholeblock = true;
