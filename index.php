@@ -148,10 +148,11 @@ $content .= '}
 
 
 // Build the main display
-$content .= '<div id="header">';
+$content .= '<div id="headerplusstatusform"><div id="header">';
 $content .= makeLinksForm($theme, $colsperscreen);
 $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a></div>';
 $content .= generateSendBoxes($posttoservices);
+$content .= '</div>';
 $content .= generateTweetTables($numColumns, $colsperscreen);
 $content .= '<div id="actionbox"></div>';
 
@@ -215,7 +216,7 @@ function makeLinksForm($theme, $colsperscreen) {
 	$content = '<div class="links">';
 	$content .= '<ul><li><input name="colsperscreen" id="colsperscreen" size="1" value="' . $colsperscreen . '" alt="Columns per screen" title="Columns per screen"><input type="submit" style="display:none"></li><li>';
 	$content .= '<a class="doactionbutton" href="actions.php?newcol=true"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
-	$content .= '</li><li>Theme: <select name="theme">';
+	$content .= '</li><li>Theme: <select id="theme">';
 	
     $dir = opendir('./themes');
     while($file = readdir($dir)) {

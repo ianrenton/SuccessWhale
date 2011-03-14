@@ -9,13 +9,23 @@ html, body {
 	max-height: 100%;
 }
 
+div#headerplusstatusform {
+	background: #0099b9;
+    background: -moz-linear-gradient(top, #a7eae0, #0099b9);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#a7eae0), to(#0099b9));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#a7eae0', EndColorStr='#0099b9', GradientType=0);
+    border-bottom: 1px solid #bbbbbb;
+}
+
 #header {
-	background:#7aa5d9;
+	/*background:#7aa5d9;*/
 	height:50px;
 	width:100%;
 	padding:0px;
 	margin:0px;
-	border-bottom: 1px solid #6a95c9;
+	/*border-bottom: 1px solid #6a95c9;*/
 }
 
 div.links {
@@ -49,7 +59,7 @@ div.links a.hover {
 #statusformdiv {
     height:50px;
 	padding:10px;
-	background: white;
+	/*background: white;*/
 }
 
 input[name="status"] {
@@ -83,7 +93,7 @@ div.columnheading {
 	background: #eeeeee;
     background: -moz-linear-gradient(top, #ffffff, #eeeeee);
     background: -webkit-gradient(linear,
-                left top, left bottom, from(#ffffff), to(#000000));
+                left top, left bottom, from(#ffffff), to(#eeeeee));
     filter: progid:DXImageTransform.Microsoft.Gradient(
                 StartColorStr='#ffffff', EndColorStr='#eeeeee', GradientType=0);
     border-bottom: 1px solid #bbbbbb;
@@ -97,8 +107,8 @@ a.navformbutton {
 	border: 1px solid #cccccc;
 	padding:0 3px 1px 3px;
 	border-radius:2px;
-	-moz-border-radius:2px;
-    -webkit-border-radius:2px;
+	--moz-border-radius:2px;
+    --webkit-border-radius:2px;
 	text-decoration:none;
 }
 
@@ -107,7 +117,7 @@ div.columnnav {
 }
 
 .item {
-	margin:20px;
+	margin:20px 20px 40px 20px;
 	color:#888888;
 }
 
@@ -148,16 +158,18 @@ table {
 	margin:0px;
 }
 
-table .bigtable {
+table.bigtable {
 	margin:5px;
 }
 
-table .metatable {
+div.metatable {
 	width:100%;
 	padding:0px;
 	/*border-bottom: 1px solid #cccccc;*/
 	margin-bottom:3px;
 	display:none;
+	float:left;
+	position:relative;
 }
 
 div.convoarea {
@@ -189,7 +201,7 @@ td .tweettextcell {
 }
 
 .tweettext a {
-	color:#7aa5d9;
+	color:#0099b9;
 	text-decoration:none;
 }
 
@@ -208,31 +220,18 @@ div.backtotop {
 div.colswitcherform {
 	text-align:center;
 	width:100%;
+	text-transform: none;
+	font-size:80%;
 }
 
-#nav {
-	float:right;
-}
-
-#nav ul {
-	margin: 0px;
-	padding: 0px;
-	white-space: nowrap;
-}
-
-#nav li {
-	list-style-type: none;
-	padding:0px;
-	display: inline;
-}
-
-#nav a {
-	color:#7aa5d9;
+div.colswitcherform a {
+	color:#cccccc;
+	border: 1px solid #cccccc;
+	padding:0 3px 1px 3px;
+	border-radius:2px;
+	--moz-border-radius:2px;
+    --webkit-border-radius:2px;
 	text-decoration:none;
-}
-
-#nav a.hover {
-	text-decoration:underline;
 }
 
 img {
@@ -240,7 +239,7 @@ img {
 }
 
 #addcolumndiv {
-	float:right;
+	float:left;
 	padding:15px 14px 14px 14px;
 }
 

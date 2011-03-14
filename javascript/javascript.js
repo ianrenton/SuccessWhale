@@ -169,14 +169,14 @@ $(document).ready(function() {
     // Mouseover statuses to show the metadata below
     $('div.item').unbind("hover");
     $('div.item').live("hover", function(e) {
-        $(this).find('table.metatable').toggle();
+        $(this).find('div.metatable').toggle();
         return false;
     });
     
     // Nav form buttons show/hide column options
     $('a.navformbutton').unbind("click");
     $('a.navformbutton').live("click", function(e) {
-        $(this).parents('div.columnheading').find('div.columnnav').toggle();
+        $(this).parents('div.columnheading').find('div.columnnav').toggle('fast');
         return false;
     });
     
@@ -184,8 +184,8 @@ $(document).ready(function() {
     $('a.convobutton').unbind("click");
     $('a.convobutton').live("click", function(e) {
         $url = $(this).attr('href');
-        $(this).parents('div.item').find('div.convoarea').toggle();
         $(this).parents('div.item').find('div.convoarea').load($url);
+        $(this).parents('div.item').find('div.convoarea').toggle('fast');
         return false;
     });
     
@@ -194,7 +194,7 @@ $(document).ready(function() {
     $('a.replybutton').live("click", function(e) {
         $url = $(this).attr('href');
         $(this).parents('div.item').find('div.replyarea').load($url);
-        $(this).parents('div.item').find('div.replyarea').toggle();
+        $(this).parents('div.item').find('div.replyarea').toggle('fast');
         return false;
     });
     

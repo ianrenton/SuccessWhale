@@ -97,18 +97,17 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
                 $content .= $tweetbody;
                 $content .= '</span>';
                 $content .= '</td></tr></table>';
-                $content .= '<table class="metatable" id="' . $_GET['div'] . '-box' . $i . '-metatable"><tr><td>';
+                $content .= '<div class="metatable">';
+                $content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
                 $content .= '<div class="metatext"><span class="name">';
                 $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
                 $content .= $data[$i][$userString]["name"];
                 $content .= '</a></span>';
                 $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
                 $content .= '</div>';
-                $content .= '</td><td>';
-                $content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-                $content .= '</td></tr></table>';
+                $content .= '</div>';
 			}
-			$content .= '</div><div class="clear"></div>';
+			$content .= '</div>';
 			$content .= '<div class="replyarea"></div>';
 			if (!$isConvo) {
 			    $content .= '<div class="convoarea"></div>';
@@ -171,17 +170,16 @@ function generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnigh
             //if (empty($statusbody)) { var_dump($data); }
             $content .= '</span>';
             $content .= '</td></tr></table>';
-            $content .= '<table class="metatable" id="' . $_GET['div'] . '-box' . $i . '-metatable"><tr><td>';
+            $content .= '<div class="metatable">';
+            //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
             $content .= '<div class="metatext"><span class="name">';
             //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
             $content .= $data[$i]["from"]["name"];
             $content .= /*</a>*/'</span>';
             $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_time"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
             $content .= '</div>';
-            $content .= '</td><td>';
-            //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-            $content .= '</td></tr></table>';
-			$content .= '</div><div class="clear"></div>';
+            $content .= '</div>';
+			$content .= '</div>';
 			if (!$isConvo) {
 			    $content .= '<div class="convoarea"></div>';
 			}
@@ -360,16 +358,7 @@ function parseLinks($html, &$numusers) {
 // Generates the pager
 function makeNavForm($count, $columnOptions, $thisColName) {
     $thisColNumber = substr($_GET['div'], 0);
-	$content = '<div class="columnnav"><div class="backtotop">';
-	$content .= '<a href="#column' . $thisColNumber . '"><img src="images/top.png" alt="Back to Top" title="Back to Top"/></a></div>';
-	
-	$content .= '<div id="nav"><ul>';
-	if ($count > 20) {
-		$content .= '<li><a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\', 1)"><img src="images/less.png" alt="Show fewer tweets" title="Show fewer tweets"/></a></li>';
-	}
-	$content .= '<li><a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\', 1)"><img src="images/more.png" alt="Show more tweets" title="Show more tweets"/></a></li>';
-	$content .= '</ul></div>';
-	
+	$content = '<div class="columnnav">';	
 	$content .= '<div name="colswitcherform" class="colswitcherform">';
 	
 	// Dropdown
@@ -404,9 +393,14 @@ function makeNavForm($count, $columnOptions, $thisColName) {
     $content .= '</select> ';
     $content .= '<input id="customcolumnentry' . $thisColNumber . '" id="customcolumnentry" size="10" disabled="true" value="@usr, @usr/list" onKeyUp="checkForSubmitCustomColumn(this, event, ' . $thisColNumber . ');"/>';
     
-    $content .= '<a class="confirmactionbutton" href="actions.php?delcol=' . $thisColNumber . '"><img src="images/delcolumn.png" title="Delete Column" alt="Delete Column"></a>';
-	$content .= '</div>';
+    $content .= '<a class="confirmactionbutton" href="actions.php?delcol=' . $thisColNumber . '">del</a>&nbsp;';
 	
+	$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . $count . '\', 1)">refresh</a>&nbsp;';
+	if ($count > 20) {
+		$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\', 1)">less</a>&nbsp;';
+	}
+	$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\', 1)">more</a>';
+	$content .= '</div>';
 	$content .= '</div>';
 	return $content;
 }
