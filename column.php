@@ -86,7 +86,9 @@ if (isset($_GET['column'])) {
             $content .= '<div class="columnheading">New Column';
         }
     }
-    $content .= '&nbsp;<a class="navformbutton" href="">V</a>';
+    
+    $content .= '&nbsp;<a class="navformbutton" href="">V</a>&nbsp;';
+    $content .= '&nbsp;<a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)">R</a>';
     $content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
     $content .= '</div>';
 	
@@ -112,11 +114,14 @@ if (isset($_GET['column'])) {
 	    $facebook = $facebooks[$username];
 	    if ($facebook != null) {
 	        $attachment =  array('access_token' => $facebook->getAccessToken());
-		    $data = $facebook->api("/me/home", $attachment);
-
-		    $content .= generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+	        try {
+		        $data = $facebook->api("/me/home", $attachment);
+		        $content .= generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+		    } catch (Exception $e) {
+		        $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div>';
+		    }
 	    } else {	
-		    $content .= '<div class="tweet">Failwhale sighted off the port bow, cap\'n!  Please try refreshing this page.</div>';
+		    $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div>';
 	    }
 	}
     

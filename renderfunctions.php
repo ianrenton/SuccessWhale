@@ -413,7 +413,6 @@ function makeNavForm($count, $columnOptions, $thisColName) {
     
     $content .= '<a class="confirmactionbutton" href="actions.php?delcol=' . $thisColNumber . '">del</a>&nbsp;';
 	
-	$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . $count . '\', 1)">refresh</a>&nbsp;';
 	if ($count > 20) {
 		$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\', 1)">less</a>&nbsp;';
 	}

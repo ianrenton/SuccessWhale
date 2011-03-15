@@ -100,7 +100,7 @@ div.columnheading {
     border-bottom: 1px solid #bbbbbb;
 }
 
-a.navformbutton {
+div.columnheading a {
     float:right;
     position:relative;
     top:-1px;
