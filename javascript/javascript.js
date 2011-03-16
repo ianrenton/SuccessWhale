@@ -100,7 +100,7 @@ function setDivSize() {
         vpheight = document.body.clientHeight; // IE 4
     }
     d = document.getElementById('mainarea');
-    d.style.height= "" + (vpheight-132) + "px";
+    d.style.height= "" + (vpheight-120) + "px";
 }
 
 // jQuery startup things (when DOM is avalable)

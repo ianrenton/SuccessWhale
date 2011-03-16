@@ -11,13 +11,12 @@ html, body {
 }
 
 div#headerplusstatusform {
-	background: #0099b9;
-    background: -moz-linear-gradient(top, #a7eae0, #0099b9);
+	background: #393939;
+    background: -moz-linear-gradient(top, #666666, #393939);
     background: -webkit-gradient(linear,
-                left top, left bottom, from(#a7eae0), to(#0099b9));
+                left top, left bottom, from(#666666), to(#393939));
     filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#a7eae0', EndColorStr='#0099b9', GradientType=0);
-    border-bottom: 1px solid #bbbbbb;
+                StartColorStr='#666666', EndColorStr='#393939', GradientType=0);
 }
 
 #header {
@@ -60,7 +59,10 @@ div.links a.hover {
 #statusformdiv {
     height:50px;
 	padding:10px;
-	/*background: white;*/
+}
+
+#statusformdiv a {
+    color:#666666;
 }
 
 input[name="status"] {
