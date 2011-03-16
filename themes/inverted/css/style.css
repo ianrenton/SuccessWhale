@@ -3,19 +3,30 @@ html, body {
 	padding:0px;
 	font-family:"Ubuntu","Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
 	font-size:90%;
+	background-color:#292929;
 }
 
 #page {
 	max-height: 100%;
 }
 
+div#headerplusstatusform {
+	background: #0099b9;
+    background: -moz-linear-gradient(top, #a7eae0, #0099b9);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#a7eae0), to(#0099b9));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#a7eae0', EndColorStr='#0099b9', GradientType=0);
+    border-bottom: 1px solid #bbbbbb;
+}
+
 #header {
-	background:#7aa5d9;
+	/*background:#7aa5d9;*/
 	height:50px;
 	width:100%;
 	padding:0px;
 	margin:0px;
-	border-bottom: 1px solid #6a95c9;
+	/*border-bottom: 1px solid #6a95c9;*/
 }
 
 div.links {
@@ -47,18 +58,16 @@ div.links a.hover {
 }
 
 #statusformdiv {
-    height:55px;
-    width:100%;
-	padding:0px 14px 14px 14px;
-	background: white;
-}
-
-form {
-	padding:10px 0 0 0;
-	margin:0px;
+    height:50px;
+	padding:10px;
+	/*background: white;*/
 }
 
 input[name="status"] {
+	width:70%;
+}
+
+input.reply {
 	width:70%;
 }
 
@@ -66,14 +75,15 @@ div#mainarea {
     overflow-x: auto;
     overflow-y: auto;
     width: 100%;
+    padding:0;
 }
 
 div.column {
     margin:0px;
 	height: 100%;
     overflow-y: auto;
-    border: 1px solid #bbbbbb;
-    background-color:#fafafa;
+    border: 1px solid #313131;
+    background-color:#222222;
 }
 
 div.columnheading {
@@ -82,25 +92,51 @@ div.columnheading {
 	text-align:center;
 	text-transform: uppercase;
 	font-size: 120%;
-	background: #eeeeee;
-    background: -moz-linear-gradient(top, #ffffff, #eeeeee);
+	background: #313131;
+    background: -moz-linear-gradient(top, #393939, #313131);
     background: -webkit-gradient(linear,
-                left top, left bottom, from(#ffffff), to(#000000));
+                left top, left bottom, from(#393939), to(#313131));
     filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#ffffff', EndColorStr='#eeeeee', GradientType=0);
-    border-bottom: 1px solid #bbbbbb;
+                StartColorStr='#393939', EndColorStr='#313131', GradientType=0);
+    border-bottom: 1px solid #313131;
+}
+
+div.columnheading a {
+	color:#888888;
+	text-decoration:none;
+}
+
+div.columnheading a.boxedbutton {
+    float:right;
+    position:relative;
+    top:-1px;
+	color:#666666;
+	border: 1px solid #666666;
+	padding:0 3px 1px 3px;
+	border-radius:2px;
+	--moz-border-radius:2px;
+    --webkit-border-radius:2px;
+	text-decoration:none;
+}
+
+div.columnnav {
+    display:none;
 }
 
 .item {
-	margin:20px;
+	margin:20px 20px 40px 20px;
 	color:#888888;
 }
 
-.convotweet {
+div.convo {
 	margin:10px 20px 10px 35px;
 }
 
-.convohider {
+div.reply {
+	margin:10px 20px 10px 45px;
+}
+
+div.convohider {
     float:left;
     position:relative;
     left:4px;
@@ -108,20 +144,20 @@ div.columnheading {
 
 .operations {
 	float:right;
-	color:#888888;
 }
 
 .operations a {
-	color:#888888;
+	color:#666666;
+	border: 1px solid #666666;
+	padding:0 3px 1px 3px;
+	border-radius:2px;
+	-moz-border-radius:2px;
+    -webkit-border-radius:2px;
 	text-decoration:none;
 }
 
-.operations a.hover {
-	text-decoration:underline;
-}
-
 .metatext {
-	color:#888888;
+	color:#666666;
 	width:100%;
 }
 
@@ -129,17 +165,34 @@ table {
 	margin:0px;
 }
 
-table .bigtable {
-	margin:5px;
+table.bigtable {
+	margin-top:5px;
 }
 
-table .metatable {
+div.metatable {
 	width:100%;
 	padding:0px;
 	/*border-bottom: 1px solid #cccccc;*/
 	margin-bottom:3px;
+	display:none;
+	float:left;
+	position:relative;
 }
 
+div.convoarea {
+    display:none;
+    margin-top:30px;
+    float:left;
+    position:relative;
+}
+
+div.replyarea {
+    display:none;
+    margin-top:30px;
+    float:left;
+    position:relative;
+}
+    
 tr {
 	margin: 0px;
 	padding: 0px;
@@ -156,17 +209,13 @@ td .tweettextcell {
 }
 
 .name a{
-	color:#444444;
+	color:#666666;
 	text-decoration:none;
 }
 
 .tweettext a {
-	color:#7aa5d9;
+	color:#0099b9;
 	text-decoration:none;
-}
-
-.facebookstatus .tweettext a {
-	color: #6666ff;
 }
 
 .tweettext a.hover {
@@ -184,31 +233,18 @@ div.backtotop {
 div.colswitcherform {
 	text-align:center;
 	width:100%;
+	text-transform: none;
+	font-size:80%;
 }
 
-#nav {
-	float:right;
-}
-
-#nav ul {
-	margin: 0px;
-	padding: 0px;
-	white-space: nowrap;
-}
-
-#nav li {
-	list-style-type: none;
-	padding:0px;
-	display: inline;
-}
-
-#nav a {
-	color:#7aa5d9;
+div.colswitcherform a {
+	color:#666666;
+	border: 1px solid #666666;
+	padding:0 3px 1px 3px;
+	border-radius:2px;
+	--moz-border-radius:2px;
+    --webkit-border-radius:2px;
 	text-decoration:none;
-}
-
-#nav a.hover {
-	text-decoration:underline;
 }
 
 img {
@@ -216,7 +252,7 @@ img {
 }
 
 #addcolumndiv {
-	float:right;
+	float:left;
 	padding:15px 14px 14px 14px;
 }
 
