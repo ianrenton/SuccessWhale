@@ -101,6 +101,11 @@ div.columnheading {
 }
 
 div.columnheading a {
+	color:#666666;
+	text-decoration:none;
+}
+
+div.columnheading a.boxedbutton {
     float:right;
     position:relative;
     top:-1px;

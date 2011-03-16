@@ -77,18 +77,19 @@ if (isset($_GET['column'])) {
 	    $url = $name;
 	}
 	
+	$content .= '<div class="columnheading"><a class="columnheading" href="">';
 	if ($columnOptions[$_GET['column']] != "") {
-        $content .= '<div class="columnheading">' . $columnOptions[$_GET['column']];
+        $content .= $columnOptions[$_GET['column']];
     } else {
         if (!empty($name)) {
-            $content .= '<div class="columnheading">' . $name;
+            $content .= $name;
         } else {
-            $content .= '<div class="columnheading">New Column';
+            $content .= 'New Column';
         }
     }
+    $content .= '</a>';
     
-    $content .= '&nbsp;<a class="navformbutton" href="">V</a>&nbsp;';
-    $content .= '&nbsp;<a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)">R</a>';
+    $content .= '<a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)" class="boxedbutton">R</a>';
     $content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
     $content .= '</div>';
 	

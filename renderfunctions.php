@@ -43,11 +43,19 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	for ($i=0; $i<count($data); $i++) {
 	
 	    // Spot truncated RTs and expand them
-	    if ($data[$i]["truncated"] == true) {
+	    if (isset($data[$i]["retweeted_status"])) {
+	        $avatar = '<a href="http://www.twitter.com/' . $data[$i]["retweeted_status"][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$i]["retweeted_status"][$userString]["profile_image_url"] . '" alt="' . $data[$i]["retweeted_status"][$userString]["name"] . '" title="' . $data[$i]["retweeted_status"][$userString]["name"] . '" border="0" width="48" height="48"></a>';
+	        $operations = makeOperations($data[$i]["retweeted_status"][$userString]["screen_name"], $data[$i]["retweeted_status"]["text"], $thisUser, $data[$i]["retweeted_status"]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["retweeted_status"]["in_reply_to_screen_name"], $data[$i]["retweeted_status"]["in_reply_to_status_id"], $numusers);
+	        $nameField = '<a href="http://www.twitter.com/' . $data[$i]["retweeted_status"][$userString]["screen_name"] . '" target="_blank">' . $data[$i]["retweeted_status"][$userString]["name"] . '</a>, RT by <a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">' . $data[$i][$userString]["name"] . '</a></span>';
 	        $tweetbody = "RT @" . $data[$i]["retweeted_status"][$userString]["screen_name"] . " " . $data[$i]["retweeted_status"]["text"];
+	        
 	    } else {
+	        $avatar = '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"></a>';
+	        $operations = makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+	        $nameField = '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">' . $data[$i][$userString]["name"] . '</a></span>';
 	        $tweetbody = $data[$i]["text"];
 	    }
+	    
 			
 		// We do this first so we know how many @users were linked up, if >0
 		// then we can do a reply-all.  User counting happens in parseLinks(),
@@ -85,9 +93,8 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
                 $content .= '<div class="metatext"><span class="name">Protected or deleted tweet.</span></div>';
 			} else {
                 $content .= '<table><tr><td>';
-                $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-                $content .= '<img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"><br/>';
-                $content .= '</a></td>';
+                $content .= $avatar;
+                $content .= '</td>';
                 $content .= '<td class="tweettextcell"><span class="tweettext">';
                 //$newtweetbody = "";
                 foreach(explode(" ", strip_tags($tweetbody)) as $key => $line) {
@@ -99,12 +106,12 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
                 $content .= '</td></tr></table>';
                 if (!$isConvo) {
                     $content .= '<div class="metatable">';
-                    $content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-                    $content .= '<div class="metatext"><span class="name">';
-                    $content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-                    $content .= $data[$i][$userString]["name"];
-                    $content .= '</a></span>';
-                    $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+                    $content .= $operations;
+                    $content .= '<div class="metatext">';
+                    $content .= makeFriendlyTime(strtotime($data[$i]["created_at"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst) . '<br/>';
+                    $content .= '<span class="name">';
+                    $content .= $nameField;
+                    $content .= '</span>';
                     $content .= '</div>';
                     $content .= '</div>';
                 }
@@ -380,7 +387,7 @@ function makeNavForm($count, $columnOptions, $thisColName) {
 	$content .= '<div name="colswitcherform" class="colswitcherform">';
 	
 	// Dropdown
-	$content .= '<select name="colswitcherbox" onchange="changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=\' + escape(this.options[this.selectedIndex].value) + \'&count=' . $count . '\', 1)">';
+	$content .= '<select name="colswitcherbox" size="10" onchange="changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=\' + escape(this.options[this.selectedIndex].value) + \'&count=' . $count . '\', 1)">';
 	
 	// Everything that is in columnOptions
 	foreach ($columnOptions as $key => $value) {
@@ -408,15 +415,16 @@ function makeNavForm($count, $columnOptions, $thisColName) {
 	}
 	
 	$content .= '<option value="----------">(Custom)</option>';
-    $content .= '</select> ';
-    $content .= '<input id="customcolumnentry' . $thisColNumber . '" id="customcolumnentry" size="10" disabled="true" value="@usr, @usr/list" onKeyUp="checkForSubmitCustomColumn(this, event, ' . $thisColNumber . ');"/>';
+    $content .= '</select><br/>';
+    $content .= '<input id="customcolumnentry' . $thisColNumber . '" class="customcolumnentry" size="20" disabled="true" value="@usr, @usr/list" onKeyUp="checkForSubmitCustomColumn(this, event, ' . $thisColNumber . ');"/><br/>';
     
-    $content .= '<a class="confirmactionbutton" href="actions.php?delcol=' . $thisColNumber . '">del</a>&nbsp;';
+    $content .= '<a class="confirmactionbutton boxedbutton" href="actions.php?delcol=' . $thisColNumber . '">del</a>&nbsp;';
+    $content .= '<a class="hidenavform boxedbutton" href="">hide</a>&nbsp;';
 	
 	if ($count > 20) {
-		$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\', 1)">less</a>&nbsp;';
+		$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\', 1)" class="boxedbutton">less</a>&nbsp;';
 	}
-	$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\', 1)">more</a>';
+	$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\', 1)" class="boxedbutton">more</a>';
 	$content .= '</div>';
 	$content .= '</div>';
 	return $content;

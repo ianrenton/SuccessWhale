@@ -122,6 +122,7 @@ $(document).ready(function() {
             recheckAccountsSelected();
             submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
             $("input#status").val('');
+            return false;
         }
         $(this).parent().children('span.counter').html("This post is " + $(this).val().length + " characters long.");
 	    if ($(this).val().length > 140) {
@@ -173,10 +174,19 @@ $(document).ready(function() {
         return false;
     });
     
-    // Nav form buttons show/hide column options
-    $('a.navformbutton').unbind("click");
-    $('a.navformbutton').live("click", function(e) {
+    // Headings show column options
+    $('a.columnheading').unbind("click");
+    $('a.columnheading').live("click", function(e) {
         $(this).parents('div.columnheading').find('div.columnnav').toggle('fast');
+        $(this).parents('div.columnheading').find('a.columnheading').toggle('fast');
+        return false;
+    });
+    
+    // Hide buttons column options
+    $('a.hidenavform').unbind("click");
+    $('a.hidenavform').live("click", function(e) {
+        $(this).parents('div.columnheading').find('div.columnnav').toggle('fast');
+        $(this).parents('div.columnheading').find('a.columnheading').toggle('fast');
         return false;
     });
     
