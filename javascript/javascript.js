@@ -93,14 +93,14 @@ function checkForSubmitCustomColumn(field, event, colNumber) {
 function setDivSize() {
     var vpheight = 0;
     if (typeof window.innerHeight == 'number') {
-        vpheight = window.innerHeight-2; // FF, Webkit, Opera
+        vpheight = window.innerHeight-1; // FF, Webkit, Opera
     } else if (document.documentElement && document.documentElement.clientHeight) {
         vpheight = document.documentElement.clientHeight; // IE 6+
     } else if (document.body && document.body.clientHeight) {
         vpheight = document.body.clientHeight; // IE 4
     }
     d = document.getElementById('mainarea');
-    d.style.height= "" + (vpheight-120) + "px";
+    d.style.height= "" + (vpheight-122) + "px";
 }
 
 // jQuery startup things (when DOM is avalable)
@@ -139,7 +139,7 @@ $(document).ready(function() {
     $('input.replybutton').unbind("click");
     $('input.replybutton').live("click", function(e) {
         submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
-        $(this).parents('div.reply').hide();
+        $.fancybox.close();
         return false;
     });
 
@@ -149,7 +149,7 @@ $(document).ready(function() {
     $('input.reply').live("keyup", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
             submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
-            $(this).parents('div.reply').hide();
+            $.fancybox.close();
         }
         $(this).parent().children('span.counter').html($(this).val().length);
 	    if ($(this).val().length > 140) {
@@ -177,15 +177,15 @@ $(document).ready(function() {
     // Headings show column options
     $('a.columnheading').unbind("click");
     $('a.columnheading').live("click", function(e) {
+        $(this).parents('div.columnheading').find('a.columnheading').toggle();
         $(this).parents('div.columnheading').find('div.columnnav').toggle('fast');
-        $(this).parents('div.columnheading').find('a.columnheading').toggle('fast');
         return false;
     });
     
-    // Hide buttons column options
+    // Hide buttons hide column options
     $('a.hidenavform').unbind("click");
     $('a.hidenavform').live("click", function(e) {
-        $(this).parents('div.columnheading').find('div.columnnav').toggle('fast');
+        $(this).parents('div.columnheading').find('div.columnnav').toggle();
         $(this).parents('div.columnheading').find('a.columnheading').toggle('fast');
         return false;
     });
@@ -194,17 +194,25 @@ $(document).ready(function() {
     $('a.convobutton').unbind("click");
     $('a.convobutton').live("click", function(e) {
         $url = $(this).attr('href');
-        $(this).parents('div.item').find('div.convoarea').load($url);
-        $(this).parents('div.item').find('div.convoarea').toggle('fast');
+        if ($(this).parents('div.item').find('div.convoarea').is(":visible")) {
+            $(this).parents('div.item').find('div.convoarea').hide();
+        } else {
+            $(this).parents('div.item').find('div.convoarea').load($url, function() {
+                $(this).parents('div.item').find('div.convoarea').show();
+            });
+        }
         return false;
     });
     
-    // Reply buttons show/hide the reply box
+    // Reply buttons show the reply box
     $('a.replybutton').unbind("click");
     $('a.replybutton').live("click", function(e) {
         $url = $(this).attr('href');
-        $(this).parents('div.item').find('div.replyarea').load($url);
-        $(this).parents('div.item').find('div.replyarea').toggle('fast');
+        $.fancybox({ 'href': $url,
+                     'padding': 0,
+                     'margin': 0,
+                     'onComplete': function() {$('input.reply').focus();}
+                     });
         return false;
     });
     
@@ -265,7 +273,6 @@ $(document).ready(function() {
             return false;
         } else if ($(this).attr('href').match(yfrogRegex)) {
             var imageurl = $(this).attr('href') + ":iphone";
-            alert(imageurl);
             $.fancybox({ 'href': imageurl });
             return false;
         } else {

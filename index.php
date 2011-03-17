@@ -154,7 +154,6 @@ $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/>
 $content .= generateSendBoxes($posttoservices);
 $content .= '</div>';
 $content .= generateTweetTables($numColumns, $colsperscreen);
-$content .= '<div id="actionbox"></div>';
 
 mysql_close();
 

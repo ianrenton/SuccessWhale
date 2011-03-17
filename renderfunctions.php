@@ -117,7 +117,6 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
                 }
 			}
 			$content .= '</div>';
-			$content .= '<div class="replyarea"></div>';
 			if (!$isConvo) {
 			    $content .= '<div class="convoarea"></div>';
 			}
@@ -194,7 +193,6 @@ function generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnigh
 			if (!$isConvo) {
 			    $content .= '<div class="convoarea"></div>';
 			}
-			$content .= '<div class="replyarea"></div>';
 			$content .= '</div><div class="clear"></div>';
 		}
 	}
