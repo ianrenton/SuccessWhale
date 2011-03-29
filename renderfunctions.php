@@ -41,31 +41,35 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	$userString = "user";
 	if ($isDM == true) $userString = "sender";
 	for ($i=0; $i<count($data); $i++) {
-	
-	    // Spot truncated RTs and expand them
-	    if (isset($data[$i]["retweeted_status"])) {
-	        $avatar = '<a href="http://www.twitter.com/' . $data[$i]["retweeted_status"][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$i]["retweeted_status"][$userString]["profile_image_url"] . '" alt="' . $data[$i]["retweeted_status"][$userString]["name"] . '" title="' . $data[$i]["retweeted_status"][$userString]["name"] . '" border="0" width="48" height="48"></a>';
-	        $operations = makeTwitterOperations($data[$i]["retweeted_status"][$userString]["screen_name"], $data[$i]["retweeted_status"]["text"], $thisUser, $data[$i]["retweeted_status"]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["retweeted_status"]["in_reply_to_screen_name"], $data[$i]["retweeted_status"]["in_reply_to_status_id"], $numusers);
-	        $nameField = '<a href="http://www.twitter.com/' . $data[$i]["retweeted_status"][$userString]["screen_name"] . '" target="_blank">' . $data[$i]["retweeted_status"][$userString]["name"] . '</a>, RT by <a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">' . $data[$i][$userString]["name"] . '</a></span>';
-	        $tweetbody = "RT @" . $data[$i]["retweeted_status"][$userString]["screen_name"] . " " . $data[$i]["retweeted_status"]["text"];
-	        
-	    } else {
-	        $avatar = '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"></a>';
-	        $operations = makeTwitterOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-	        $nameField = '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">' . $data[$i][$userString]["name"] . '</a></span>';
-	        $tweetbody = $data[$i]["text"];
-	    }
 	    
 			
 		// We do this first so we know how many @users were linked up, if >0
 		// then we can do a reply-all.  User counting happens in parseLinks(),
 		// so we set this to zero before we call it.
 		$numusers = 0;
+	
+	    // Spot truncated RTs and expand them
+	    if (isset($data[$i]["retweeted_status"])) {
+	        $avatar = '<a href="http://www.twitter.com/' . $data[$i]["retweeted_status"][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$i]["retweeted_status"][$userString]["profile_image_url"] . '" alt="' . $data[$i]["retweeted_status"][$userString]["name"] . '" title="' . $data[$i]["retweeted_status"][$userString]["name"] . '" border="0" width="48" height="48"></a>';
+	        $nameField = '<a href="http://www.twitter.com/' . $data[$i]["retweeted_status"][$userString]["screen_name"] . '" target="_blank">' . $data[$i]["retweeted_status"][$userString]["name"] . '</a>, RT by <a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">' . $data[$i][$userString]["name"] . '</a></span>';
+	        $tweetbody = "RT @" . $data[$i]["retweeted_status"][$userString]["screen_name"] . " " . $data[$i]["retweeted_status"]["text"];
+	        // Expand short URLs etc first, so we can apply the blocklist to real URLs.
+		    // A bit of processing overhead, but it stops unwelcome URLs in tweets
+		    // evading the blocker by using a URL shortener.
+		    $tweetbody = parseLinks($tweetbody, $numusers);
+	        $operations = makeTwitterOperations($data[$i]["retweeted_status"][$userString]["screen_name"], $data[$i]["retweeted_status"]["text"], $thisUser, $data[$i]["retweeted_status"]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["retweeted_status"]["in_reply_to_screen_name"], $data[$i]["retweeted_status"]["in_reply_to_status_id"], $numusers);
+	    } else {
+	        $avatar = '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"></a>';
+	        $nameField = '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">' . $data[$i][$userString]["name"] . '</a></span>';
+	        $tweetbody = $data[$i]["text"];
+	        // Expand short URLs etc first, so we can apply the blocklist to real URLs.
+		    // A bit of processing overhead, but it stops unwelcome URLs in tweets
+		    // evading the blocker by using a URL shortener.
+		    $tweetbody = parseLinks($tweetbody, $numusers);
+		    $operations = makeTwitterOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+	    }
 			
-		// Expand short URLs etc first, so we can apply the blocklist to real URLs.
-		// A bit of processing overhead, but it stops unwelcome URLs in tweets
-		// evading the blocker by using a URL shortener.
-		$tweetbody = parseLinks($tweetbody, $numusers);
+		
 			
 		// Check blocklist
 		$match = false;
