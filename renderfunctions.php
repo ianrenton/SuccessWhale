@@ -45,13 +45,13 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	    // Spot truncated RTs and expand them
 	    if (isset($data[$i]["retweeted_status"])) {
 	        $avatar = '<a href="http://www.twitter.com/' . $data[$i]["retweeted_status"][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$i]["retweeted_status"][$userString]["profile_image_url"] . '" alt="' . $data[$i]["retweeted_status"][$userString]["name"] . '" title="' . $data[$i]["retweeted_status"][$userString]["name"] . '" border="0" width="48" height="48"></a>';
-	        $operations = makeOperations($data[$i]["retweeted_status"][$userString]["screen_name"], $data[$i]["retweeted_status"]["text"], $thisUser, $data[$i]["retweeted_status"]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["retweeted_status"]["in_reply_to_screen_name"], $data[$i]["retweeted_status"]["in_reply_to_status_id"], $numusers);
+	        $operations = makeTwitterOperations($data[$i]["retweeted_status"][$userString]["screen_name"], $data[$i]["retweeted_status"]["text"], $thisUser, $data[$i]["retweeted_status"]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["retweeted_status"]["in_reply_to_screen_name"], $data[$i]["retweeted_status"]["in_reply_to_status_id"], $numusers);
 	        $nameField = '<a href="http://www.twitter.com/' . $data[$i]["retweeted_status"][$userString]["screen_name"] . '" target="_blank">' . $data[$i]["retweeted_status"][$userString]["name"] . '</a>, RT by <a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">' . $data[$i][$userString]["name"] . '</a></span>';
 	        $tweetbody = "RT @" . $data[$i]["retweeted_status"][$userString]["screen_name"] . " " . $data[$i]["retweeted_status"]["text"];
 	        
 	    } else {
 	        $avatar = '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$i][$userString]["profile_image_url"] . '" alt="' . $data[$i][$userString]["name"] . '" title="' . $data[$i][$userString]["name"] . '" border="0" width="48" height="48"></a>';
-	        $operations = makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+	        $operations = makeTwitterOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
 	        $nameField = '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">' . $data[$i][$userString]["name"] . '</a></span>';
 	        $tweetbody = $data[$i]["text"];
 	    }
@@ -95,12 +95,7 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
                 $content .= '<table><tr><td>';
                 $content .= $avatar;
                 $content .= '</td>';
-                $content .= '<td class="tweettextcell"><span class="tweettext">';
-                //$newtweetbody = "";
-                foreach(explode(" ", strip_tags($tweetbody)) as $key => $line) {
-                    //$newtweetbody .= $line . " ";
-                    if (strlen($line) > 30) $tweetbody = str_replace($line, wordwrap($line, 25, "- ", 1), $tweetbody);
-                }
+                $content .= '<td class="tweettextcell"><span class="tweettext wraptext">';
                 $content .= $tweetbody;
                 $content .= '</span>';
                 $content .= '</td></tr></table>';
@@ -128,25 +123,36 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 
 
 // Generates an individual facebook status list
-function generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst) {
+function generateFBStatusList($data, $isNotifications, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst) {
 	
 	//Unpack blocklist
 	$blocks = explode(";", $blocklist);
 	
-	$data = $data['data'];
+	if (!$isNotifications) {
+	    $data = $data['data'];
+	}
+	
 	for ($i=0; $i<count($data); $i++) {
 			
 		// Get the status body based on what the data contains
-		if ($data[$i]["type"] == "status") {
-		    $statusbody = $data[$i]["message"];
-		} elseif ($data[$i]["type"] == "link") {
-		    $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["description"];
-		} elseif ($data[$i]["type"] == "photo") {
-		    $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["message"];
-		} elseif ($data[$i]["type"] == "video") {
-		    $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["message"];
+		if ($isNotifications) {
+		    $statusbody = $data[$i]["title_html"] . '<br/>' . $data[$i]["body_html"];
+		    $avatar = '<img class="avatar" src="http://graph.facebook.com/' .$data[$i]["sender_id"] . '/picture" border="0" width="48" height="48"><br/>';
+            $timeString = makeFriendlyTime($data[$i]["created_time"]+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
 		} else {
-		    $statusbody = "";
+	        if ($data[$i]["type"] == "status") {
+		        $statusbody = $data[$i]["message"];
+		    } elseif ($data[$i]["type"] == "link") {
+		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["description"];
+		    } elseif ($data[$i]["type"] == "photo") {
+		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["message"];
+		    } elseif ($data[$i]["type"] == "video") {
+		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["message"];
+		    } else {
+		        $statusbody = "";
+		    }
+		    $avatar = '<img class="avatar" src="http://graph.facebook.com/' .$data[$i]["from"]["id"] . '/picture" alt="' . $data[$i]["from"]["name"] . '" title="' . $data[$i]["from"]["name"] . '" border="0" width="48" height="48"><br/>';
+            $timeString = makeFriendlyTime(strtotime($data[$i]["created_time"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
 		}
 			
 		// Check blocklist
@@ -167,25 +173,24 @@ function generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnigh
 			$content .= '<div class="item facebookstatus">';
 			$content .= '<div class="text">';
             $content .= '<table><tr><td>';
-            //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-            $content .= '<img class="avatar" src="http://graph.facebook.com/' .$data[$i]["from"]["id"] . '/picture" alt="' . $data[$i]["from"]["name"] . '" title="' . $data[$i]["from"]["name"] . '" border="0" width="48" height="48"><br/>';
-            $content .= /*</a>*/'</td>';
-            $content .= '<td class="tweettextcell"><span class="tweettext">';
-            foreach(explode(" ", strip_tags($statusbody)) as $key => $line) {
-                if (strlen($line) > 30) $statusbody = str_replace($line, wordwrap($line, 25, "- ", 1), $statusbody);
-            }
+            $content .= $avatar;
+            $content .= '</td>';
+            $content .= '<td class="tweettextcell"><span class="tweettext wraptext">';
             $content .= $statusbody;
-            //if (empty($statusbody)) { var_dump($data); }
             $content .= '</span>';
             $content .= '</td></tr></table>';
             if (!$isConvo) {
                 $content .= '<div class="metatable">';
                 //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
-                $content .= '<div class="metatext"><span class="name">';
-                //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
-                $content .= $data[$i]["from"]["name"];
-                $content .= /*</a>*/'</span>';
-                $content .= ' &bull; ' . makeFriendlyTime(strtotime($data[$i]["created_time"])+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+                $content .= '<div class="metatext">';
+                if (!$isNotifications) {
+                    $content .= '<span class="name">';
+                    //$content .= '<a href="http://www.twitter.com/' . $data[$i][$userString]["screen_name"] . '" target="_blank">';
+                    $content .= $data[$i]["from"]["name"];
+                    $content .= /*</a>*/'</span>';
+                    $content .= ' &bull; ';
+                }
+                $content .= $timeString;
                 $content .= '</div>';
                 $content .= '</div>';
             }
@@ -234,7 +239,7 @@ function makeFriendlyTime($time, $midnightYesterday, $oneWeekAgo, $janFirst) {
 // Generates the "@ dm rt" options for each tweet.  $isMention is required because we only show the Report button
 // on mentions, if you've followed the person already we assume non-spammer.
 // $numusers > 0 means we need to do a reply-all button
-function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isDM, $isConvoTweet, $i, $replyToUser, $replyToID, $numusers) {
+function makeTwitterOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isDM, $isConvoTweet, $i, $replyToUser, $replyToID, $numusers) {
 	$content = '<div class="operations">';
 	if ($isDM == true)  {
 		if ($username != $thisUser) {
@@ -244,7 +249,7 @@ function makeOperations($username, $tweet, $thisUser, $tweetid, $isMention, $isD
 		}
 	} else {
 	    if ((!$isConvoTweet) && ($replyToID > 0)) {
-	        $content .= '<a class="convobutton" href="convo.php?thisUser=' . $thisUser . '&status=' . $tweetid . '">convo</a>&nbsp;';
+	        $content .= '<a class="convobutton" href="convo.php?service=twitter&thisUser=' . $thisUser . '&status=' . $tweetid . '">convo</a>&nbsp;';
 	    }
 		if ($username != $thisUser) {
 			$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('@'.$username) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">@</a>&nbsp;';

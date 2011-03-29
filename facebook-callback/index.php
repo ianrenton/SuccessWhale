@@ -39,8 +39,9 @@ if (FACEBOOK_ENABLED) {
             }
             // The user is now logged in, so record their Facebook details alongside
             // their other details.
-            $query="INSERT INTO facebook_users (sw_uid,session_key,uid,expires,secret,access_token,sig)
+            $query="INSERT INTO facebook_users (sw_uid,session,session_key,uid,expires,secret,access_token,sig)
                     VALUES ('" . mysql_real_escape_string($_SESSION['sw_uid']) . "', '".
+                                mysql_real_escape_string(serialize($session))."','".
                                 mysql_real_escape_string($session['session_key'])."','".
                                 mysql_real_escape_string($session['uid'])."','".
                                 mysql_real_escape_string($session['expires'])."','".
@@ -51,6 +52,7 @@ if (FACEBOOK_ENABLED) {
         } else {
             // This Facebook account has been seen before, so update details.
             $query = "UPDATE facebook_users SET session_key='" . mysql_real_escape_string($session['session_key']) . 
+                                                "', session='" . mysql_real_escape_string(serialize($session)) .  
                                                 "', expires='" . mysql_real_escape_string($session['expires']) . 
                                                 "', secret='" . mysql_real_escape_string($session['secret']) . 
                                                 "', access_token='" . mysql_real_escape_string($session['access_token']) . 

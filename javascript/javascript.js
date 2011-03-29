@@ -4,7 +4,9 @@ var refreshIDs = new Array();
 function changeColumn(colnumber, url, updatedb) {
     if (url.indexOf("----------") == -1) {
         // Normal use
-        $("#column" + colnumber).load(url + "&updatedb=" + updatedb);
+        $("#column" + colnumber).load((url + "&updatedb=" + updatedb), function() {
+            $('.wraptext').breakly(20);
+        });
         clearInterval(refreshIDs[colnumber]);
         refreshIDs[colnumber] = setInterval(function() {
             $("#column" + colnumber).load(url);
@@ -208,10 +210,15 @@ $(document).ready(function() {
     $('a.replybutton').unbind("click");
     $('a.replybutton').live("click", function(e) {
         $url = $(this).attr('href');
+        var position = $(this).position();
         $.fancybox({ 'href': $url,
                      'padding': 0,
                      'margin': 0,
-                     'onComplete': function() {$('input.reply').focus();}
+                     'onComplete': function() {
+                        $('input.reply').focus();
+                        //$("p:last").text( "left: " + position.left + ", top: " + position.top );
+                        //$('div#fancybox').
+                     }
                      });
         return false;
     });

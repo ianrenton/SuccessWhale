@@ -116,10 +116,19 @@ if (isset($_GET['column'])) {
 	    if ($facebook != null) {
 	        $attachment =  array('access_token' => $facebook->getAccessToken());
 	        try {
-		        $data = $facebook->api("/me/home", $attachment);
-		        $content .= generateFBStatusList($data, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
+	            // Catch the Notifications column, which needs to be in FQL
+	            if ($name == "notifications") {
+	                $attachment['query'] = 'SELECT notification_id, sender_id, created_time, title_html, body_html, href FROM notification WHERE recipient_id=' . $facebook->getUser() . /*'AND is_unread = 1' . */ 'AND is_hidden = 0 LIMIT ' . $paramArray['count'];
+                    $attachment['method'] = 'fql.query';
+                    $data = $facebook->api($attachment);
+                    $isNotifications = true;
+	            } else {
+		            $data = $facebook->api($name, $attachment);
+                    $isNotifications = false;
+		        }
+		        $content .= generateFBStatusList($data, $isNotifications, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
 		    } catch (Exception $e) {
-		        $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div>';
+		        $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div><div class="tweet"><br/>' . $e . '</div>';
 		    }
 	    } else {	
 		    $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div>';

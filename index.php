@@ -77,7 +77,7 @@ if (TWITTER_ENABLED) {
 }
 $facebooks = array();
 if (FACEBOOK_ENABLED) {
-    $query = "SELECT access_token FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
+    $query = "SELECT session FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
     $result = mysql_query($query) or die (mysql_error());
     while ($row = mysql_fetch_assoc($result)) {
         $facebook = new Facebook(array(
@@ -86,15 +86,14 @@ if (FACEBOOK_ENABLED) {
           'cookie' => true,
         ));
         try {
-         $attachment =  array('access_token' => $row['access_token']);
-         $me = $facebook->api('/me', 'GET', $attachment);
-         $name = $me['name'];
-         $facebooks[$name] = $facebook;
-        }
+	         $facebook->setSession(unserialize($row['session']));
+             $me = $facebook->api('/me', 'GET');
+             $name = $me['name'];
+             $facebooks[$name] = $facebook;
+         }
          catch (Exception $e) {
-          //$res = mysql_query('DELETE FROM facebook_users WHERE expires=0');
-          // We don't have a good session, so let's get one!
-          //TODO re-implement once offline support is sorted: header('Location: ./facebook-callback/');
+          // We don't have a good session
+          var_dump($e);
         }
     }
     $_SESSION['facebooks'] = $facebooks;
@@ -121,7 +120,10 @@ foreach ($twitters as $name => $twitter) {
 foreach ($facebooks as $name => $facebook) {
     // Facebook basics TODO
     $columnOptions[("facebook:" . $name)] = "-- Facebook: " . $name . " --";
-    $columnOptions["facebook:" . $name . ":blah"] = "Friends Status Feed";
+    $columnOptions["facebook:" . $name . ":/me/home"] = "Main Feed";
+    $columnOptions["facebook:" . $name . ":/me/feed"] = "Wall Posts";
+    $columnOptions["facebook:" . $name . ":notifications"] = "Notifications";
+    $columnOptions["facebook:" . $name . ":/me/events"] = "Events";
 }
 // Session-global the column options (timelines, lists etc.)
 $_SESSION['columnOptions'] = $columnOptions;

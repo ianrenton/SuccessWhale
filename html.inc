@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="javascript/jquery.min.js"></script>
 	<script type="text/javascript" src="javascript/jquery.form.js"></script>
 	<script type="text/javascript" src="javascript/jquery.blockUI.js"></script>
-	<script type="text/javascript" src="javascript/jquery.uniform.min.js"></script>
+	<script type="text/javascript" src="javascript/jquery.breakly.js"></script>
 	<script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 	
 	<script type="text/javascript" src="javascript/javascript.js"></script>
