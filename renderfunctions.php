@@ -69,8 +69,6 @@ function generateTweetList($data, $isMention, $isDM, $isConvo, $thisUser, $block
 		    $operations = makeTwitterOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
 	    }
 			
-		
-			
 		// Check blocklist
 		$match = false;
 		foreach ($blocks as $blockstring) {
@@ -140,18 +138,18 @@ function generateFBStatusList($data, $isNotifications, $thisUser, $blocklist, $u
 			
 		// Get the status body based on what the data contains
 		if ($isNotifications) {
-		    $statusbody = $data[$i]["title_html"] . '<br/>' . $data[$i]["body_html"];
+		    $statusbody = $data[$i]["title_html"] . '<br/>' . parseLinks($data[$i]["body_html"], $ignore);
 		    $avatar = '<img class="avatar" src="http://graph.facebook.com/' .$data[$i]["sender_id"] . '/picture" border="0" width="48" height="48"><br/>';
             $timeString = makeFriendlyTime($data[$i]["created_time"]+$utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
 		} else {
 	        if ($data[$i]["type"] == "status") {
-		        $statusbody = $data[$i]["message"];
+		        $statusbody = parseLinks($data[$i]["message"],$ignore);
 		    } elseif ($data[$i]["type"] == "link") {
-		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["description"];
+		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . parseLinks($data[$i]["description"],$ignore);
 		    } elseif ($data[$i]["type"] == "photo") {
-		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["message"];
+		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . parseLinks($data[$i]["message"],$ignore);
 		    } elseif ($data[$i]["type"] == "video") {
-		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . $data[$i]["message"];
+		        $statusbody = '<a href="' . $data[$i]["link"] . '">' . $data[$i]["name"] . '</a><br/>' . parseLinks($data[$i]["message"],$ignore);
 		    } else {
 		        $statusbody = "";
 		    }
