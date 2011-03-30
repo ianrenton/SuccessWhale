@@ -135,7 +135,6 @@ function generateFBStatusList($data, $isNotifications, $thisUser, $blocklist, $u
 	}
 	
 	for ($i=0; $i<count($data); $i++) {
-			
 		// Get the status body based on what the data contains
 		if ($isNotifications) {
 		    $statusbody = $data[$i]["title_html"] . '<br/>' . parseLinks($data[$i]["body_html"], $ignore);
@@ -183,7 +182,7 @@ function generateFBStatusList($data, $isNotifications, $thisUser, $blocklist, $u
             $content .= '</td></tr></table>';
             if (!$isConvo) {
                 $content .= '<div class="metatable">';
-                //$content .= makeOperations($data[$i][$userString]["screen_name"], $data[$i]["text"], $thisUser, $data[$i]["id"], $isMention, $isDM, $isConvo, $i, $data[$i]["in_reply_to_screen_name"], $data[$i]["in_reply_to_status_id"], $numusers);
+                $content .= makeFBOperations($data[$i]["id"], $data[$i]["actions"][0]["link"], $data[$i]["actions"][1]["link"]);
                 $content .= '<div class="metatext">';
                 if (!$isNotifications) {
                     $content .= '<span class="name">';
@@ -281,6 +280,16 @@ function makeTwitterOperations($username, $tweet, $thisUser, $tweetid, $isMentio
 			$content .= '<a class="confirmactionbutton" href="actions.php?destroystatus=' . $tweetid . '&thisUser=' . urlencode($thisUser) . '">del</a>&nbsp;';
 		}
 	}
+	$content .= '</div>';
+	return $content;
+}
+
+
+// Generates the "comment like convo" options for each FB status.
+function makeFBOperations($statusID, $commentLink, $likeLink) {
+	$content = '<div class="operations">';
+	$content .= '<a class="replybutton" href="' . $commentLink . '">comment</a>&nbsp;';
+	$content .= '<a class="replybutton" href="' . $likeLink . '">like</a>&nbsp;';
 	$content .= '</div>';
 	return $content;
 }
