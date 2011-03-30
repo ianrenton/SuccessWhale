@@ -6,11 +6,11 @@ function changeColumn(colnumber, url, updatedb) {
         // Normal use
         $("#column" + colnumber).load((url + "&updatedb=" + updatedb), function() {
             $('.wraptext').breakly(20);
+            clearInterval(refreshIDs[colnumber]);
+            refreshIDs[colnumber] = setInterval(function() {
+                $("#column" + colnumber).load(url);
+            }, 300000);
         });
-        clearInterval(refreshIDs[colnumber]);
-        refreshIDs[colnumber] = setInterval(function() {
-            $("#column" + colnumber).load(url);
-        }, 300000);
     } else {
         // "Other" selected in dropdown
         document.getElementById("customcolumnentry" + colnumber).disabled = false;
@@ -18,30 +18,6 @@ function changeColumn(colnumber, url, updatedb) {
         document.getElementById("customcolumnentry" + colnumber).focus();
     }
 }
-
-// BlockUI
-$(document).ajaxStart(function() {
-	$.blockUI({ 
-		message: '<img src="images/ajax-loader.gif" alt="Loading..."/> Thinking...', 
-		timeout: 12000,
-		showOverlay: false, 
-		centerY: false, 
-		css: { 
-			width: '130px', 
-			top: '10px',
-			bottom: '', 
-			left: '400px', 
-			right: '', 
-			border: '1px solid #cccccc', 
-			padding: '5px', 
-			backgroundColor: '#cfe2ff', 
-			'-webkit-border-radius': '10px', 
-			'-moz-border-radius': '10px', 
-			opacity: .6, 
-			color: '#000'
-		} 
-	});
-}).ajaxStop($.unblockUI);
 
 // Submit status
 function submitStatus(status, replyId, postToAccounts) {
@@ -107,6 +83,17 @@ function setDivSize() {
 
 // jQuery startup things (when DOM is avalable)
 $(document).ready(function() {
+
+    // jQuery UI formatting
+    $('input#submitbutton').button().css({padding:2});
+    $('input.accountSelector').button({
+        icons: {
+            primary: "ui-icon-gear",
+            secondary: "ui-icon-triangle-1-s"
+        }
+    }).css({padding:0});
+    $('label').css({padding:0});
+
     // Clicking main Submit button posts status
     $('input#submitbutton').unbind("click");
     $('input#submitbutton').live("click", function() {
@@ -169,10 +156,29 @@ $(document).ready(function() {
         recheckAccountsSelected();
     });
     
-    // Mouseover statuses to show the metadata below
-    $('div.item').unbind("hover");
-    $('div.item').live("hover", function(e) {
-        $(this).find('div.metatable').toggle();
+    // Mouseover statuses to show the operations below.  Entering and leaving handled
+    // separately due to the many strange ways in which mouse paths can break
+    // hover().
+    $('div.item').unbind("mouseenter mouseleave");
+    $('div.item').live("mouseenter", function() {
+        $(this).find('div.operations').show();
+        return false;
+    });
+    $('div.item').live("mouseleave", function() {
+        $(this).find('div.operations').hide();
+        return false;
+    });
+    
+    // Mouseover images to show the metadata below.  Entering and leaving handled
+    // separately due to the many strange ways in which mouse paths can break
+    // hover().
+    $('img.avatar').unbind("mouseenter mouseleave");
+    $('img.avatar').live("mouseenter", function() {
+        $(this).parents('div.item').find('div.metatext').show();
+        return false;
+    });
+    $('img.avatar').live("mouseleave", function() {
+        $(this).parents('div.item').find('div.metatext').hide();
         return false;
     });
     
@@ -215,9 +221,8 @@ $(document).ready(function() {
                      'padding': 0,
                      'margin': 0,
                      'onComplete': function() {
-                        $('input.reply').focus();
-                        //$("p:last").text( "left: " + position.left + ", top: " + position.top );
-                        //$('div#fancybox').
+                        $('input.reply').putCursorAtEnd();
+                        $('input.replybutton').button();
                      }
                      });
         return false;
@@ -305,6 +310,30 @@ $(window).resize(function() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(setDivSize, 100);
 });
+
+// jQuery on AJAX start things
+$(document).ajaxStart(function() {
+	$.blockUI({ 
+		message: '<img src="images/ajax-loader.gif" alt="Loading..."/> Thinking...', 
+		timeout: 12000,
+		showOverlay: false, 
+		centerY: false, 
+		css: { 
+			width: '130px', 
+			top: '10px',
+			bottom: '', 
+			left: '400px', 
+			right: '', 
+			border: '1px solid #cccccc', 
+			padding: '5px', 
+			backgroundColor: '#cfe2ff', 
+			'-webkit-border-radius': '10px', 
+			'-moz-border-radius': '10px', 
+			opacity: .6, 
+			color: '#000'
+		} 
+	});
+}).ajaxStop($.unblockUI);
 
 // Normal startup things (when the page has fully loaded)
 function init() {

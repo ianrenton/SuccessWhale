@@ -169,22 +169,23 @@ function generateSendBoxes($posttoservices) {
     $content .= '<input type="text" autocomplete="off" name="status" id="status" class="status">';
     $content .= '<input type="submit" name="submit" id="submitbutton" value="Post" />';
 	$content .= '&nbsp;&nbsp;<span class="counter">This post is 0 characters long</span><br/>';
-
+    
+    $counter = 0;
     foreach ($_SESSION['twitters'] as $username => $twitter) {
-        $content .= '<input type="checkbox" class="accountSelector" id="twitter:' . $username . '" value="twitter:' . $username . '" ';
+        $content .= '<input type="checkbox" class="accountSelector" id="accountSelector' . ++$counter . '" value="twitter:' . $username . '" ';
         if (strpos($posttoservices, ("twitter:" . $username)) !== FALSE) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<label for="twitter:' . $username . '">twitter:' . $username . '</label>';
+        $content .= '<label for="accountSelector' . $counter . '">twitter:' . $username . '</label>';
     }
     foreach ($_SESSION['facebooks'] as $username => $facebook) {
-        $content .= '<input type="checkbox" class="accountSelector" id="facebook:' . $username . '" value="facebook:' . $username . '" ';
+        $content .= '<input type="checkbox" class="accountSelector" id="accountSelector' . ++$counter . '" value="facebook:' . $username . '" ';
         if (strpos($posttoservices, ("facebook:" . $username)) !== FALSE) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<label for="facebook:' . $username . '">facebook:' . $username . '</label>';
+        $content .= '<label for="accountSelector' . $counter . '">facebook:' . $username . '</label>';
     }
     $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     

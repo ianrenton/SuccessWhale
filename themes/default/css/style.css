@@ -67,7 +67,7 @@ input[name="status"] {
 }
 
 input.reply {
-	width:70%;
+	width:500px;
 }
 
 div#mainarea {
@@ -142,6 +142,7 @@ div.convohider {
 }
 
 .operations {
+	display:none;
 	float:right;
 }
 
@@ -156,6 +157,7 @@ div.convohider {
 }
 
 .metatext {
+	display:none;
 	color:#cccccc;
 	width:100%;
 }
@@ -173,23 +175,27 @@ div.metatable {
 	padding:0px;
 	/*border-bottom: 1px solid #cccccc;*/
 	margin-bottom:3px;
-	display:none;
 	float:left;
 	position:relative;
 }
 
 div.convoarea {
     display:none;
-    margin-top:30px;
-    float:left;
-    position:relative;
+    margin-top:35px;
+    padding:10px;
+    position:absolute;
+    float:right;
+    width: 350px;
+    background-color:#eeeeee;
+    border: 2px dashed #888888;
 }
 
-div.replyarea {
-    display:none;
-    margin-top:30px;
-    float:left;
-    position:relative;
+div#replybox {
+    background-color:#eeeeee;
+    color:#888888;
+    padding:10px;
+    margin:0;
+    width:620px;
 }
     
 tr {

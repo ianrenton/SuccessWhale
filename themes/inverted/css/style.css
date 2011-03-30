@@ -3,6 +3,7 @@ html, body {
 	padding:0px;
 	font-family:"Ubuntu","Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
 	font-size:90%;
+	background-color:#292929;
 }
 
 #page {
@@ -10,13 +11,12 @@ html, body {
 }
 
 div#headerplusstatusform {
-	background: #0099b9;
-    background: -moz-linear-gradient(top, #a7eae0, #0099b9);
+	background: #393939;
+    background: -moz-linear-gradient(top, #666666, #393939);
     background: -webkit-gradient(linear,
-                left top, left bottom, from(#a7eae0), to(#0099b9));
+                left top, left bottom, from(#666666), to(#393939));
     filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#a7eae0', EndColorStr='#0099b9', GradientType=0);
-    border-bottom: 1px solid #bbbbbb;
+                StartColorStr='#666666', EndColorStr='#393939', GradientType=0);
 }
 
 #header {
@@ -59,7 +59,10 @@ div.links a.hover {
 #statusformdiv {
     height:50px;
 	padding:10px;
-	/*background: white;*/
+}
+
+#statusformdiv a {
+    color:#666666;
 }
 
 input[name="status"] {
@@ -81,8 +84,8 @@ div.column {
     margin:0px;
 	height: 100%;
     overflow-y: auto;
-    border: 1px solid #bbbbbb;
-    background-color:#fafafa;
+    border: 1px solid #313131;
+    background-color:#222222;
 }
 
 div.columnheading {
@@ -91,17 +94,17 @@ div.columnheading {
 	text-align:center;
 	text-transform: uppercase;
 	font-size: 120%;
-	background: #eeeeee;
-    background: -moz-linear-gradient(top, #ffffff, #eeeeee);
+	background: #313131;
+    background: -moz-linear-gradient(top, #393939, #313131);
     background: -webkit-gradient(linear,
-                left top, left bottom, from(#ffffff), to(#eeeeee));
+                left top, left bottom, from(#393939), to(#313131));
     filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#ffffff', EndColorStr='#eeeeee', GradientType=0);
-    border-bottom: 1px solid #bbbbbb;
+                StartColorStr='#393939', EndColorStr='#313131', GradientType=0);
+    border-bottom: 1px solid #313131;
 }
 
 div.columnheading a {
-	color:#666666;
+	color:#888888;
 	text-decoration:none;
 }
 
@@ -109,8 +112,8 @@ div.columnheading a.boxedbutton {
     float:right;
     position:relative;
     top:-1px;
-	color:#cccccc;
-	border: 1px solid #cccccc;
+	color:#666666;
+	border: 1px solid #666666;
 	padding:0 3px 1px 3px;
 	border-radius:2px;
 	--moz-border-radius:2px;
@@ -142,12 +145,13 @@ div.convohider {
 }
 
 .operations {
+	display:none;
 	float:right;
 }
 
 .operations a {
-	color:#cccccc;
-	border: 1px solid #cccccc;
+	color:#666666;
+	border: 1px solid #666666;
 	padding:0 3px 1px 3px;
 	border-radius:2px;
 	-moz-border-radius:2px;
@@ -156,7 +160,8 @@ div.convohider {
 }
 
 .metatext {
-	color:#cccccc;
+	display:none;
+	color:#666666;
 	width:100%;
 }
 
@@ -173,7 +178,6 @@ div.metatable {
 	padding:0px;
 	/*border-bottom: 1px solid #cccccc;*/
 	margin-bottom:3px;
-	display:none;
 	float:left;
 	position:relative;
 }
@@ -185,12 +189,12 @@ div.convoarea {
     position:absolute;
     float:right;
     width: 350px;
-    background-color:#eeeeee;
+    background-color:#313131;
     border: 2px dashed #888888;
 }
 
 div#replybox {
-    background-color:#eeeeee;
+    background-color:#313131;
     color:#888888;
     padding:10px;
     margin:0;
@@ -213,7 +217,7 @@ td .tweettextcell {
 }
 
 .name a{
-	color:#cccccc;
+	color:#666666;
 	text-decoration:none;
 }
 
@@ -242,8 +246,8 @@ div.colswitcherform {
 }
 
 div.colswitcherform a {
-	color:#cccccc;
-	border: 1px solid #cccccc;
+	color:#666666;
+	border: 1px solid #666666;
 	padding:0 3px 1px 3px;
 	border-radius:2px;
 	--moz-border-radius:2px;
