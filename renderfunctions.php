@@ -288,8 +288,8 @@ function makeTwitterOperations($username, $tweet, $thisUser, $tweetid, $isMentio
 // Generates the "comment like convo" options for each FB status.
 function makeFBOperations($statusID, $commentLink, $likeLink) {
 	$content = '<div class="operations">';
-	$content .= '<a class="replybutton" href="' . $commentLink . '">comment</a>&nbsp;';
-	$content .= '<a class="replybutton" href="' . $likeLink . '">like</a>&nbsp;';
+	$content .= '<a class="convobutton" href="' . $commentLink . '">comment</a>&nbsp;';
+	$content .= '<a class="confirmactionbutton" href="' . $likeLink . '">like</a>&nbsp;';
 	$content .= '</div>';
 	return $content;
 }

@@ -71,28 +71,22 @@ function checkForSubmitCustomColumn(field, event, colNumber) {
 function setDivSize() {
     var vpheight = 0;
     if (typeof window.innerHeight == 'number') {
-        vpheight = window.innerHeight-1; // FF, Webkit, Opera
+        vpheight = window.innerHeight; // FF, Webkit, Opera
     } else if (document.documentElement && document.documentElement.clientHeight) {
         vpheight = document.documentElement.clientHeight; // IE 6+
     } else if (document.body && document.body.clientHeight) {
         vpheight = document.body.clientHeight; // IE 4
     }
     d = document.getElementById('mainarea');
-    d.style.height= "" + (vpheight-122) + "px";
+    d.style.height= "" + (vpheight-127) + "px";
 }
 
 // jQuery startup things (when DOM is avalable)
 $(document).ready(function() {
 
     // jQuery UI formatting
-    $('input#submitbutton').button().css({padding:2});
-    $('input.accountSelector').button({
-        icons: {
-            primary: "ui-icon-gear",
-            secondary: "ui-icon-triangle-1-s"
-        }
-    }).css({padding:0});
-    $('label').css({padding:0});
+    //$('input#submitbutton').button().css({'padding':'0'});
+    $('input.accountSelector').button().css({'padding':'0'});
 
     // Clicking main Submit button posts status
     $('input#submitbutton').unbind("click");

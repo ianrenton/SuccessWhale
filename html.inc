@@ -5,8 +5,8 @@
   <head>
     <title>SuccessWhale</title>
 	<link rel="shortcut icon" href="favicon.ico">
-	<link type="text/css" rel="stylesheet" media="all" href="themes/<?php echo($theme) ?>/css/jquery-ui.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="themes/<?php echo($theme) ?>/css/style.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="themes/<?php echo($theme) ?>/jquery-ui.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="themes/<?php echo($theme) ?>/style.css" />
 	<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<script src="https://www.google.com/jsapi?key=ABQIAAAA4f8pRNBT_o7wZoAgoU2cgBSc8NznX29xu-21-GP_yo_9Tviv2RTZ7JdpGqWnaYID1MR2-Pi2rpQkWg" type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>

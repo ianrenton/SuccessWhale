@@ -168,7 +168,7 @@ function generateSendBoxes($posttoservices) {
     $content .= '<form id="statusform" name="statusform">';
     $content .= '<input type="text" autocomplete="off" name="status" id="status" class="status">';
     $content .= '<input type="submit" name="submit" id="submitbutton" value="Post" />';
-	$content .= '&nbsp;&nbsp;<span class="counter">This post is 0 characters long</span><br/>';
+	$content .= '&nbsp;&nbsp;<span class="counter">This post is 0 characters long</span><div id="serviceselectors">';
     
     $counter = 0;
     foreach ($_SESSION['twitters'] as $username => $twitter) {
@@ -177,7 +177,7 @@ function generateSendBoxes($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<label for="accountSelector' . $counter . '">twitter:' . $username . '</label>';
+        $content .= '<label for="accountSelector' . $counter . '"><img src="/images/serviceicons/twitter.png" alt="Twitter" title="Twitter" /> ' . $username . '</label> ';
     }
     foreach ($_SESSION['facebooks'] as $username => $facebook) {
         $content .= '<input type="checkbox" class="accountSelector" id="accountSelector' . ++$counter . '" value="facebook:' . $username . '" ';
@@ -185,14 +185,14 @@ function generateSendBoxes($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<label for="accountSelector' . $counter . '">facebook:' . $username . '</label>';
+        $content .= '<label for="accountSelector' . $counter . '"><img src="/images/serviceicons/facebook.png" alt="Facebook" title="Facebook" /> ' . $username . '</label> ';
     }
     $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     
     
 	// Add Twitter/Facebook/etc accounts.
     $content .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./twitter-callback/redirect.php">+ Twitter</a>&nbsp;&nbsp;&nbsp;';
-    $content .= '<a href="./facebook-callback/">+ Facebook</a>';
+    $content .= '<a href="./facebook-callback/">+ Facebook</a></div>';
 
     $content .= '</form>';
 	$content .= '</div>';
