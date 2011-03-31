@@ -131,13 +131,9 @@ div.columnnav {
     display:none;
 }
 
-.item {
+.text {
 	margin:20px 20px 40px 20px;
 	color:#888888;
-}
-
-div.convo {
-	margin:10px 20px 10px 35px;
 }
 
 div.reply {
@@ -191,12 +187,15 @@ div.metatable {
 div.convoarea {
     display:none;
     margin-top:35px;
-    padding:10px;
-    position:absolute;
-    float:right;
-    width: 350px;
+    margin-right:100px;
+    width: 100%;
     background-color:#eeeeee;
-    border: 2px dashed #888888;
+    background: -moz-linear-gradient(top, #fafafa, #eeeeee);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#fafafa), to(#eeeeee));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#fafafa', EndColorStr='#eeeeee', GradientType=0);
+    border-bottom: 1px solid #bbbbbb;
 }
 
 div#replybox {
