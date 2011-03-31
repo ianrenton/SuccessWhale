@@ -13,8 +13,13 @@ $content = '';
 // Get session vars
 $twitters = $_SESSION['twitters'];
 $facebooks = $_SESSION['facebooks'];
-$utcOffset = $_SESSION['utcOffset'];
 $columnOptions = $_SESSION['columnOptions'];
+
+// Set session time constants (so we don't have to calculate them for every
+// tweet)
+$_SESSION['midnightYesterday'] = strtotime("midnight -1 day");
+$_SESSION['oneWeekAgo'] = strtotime("midnight -6 days");
+$_SESSION['janFirst'] = strtotime("january 1st");
 
 // Set count
 if (isset($_GET['count'])) {
@@ -45,7 +50,7 @@ $query = "SELECT blocklist FROM sw_users WHERE sw_uid='" . mysql_real_escape_str
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
 if ($row != FALSE) {
-    $blocklist = $row["blocklist"];
+	$blocklist = explode(";", $row["blocklist"]);
 } else {
     $blocklist = "";
 }
@@ -53,88 +58,116 @@ if ($row != FALSE) {
 
 // Get column-dependent data and render
 if (isset($_GET['column'])) {
-    // Column identifiers are in three colon-separate bits, e.g.
-    // twitter:tsuki_chama:statuses/user_timeline
-	$columnIdentifiers = explode(":", $_GET['column']);
-	$service = $columnIdentifiers[0];
-	$username = $columnIdentifiers[1];
-	$name = $columnIdentifiers[2];
-	
-	if (preg_match("/^@(\w+)$/", $name, $matches)) {
-	    // Matches @user
-	    $url = "statuses/user_timeline";
-	    $paramArray['screen_name'] = $matches[1];
-	} else if (preg_match("/^@(\w+)\/([\w\s-]+)$/", $name, $matches)) {
-	    // Matches @user/list
-	    $listStub = strtolower(str_replace(" ", "-", $matches[2]));
-	    $url = $matches[1] . "/lists/" . $listStub . "/statuses";
-	//} else if (preg_match("/^#(\w+)$/", $name, $matches)) {
-	    // Matches #tag
-	    // TODO implement searches
-	    //$url = $name;
-	} else {
-	    // Doesn't match, assume it's a real URL like "statuses/mentions".
-	    $url = $name;
-	}
-	
-	$content .= '<div class="columnheading"><a class="columnheading" href="">';
-	if ($columnOptions[$_GET['column']] != "") {
+
+    // Header block
+    $content .= '<div class="columnheading"><a class="columnheading" href="">';
+    if ($columnOptions[$_GET['column']] != "") {
         $content .= $columnOptions[$_GET['column']];
     } else {
-        if (!empty($name)) {
-            $content .= $name;
+        if (!empty($_GET['column'])) {
+            $content .= $_GET['column'];
         } else {
             $content .= 'New Column';
         }
     }
     $content .= '</a>';
-    
     $content .= '<a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)" class="boxedbutton">R</a>';
     $content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
     $content .= '</div>';
+        
+    // Column identifiers are in three colon-separate bits, e.g.
+    // twitter:tsuki_chama:statuses/user_timeline
+    // Multiple source feeds have several of the above, separated by pipes.
+    $items = array();
+    $sources = explode("|", $_GET['column']);
+    foreach($sources as $source) {
+        if (!empty($source)) {
+	        $columnIdentifiers = explode(":", $source);
+	        $service = $columnIdentifiers[0];
+	        $username = $columnIdentifiers[1];
+	        $name = $columnIdentifiers[2];
 	
-	if ($service == "twitter") {
-	    $twitter = $twitters[$username];
-	    if ($twitter != null) {
-		    $data = $twitter->get($url, $paramArray);
+	        if (preg_match("/^@(\w+)$/", $source, $matches)) {
+	            // Matches @user
+	            $service = "twitter";
+	            $twitterUsernames = array_keys($twitters);
+	            $username = $twitterUsernames[0];
+	            $url = "statuses/user_timeline";
+	            $paramArray['screen_name'] = $matches[1];
+	        } else if (preg_match("/^@(\w+)\/([\w\s-]+)$/", $source, $matches)) {
+	            // Matches @user/list
+	            $service = "twitter";
+	            $twitterUsernames = array_keys($twitters);
+	            $username = $twitterUsernames[0];
+	            $listStub = strtolower(str_replace(" ", "-", $matches[2]));
+	            $url = $matches[1] . "/lists/" . $listStub . "/statuses";
+	        } else {
+	            // Doesn't match, assume it's a real URL like "statuses/mentions".
+	            $url = $name;
+	        }
+	
+	        if ($service == "twitter") {
+	            $twitter = $twitters[$username];
+	            if ($twitter != null) {
+	                $data = $twitter->get($url, $paramArray);
 
-		    $isMention = false;
-		    $isDM = false;
-	        if ($name == 'statuses/mentions') {
-			    $isMention = true;
-		    } elseif ($name == 'direct_messages') {
-			    $isDM = true;
-		    }
+	                $isMention = false;
+	                $isDM = false;
+                    if ($name == 'statuses/mentions') {
+		                $isMention = true;
+	                } elseif (($name == 'direct_messages') || ($name == 'direct_messages/sent')) {
+		                $isDM = true;
+	                }
+	                for ($i=0; $i<count($data); $i++) {
+	                    $item = generateTweetItem($data[$i], $isMention, $isDM, false, $username, $blocklist);
+	                    $items[$item['time']] = $item['html'];
+	                }
+		            
+	            } else {	
+		            $content .= '<div class="tweet">Failwhale sighted off the port bow, cap\'n!  Please try refreshing this page.</div>';
+	            }
+	            
+	        } elseif ($service == "facebook") {
+	            $facebook = $facebooks[$username];
+	            if ($facebook != null) {
+	                $attachment =  array('access_token' => $facebook->getAccessToken());
+                    try {
+                        // Catch the Notifications column, which needs to be in FQL
+                        if ($name == "notifications") {
+                            $attachment['query'] = 'SELECT notification_id, sender_id, created_time, title_html, body_html, href FROM notification WHERE recipient_id=' . $facebook->getUser() . /*'AND is_unread = 1' . */ 'AND is_hidden = 0 LIMIT ' . $paramArray['count'];
+                            $attachment['method'] = 'fql.query';
+                            $data = $facebook->api($attachment);
+                            $isNotifications = true;
+                        } else {
+                            $data = $facebook->api($name, $attachment);
+                            $isNotifications = false;
+                        }
+                        
+                        if (!$isNotifications) {
+                            $data = $data['data'];
+                        }
 
-		    $content .= generateTweetList($data, $isMention, $isDM, false, $username, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-	    } else {	
-		    $content .= '<div class="tweet">Failwhale sighted off the port bow, cap\'n!  Please try refreshing this page.</div>';
+                        for ($i=0; $i<count($data); $i++) {
+                            $item = generateFBStatusItem($data[$i], $isNotifications, $thisUser, $blocklist);
+                            $items[$item['time']] = $item['html'];
+                        }
+	                } catch (Exception $e) {
+	                    $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div><div class="tweet"><br/>' . $e . '</div>';
+	                }
+	            } else {	
+		            $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div>';
+	            }
+	        }
 	    }
-	    
-	} elseif ($service == "facebook") {
-	    $facebook = $facebooks[$username];
-	    if ($facebook != null) {
-	        $attachment =  array('access_token' => $facebook->getAccessToken());
-	        try {
-	            // Catch the Notifications column, which needs to be in FQL
-	            if ($name == "notifications") {
-	                $attachment['query'] = 'SELECT notification_id, sender_id, created_time, title_html, body_html, href FROM notification WHERE recipient_id=' . $facebook->getUser() . /*'AND is_unread = 1' . */ 'AND is_hidden = 0 LIMIT ' . $paramArray['count'];
-                    $attachment['method'] = 'fql.query';
-                    $data = $facebook->api($attachment);
-                    $isNotifications = true;
-	            } else {
-		            $data = $facebook->api($name, $attachment);
-                    $isNotifications = false;
-		        }
-		        $content .= generateFBStatusList($data, $isNotifications, $thisUser, $blocklist, $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-		    } catch (Exception $e) {
-		        $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div><div class="tweet"><br/>' . $e . '</div>';
-		    }
-	    } else {	
-		    $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div>';
-	    }
-	}
+    }
     
+    ksort($items);
+    $items = array_reverse($items, true);
+    $items = array_slice($items, 0, $paramArray['count'], true);
+    foreach ($items as $itemHTML) {
+        $content .= $itemHTML;
+    }
+		        
     echo $content;
 }
 

@@ -101,13 +101,50 @@ if (FACEBOOK_ENABLED) {
 
 // Build column options list
 $columnOptions = array();
+
+// Combined
+$columnOptions["combined:" . $name] = "-- Combined --";
+// Combined: T&MF
+$mnString = "";
+foreach ($twitters as $name => $twitter) {
+    $mnString .= "twitter:" . $name . ":statuses/home_timeline|";
+}
+foreach ($facebooks as $name => $facebook) {
+    $mnString .= "facebook:" . $name . ":home|";
+}
+$columnOptions[$mnString] = "Home Timeline & Main Feed";
+// Combined: M&N
+$mnString = "";
+foreach ($twitters as $name => $twitter) {
+    $mnString .= "twitter:" . $name . ":statuses/mentions|";
+}
+foreach ($facebooks as $name => $facebook) {
+    $mnString .= "facebook:" . $name . ":notifications|";
+}
+$columnOptions[$mnString] = "Mentions & Notifications";
+// Combined: M&N&me
+$mnString = "";
+foreach ($twitters as $name => $twitter) {
+    $mnString .= "twitter:" . $name . ":statuses/mentions|";
+    $mnString .= "twitter:" . $name . ":statuses/user_timeline|";
+}
+foreach ($facebooks as $name => $facebook) {
+    $mnString .= "facebook:" . $name . ":notifications|";
+    $mnString .= "facebook:" . $name . ":/me/feed|";
+}
+$columnOptions[$mnString] = "Mentions, Notifications & Me";
+
+// Twitter
 foreach ($twitters as $name => $twitter) {
     // Twitter basics
     $columnOptions["twitter:" . $name] = "-- Twitter: @" . $name . " --";
     $columnOptions["twitter:" . $name . ":statuses/home_timeline"] = "Home Timeline";
     $columnOptions["twitter:" . $name . ":statuses/friends_timeline"] = "Friends Only";
+    $columnOptions["twitter:" . $name . ":statuses/user_timeline"] = "My Tweets";
     $columnOptions["twitter:" . $name . ":statuses/public_timeline"] = "All Tweets";
     $columnOptions["twitter:" . $name . ":statuses/mentions"] = "Mentions";
+    $columnOptions["twitter:" . $name . ":statuses/mentions|twitter:" . $name . ":statuses/user_timeline"] = "Mentions & My Tweets";
+    $columnOptions["twitter:" . $name . ":direct_messages|twitter:" . $name . ":direct_messages/sent"] = "DMs Sent & Received";
     $columnOptions["twitter:" . $name . ":direct_messages"] = "DMs Received";
     $columnOptions["twitter:" . $name . ":direct_messages/sent"] = "DMs Sent";
     // Twitter lists
@@ -117,8 +154,9 @@ foreach ($twitters as $name => $twitter) {
         $columnOptions["twitter:" . $name . ":" . $name . '/lists/' . $lists[$i]["slug"] . '/statuses'] = $lists[$i]["name"];
     }
 }
+
+// Facebook
 foreach ($facebooks as $name => $facebook) {
-    // Facebook basics TODO
     $columnOptions[("facebook:" . $name)] = "-- Facebook: " . $name . " --";
     $columnOptions["facebook:" . $name . ":/me/home"] = "Main Feed";
     $columnOptions["facebook:" . $name . ":/me/feed"] = "Wall Posts";

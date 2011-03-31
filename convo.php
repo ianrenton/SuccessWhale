@@ -8,7 +8,7 @@ mysql_connect(DB_SERVER,DB_USER,DB_PASS);
     
 $content = '';
 
-if (isset($_GET['thisUser']) && isset($_GET['status'])) {
+if (($_GET['service'] == 'twitter') && isset($_GET['thisUser']) && isset($_GET['status'])) {
     // Get session vars
     $twitter = $_SESSION['twitters'][$_GET['thisUser']];
     $utcOffset = $_SESSION['utcOffset'];
@@ -18,19 +18,16 @@ if (isset($_GET['thisUser']) && isset($_GET['status'])) {
 
 
     // Get tweet data and render
-    $data = array();
-    $i = 0;
     $thisItem = $twitter->get('statuses/show/' . $statusID, $paramArray);
     $statusID = $thisItem['in_reply_to_status_id'];
     while ($statusID > 0) {
-        $thisItem = $twitter->get('statuses/show/' . $statusID, $paramArray);
-        $data[$i++] = $thisItem;
-        $statusID = $thisItem['in_reply_to_status_id'];
+        $data = $twitter->get('statuses/show/' . $statusID, $paramArray);
+        $statusID = $data['in_reply_to_status_id'];
+        // Blank array is for the blocklist. Blocklists aren't obeyed in convo threads.
+        $item = generateTweetItem($data, false, false, true, $_GET['thisUser'], array());
+        $content .= $item['html'];
     }
-
-    // Blank string is for the blocklist. Blocklists aren't obeyed in convo threads anyway.
-    $content .= generateTweetList($data, false, false, true, $thisUser, '', $utcOffset, $midnightYesterday, $oneWeekAgo, $janFirst);
-
+    
     echo $content;
 }
 
