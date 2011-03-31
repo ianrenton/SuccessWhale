@@ -20,12 +20,10 @@ div#headerplusstatusform {
 }
 
 #header {
-	/*background:#7aa5d9;*/
 	height:45px;
 	width:100%;
 	padding:0px;
 	margin:0px;
-	/*border-bottom: 1px solid #6a95c9;*/
 }
 
 div.links {
@@ -39,9 +37,12 @@ div.links {
                 left top, left bottom, from(#333333), to(#000000));
     filter: progid:DXImageTransform.Microsoft.Gradient(
                 StartColorStr='#333333', EndColorStr='#000000', GradientType=0);
-	border-radius:2px;
-	-moz-border-radius:2px;
-    -webkit-border-radius:2px;
+	-webkit-border-bottom-right-radius: 16px;
+	-webkit-border-bottom-left-radius: 16px;
+	-moz-border-radius-bottomright: 16px;
+	-moz-border-radius-bottomleft: 16px;
+	border-bottom-right-radius: 16px;
+	border-bottom-left-radius: 16px;
 	float:right;
 	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
 }
