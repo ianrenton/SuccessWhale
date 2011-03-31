@@ -66,9 +66,10 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
 		
 	// Check blocklist
 	$match = false;
+	$tweetbodyLowerCase = strtolower($tweetbody);
 	foreach ($blocklist as $blockstring) {
 		if ($blockstring != '') {
-			$pos = strpos($tweetbody, $blockstring);
+			$pos = strpos($tweetbodyLowerCase, $blockstring);
 			if ($pos !== false) {
 				$match = true;
 			}
@@ -145,9 +146,10 @@ function generateFBStatusItem($data, $isNotifications, $thisUser, $blocklist) {
 		
 	// Check blocklist
 	$match = false;
+	$statusbodyLowerCase = strtolower($statusbody);
 	foreach ($blocklist as $blockstring) {
 		if ($blockstring != '') {
-			$pos = strpos($statusbody, $blockstring);
+			$pos = strpos($statusbodyLowerCase, $blockstring);
 			if ($pos !== false) {
 				$match = true;
 			}

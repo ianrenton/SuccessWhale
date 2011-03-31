@@ -50,7 +50,7 @@ $query = "SELECT blocklist FROM sw_users WHERE sw_uid='" . mysql_real_escape_str
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
 if ($row != FALSE) {
-	$blocklist = explode(";", $row["blocklist"]);
+	$blocklist = explode("\n", strtolower($row["blocklist"]));
 } else {
     $blocklist = "";
 }
