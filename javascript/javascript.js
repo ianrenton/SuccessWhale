@@ -143,6 +143,25 @@ $(document).ready(function() {
         return false;
     });
     
+    // Popup boxes for the main (top-right) menu options
+    $("a.popup").live("click", function() {
+        var url = $(this).attr('href');
+        $.fancybox({ 'href': url });
+        return false;
+    });
+    
+    // Click submits popup for Banned Phrases
+    $('input#setBannedPhrases').live("click", function() {
+            var dataString = 'blocklist=' + $(this).parent().children('textarea#blocklist').val();
+            $.ajax({
+                type: "POST",
+                url: "manageblockscallback.php",
+                data: dataString
+            });
+            $.fancybox.close();
+            return false;
+    });
+    
     // User Checks/unchecks services to post to, updating the current knowledge of
     // the user's preferences.
     $('input.accountSelector').unbind("click");

@@ -189,8 +189,9 @@ $content .= '}
 
 // Build the main display
 $content .= '<div id="headerplusstatusform"><div id="header">';
-$content .= makeLinksForm($theme, $colsperscreen);
+$content .= makeLinksForm();
 $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a></div>';
+$content .= '<div id="addcolumndiv"><a class="doactionbutton" href="actions.php?newcol=true"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a></div>';
 $content .= generateSendBoxes($posttoservices);
 $content .= '</div>';
 $content .= generateTweetTables($numColumns, $colsperscreen);
@@ -227,11 +228,6 @@ function generateSendBoxes($posttoservices) {
     }
     $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     
-    
-	// Add Twitter/Facebook/etc accounts.
-    $content .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./twitter-callback/redirect.php">+ Twitter</a>&nbsp;&nbsp;&nbsp;';
-    $content .= '<a href="./facebook-callback/">+ Facebook</a></div>';
-
     $content .= '</form>';
 	$content .= '</div>';
 	return $content;
@@ -251,42 +247,14 @@ function generateTweetTables($numColumns, $colsperscreen) {
 }
 
 // Generates the top-right config area
-function makeLinksForm($theme, $colsperscreen) {
+function makeLinksForm() {
     
 	$content = '<div class="links">';
-	$content .= '<ul><li><input name="colsperscreen" id="colsperscreen" size="1" value="' . $colsperscreen . '" alt="Columns per screen" title="Columns per screen"><input type="submit" style="display:none"></li><li>';
-	$content .= '<a class="doactionbutton" href="actions.php?newcol=true"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a>';
-	$content .= '</li><li>Theme: <select id="theme">';
+	$content .= '<li><a href="manageappearance.php" class="popup">Appearance</a></li>';
+	$content .= '<li><a href="manageaccounts.php" class="popup">Accounts</a></li>';
+	$content .= '<li><a href="manageblocks.php" class="popup">Banned Phrases</a></li>';
+	$content .= '<li><a href="clearsessions.php">Log Out</a></li></ul></div>';
 	
-    $dir = opendir('./themes');
-    while($file = readdir($dir)) {
-        if($file != '.' && $file != '..') {
-            $content .= '<option value="' . $file . '"';
-			if ($file == $theme) {
-				$content .= ' selected="selected"';
-			}
-			$content .= '>' . $file . '</option>\n';
-        }
-    }
-    closedir($dir);
-	$content .= '</select></li>';
-	
-	// Cache tokens item
-    $query = "SELECT * FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
-    $result = mysql_query($query);
-    $row = mysql_fetch_assoc($result);
-    if (isset($row["password"])) {
-        $content .= '<li><a href="./unregister.php">Stop Caching Auth Token</a></li>';
-    } else {
-        $content .= '<li><a href="./register.php">Cache Auth Token</a></li>';
-    }
-	
-	// Blocklist item
-	if (DB_SERVER != '') {
-		$content .= '<li><a href="manageblocks.php">Manage Banned Phrases</a></li>';
-	}
-	
-	$content .= '<li><a href="./clearsessions.php">Log Out</a></li></ul></div>';
 	return $content;
 }
 

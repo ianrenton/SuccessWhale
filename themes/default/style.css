@@ -265,27 +265,8 @@ img {
 }
 
 #addcolumndiv {
-	float:left;
-	padding:15px 14px 14px 14px;
-}
-
-#addcolumndiv ul {
-	margin: 0px;
-	padding: 0px;
-	white-space: nowrap;
-}
-
-#addcolumndiv li {
-	list-style-type: none;
-	padding:0px;
-	padding-right:20px;
-	display: inline;
-}
-
-#addcolumndiv li input {
-    position:relative;
-    top:-7px;
-	margin:0px;
-	padding:0px;
-	width:20px;
+	float:right;
+	margin-right:15px;
+	position:relative;
+	top:40px;
 }
