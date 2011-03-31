@@ -193,7 +193,7 @@ $content .= makeLinksForm();
 $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a></div>';
 $content .= '<div id="addcolumndiv"><a class="doactionbutton" href="actions.php?newcol=true"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a></div>';
 $content .= generateSendBoxes($posttoservices);
-$content .= '</div>';
+$content .= '</div></div>';
 $content .= generateTweetTables($numColumns, $colsperscreen);
 
 mysql_close();
