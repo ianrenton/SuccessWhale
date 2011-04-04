@@ -1,9 +1,18 @@
 var refreshIDs = new Array();
+var allColumns = new Array();
+
+// Refreshes all columns
+function refreshAll() {
+    for ($i=0; $i<allColumns.length; $i++) {
+        changeColumn($i, allColumns[$i], true);
+    }
+}
 
 // Changes the content of one column, and re-sets its refresh.
 function changeColumn(colnumber, url, updatedb) {
     if (url.indexOf("----------") == -1) {
         // Normal use
+        allColumns[colnumber] = url;
         $("#column" + colnumber).load((url + "&updatedb=" + updatedb), function() {
             $('.wraptext').breakly(20);
             clearInterval(refreshIDs[colnumber]);
@@ -78,7 +87,7 @@ function setDivSize() {
         vpheight = document.body.clientHeight; // IE 4
     }
     d = document.getElementById('mainarea');
-    d.style.height= "" + (vpheight-127) + "px";
+    d.style.height= "" + (vpheight-122) + "px";
 }
 
 // jQuery startup things (when DOM is avalable)

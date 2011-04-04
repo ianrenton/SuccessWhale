@@ -179,12 +179,13 @@ $numColumns = count($columns);
 // This is called jQuery-style when the DOM is ready.  Because we need to
 // populate it with values from the DB, this can't sit in javascript.js.
 $content .= '<script language="javascript">
-function refreshAll() {';
+var allColumns = new Array();
+';
 for ($i=0; $i<$numColumns; $i++) {
-$content .= 'changeColumn("' . $i . '","column.php?div=' . $i . '&column=' . urlencode($columns[$i]) . '", 0);';
+$content .= 'allColumns[' . $i . '] = "column.php?div=' . $i . '&column=' . urlencode($columns[$i]) . '";
+';
 }
-$content .= '}
-</script>';
+$content .= '</script>';
 
 
 // Build the main display
