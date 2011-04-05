@@ -12,7 +12,7 @@ $blocklist = mysql_result($result,0,"blocklist");
     
 $content .= '<p>Messages in any timeline that contain one of the following phrases will not be displayed.  Enter one phrase per line.</p>';
 $content .= '<form name="manageblocksform" method="post" action="manageblockscallback.php">
-        <textarea name="blocklist" id="blocklist" rows="10" columns="20">' . $blocklist .'</textarea><br/>
+        <textarea name="blocklist" id="blocklist" rows="10" columns="80">' . $blocklist .'</textarea><br/>
         <input type="submit" name="Submit" id="setBannedPhrases" value="Set Banned Phrases">
         </form>';
 

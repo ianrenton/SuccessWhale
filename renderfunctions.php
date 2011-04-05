@@ -131,6 +131,9 @@ function generateFBStatusItem($data, $isNotifications, $thisUser, $blocklist) {
 	} else {
         if ($data["type"] == "status") {
 	        $statusbody = parseLinks($data["message"],$ignore);
+	        if (!empty($data["to"])) {
+	            $statusbody = "&#9654; " . $data["to"]["data"][0]["name"] . "<br/>" . $statusbody;
+	        }
 	    } elseif ($data["type"] == "link") {
 	        $statusbody = '<a href="' . $data["link"] . '">' . $data["name"] . '</a><br/>' . parseLinks($data["description"],$ignore);
 	    } elseif ($data["type"] == "photo") {

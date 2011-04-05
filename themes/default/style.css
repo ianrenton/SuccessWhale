@@ -281,3 +281,7 @@ img {
 	position:relative;
 	top:40px;
 }
+
+textarea#blocklist {
+    width:90%;
+}
