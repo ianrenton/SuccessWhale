@@ -114,8 +114,8 @@ $(document).ready(function() {
     
     // Typing in main box updates the counter.
     // Enter in main Text input posts status
-    $('input#status').unbind("keyup");
-    $('input#status').live("keyup", function(e) {
+    $('input#status').unbind("keydown");
+    $('input#status').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
             recheckAccountsSelected();
             submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
@@ -142,8 +142,8 @@ $(document).ready(function() {
 
     // Enter to submit reply form
     // Typing in reply form updates the counter
-    $('input.reply').unbind("keyup");
-    $('input.reply').live("keyup", function(e) {
+    $('input.reply').unbind("keydown");
+    $('input.reply').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
             submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
             $.fancybox.close();
