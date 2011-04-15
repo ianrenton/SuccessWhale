@@ -44,6 +44,7 @@ function submitStatus(status, replyId, postToAccounts) {
             return false;
         }
     });
+    return false;
 }
 
 // Fills in the hidden "postToAccounts" field based on which account checkboxes
@@ -125,7 +126,7 @@ $(document).ready(function() {
 	        $(this).parent().children('span.counter').css("color", "red");
 	        $(this).parent().children('input#submitbutton').attr('disabled', true);
 	    } else {
-	        $(this).parent().children('span.counter').css("color", "black");
+	        $(this).parent().children('span.counter').css("color", "black");s
 	        $(this).parent().children('input#submitbutton').attr('disabled', false);
 	    }
         return false;
@@ -354,7 +355,9 @@ $(document).ajaxStart(function() {
 			padding: '5px', 
 			backgroundColor: '#cfe2ff', 
 			'-webkit-border-radius': '10px', 
-			'-moz-border-radius': '10px', 
+			'-moz-border-radius': '10px',  
+			'-khtml-border-radius': '10px',  
+			'border-radius': '10px', 
 			opacity: .6, 
 			color: '#000'
 		} 
