@@ -43,7 +43,7 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
     if (isset($data["retweeted_status"])) {
         $avatar = '<a href="http://www.twitter.com/' . $data["retweeted_status"][$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data["retweeted_status"][$userString]["profile_image_url"] . '" alt="' . $data["retweeted_status"][$userString]["name"] . '" title="' . $data["retweeted_status"][$userString]["name"] . '" border="0" width="48" height="48"></a>';
         $nameField = '<a href="http://www.twitter.com/' . $data["retweeted_status"][$userString]["screen_name"] . '" target="_blank">' . $data["retweeted_status"][$userString]["name"] . '</a>, RT by <a href="http://www.twitter.com/' . $data[$userString]["screen_name"] . '" target="_blank">' . $data[$userString]["name"] . '</a></span>';
-        $tweetbody = "RT @" . $data["retweeted_status"][$userString]["screen_name"] . " " . $data["retweeted_status"]["text"];
+        $tweetbody = /*"RT @" . $data["retweeted_status"][$userString]["screen_name"] . " " .*/ $data["retweeted_status"]["text"];
         // Expand short URLs etc first, so we can apply the blocklist to real URLs.
 	    // A bit of processing overhead, but it stops unwelcome URLs in tweets
 	    // evading the blocker by using a URL shortener.

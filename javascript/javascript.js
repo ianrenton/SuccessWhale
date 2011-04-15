@@ -36,7 +36,12 @@ function submitStatus(status, replyId, postToAccounts) {
         url: "actions.php",
         data: dataString,
         success: function() {
+            $("input#status").val('');
             setTimeout('refreshAll()', 3000);
+            $(this).parent().children('span.counter').html("This post is 0 characters long.");
+            $(this).parent().children('span.counter').css("color", "black");
+            $(this).parent().children('input#submitbutton').attr('disabled', false);
+            return false;
         }
     });
 }
@@ -113,7 +118,6 @@ $(document).ready(function() {
         if (e.keyCode == 13 || e.keyCode == 10) {
             recheckAccountsSelected();
             submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
-            $("input#status").val('');
             return false;
         }
         $(this).parent().children('span.counter').html("This post is " + $(this).val().length + " characters long.");
