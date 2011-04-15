@@ -38,9 +38,7 @@ function submitStatus(status, replyId, postToAccounts) {
         success: function() {
             $("input#status").val('');
             setTimeout('refreshAll()', 3000);
-            $(this).parent().children('span.counter').html("This post is 0 characters long.");
-            $(this).parent().children('span.counter').css("color", "black");
-            $(this).parent().children('input#submitbutton').attr('disabled', false);
+            $('input#status').keyUp(); // Pretend a character has been typed, to update count.
             return false;
         }
     });
@@ -112,7 +110,6 @@ $(document).ready(function() {
         return false;
     });
     
-    // Typing in main box updates the counter.
     // Enter in main Text input posts status
     $('input#status').unbind("keydown");
     $('input#status').live("keydown", function(e) {
@@ -121,6 +118,12 @@ $(document).ready(function() {
             submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
             return false;
         }
+        return true;
+    });
+    
+    // Typing in main box updates the counter.
+    $('input#status').unbind("keyup");
+    $('input#status').live("keyup", function(e) {
         $(this).parent().children('span.counter').html("This post is " + $(this).val().length + " characters long.");
 	    if ($(this).val().length > 140) {
 	        $(this).parent().children('span.counter').css("color", "red");
@@ -129,7 +132,7 @@ $(document).ready(function() {
 	        $(this).parent().children('span.counter').css("color", "black");s
 	        $(this).parent().children('input#submitbutton').attr('disabled', false);
 	    }
-        return false;
+        return true;
     });
     
     // Click to submit reply form
@@ -141,20 +144,26 @@ $(document).ready(function() {
     });
 
     // Enter to submit reply form
-    // Typing in reply form updates the counter
     $('input.reply').unbind("keydown");
     $('input.reply').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
             submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
             $.fancybox.close();
+            return false;
         }
+        return true;
+    });
+
+    // Typing in reply form updates the counter
+    $('input.reply').unbind("keyup");
+    $('input.reply').live("keyup", function(e) {
         $(this).parent().children('span.counter').html($(this).val().length);
 	    if ($(this).val().length > 140) {
 	        $(this).parent().children('input.replybutton').val("Twixt");
 	    } else {
 	        $(this).parent().children('input.replybutton').val("Post");
 	    }
-        return false;
+        return true;
     });
     
     // Popup boxes for the main (top-right) menu options
