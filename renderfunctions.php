@@ -263,7 +263,7 @@ function makeTwitterOperations($username, $tweet, $thisUser, $tweetid, $isMentio
 			}
 			
 			$content .= '<a class="doactionbutton" href="actions.php?retweet=' . $tweetid . '&thisUser=' . urlencode($thisUser) . '">rt</a>&nbsp;';
-			$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('RT @'.$username) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">rt:</a>&nbsp;';
+			$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('RT @'.$username.' '.$tweet) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">rt:</a>&nbsp;';
 			$content .= '<a class="replybutton" href="replybox.php?initialtext=' . urlencode('d '.$username) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">d</a>&nbsp;';
 			if ($isMention == true) {
 				$content .= '<a class="confirmactionbutton" href="actions.php?report=' . urlencode($username) . '&thisUser=' . urlencode($thisUser) . '">b&</a>&nbsp;';
@@ -300,7 +300,9 @@ function parseLinks($html, &$numusers) {
 		"zz.gd",
 		"t.co",
 		"wp.me",
-		"digs.by"
+		"digs.by",
+		"s.coop",
+		"bbc.in"
 	);
 	$picservers = array(
 		"twitpic.com",
