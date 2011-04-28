@@ -129,7 +129,7 @@ $(document).ready(function() {
 	        $(this).parent().children('span.counter').css("color", "red");
 	        $(this).parent().children('input#submitbutton').attr('disabled', true);
 	    } else {
-	        $(this).parent().children('span.counter').css("color", "black");s
+	        $(this).parent().children('span.counter').css("color", "black");
 	        $(this).parent().children('input#submitbutton').attr('disabled', false);
 	    }
         return true;
