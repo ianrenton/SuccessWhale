@@ -48,7 +48,7 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	    // A bit of processing overhead, but it stops unwelcome URLs in tweets
 	    // evading the blocker by using a URL shortener.
 	    $tweetbody = parseLinks($tweetbody, $numusers);
-        $operations = makeTwitterOperations($data["retweeted_status"][$userString]["screen_name"], $data["retweeted_status"]["text"], $thisUser, $data["retweeted_status"]["id"], $isMention, $isDM, $isConvo, $i, $data["retweeted_status"]["in_reply_to_screen_name"], $data["retweeted_status"]["in_reply_to_status_id"], $numusers);
+        $operations = makeTwitterOperations($data["retweeted_status"][$userString]["screen_name"], $data["retweeted_status"]["text"], $thisUser, $data["retweeted_status"]["id_str"], $isMention, $isDM, $isConvo, $i, $data["retweeted_status"]["in_reply_to_screen_name"], $data["retweeted_status"]["in_reply_to_status_id"], $numusers);
     } else {
         $avatar = '<a href="http://www.twitter.com/' . $data[$userString]["screen_name"] . '" target="_blank"><img class="avatar" src="' . $data[$userString]["profile_image_url"] . '" alt="' . $data[$userString]["name"] . '" title="' . $data[$userString]["name"] . '" border="0" width="48" height="48"></a>';
         if ($isDM && ($data["sender_screen_name"] == $thisUser)) {
@@ -61,7 +61,7 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	    // A bit of processing overhead, but it stops unwelcome URLs in tweets
 	    // evading the blocker by using a URL shortener.
 	    $tweetbody = parseLinks($tweetbody, $numusers);
-	    $operations = makeTwitterOperations($data[$userString]["screen_name"], $data["text"], $thisUser, $data["id"], $isMention, $isDM, $isConvo, $i, $data["in_reply_to_screen_name"], $data["in_reply_to_status_id"], $numusers);
+	    $operations = makeTwitterOperations($data[$userString]["screen_name"], $data["text"], $thisUser, $data["id_str"], $isMention, $isDM, $isConvo, $i, $data["in_reply_to_screen_name"], $data["in_reply_to_status_id"], $numusers);
     }
 		
 	// Check blocklist
