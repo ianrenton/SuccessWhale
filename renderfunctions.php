@@ -424,17 +424,25 @@ function makeNavForm($count, $columnOptions, $thisColName) {
 	$content .= '<option value="----------">(Custom)</option>';
     $content .= '</select><br/>';
     $content .= '<input id="customcolumnentry' . $thisColNumber . '" class="customcolumnentry" size="20" disabled="true" value="@usr, @usr/list" onKeyUp="checkForSubmitCustomColumn(this, event, ' . $thisColNumber . ');"/><br/>';
-    
-    $content .= '<a class="confirmactionbutton boxedbutton" href="actions.php?delcol=' . $thisColNumber . '">del</a>&nbsp;';
-    $content .= '<a class="hidenavform boxedbutton" href="">hide</a>&nbsp;';
-	
-	if ($count > 20) {
-		$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\', 1)" class="boxedbutton">less</a>&nbsp;';
-	}
-	$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\', 1)" class="boxedbutton">more</a>';
+
 	$content .= '</div>';
 	$content .= '</div>';
 	return $content;
 }
 
+
+// Generates the pager
+function makeMoreLessForm($count, $columnOptions, $thisColName) {
+    $thisColNumber = substr($_GET['div'], 0);
+	$content = '<div class="morelessform">';	
+
+	if ($count > 20) {
+		$content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count-20) . '\', 1)" class="button left">less</a>&nbsp;';
+	    $content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\', 1)" class="button right">more</a>';
+	} else {
+	    $content .= '<a href="javascript:changeColumn(\'' . $thisColNumber . '\', \'column.php?div=' . $thisColNumber . '&column=' . urlencode($_GET['column']) . '&count=' . ($count+20) . '\', 1)" class="button">more</a>';
+	}
+	$content .= '</div>';
+	return $content;
+}
 ?>

@@ -91,7 +91,7 @@ function setDivSize() {
         vpheight = document.body.clientHeight; // IE 4
     }
     d = document.getElementById('mainarea');
-    d.style.height= "" + (vpheight-122) + "px";
+    d.style.height= "" + (vpheight-75) + "px";
 }
 
 // jQuery startup things (when DOM is avalable)
@@ -124,12 +124,10 @@ $(document).ready(function() {
     // Typing in main box updates the counter.
     $('input#status').unbind("keyup");
     $('input#status').live("keyup", function(e) {
-        $(this).parent().children('span.counter').html("This post is " + $(this).val().length + " characters long.");
+        $(this).parent().children('span.counter').html("" + (140 - $(this).val().length) + "");
 	    if ($(this).val().length > 140) {
-	        $(this).parent().children('span.counter').css("color", "red");
 	        $(this).parent().children('input#submitbutton').attr('disabled', true);
 	    } else {
-	        $(this).parent().children('span.counter').css("color", "black");
 	        $(this).parent().children('input#submitbutton').attr('disabled', false);
 	    }
         return true;
@@ -218,19 +216,12 @@ $(document).ready(function() {
         return false;
     });
     
-    // Headings show column options
-    $('a.columnheading').unbind("click");
-    $('a.columnheading').live("click", function(e) {
-        $(this).parents('div.columnheading').find('a.columnheading').toggle();
+    // Column options button
+    $('a.columnoptions').unbind("click");
+    $('a.columnoptions').live("click", function(e) {
+        //$(this).parents('div.columnheading').find('a.columnheading').toggle();
         $(this).parents('div.columnheading').find('div.columnnav').toggle('fast');
-        return false;
-    });
-    
-    // Hide buttons hide column options
-    $('a.hidenavform').unbind("click");
-    $('a.hidenavform').live("click", function(e) {
-        $(this).parents('div.columnheading').find('div.columnnav').toggle();
-        $(this).parents('div.columnheading').find('a.columnheading').toggle('fast');
+        $(this).parents('div.columnheading').find('a.deletecolumnbutton').toggle();
         return false;
     });
     
@@ -350,25 +341,22 @@ $(window).resize(function() {
 // jQuery on AJAX start things
 $(document).ajaxStart(function() {
 	$.blockUI({ 
-		message: '<img src="images/ajax-loader.gif" alt="Loading..."/> Thinking...', 
+		message: '<img src="images/ajax-loader.gif" alt="Loading..."/>', 
 		timeout: 12000,
 		showOverlay: false, 
 		centerY: false, 
 		css: { 
-			width: '130px', 
+			width: '30px', 
 			top: '10px',
 			bottom: '', 
-			left: '400px', 
-			right: '', 
-			border: '1px solid #cccccc', 
+			left: '', 
+			right: '170px', 
+			border: 'none', 
 			padding: '5px', 
-			backgroundColor: '#cfe2ff', 
-			'-webkit-border-radius': '10px', 
-			'-moz-border-radius': '10px',  
-			'-khtml-border-radius': '10px',  
-			'border-radius': '10px', 
-			opacity: .6, 
-			color: '#000'
+			backgroundColor: '#00000000', 
+			opacity: 1, 
+			color: '#000', 
+            cursor:'wait' 
 		} 
 	});
 }).ajaxStop($.unblockUI);

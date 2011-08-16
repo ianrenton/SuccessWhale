@@ -1,13 +1,5 @@
 html, body {
-	margin:0px;
-	padding:0px;
-	font-family:"Ubuntu","Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
-	font-size:90%;
 	background-color:#292929;
-}
-
-#page {
-	max-height: 100%;
 }
 
 div#headerplusstatusform {
@@ -19,191 +11,42 @@ div#headerplusstatusform {
                 StartColorStr='#666666', EndColorStr='#393939', GradientType=0);
 }
 
-#header {
-	height:45px;
-	width:100%;
-	padding:0px;
-	margin:0px;
-}
-
-div.links {
-    position:relative;
-    left:-30px;
-	margin:0px;
-	padding:4px 10px 8px 10px;
-	background: #000000;
-    background: -moz-linear-gradient(top, #333333, #000000);
-    background: -webkit-gradient(linear,
-                left top, left bottom, from(#333333), to(#000000));
-    filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#333333', EndColorStr='#000000', GradientType=0);
-	-webkit-border-bottom-right-radius: 16px;
-	-webkit-border-bottom-left-radius: 16px;
-	-moz-border-radius-bottomright: 16px;
-	-moz-border-radius-bottomleft: 16px;
-	border-bottom-right-radius: 16px;
-	border-bottom-left-radius: 16px;
-	float:right;
-	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
-}
-
-div.links ul {
-	margin: 0px;
-	padding: 0px;
-	white-space: nowrap;
-}
-
-div.links li {
-	list-style-type: none;
-	padding:5px 15px 5px 15px;
-	display: inline;
-}
-
-div.links a {
-	color:white;
-	text-decoration:none;
-}
-
-div.links a.hover {
-	text-decoration:underline;
-}
-
-#statusformdiv {
-    height:55px;
-	padding:10px;
-}
-
-#statusformdiv a {
-    color:#666666;
-}
-
-div#serviceselectors {
-    margin-top:5px;
-}
-
-div#serviceselectors img {
-    position:relative;
-    top:2px;
-}
-
-input[name="status"] {
-	width:70%;
-}
-
-input.reply {
-	width:500px;
-}
-
-div#mainarea {
-    overflow-x: auto;
-    overflow-y: auto;
-    width: 100%;
-    padding:0;
-}
-
-div.column {
-    margin:0px;
-	height: 100%;
-    overflow-y: auto;
-    border: 1px solid #313131;
-    background-color:#222222;
+span.counter {
+    color:#666;
 }
 
 div.columnheading {
 	color:#666666;
-	padding:5px;
-	text-align:center;
-	text-transform: uppercase;
-	font-size: 120%;
 	background: #313131;
     background: -moz-linear-gradient(top, #393939, #313131);
     background: -webkit-gradient(linear,
                 left top, left bottom, from(#393939), to(#313131));
     filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#393939', EndColorStr='#313131', GradientType=0);
-    border-bottom: 1px solid #313131;
+                StartColorStr='#dddddd', EndColorStr='#313131', GradientType=0);
 }
 
-div.columnheading a {
-	color:#888888;
-	text-decoration:none;
-}
-
-div.columnheading a.boxedbutton {
-    float:right;
-    position:relative;
-    top:-1px;
+div.columnheading span.title {
 	color:#666666;
-	border: 1px solid #666666;
-	padding:0 3px 1px 3px;
-	border-radius:2px;
-	--moz-border-radius:2px;
-    --webkit-border-radius:2px;
-	text-decoration:none;
 }
 
-div.columnnav {
-    display:none;
+div.columnheading span.columnbuttons {
+	color:#666666;
 }
 
 .text {
-	margin:20px 20px 40px 20px;
 	color:#888888;
-}
-
-div.reply {
-	margin:10px 20px 10px 45px;
-}
-
-div.convohider {
-    float:left;
-    position:relative;
-    left:4px;
-}
-
-.operations {
-	display:none;
-	float:right;
 }
 
 .operations a {
 	color:#666666;
 	border: 1px solid #666666;
-	padding:0 3px 1px 3px;
-	border-radius:2px;
-	-moz-border-radius:2px;
-    -webkit-border-radius:2px;
-	text-decoration:none;
 }
 
 .metatext {
-	display:none;
 	color:#666666;
-	width:100%;
-}
-
-table {
-	margin:0px;
-}
-
-table.bigtable {
-	margin-top:5px;
-}
-
-div.metatable {
-	width:100%;
-	padding:0px;
-	/*border-bottom: 1px solid #cccccc;*/
-	margin-bottom:3px;
-	float:left;
-	position:relative;
 }
 
 div.convoarea {
-    display:none;
-    margin-top:35px;
-    margin-right:100px;
-    width: 100%;
     background-color:#313131;
     background: -moz-linear-gradient(top, #222222, #313131);
     background: -webkit-gradient(linear,
@@ -216,76 +59,62 @@ div.convoarea {
 div#replybox {
     background-color:#313131;
     color:#888888;
-    padding:10px;
-    margin:0;
-    width:620px;
-}
-    
-tr {
-	margin: 0px;
-	padding: 0px;
-}
-
-td {
-	vertical-align: top;
-	margin: 0px;
-	padding: 0px;
-}
-
-td .tweettextcell {
-	padding-left: 5px;
 }
 
 .name a{
 	color:#666666;
-	text-decoration:none;
 }
 
 .tweettext a {
 	color:#0099b9;
-	text-decoration:none;
-}
-
-.tweettext a.hover {
-	text-decoration:underline;
-}
-
-.clear {
-	clear:both;
-}
-
-div.backtotop {
-	float:left;
-}
-
-div.colswitcherform {
-	text-align:center;
-	width:100%;
-	text-transform: none;
-	font-size:80%;
 }
 
 div.colswitcherform a {
 	color:#666666;
 	border: 1px solid #666666;
-	padding:0 3px 1px 3px;
-	border-radius:2px;
-	--moz-border-radius:2px;
-    --webkit-border-radius:2px;
-	text-decoration:none;
 }
 
-img {
-	border:0px;
+a.button,
+a.icon {
+    color: #484848;
+    background: #444444;
+    background: -webkit-linear-gradient(top, #444444, #222222);
+    background: -moz-linear-gradient(top, #444444, #222222);
+    background: -ms-linear-gradient(top, #444444, #222222);
+    background: -o-linear-gradient(top, #444444, #222222);
+    border: solid 1px #000;
+}
+a.button:hover,
+a.icon:hover {
+    border: solid 1px #222;
+    color: #666666;
+    background: -webkit-linear-gradient(top, #666666, #444444);
+    background: -moz-linear-gradient(top, #666666, #444444);
+    background: -ms-linear-gradient(top, #666666, #444444);
+    background: -o-linear-gradient(top, #666666, #444444);
+}
+a.button:active,
+a.icon:active {
+    border: solid 1px #222;
+    background: #555555;
+    background: -webkit-gradient(linear, left top, left bottom, from(#555555), color-stop(0.15, #666666), to(#777777));
+    background: -webkit-linear-gradient(top, #555555, #666666 15%, #777777);
+    background: -moz-linear-gradient(top, #555555, #666666 15%, #777777);
+    background: -ms-linear-gradient(top, #555555, #666666 15%, #777777);
+    background: -o-linear-gradient(top, #555555, #666666 15%, #777777);
 }
 
-#addcolumndiv {
-	float:right;
-	margin-right:15px;
-	position:relative;
-	top:40px;
+a.left {
+    border-right: solid 1px #222;
 }
-
-textarea#blocklist {
-    width:90%;
+a.middle {
+    border-left: solid 1px rgba(40, 40, 40, 0);
+    border-right: solid 1px #222;
+}
+a.middle:hover,
+a.right:hover { border-left: solid 1px #333 }
+a.middle:active,
+a.right:active { border-left: solid 1px #444 }
+a.right {
+    border-left: solid 1px rgba(40, 40, 40, 0);
 }

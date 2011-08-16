@@ -60,7 +60,7 @@ if ($row != FALSE) {
 if (isset($_GET['column'])) {
 
     // Header block
-    $content .= '<div class="columnheading"><a class="columnheading" href="">';
+    $content .= '<div class="columnheading"><span class="title">';
     if ($columnOptions[$_GET['column']] != "") {
         $content .= $columnOptions[$_GET['column']];
     } else {
@@ -70,8 +70,10 @@ if (isset($_GET['column'])) {
             $content .= 'New Column';
         }
     }
-    $content .= '</a>';
-    $content .= '<a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)" class="boxedbutton">R</a>';
+    $content .= '</span>';
+    $content .= '<span class="columnbuttons"><a href="#" class="columnoptions icon left icon157"><span>Column Settings</span></a>';
+    $content .= '<a class="confirmactionbutton deletecolumnbutton icon middle icon184" href="actions.php?delcol=' . $thisColNumber . '"><span>Delete Column</span></a>';
+    $content .= '<a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)" class="icon right icon2"><span>Refresh Column</span></a></span>';
     $content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
     $content .= '</div>';
         
@@ -167,6 +169,8 @@ if (isset($_GET['column'])) {
     foreach ($items as $itemHTML) {
         $content .= $itemHTML;
     }
+    
+    $content .= makeMoreLessForm($paramArray["count"], $columnOptions, $_GET['column']);
 		        
     echo $content;
 }

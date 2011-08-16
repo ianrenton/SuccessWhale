@@ -41,12 +41,12 @@ if (isset($_POST['status'])) {
 	        
 	        if ($service == "twitter") {
 	            $twitter = $twitters[$username];
-	            if ($twitter != null) {
+	            if (($twitter != null) && (!empty($statusForTwitter))) {
 	                $twitter->post('statuses/update', array('status' => $statusForTwitter, 'in_reply_to_status_id' => $replyid));
 	            }
 	        } elseif ($service == "facebook") {
 	            $facebook = $facebooks[$username];
-	            if ($facebook != null) {
+	            if (($facebook != null) && (!empty($status))) {
 	                $facebook->api('/me/feed', 'POST', array('message'=> $status, 'cb' => ''));
 	            }
 	        }

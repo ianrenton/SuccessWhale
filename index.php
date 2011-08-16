@@ -189,9 +189,8 @@ $content .= '</script>';
 
 
 // Build the main display
-$content .= '<div id="headerplusstatusform"><div id="header">';
+$content .= '<div id="headerplusstatusform">';
 $content .= makeLinksForm();
-$content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a></div>';
 $content .= '<div id="addcolumndiv"><a class="doactionbutton" href="actions.php?newcol=true"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a></div>';
 $content .= generateSendBoxes($posttoservices);
 $content .= '</div></div>';
@@ -207,8 +206,8 @@ function generateSendBoxes($posttoservices) {
 	$content = '<div id="statusformdiv">';
     $content .= '<form id="statusform" name="statusform">';
     $content .= '<input type="text" autocomplete="off" name="status" id="status" class="status">';
-    $content .= '<input type="submit" name="submit" id="submitbutton" value="Post" />';
-	$content .= '&nbsp;&nbsp;<span class="counter">This post is 0 characters long</span><div id="serviceselectors">';
+    $content .= '<span class="counter">140</span><input type="submit" name="submit" id="submitbutton" value="Post" />';
+	$content .= '<div id="serviceselectors">';
     
     $counter = 0;
     foreach ($_SESSION['twitters'] as $username => $twitter) {
@@ -251,10 +250,10 @@ function generateTweetTables($numColumns, $colsperscreen) {
 function makeLinksForm() {
     
 	$content = '<div class="links">';
-	$content .= '<li><a href="manageappearance.php" class="popup">Appearance</a></li>';
-	$content .= '<li><a href="manageaccounts.php" class="popup">Accounts</a></li>';
-	$content .= '<li><a href="manageblocks.php" class="popup">Banned Phrases</a></li>';
-	$content .= '<li><a href="clearsessions.php">Log Out</a></li></ul></div>';
+	$content .= '<a href="manageappearance.php" class="icon left icon98 popup" title="Appearance"><span>Appearance</span></a>';
+	$content .= '<a href="manageaccounts.php" class="icon middle icon112 popup" title="Accounts"><span>Accounts</span></a>';
+	$content .= '<a href="manageblocks.php" class="icon middle icon146 popup" title="Banned Phrases"><span>Banned Phrases</span></a>';
+	$content .= '<a href="clearsessions.php" class="icon right icon63" title="Log Out"><span>Log Out</span></a></div>';
 	
 	return $content;
 }
