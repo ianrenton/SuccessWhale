@@ -309,7 +309,7 @@ function parseLinks($html, &$numusers) {
 	        $query = "SELECT * FROM linkcache WHERE url='" . $match . "'";
             $result = mysql_query($query);
         }
-        if ((DB_SERVER != '') && (mysql_num_rows($result) )) {
+        if (false) {//}((DB_SERVER != '') && (mysql_num_rows($result) )) {
             // It's cached.
             $wholeblock = mysql_result($result,0,"wholeblock");
 		    $replacetext = mysql_result($result,0,"replacetext");
@@ -334,6 +334,22 @@ function parseLinks($html, &$numusers) {
 				    if(preg_match("~^Location: (.+)\r\n~",$line,$locationMatches))
 					    $loc = $locationMatches[1];
 			    }
+			
+				if ($loc) {
+					// Check again against the list of URL shorteners, in case it's doubly wrapped
+					preg_match('/^(http[s]?|ftp|file):\/\/([^\/]+)\/?(.*)$/', $loc, $urlParts);
+				    $server = $urlParts[2];
+				    if(in_array($server,$shortservers)) {
+						$id = preg_replace("~[^A-Za-z0-9]+~","",$urlParts[3]);
+					    $result = grab($server,$id);
+					    $loc = false;
+					    foreach($result as $line) {
+						    if(preg_match("~^Location: (.+)\r\n~",$line,$locationMatches))
+							    $loc = $locationMatches[1];
+					    }
+					}
+				}
+				
 			    if (!$loc) {
 				    // Not a shortened link, so give the URL text an a href
 				    $wholeblock = false;
@@ -341,7 +357,7 @@ function parseLinks($html, &$numusers) {
 			    } elseif (!preg_match("~http://twixt.successwhale.com/(.+)~",$loc,$locationMatches)) {
 				    // Shortened link (but not Twixt), so replace the URL text with an an href to the real location
 			        preg_match('/^http[s]?:\/\/([^\/]+)\/?(.*)$/', $loc, $domainMatch);
-				        $wholeblock = false;
+				    $wholeblock = false;
 				    if(in_array($domainMatch[1],$picservers)) {
 			            // Image server link, so give the URL text an a href and a fancybox class
 				        $replacetext = '<a href="' . $loc . '" class="fancybox">[' . $domainMatch[1] . ']</a>';
