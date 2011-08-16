@@ -49,8 +49,9 @@ input#submitbutton {
     left:-20px;
 }
 
-input.reply {
+textarea.reply {
 	width:500px;
+	height:50px;
 }
 
 div#mainarea {
