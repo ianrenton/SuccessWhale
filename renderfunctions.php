@@ -466,6 +466,14 @@ function getReplaceTextForPicture($urlParts) {
 	} else if ($urlParts[2] == "twitpic.com") {
 		// Twitpic just needs some URL substitution
 		$loc = "http://twitpic.com/show/large/" . $urlParts[3] . ".jpg";
+	} else if ($urlParts[2] == "lockerz.com") {
+		// Lockerz (formerly plixi) needs an API call, then gives us a 301 to the real image
+		$result = grab("api.plixi.com","api/tpapi.svc/imagefromurl?url=" . $urlParts[0] . "&size=medium");
+	    $loc = false;
+	    foreach($result as $line) {
+		    if(preg_match("~^Location: (.+)\r\n~",$line,$locationMatches))
+			    $loc = $locationMatches[1];
+	    }
 	}
     $text = '<a href="' . $loc . '" class="fancybox">[' . $urlParts[2] . ']</a>';
 	return $text;

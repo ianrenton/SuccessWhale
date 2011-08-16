@@ -286,19 +286,9 @@ $(document).ready(function() {
     
     // Fancybox images
     $("a.fancybox").live("click", function() {
-        var twitpicRegex = new RegExp("twitpic.com\/([\\w\\n]+)", "i");
-        var yfrogRegex = new RegExp("yfrog.com\/([\\w\\n]+)", "i");
-        if ($(this).attr('href').match(twitpicRegex)) {
-            var imageurl = $(this).attr('href');
-            $.fancybox({ 'href': imageurl });
-            return false;
-        } else if ($(this).attr('href').match(yfrogRegex)) {
-            var imageurl = $(this).attr('href');
-            $.fancybox({ 'href': imageurl });
-            return false;
-        } else {
-            return true;
-        }
+         var imageurl = $(this).attr('href');
+         $.fancybox({ 'href': imageurl });
+         return false;
     });
     
     // User Checks/unchecks services to post to, updating the current knowledge of
