@@ -290,7 +290,9 @@ function parseLinks($html, &$numusers) {
 		"wp.me",
 		"digs.by",
 		"s.coop",
-		"bbc.in"
+		"bbc.in",
+		"post.ly",
+		"wp.me"
 	);
 	$picservers = array(
 		"twitpic.com",
