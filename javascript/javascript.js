@@ -189,30 +189,12 @@ $(document).ready(function() {
     $('input.accountSelector').live("click", function() {
         recheckAccountsSelected();
     });
-    
-    // Mouseover statuses to show the operations below.  Entering and leaving handled
-    // separately due to the many strange ways in which mouse paths can break
-    // hover().
-    $('div.item').unbind("mouseenter mouseleave");
-    $('div.item').live("mouseenter", function() {
-        $(this).find('div.operations').show();
-        return false;
-    });
-    $('div.item').live("mouseleave", function() {
-        $(this).find('div.operations').hide();
-        return false;
-    });
-    
-    // Mouseover images to show the metadata below.  Entering and leaving handled
-    // separately due to the many strange ways in which mouse paths can break
-    // hover().
-    $('img.avatar').unbind("mouseenter mouseleave");
-    $('img.avatar').live("mouseenter", function() {
-        $(this).parents('div.item').find('div.metatext').show();
-        return false;
-    });
-    $('img.avatar').live("mouseleave", function() {
-        $(this).parents('div.item').find('div.metatext').hide();
+
+    // Click images to switch to showing metadata instead of post text.
+    $('img.avatar').unbind("click");
+    $('img.avatar').live("click", function() {
+        $(this).parents('div.item').find('span.tweettext').toggle();
+        $(this).parents('div.item').find('span.metatext').toggle();
         return false;
     });
     

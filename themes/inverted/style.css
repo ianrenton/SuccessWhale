@@ -29,21 +29,12 @@ div.columnheading span.title {
 	color:#666666;
 }
 
-div.columnheading span.columnbuttons {
-	color:#666666;
-}
-
 .text {
 	color:#888888;
 }
 
-.operations a {
-	color:#666666;
-	border: 1px solid #666666;
-}
-
 .metatext {
-	color:#666666;
+	color:#888888;
 }
 
 div.convoarea {
@@ -61,11 +52,11 @@ div#replybox {
     color:#888888;
 }
 
-.name a{
-	color:#666666;
+.tweettext a {
+	color:#0099b9;
 }
 
-.tweettext a {
+.metatext a {
 	color:#0099b9;
 }
 
@@ -76,7 +67,8 @@ div.colswitcherform a {
 
 a.button,
 a.icon {
-    color: #484848;
+    color: #aaaaaa;
+    text-shadow: 0 1px 0 #000;
     background: #444444;
     background: -webkit-linear-gradient(top, #444444, #222222);
     background: -moz-linear-gradient(top, #444444, #222222);
@@ -87,7 +79,7 @@ a.icon {
 a.button:hover,
 a.icon:hover {
     border: solid 1px #222;
-    color: #666666;
+    color: #aaaaaa;
     background: -webkit-linear-gradient(top, #666666, #444444);
     background: -moz-linear-gradient(top, #666666, #444444);
     background: -ms-linear-gradient(top, #666666, #444444);
