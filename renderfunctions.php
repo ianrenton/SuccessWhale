@@ -311,7 +311,7 @@ function parseLinks($html, &$numusers) {
 	        $query = "SELECT * FROM linkcache WHERE url='" . $match . "'";
             $result = mysql_query($query);
         }
-        if (false) {//}((DB_SERVER != '') && (mysql_num_rows($result) )) {
+        if ((DB_SERVER != '') && (mysql_num_rows($result) )) {
             // It's cached.
             $wholeblock = mysql_result($result,0,"wholeblock");
 		    $replacetext = mysql_result($result,0,"replacetext");
@@ -320,10 +320,10 @@ function parseLinks($html, &$numusers) {
 		    preg_match('/^(http[s]?|ftp|file):\/\/([^\/]+)\/?(.*)$/', $match, $urlParts);
 		    $server = $urlParts[2];
 		    if(!in_array($server,$shortservers)) {
-			    // Not a shortened or image server link, so give the URL text an a href
+			    // Not a shortened link, so give the URL text an a href
 			    $wholeblock = false;
 			    if(in_array($server,$picservers)) {
-			        $replacetext = '<a href="' . $urlParts[0] . '" class="fancybox">[' . $urlParts[2] . ']</a>';
+					$replacetext = getReplaceTextForPicture($urlParts);
 			    } else {
 			        $replacetext = '<a href="' . $urlParts[0] . '" target="_blank">[' . $urlParts[2] . ']</a>';
 			    }
@@ -353,18 +353,18 @@ function parseLinks($html, &$numusers) {
 				}
 				
 			    if (!$loc) {
-				    // Not a shortened link, so give the URL text an a href
+				    // Not a shortened link (oops?), so give the URL text an a href
 				    $wholeblock = false;
 			        $replacetext = '<a href="' . $urlParts[0] . '" target="_blank">[' . $urlParts[2] . ']</a>';
 			    } elseif (!preg_match("~http://twixt.successwhale.com/(.+)~",$loc,$locationMatches)) {
 				    // Shortened link (but not Twixt), so replace the URL text with an an href to the real location
-			        preg_match('/^http[s]?:\/\/([^\/]+)\/?(.*)$/', $loc, $domainMatch);
+			        //preg_match('/^http[s]?:\/\/([^\/]+)\/?(.*)$/', $loc, $domainMatch);
+					preg_match('/^(http[s]?|ftp|file):\/\/([^\/]+)\/?(.*)$/', $loc, $urlParts);
 				    $wholeblock = false;
-				    if(in_array($domainMatch[1],$picservers)) {
-			            // Image server link, so give the URL text an a href and a fancybox class
-				        $replacetext = '<a href="' . $loc . '" class="fancybox">[' . $domainMatch[1] . ']</a>';
+				    if(in_array($urlParts[2],$picservers)) {
+						$replacetext = getReplaceTextForPicture($urlParts);
 		            } else {
-				        $replacetext = '<a href="' . $loc . '" target="_blank">[' . $domainMatch[1] . ']</a>';
+				        $replacetext = '<a href="' . $loc . '" target="_blank">[' . $urlParts[2] . ']</a>';
 				    }
 			    } else {
 				    // Must be Twixt, so replace the whole text with the twixt data.
@@ -450,5 +450,24 @@ function makeMoreLessForm($count, $columnOptions, $thisColName) {
 	}
 	$content .= '</div>';
 	return $content;
+}
+
+// We've got the URL to an image server such as twitpit, so let's build special URLs for fetching the real pictures.
+function getReplaceTextForPicture($urlParts) {
+	if ($urlParts[2] == "yfrog.com") {
+		// yFrog needs a special ":iphone" URL, then gives us a 301 to the real image
+		$id = preg_replace("~[^A-Za-z0-9]+~","",$urlParts[3]);
+	    $result = grab($urlParts[2],$id.":iphone");
+	    $loc = false;
+	    foreach($result as $line) {
+		    if(preg_match("~^Location: (.+)\r\n~",$line,$locationMatches))
+			    $loc = $locationMatches[1];
+	    }
+	} else if ($urlParts[2] == "twitpic.com") {
+		// Twitpic just needs some URL substitution
+		$loc = "http://twitpic.com/show/large/" . $urlParts[3] . ".jpg";
+	}
+    $text = '<a href="' . $loc . '" class="fancybox">[' . $urlParts[2] . ']</a>';
+	return $text;
 }
 ?>

@@ -289,11 +289,11 @@ $(document).ready(function() {
         var twitpicRegex = new RegExp("twitpic.com\/([\\w\\n]+)", "i");
         var yfrogRegex = new RegExp("yfrog.com\/([\\w\\n]+)", "i");
         if ($(this).attr('href').match(twitpicRegex)) {
-            var imageurl = $(this).attr('href').replace(twitpicRegex, 'twitpic.com/show/large/$1.jpg');
+            var imageurl = $(this).attr('href');
             $.fancybox({ 'href': imageurl });
             return false;
         } else if ($(this).attr('href').match(yfrogRegex)) {
-            var imageurl = $(this).attr('href') + ":iphone";
+            var imageurl = $(this).attr('href');
             $.fancybox({ 'href': imageurl });
             return false;
         } else {
