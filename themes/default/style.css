@@ -91,6 +91,15 @@ a.icon:active {
     background: -ms-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
     background: -o-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
 }
+a.pressed {
+    border: solid 1px #7f7f7f;
+    background: #d0d0d0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#a8a8a8), color-stop(0.15, #c6c6c6), to(#d8d8d8));
+    background: -webkit-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -moz-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -ms-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+    background: -o-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+}
 
 a.left {
     border-right: solid 1px #b0b0b0;

@@ -95,6 +95,15 @@ a.icon:active {
     background: -ms-linear-gradient(top, #555555, #666666 15%, #777777);
     background: -o-linear-gradient(top, #555555, #666666 15%, #777777);
 }
+a.pressed {
+    border: solid 1px #222;
+    background: #55aa55;
+    background: -webkit-gradient(linear, left top, left bottom, from(#55aa55), color-stop(0.15, #66bb66), to(#77cc77));
+    background: -webkit-linear-gradient(top, #55aa55, #66bb66 15%, #77cc77);
+    background: -moz-linear-gradient(top, #55aa55, #66bb66 15%, #77cc77);
+    background: -ms-linear-gradient(top, #55aa55, #66bb66 15%, #77cc77);
+    background: -o-linear-gradient(top, #55aa55, #66bb66 15%, #77cc77);
+}
 
 a.left {
     border-right: solid 1px #222;

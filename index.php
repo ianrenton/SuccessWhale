@@ -206,25 +206,54 @@ function generateSendBoxes($posttoservices) {
 	$content = '<div id="statusformdiv">';
     $content .= '<form id="statusform" name="statusform">';
     $content .= '<input type="text" autocomplete="off" name="status" id="status" class="status">';
-    $content .= '<span class="counter">140</span><input type="submit" name="submit" id="submitbutton" value="Post" />';
+    $content .= '<a id="submitbutton" class="button right" href="#"><span>Post</span></a><span class="counter">140</span>';
 	$content .= '<div id="serviceselectors">';
     
+    $numSelectors = count($_SESSION['twitters']) + count($_SESSION['facebooks']);
     $counter = 0;
     foreach ($_SESSION['twitters'] as $username => $twitter) {
-        $content .= '<input type="checkbox" class="accountSelector" id="accountSelector' . ++$counter . '" value="twitter:' . $username . '" ';
+        $counter++;
+        $content .= '<a class="button accountselector';
+        if ($numSelectors != 1) {
+            if ($counter == 1) {
+                $content .= " left";
+            } else if ($counter == $numSelectors) {
+                $content .= " right";
+            } else {
+                $content .= " middle";
+            }
+        }
+        if (strpos($posttoservices, ("twitter:" . $username)) !== FALSE) {
+            $content .= " pressed";
+        }
+        $content .= '"><input type="checkbox" class="accountSelector" id="accountSelector' . $counter . '" value="twitter:' . $username . '" ';
         if (strpos($posttoservices, ("twitter:" . $username)) !== FALSE) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<label for="accountSelector' . $counter . '"><img src="/images/serviceicons/twitter.png" alt="Twitter" title="Twitter" /> ' . $username . '</label> ';
+        $content .= '<img src="/images/serviceicons/twitter.png" alt="Twitter" title="Twitter" /> ' . $username . '</a>';
     }
     foreach ($_SESSION['facebooks'] as $username => $facebook) {
-        $content .= '<input type="checkbox" class="accountSelector" id="accountSelector' . ++$counter . '" value="facebook:' . $username . '" ';
+        $counter++;
+        $content .= '<a class="button accountselector';
+        if ($numSelectors != 1) {
+            if ($counter == 1) {
+                $content .= " left";
+            } else if ($counter == $numSelectors) {
+                $content .= " right";
+            } else {
+                $content .= " middle";
+            }
+        }
+        if (strpos($posttoservices, ("facebook:" . $username)) !== FALSE) {
+            $content .= " pressed";
+        }
+        $content .= '"><input type="checkbox" class="accountSelector" id="accountSelector' . $counter . '" value="facebook:' . $username . '" ';
         if (strpos($posttoservices, ("facebook:" . $username)) !== FALSE) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<label for="accountSelector' . $counter . '"><img src="/images/serviceicons/facebook.png" alt="Facebook" title="Facebook" /> ' . $username . '</label> ';
+        $content .= '<img src="/images/serviceicons/facebook.png" alt="Facebook" title="Facebook" /> ' . $username . '</a>';
     }
     $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     

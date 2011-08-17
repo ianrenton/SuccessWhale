@@ -53,6 +53,9 @@ function recheckAccountsSelected() {
         var $box = $(this);
         if ($box.attr("checked")) {
             $servicesEnabled += $box.val() + ";";
+            $box.parents('a.accountselector').addClass("pressed");
+        } else {
+            $box.parents('a.accountselector').removeClass("pressed");
         }
     });
     $('input#postToAccounts').val($servicesEnabled);
@@ -99,11 +102,11 @@ $(document).ready(function() {
 
     // jQuery UI formatting
     //$('input#submitbutton').button().css({'padding':'0'});
-    $('input.accountSelector').button().css({'padding':'0'});
+    //$('input.accountSelector').button().css({'padding':'0'});
 
     // Clicking main Submit button posts status
-    $('input#submitbutton').unbind("click");
-    $('input#submitbutton').live("click", function() {
+    $('a#submitbutton').unbind("click");
+    $('a#submitbutton').live("click", function() {
         recheckAccountsSelected();
         submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
         $("input#status").val('');
@@ -142,8 +145,8 @@ $(document).ready(function() {
     });
 
     // Enter to submit reply form
-    $('input.reply').unbind("keydown");
-    $('input.reply').live("keydown", function(e) {
+    $('textarea.reply').unbind("keydown");
+    $('textarea.reply').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
             submitStatus($(this).parent().children('textarea.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
             $.fancybox.close();
@@ -185,8 +188,14 @@ $(document).ready(function() {
     
     // User Checks/unchecks services to post to, updating the current knowledge of
     // the user's preferences.
-    $('input.accountSelector').unbind("click");
-    $('input.accountSelector').live("click", function() {
+    $('a.accountselector').unbind("click");
+    $('a.accountselector').live("click", function() {
+        var $checkbox = $(this).find('input.accountSelector');
+        if ($checkbox.is(':checked')) {
+            $checkbox.removeAttr('checked');
+        } else {
+            $checkbox.attr('checked', 'checked');
+        }
         recheckAccountsSelected();
     });
 

@@ -25,6 +25,7 @@ div.links {
 }
 
 div#serviceselectors {
+    clear:both;
     margin-top:5px;
 }
 
@@ -33,20 +34,24 @@ div#serviceselectors img {
     top:2px;
 }
 
+input.accountSelector {
+    display:none;
+}
+
 input[name="status"] {
-	width:60%;
+	width:70%;
+	height:23px;
+	float:left;
+	font-size:19px;
 }
 
 span.counter {
     position:relative;
-    left:-30px;
+    left:-95px;
+    top:28px;
     z-index:999;
     font-weight:bold;
-}
-
-input#submitbutton {
-    position:relative;
-    left:-20px;
+	font-size:21px;
 }
 
 textarea.reply {
@@ -242,6 +247,7 @@ a.icon {
     -moz-transition: border .218s;
     -o-transition: border-color .218s;
     transition: border-color .218s;
+    cursor:default;
 }
 a.icon {
     padding: 0;
