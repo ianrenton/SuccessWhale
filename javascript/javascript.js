@@ -201,10 +201,16 @@ $(document).ready(function() {
     // Column options button
     $('a.columnoptions').unbind("click");
     $('a.columnoptions').live("click", function(e) {
-        //$(this).parents('div.columnheading').find('a.columnheading').toggle();
         $(this).parents('div.columnheading').find('div.columnnav').toggle('fast');
         $(this).parents('div.columnheading').find('a.deletecolumnbutton').toggle();
         return false;
+    });
+    
+    // Column refresh button
+    $('a.refreshcolumnbutton').unbind("click");
+    $('a.refreshcolumnbutton').live("click", function(e) {
+        $(this).find('span').css("background", "url(/images/ajax-loader.gif) 10px 6px no-repeat");  
+        return true;
     });
     
     // Convo buttons show/hide conversations

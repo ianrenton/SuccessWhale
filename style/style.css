@@ -84,6 +84,12 @@ div.columnheading span.title {
     overflow-y: auto;
 }
 
+div.columnheading img {
+    float:left;
+    position:relative;
+    top:11px;
+}
+
 div.columnheading span.columnbuttons {
     float:right;
     position:relative;
