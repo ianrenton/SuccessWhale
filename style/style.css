@@ -9,6 +9,32 @@ html, body {
 	max-height: 100%;
 }
 
+div.centredbluebox {
+    width:500px;
+    margin: 50px auto 20px auto;
+    background: #7aa5d9;
+    padding: 30px;
+    border: 3px solid #4e8cd9;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    -webkit-border-radius: 10px; 
+    text-align: center;    
+}
+
+div.centredgreybox {
+    width:500px;
+    margin: 50px auto 20px auto;
+    background: #eeeeee;
+    padding: 30px;
+    border: 3px solid #dddddd;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    -webkit-border-radius: 10px; 
+    text-align: center;
+}
+
 div.links {
     position:relative;
     left:-5px;

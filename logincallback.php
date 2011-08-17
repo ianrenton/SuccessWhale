@@ -29,19 +29,19 @@ if ((isset($_POST['username'])) && (isset($_POST['password']))) {
             } else {
                 // Password didn't match
                 mysql_close();
-                header('Location: ./login.php?fail=true');
+                header('Location: ./connect.php?fail=true');
                 die();
             }
         } else {
             // Username didn't match
             mysql_close();
-            header('Location: ./login.php?fail=true');
+            header('Location: ./connect.php?fail=true');
             die();
         }
 
 } else {
     // Called without username/password POST.
-    header('Location: ./login.php');
+    header('Location: ./connect.php');
     die();
 }
 
