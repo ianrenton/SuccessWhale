@@ -231,7 +231,7 @@ function generateSendBoxes($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<img src="/images/serviceicons/twitter.png" alt="Twitter" title="Twitter" /> ' . $username . '</a>';
+        $content .= '<span><img src="/images/serviceicons/twitter.png" alt="Twitter" title="Twitter" />&nbsp;&nbsp;' . $username . '</span></a>';
     }
     foreach ($_SESSION['facebooks'] as $username => $facebook) {
         $counter++;
@@ -253,7 +253,7 @@ function generateSendBoxes($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<img src="/images/serviceicons/facebook.png" alt="Facebook" title="Facebook" /> ' . $username . '</a>';
+        $content .= '<span><img src="/images/serviceicons/facebook.png" alt="Facebook" title="Facebook" />&nbsp;&nbsp;' . $username . '</span></a>';
     }
     $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     

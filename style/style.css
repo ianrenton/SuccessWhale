@@ -46,13 +46,13 @@ div.links {
 }
 
 #statusformdiv {
-    height:55px;
+    height:65px;
 	padding:10px;
 }
 
 div#serviceselectors {
     clear:both;
-    margin-top:5px;
+    padding-top:8px;
 }
 
 div#serviceselectors img {
@@ -62,6 +62,11 @@ div#serviceselectors img {
 
 input.accountSelector {
     display:none;
+}
+
+a.accountselector span {
+	position:relative;
+	top:2px;
 }
 
 input#status {
@@ -80,8 +85,8 @@ input#reply {
 
 span.counter {
     position:relative;
-    left:-95px;
-    top:28px;
+    left:-100px;
+    top:32px;
     font-weight:bold;
 	font-size:21px;
 }
