@@ -137,18 +137,18 @@ $(document).ready(function() {
     });
     
     // Click to submit reply form
-    $('input.replybutton').unbind("click");
-    $('input.replybutton').live("click", function(e) {
-        submitStatus($(this).parent().children('textarea.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
+    $('a.replybutton').unbind("click");
+    $('a.replybutton').live("click", function(e) {
+        submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
         $.fancybox.close();
         return false;
     });
 
     // Enter to submit reply form
-    $('textarea.reply').unbind("keydown");
-    $('textarea.reply').live("keydown", function(e) {
+    $('input.reply').unbind("keydown");
+    $('input.reply').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
-            submitStatus($(this).parent().children('textarea.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
+            submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
             $.fancybox.close();
             return false;
         }
@@ -156,13 +156,13 @@ $(document).ready(function() {
     });
 
     // Typing in reply form updates the counter
-    $('textarea.reply').unbind("keyup");
-    $('textarea.reply').live("keyup", function(e) {
-        $(this).parent().children('span.counter').html($(this).val().length);
+    $('input.reply').unbind("keyup");
+    $('input.reply').live("keyup", function(e) {
+        $(this).parent().children('span.replycounter').html($(this).val().length);
 	    if ($(this).val().length > 140) {
-	        $(this).parent().children('input.replybutton').val("Twixt");
+	        $(this).parent().children('a.replybutton').html("Twixt");
 	    } else {
-	        $(this).parent().children('input.replybutton').val("Post");
+	        $(this).parent().children('a.replybutton').html("Post");
 	    }
         return true;
     });
@@ -245,8 +245,7 @@ $(document).ready(function() {
                      'padding': 0,
                      'margin': 0,
                      'onComplete': function() {
-                        $('textarea.reply').putCursorAtEnd();
-                        $('input.replybutton').button();
+                        $('input.reply').putCursorAtEnd();
                      }
                      });
         return false;

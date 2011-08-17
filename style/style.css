@@ -38,8 +38,15 @@ input.accountSelector {
     display:none;
 }
 
-input[name="status"] {
+input#status {
 	width:70%;
+	height:23px;
+	float:left;
+	font-size:19px;
+}
+
+input#reply {
+	width:500px;
 	height:23px;
 	float:left;
 	font-size:19px;
@@ -49,14 +56,15 @@ span.counter {
     position:relative;
     left:-95px;
     top:28px;
-    z-index:999;
     font-weight:bold;
 	font-size:21px;
 }
 
-textarea.reply {
-	width:500px;
-	height:50px;
+span.replycounter {
+    position:relative;
+    top:6px;
+    font-weight:bold;
+	font-size:21px;
 }
 
 div#mainarea {
