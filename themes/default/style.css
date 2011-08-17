@@ -25,6 +25,10 @@ div.columnheading span.title {
 	color:#666666;
 }
 
+div.columnheading span.title span.accountname {
+    color:#888888;
+}
+
 .text {
 	color:#888888;
 }

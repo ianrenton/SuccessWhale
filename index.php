@@ -267,7 +267,9 @@ function generateTweetTables($numColumns, $colsperscreen) {
 	$content = '<div id="mainarea"><table class="bigtable" id="bigtable" border="0" style="min-width:' . ($numColumns*(100/$colsperscreen)) . '%; width:' . ($numColumns*(100/$colsperscreen)) . '%; max-width:' . ($numColumns*(100/$colsperscreen)+1) . '%; "><tr>';
 	for ($i=0; $i<$numColumns; $i++) {
 	    $content .= '<td width="' . (100/$numColumns) . '%" valign=top>';
-	    $content .= '<div class="column" name="column" id="column' . $i . '"><div class="columnheading"><img src="images/ajax-loader.gif" alt="Loading..."/></div></div>';
+	    $content .= '<div class="column" name="column" id="column' . $i . '"><div class="columnheading"><span class="columnbuttons">';
+	    $content .= '<a class="icon" style="background:url(/images/ajax-loader.gif) 10px 6px no-repeat;"><span>Refresh Column</span></a></span></span>';
+	    $content .= '</div></div>';
 	    $content .= '</td>';
 	}
 	$content .= '</tr></table>';

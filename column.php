@@ -70,6 +70,23 @@ if (isset($_GET['column'])) {
             $content .= 'New Column';
         }
     }
+    $content .= '<br/><span class="accountname">';
+    $sources = explode("|", $_GET['column']);
+    if (count($sources) > 1) {
+        $content .= 'Combined Feed';
+    } else {
+        if (!empty($sources[0])) {
+	        $columnIdentifiers = explode(":", $sources[0]);
+	        $service = $columnIdentifiers[0];
+	        $username = $columnIdentifiers[1];
+	        if ($service == "twitter") {
+	            $content .= '@';
+	        }
+	        $content .= $username;
+	    }
+    }
+    
+    $content .= '</span>';
     $content .= '</span>';
     $content .= '<span class="columnbuttons"><a href="#" class="columnoptions icon left icon157"><span>Column Settings</span></a>';
     $content .= '<a class="confirmactionbutton deletecolumnbutton icon middle icon184" href="actions.php?delcol=' . $thisColNumber . '"><span>Delete Column</span></a>';

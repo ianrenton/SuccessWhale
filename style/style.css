@@ -117,10 +117,14 @@ div.columnheading {
 div.columnheading span.title {
     float:left;
     position:relative;
-    top:11px;
+    top:2px;
 	text-decoration:none;
     overflow-x: auto;
     overflow-y: auto;
+}
+
+div.columnheading span.title span.accountname {
+    font-weight:lighter;
 }
 
 div.columnheading img {
