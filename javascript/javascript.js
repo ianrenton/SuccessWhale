@@ -13,11 +13,12 @@ function changeColumn(colnumber, url, updatedb) {
     if (url.indexOf("----------") == -1) {
         // Normal use
         allColumns[colnumber] = url;
+        $("#column" + colnumber).find('a.refreshcolumnbutton').find('span').css("background", "url(/images/ajax-loader.gif) 10px 6px no-repeat");
         $("#column" + colnumber).load((url + "&updatedb=" + updatedb), function() {
             $('.wraptext').breakly(20);
             clearInterval(refreshIDs[colnumber]);
             refreshIDs[colnumber] = setInterval(function() {
-                $("#column" + colnumber).load(url);
+                changeColumn(colnumber, url, 0);
             }, 300000);
         });
     } else {
