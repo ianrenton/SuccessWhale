@@ -45,8 +45,17 @@ div.links {
 	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
 }
 
+div#addcolumndiv {
+	float:right;
+	position:relative;
+	left:5px;
+	top:-2px;
+	margin:0;
+	padding:0;
+}
+
 #statusformdiv {
-    height:65px;
+    height:66px;
 	padding:10px;
 }
 
@@ -255,13 +264,6 @@ div.colswitcherform a {
 
 img {
 	border:0px;
-}
-
-#addcolumndiv {
-	float:right;
-	margin-right:15px;
-	position:relative;
-	top:40px;
 }
 
 textarea#blocklist {

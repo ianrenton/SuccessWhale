@@ -191,8 +191,8 @@ $content .= '</script>';
 // Build the main display
 $content .= '<div id="headerplusstatusform">';
 $content .= makeLinksForm();
-$content .= '<div id="addcolumndiv"><a class="doactionbutton" href="actions.php?newcol=true"><img src="images/newcolumn.png" title="New Column" alt="New Column"></a></div>';
 $content .= generateSendBoxes($posttoservices);
+$content .= '<div id="addcolumndiv"><a href="actions.php?newcol=true" class="icon icon10 doactionbutton" title="New Column"><span>New Column</span></a></div>';
 $content .= '</div></div>';
 $content .= generateTweetTables($numColumns, $colsperscreen);
 
