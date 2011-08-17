@@ -38,8 +38,8 @@ function submitStatus(status, replyId, postToAccounts) {
         data: dataString,
         success: function() {
             $("input#status").val('');
+            $("input#status").parent().children('span.counter').html("140");
             setTimeout('refreshAll()', 3000);
-            $('input#status').keyUp(); // Pretend a character has been typed, to update count.
             return false;
         }
     });
