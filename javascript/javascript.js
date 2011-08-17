@@ -136,7 +136,7 @@ $(document).ready(function() {
     // Click to submit reply form
     $('input.replybutton').unbind("click");
     $('input.replybutton').live("click", function(e) {
-        submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
+        submitStatus($(this).parent().children('textarea.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
         $.fancybox.close();
         return false;
     });
@@ -145,7 +145,7 @@ $(document).ready(function() {
     $('input.reply').unbind("keydown");
     $('input.reply').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
-            submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
+            submitStatus($(this).parent().children('textarea.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
             $.fancybox.close();
             return false;
         }
@@ -153,8 +153,8 @@ $(document).ready(function() {
     });
 
     // Typing in reply form updates the counter
-    $('input.reply').unbind("keyup");
-    $('input.reply').live("keyup", function(e) {
+    $('textarea.reply').unbind("keyup");
+    $('textarea.reply').live("keyup", function(e) {
         $(this).parent().children('span.counter').html($(this).val().length);
 	    if ($(this).val().length > 140) {
 	        $(this).parent().children('input.replybutton').val("Twixt");
@@ -236,7 +236,7 @@ $(document).ready(function() {
                      'padding': 0,
                      'margin': 0,
                      'onComplete': function() {
-                        $('input.reply').putCursorAtEnd();
+                        $('textarea.reply').putCursorAtEnd();
                         $('input.replybutton').button();
                      }
                      });
