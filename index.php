@@ -191,8 +191,9 @@ $content .= '</script>';
 // Build the main display
 $content .= '<div id="headerplusstatusform">';
 $content .= makeLinksForm();
-$content .= generateSendBoxes($posttoservices);
+$content .= generateSendBoxes();
 $content .= '<div id="addcolumndiv"><a href="actions.php?newcol=true" class="icon icon10 doactionbutton" title="New Column"><span>New Column</span></a></div>';
+$content .= generateServiceSelectors($posttoservices);
 $content .= '</div></div>';
 $content .= generateTweetTables($numColumns, $colsperscreen);
 
@@ -202,11 +203,15 @@ mysql_close();
 include('html.inc');
 
 // Generates the top area - status entry box, "number of chars left" box, and Post button.
-function generateSendBoxes($posttoservices) {
+function generateSendBoxes() {
 	$content = '<div id="statusformdiv">';
     $content .= '<form id="statusform" name="statusform">';
     $content .= '<input type="text" autocomplete="off" name="status" id="status" class="status">';
     $content .= '<a id="submitbutton" class="button right" href="#"><span>Post</span></a><span class="counter">140</span>';
+    return $content;
+}
+
+function generateServiceSelectors($posttoservices) {
 	$content .= '<div id="serviceselectors">';
     
     $numSelectors = count($_SESSION['twitters']) + count($_SESSION['facebooks']);

@@ -101,10 +101,6 @@ function setDivSize() {
 // jQuery startup things (when DOM is avalable)
 $(document).ready(function() {
 
-    // jQuery UI formatting
-    //$('input#submitbutton').button().css({'padding':'0'});
-    //$('input.accountSelector').button().css({'padding':'0'});
-
     // Clicking main Submit button posts status
     $('a#submitbutton').unbind("click");
     $('a#submitbutton').live("click", function() {
@@ -255,7 +251,18 @@ $(document).ready(function() {
     // "Do action"
     $('a.doactionbutton').unbind("click");
     $('a.doactionbutton').live("click", function(e) {
-        $.ajax($(this).attr('href'));
+		var $originaltext = $(this).html();
+		//alert($originaltext);
+		//$(this).html("<img src=\"/images/ajax-loader.gif\"/>");
+		//$(this).html("  ");
+		//$(this).css("background", "url(/images/ajax-loader.gif) 10px 6px no-repeat");  
+        $.ajax({
+			url: $(this).attr('href'),
+			complete: function() {
+				//$(this).html($originaltext);
+				//$(this).css("background", "none");  
+			}
+			});
         return false;
     });
     
@@ -263,7 +270,12 @@ $(document).ready(function() {
     $('a.confirmactionbutton').unbind("click");
     $('a.confirmactionbutton').live("click", function(e) {
         if (confirm("Are you really sure about that?")) {
-        	$.ajax($(this).attr('href'));
+        	$.ajax({
+			url: $(this).attr('href'),
+			success: function() {
+				$.growlUI('Notification', 'Action Complete!'); 
+			}
+			});
 	    }
         return false;
     });
@@ -326,7 +338,7 @@ $(window).resize(function() {
 });
 
 // jQuery on AJAX start things
-$(document).ajaxStart(function() {
+/*$(document).ajaxStart(function() {
 	$.blockUI({ 
 		message: '<img src="images/ajax-loader.gif" alt="Loading..."/>', 
 		timeout: 12000,
@@ -346,7 +358,7 @@ $(document).ajaxStart(function() {
             cursor:'wait' 
 		} 
 	});
-}).ajaxStop($.unblockUI);
+}).ajaxStop($.unblockUI);*/
 
 // Normal startup things (when the page has fully loaded)
 function init() {

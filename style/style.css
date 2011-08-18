@@ -42,14 +42,14 @@ div.links {
 	margin:0px;
 	padding:0px;
 	float:right;
-	font-family:"Lucida Grande","Helvetica","Trebuchet MS",sans-serif;
 }
 
 div#addcolumndiv {
+    clear:both;
 	float:right;
 	position:relative;
 	left:5px;
-	top:-2px;
+	top:8px;
 	margin:0;
 	padding:0;
 }
@@ -60,7 +60,7 @@ div#addcolumndiv {
 }
 
 div#serviceselectors {
-    clear:both;
+    float:left;
     padding-top:8px;
 }
 
