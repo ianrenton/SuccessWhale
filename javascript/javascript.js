@@ -130,6 +130,7 @@ $(document).ready(function() {
     $('input#status').unbind("keyup");
     $('input#status').live("keyup", function(e) {
         $(this).parent().children('span.counter').html("" + (140 - $(this).val().length) + "");
+        $(this).parent().children('span.counter').forceRedraw(true);
 	    if ($(this).val().length > 140) {
 	        $(this).parent().children('input#submitbutton').attr('disabled', true);
 	    } else {

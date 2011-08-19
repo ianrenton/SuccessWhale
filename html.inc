@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript" src="javascript/jquery.breakly.js"></script>
 	<script type="text/javascript" src="javascript/jquery.impromptu.js"></script>
+	<script type="text/javascript" src="javascript/jquery.forceredraw.js"></script>
 	<script type="text/javascript" src="javascript/jquery.putCursorAtEnd.js"></script>
 	<script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 	
