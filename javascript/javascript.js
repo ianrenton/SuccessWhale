@@ -32,8 +32,7 @@ function changeColumn(colnumber, url, updatedb) {
 // Submit status
 function submitStatus(status, replyId, postToAccounts) {
     var dataString = 'status=' + encodeURIComponent(status) + "&replyid=" + replyId + "&postToAccounts=" + encodeURIComponent(postToAccounts);
-	alert(dataString);
-    $.ajax({
+	$.ajax({
         type: "POST",
         url: "actions.php",
         data: dataString,
