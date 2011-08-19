@@ -247,7 +247,7 @@ function makeTwitterOperations($username, $tweet, $thisUser, $tweetid, $isMentio
 				}
 			}
 			
-			$content .= '<a class="button middle doactionbutton" href="actions.php?retweet=' . $tweetid . '&thisUser=' . urlencode($thisUser) . '">rt</a>';
+			$content .= '<a class="button middle confirmactionbutton" href="actions.php?retweet=' . $tweetid . '&thisUser=' . urlencode($thisUser) . '">rt</a>';
 			$content .= '<a class="button middle replybutton" href="replybox.php?initialtext=' . urlencode('RT @'.$username.' '.$tweet) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">rt:</a>';
 			$content .= '<a class="button right replybutton" href="replybox.php?initialtext=' . urlencode('d '.$username) . '&replyid=' . $tweetid . '&account=' . urlencode('twitter:' . $thisUser) . '">d</a>';
 			if ($isMention == true) {
