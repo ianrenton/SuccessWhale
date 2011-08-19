@@ -18,8 +18,8 @@ if (($_GET['service'] == 'twitter') && isset($_GET['thisUser']) && isset($_GET['
 
 
     // Get tweet data and render
-    $thisItem = $twitter->get('statuses/show/' . $statusID, $paramArray);
-    $statusID = $thisItem['in_reply_to_status_id'];
+    //$thisItem = $twitter->get('statuses/show/' . $statusID, $paramArray);
+    //$statusID = $thisItem['in_reply_to_status_id'];
     while ($statusID > 0) {
         $data = $twitter->get('statuses/show/' . $statusID, $paramArray);
         $statusID = $data['in_reply_to_status_id'];

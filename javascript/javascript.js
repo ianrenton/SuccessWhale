@@ -221,16 +221,13 @@ $(document).ready(function() {
     
     // Convo buttons show/hide conversations
     $('a.convobutton').unbind("click");
-    $('a.convobutton').live("click", function(e) {
-        $url = $(this).attr('href');
-        if ($(this).parents('div.item').find('div.convoarea').is(":visible")) {
-            $(this).parents('div.item').find('div.convoarea').hide();
-        } else {
-            $(this).parents('div.item').find('div.convoarea').load($url, function() {
-                $(this).parents('div.item').find('div.convoarea').show();
-            });
-        }
-        return false;
+	$("a.convobutton").live("click", function() {
+         var $url = $(this).attr('href');
+         $.fancybox({ 'href': $url,
+						'autoDimensions' : false,
+						'width' : '50%',
+						'height' : '50%'});
+         return false;
     });
     
     // Reply buttons show the reply box
