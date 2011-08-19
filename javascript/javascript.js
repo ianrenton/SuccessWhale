@@ -39,9 +39,14 @@ function submitStatus(status, replyId, postToAccounts) {
         success: function() {
             $("input#status").val('');
             $("input#status").parent().children('span.counter').html("140");
+			$.growlUI('Done.');
             setTimeout('refreshAll()', 3000);
-            return false;
-        }
+            return true;
+        },
+		error: function() {
+			$.growlUI('An error occurred, your status was not posted.');
+			return false;
+		}
     });
     return false;
 }
@@ -136,8 +141,10 @@ $(document).ready(function() {
     // Click to submit reply form
     $('a.replybutton').unbind("click");
     $('a.replybutton').live("click", function(e) {
-        submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
-        $.fancybox.close();
+        $success = submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
+        if ($success = true) {
+			$.fancybox.close();
+		}
         return false;
     });
 
@@ -145,8 +152,10 @@ $(document).ready(function() {
     $('input.reply').unbind("keydown");
     $('input.reply').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
-            submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
-            $.fancybox.close();
+            $success = submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.service').val(), $(this).parent().children('input.account').val());
+            if ($success = true) {
+				$.fancybox.close();
+			}
             return false;
         }
         return true;
@@ -226,7 +235,9 @@ $(document).ready(function() {
          $.fancybox({ 'href': $url,
 						'autoDimensions' : false,
 						'width' : '50%',
-						'height' : '50%'});
+						'height' : '50%',
+						'margin' : '0',
+						'padding' : '0'});
          return false;
     });
     
@@ -236,8 +247,11 @@ $(document).ready(function() {
         $url = $(this).attr('href');
         var position = $(this).position();
         $.fancybox({ 'href': $url,
-                     'padding': 0,
-                     'margin': 0,
+						'autoDimensions' : false,
+						'width' : '50%',
+						'height' : '40px',
+						'margin' : '0',
+						'padding' : '0',
                      'onComplete': function() {
                         $('input.reply').putCursorAtEnd();
                      }
@@ -255,9 +269,11 @@ $(document).ready(function() {
 		//$(this).css("background", "url(/images/ajax-loader.gif) 10px 6px no-repeat");  
         $.ajax({
 			url: $(this).attr('href'),
-			complete: function() {
-				//$(this).html($originaltext);
-				//$(this).css("background", "none");  
+			success: function() {
+				$.growlUI('Done.');
+			},
+			error: function() {
+				$.growlUI('An error occurred, the operation did not complete.');
 			}
 			});
         return false;
@@ -273,7 +289,10 @@ $(document).ready(function() {
 					$.ajax({
 						url: $url,
 						success: function() {
-							$.growlUI('Notification', 'Action Complete!');
+							$.growlUI('Done.');
+						},
+						error: function() {
+							$.growlUI('An error occurred, the operation did not complete.');
 						}
 					});
 				}

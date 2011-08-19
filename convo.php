@@ -53,6 +53,14 @@ if (($_GET['service'] == 'twitter') && isset($_GET['thisUser']) && isset($_GET['
 			echo("Oops, buggered that up :(<br/><br/>".$e);
 		}
 	}
+	
+	$content .= '<div id="replybox">';
+	$content .= '<input type="text" autocomplete="off" class="reply" id="reply" name="reply" value=""/>';
+	$content .= '<input type="hidden" class="replyid" value="' . $statusID . '" />';
+	$content .= '<input type="hidden" class="account" value="facebook:' . $_GET['thisUser'] . '" />';
+	$content .= '<a id="replybutton" class="button right replybutton">Post</a>';
+	$content .= '</div>';
+	
 	echo $content;
 }
 
