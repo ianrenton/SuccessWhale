@@ -282,6 +282,33 @@ $(document).ready(function() {
 		});
         return false;
     });
+
+	// Facebook Like
+    $('a.likebutton').unbind("click");
+    $('a.likebutton').live("click", function(e) {
+		var $url = $(this).attr('href');
+		$.prompt("Like this post?",{
+			callback: function(v,m,f) {
+				if (v == 'like') {
+					$.ajax({
+						url: ($url + "&like=true"),
+						success: function() {
+							$.growlUI('Post liked!');
+						}
+					});
+				} else if (v == 'unlike') {
+					$.ajax({
+						url: ($url + "&like=false"),
+						success: function() {
+							$.growlUI('"Like" removed.');
+						}
+					});
+				}
+			},
+			buttons: { Like: 'like', Unlike: 'unlike', Cancel: 'cancel' }
+		});
+        return false;
+    });
     
     // Enter submits cols-per-screen form
     $('input#colsperscreen').live("keydown", function(e) {

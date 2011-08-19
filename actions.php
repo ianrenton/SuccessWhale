@@ -74,9 +74,25 @@ if (isset($_GET['retweet']) && isset($_GET['thisUser'])) {
     if ($twitter != null) {
 	    $retweet = "statuses/retweet/".$_GET['retweet'];
 	    $response = $twitter->post($retweet);
-	}
-			
+	}		
 }
+
+// If we're GETing with an like request, send the request to Facebook.
+if (isset($_GET['likeID']) && isset($_GET['thisUser']) && isset($_GET['like'])) {
+    $facebook = $facebooks[$_GET['thisUser']];
+    if ($facebook != null) {
+	    $like = $_GET['likeID'] . "/likes";
+		$attachment =  array('access_token' => $facebook->getAccessToken());
+		$httpType = 'post';
+		if ($_GET['like'] == 'false') {
+			$httpType = 'delete';
+		}
+	    $response = $facebook->api($like, $httpType, $attachment);
+	}
+}
+
+
+
 // If we're GETing with a Twitter report, send the request to Twitter.
 if (isset($_GET['report']) && isset($_GET['thisUser'])) {
     $twitter = $twitters[$_GET['thisUser']];

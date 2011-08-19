@@ -71,7 +71,7 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	// Convo
 	$convo = "";
 	if (($isInReplyToAnotherTweet) && (!$isConvo)) {
-		$convo = '<br/><span class="convolikearea"><a href="convo.php?service=twitter&thisUser=' . $thisUser . '&status=' . $thisTweetID . '" class="convobutton"><img src="images/convo.png" alt="In reply to..." title="In reply to..."></a></span>';
+		$convo = '<br/><span class="convolikearea"><span style="display:inline-block;"><a href="convo.php?service=twitter&thisUser=' . $thisUser . '&status=' . $thisTweetID . '" class="convobutton"><img src="images/convo.png" alt="In reply to..." title="In reply to..."></a></span></span>';
 	}
 		
 	// Check blocklist
@@ -189,7 +189,7 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 			if (isset($data['likes'])) {
 				$likeCount = $data['likes']['count'];
 			}
-			$commentsLikes = '<br/><span class="convolikearea"><a href="convo.php?service=facebook&thisUser=' . $thisUser . '&status=' . $data['id'] . '" class="convobutton"><img src="images/convo.png" alt="Comments" title="Comments">' . $commentCount . '</a> <a class="likebutton"><img src="images/like.png" alt="Likes" title="Likes">' . $likeCount . '</a></span>';
+			$commentsLikes = '<br/><span class="convolikearea"><span style="display:inline-block;"><a href="convo.php?service=facebook&thisUser=' . $thisUser . '&status=' . $data['id'] . '" class="convobutton"><img src="images/convo.png" alt="Comments" title="Comments">' . $commentCount . '</a></span> <span style="display:inline-block;"><a class="likebutton" href="actions.php?likeID=' . $data['id'] . '&thisUser=' . $thisUser . '"><img src="images/like.png" alt="Likes" title="Likes">' . $likeCount . '</a></span></span>';
 		}
 		
 		// Check blocklist
