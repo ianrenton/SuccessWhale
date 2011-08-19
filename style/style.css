@@ -80,16 +80,18 @@ a.accountselector span {
 
 input#status {
 	width:70%;
-	height:23px;
+	height:20px;
 	float:left;
-	font-size:19px;
+	padding:3px;
+	font-size:14px;
 }
 
 input#reply {
 	width:500px;
-	height:23px;
+	height:20px;
 	float:left;
-	font-size:19px;
+	padding:3px;
+	font-size:14px;
 }
 
 span.counter {
