@@ -32,6 +32,7 @@ function changeColumn(colnumber, url, updatedb) {
 // Submit status
 function submitStatus(status, replyId, postToAccounts) {
     var dataString = 'status=' + encodeURIComponent(status) + "&replyid=" + replyId + "&postToAccounts=" + encodeURIComponent(postToAccounts);
+	alert(dataString);
     $.ajax({
         type: "POST",
         url: "actions.php",
@@ -153,7 +154,7 @@ $(document).ready(function() {
     $('input.reply').unbind("keydown");
     $('input.reply').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
-            $success = submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.service').val(), $(this).parent().children('input.account').val());
+            $success = submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
             if ($success = true) {
 				$.fancybox.close();
 			}
