@@ -153,7 +153,7 @@ if (isset($_GET['column'])) {
                     try {
                         // Catch the Notifications column, which needs to be in FQL
                         if ($name == "notifications") {
-                            $attachment['query'] = 'SELECT notification_id, sender_id, created_time, title_html, body_html, href FROM notification WHERE recipient_id=' . $facebook->getUser() . /*'AND is_unread = 1' . */ 'AND is_hidden = 0 LIMIT ' . $paramArray['count'];
+                            $attachment['query'] = 'SELECT notification_id, sender_id, created_time, title_html, body_html, href FROM notification WHERE recipient_id="' . $facebook->getUser() . /*'AND is_unread = 1' . */ '" AND is_hidden = 0 LIMIT ' . $paramArray['count'];
                             $attachment['method'] = 'fql.query';
                             $data = $facebook->api($attachment);
                             $isNotifications = true;
@@ -167,7 +167,7 @@ if (isset($_GET['column'])) {
                         }
 
                         for ($i=0; $i<count($data); $i++) {
-                            $item = generateFBStatusItem($data[$i], $isNotifications, $thisUser, $blocklist);
+                            $item = generateFBStatusItem($data[$i], $isNotifications, false, $username, $blocklist);
                             $items[$item['time']] = $item['html'];
                         }
 	                } catch (Exception $e) {

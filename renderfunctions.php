@@ -71,7 +71,7 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
 	// Convo
 	$convo = "";
 	if (($isInReplyToAnotherTweet) && (!$isConvo)) {
-		$convo = '<br/><a href="convo.php?service=twitter&thisUser=' . $thisUser . '&status=' . $thisTweetID . '" class="convobutton"><img src="images/convo.png" alt="In reply to..." title="In reply to..."></a>';
+		$convo = '<br/><span class="convolikearea"><a href="convo.php?service=twitter&thisUser=' . $thisUser . '&status=' . $thisTweetID . '" class="convobutton"><img src="images/convo.png" alt="In reply to..." title="In reply to..."></a></span>';
 	}
 		
 	// Check blocklist
@@ -115,9 +115,6 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
             $content .= '</td></tr></table>';
 		}
 		$content .= '</div>';
-		if (!$isConvo) {
-		    $content .= '<div class="convoarea"></div>';
-		}
 		$content .= '</div><div class="clear"></div>';
 	}
 	$item = array('time' => $time, 'html' => $content);
@@ -126,14 +123,38 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
 
 
 // Generates an individual facebook status list
-function generateFBStatusItem($data, $isNotifications, $thisUser, $blocklist) {
-	
-	//var_dump($data); echo("<br/><br/>");
+function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $blocklist) {
 	
 	// Get the status body based on what the data contains
 	if ($isNotifications) {
 	    $statusbody = $data["title_html"] . '<br/>' . parseLinks($data["body_html"], $ignore);
 	    $avatar = '<a><img class="avatar" src="http://graph.facebook.com/' .$data["sender_id"] . '/picture" border="0" width="48" height="48"></a>';
+	    $time = $data["created_time"]+$_SESSION['utcOffset'];
+		$renderCommentsLikes = false;
+	
+		// We don't need the data for this notification anymore, from here on we want the
+		// data for the item that the notification was referring to. So request that from
+		// the API.
+		$facebook = $_SESSION['facebooks'][$thisUser];
+		if (($facebook != null) && ($data['href'] != null)) {
+	        $attachment =  array('access_token' => $facebook->getAccessToken());
+			$pattern = '/[0-9]+/';
+			$numMatches = preg_match_all($pattern, $data['href'], $matches);
+			//$content .= $data['href'];
+			if ($numMatches > 0) {
+				$idToFetch = $matches[0][sizeof($matches[0])-1];
+				try {
+					$data = $facebook->api($idToFetch, $attachment);
+					$renderCommentsLikes = true;
+				} catch (Exception $e) {
+					//$content .= $e;
+					//$content .= $data['sender_id'];
+				}
+			}
+		}
+	} elseif ($isComment) {
+	    $statusbody = parseLinks($data["message"], $ignore);
+	    $avatar = '<a><img class="avatar" src="http://graph.facebook.com/' .$data["from"]["id"] . '/picture" border="0" width="48" height="48"></a>';
 	    $time = $data["created_time"]+$_SESSION['utcOffset'];
 	} else {
         if ($data["type"] == "status") {
@@ -152,34 +173,39 @@ function generateFBStatusItem($data, $isNotifications, $thisUser, $blocklist) {
 	    }
 	    $avatar = '<img class="avatar" src="http://graph.facebook.com/' .$data["from"]["id"] . '/picture" alt="' . $data["from"]["name"] . '" title="' . $data["from"]["name"] . '" border="0" width="48" height="48">';
 	    $time = strtotime($data["created_time"])+$_SESSION['utcOffset'];
+		$renderCommentsLikes = true;
 	}
 
-	// Check comments & likes
-	$commentCount = 0;
-	$likeCount = 0;
-	if (isset($data['comments'])) {
-		$commentCount = $data['comments']['count'];
-	}
-	if (isset($data['likes'])) {
-		$likeCount = $data['likes']['count'];
-	}
-	$commentsLikes = "<br/><img src=\"images/convo.png\" alt=\"Comments\" title=\"Comments\">" . $commentCount . " <img src=\"images/like.png\" alt=\"Likes\" title=\"Likes\">" . $likeCount;
-		
-	// Check blocklist
+	$commentsLikes = "";
 	$match = false;
-	$statusbodyLowerCase = strtolower($statusbody);
-	foreach ($blocklist as $blockstring) {
-		if ($blockstring != '') {
-			$pos = strpos($statusbodyLowerCase, $blockstring);
-			if ($pos !== false) {
-				$match = true;
+	if (!$isComment) {
+		if ($renderCommentsLikes) {
+			// Check comments & likes
+			$commentCount = 0;
+			$likeCount = 0;
+			if (isset($data['comments'])) {
+				$commentCount = $data['comments']['count'];
+			}
+			if (isset($data['likes'])) {
+				$likeCount = $data['likes']['count'];
+			}
+			$commentsLikes = '<br/><span class="convolikearea"><a href="convo.php?service=facebook&thisUser=' . $thisUser . '&status=' . $data['id'] . '" class="convobutton"><img src="images/convo.png" alt="Comments" title="Comments">' . $commentCount . '</a> <a class="likebutton"><img src="images/like.png" alt="Likes" title="Likes">' . $likeCount . '</a></span>';
+		}
+		
+		// Check blocklist
+		$statusbodyLowerCase = strtolower($statusbody);
+		foreach ($blocklist as $blockstring) {
+			if ($blockstring != '') {
+				$pos = strpos($statusbodyLowerCase, $blockstring);
+				if ($pos !== false) {
+					$match = true;
+				}
 			}
 		}
 	}
 	
-	// Display tweet if it didn't match, of if it's part of a convo
-	// (Convos explicitly request a thread, it would look weird if
-	// we hid parts of it.)
+	// Display tweet if it didn't match, or (as blocks are only checked for
+	// non-comment threads) if it's a comment thread.
 	if (!$match) {
 		$content .= '<div class="item facebookstatus">';
 		$content .= '<div class="text">';
@@ -201,9 +227,6 @@ function generateFBStatusItem($data, $isNotifications, $thisUser, $blocklist) {
         $content .= '</span>';
         $content .= '</td></tr></table>';
 		$content .= '</div>';
-		if (!$isConvo) {
-		    $content .= '<div class="convoarea"></div>';
-		}
 		$content .= '</div><div class="clear"></div>';
 	}
 	$item = array('time' => $time, 'html' => $content);

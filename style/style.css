@@ -197,13 +197,6 @@ table.bigtable {
 	margin-top:5px;
 }
 
-div.convoarea {
-    display:none;
-    margin-top:35px;
-    margin-right:100px;
-    width: 100%;
-}
-
 div#replybox {
     padding:10px;
     margin:0;
@@ -226,6 +219,10 @@ td .tweettextcell {
 }
 
 .name a{
+	text-decoration:none;
+}
+
+.convolikearea a {
 	text-decoration:none;
 }
 
