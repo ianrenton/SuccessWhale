@@ -533,3 +533,34 @@ a.icon197 span {background:url(button-icons.png) -216px -724px;}
 a.icon198 span {background:url(button-icons.png) -252px -724px;}
 a.icon199 span {background:url(button-icons.png) -288px -724px;}
 a.icon200 span {background:url(button-icons.png) -324px -724px;}
+
+/*
+------------------------------
+	Impromptu
+------------------------------
+*/
+.jqifade{
+	position: absolute; 
+}
+div.jqi{ 
+	width: 400px; 
+	position: absolute;
+	text-align: left;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	padding: 7px;
+}
+div.jqi .jqicontainer{
+}
+div.jqi .jqiclose{ 
+	display:none;
+}
+div.jqi .jqimessage{ 
+	padding: 10px; 
+	line-height: 20px;
+}
+div.jqi .jqibuttons{ 
+	text-align: right; 
+	padding: 5px 0 5px 0;
+}

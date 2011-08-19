@@ -119,3 +119,19 @@ a.right:active { border-left: solid 1px #7f7f7f }
 a.right {
     border-left: solid 1px rgba(255, 255, 255, 0);
 }
+
+.jqifade{
+	background-color: #aaaaaa; 
+}
+div.jqi{
+	background: #cccccc;
+    background: -moz-linear-gradient(top, #cccccc, #aaaaaa);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#cccccc), to(#aaaaaa));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#cccccc', EndColorStr='#aaaaaa', GradientType=0);
+	border: solid 1px #888888;
+}
+div.jqi .jqimessage{ 
+	color: #444444; 
+}

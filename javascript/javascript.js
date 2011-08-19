@@ -269,14 +269,20 @@ $(document).ready(function() {
     // "Confirm action"
     $('a.confirmactionbutton').unbind("click");
     $('a.confirmactionbutton').live("click", function(e) {
-        if (confirm("Are you really sure about that?")) {
-        	$.ajax({
-			url: $(this).attr('href'),
-			success: function() {
-				$.growlUI('Notification', 'Action Complete!'); 
-			}
-			});
-	    }
+		var $url = $(this).attr('href');
+		$.prompt("Are you sure?",{
+			callback: function(v,m,f) {
+				if (v == true) {
+					$.ajax({
+						url: $url,
+						success: function() {
+							$.growlUI('Notification', 'Action Complete!');
+						}
+					});
+				}
+			},
+			buttons: { Yes: true, No: false }
+		});
         return false;
     });
     
