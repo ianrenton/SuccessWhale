@@ -140,8 +140,8 @@ $(document).ready(function() {
     });
     
     // Click to submit reply form
-    $('a.replybutton').unbind("click");
-    $('a.replybutton').live("click", function(e) {
+    $('a.submitreplybutton').unbind("click");
+    $('a.submitreplybutton').live("click", function(e) {
         $success = submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
         if ($success = true) {
 			$.fancybox.close();
@@ -246,15 +246,15 @@ $(document).ready(function() {
     $('a.replybutton').unbind("click");
     $('a.replybutton').live("click", function(e) {
         $url = $(this).attr('href');
-        var position = $(this).position();
         $.fancybox({ 'href': $url,
 						'autoDimensions' : false,
 						'width' : '50%',
-						'height' : '40px',
+						'height' : '34px',
 						'margin' : '0',
 						'padding' : '0',
                      'onComplete': function() {
                         $('input.reply').putCursorAtEnd();
+						return false;
                      }
                      });
         return false;
