@@ -71,9 +71,12 @@ if (FACEBOOK_ENABLED) {
         header('Location: ../index.php');
 
       } catch (FacebookApiException $e) {
-        if (DEBUG) {
-	        die($e);
-        }
+        // Exception, so let's request a new session.
+		$params = array();
+        $params['req_perms'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
+        $loginUrl = $facebook->getLoginUrl($params);
+         
+        header('Location: ' . $loginUrl);
       }
     } else {
         // No session, redirect to Facebook to get one
