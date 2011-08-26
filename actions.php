@@ -47,9 +47,9 @@ if (isset($_POST['status'])) {
 	        } elseif ($service == "facebook") {
 	            $facebook = $facebooks[$username];
 	            if (($facebook != null) && (!empty($status))) {
-					if ($replyid == '') {
+					if (($replyid == '') || ($replyid == 'undefined')) {
 						// Posting to feed
-	                	$facebook->api('/me/feed', 'POST', array('message'=> $status, 'cb' => ''));
+	                	$resultToPrint = $facebook->api('/me/feed', 'POST', array('message'=> $status));
 					} else {
 						// Posting a comment
 						$facebook->api($replyid . '/comments', 'POST', array('message'=> $status));
