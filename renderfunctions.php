@@ -138,18 +138,19 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 		$facebook = $_SESSION['facebooks'][$thisUser];
 		if (($facebook != null) && ($data['href'] != null)) {
 	        $attachment =  array('access_token' => $facebook->getAccessToken());
-			$pattern = '/[0-9]+/';
-			$numMatches = preg_match_all($pattern, $data['href'], $matches);
-			//$content .= $data['href'];
-			if ($numMatches > 0) {
-				$idToFetch = $matches[0][sizeof($matches[0])-1];
-				try {
-					$data = $facebook->api($idToFetch, $attachment);
-					$renderCommentsLikes = true;
-				} catch (Exception $e) {
-					//$content .= $e;
-					//$content .= $data['sender_id'];
+			$idToFetch = $data['object_id'];
+			try {
+				//var_dump($data); echo("<br/><br/>");
+				if ($data['object_type'] == "stream") {
+					$tmpArray = explode("_", $idToFetch);
+					$idToFetch = $tmpArray[1];
 				}
+				//echo($idToFetch . "<br/><br/>");
+				$data = $facebook->api($idToFetch);
+				$renderCommentsLikes = true;
+			} catch (Exception $e) {
+				//$content .= $e;
+				//$content .= $data['object_id'];
 			}
 		}
 	} elseif ($isComment) {

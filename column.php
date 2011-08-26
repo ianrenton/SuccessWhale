@@ -153,7 +153,7 @@ if (isset($_GET['column'])) {
                     try {
                         // Catch the Notifications column, which needs to be in FQL
                         if ($name == "notifications") {
-                            $attachment['query'] = 'SELECT notification_id, sender_id, created_time, title_html, body_html, href FROM notification WHERE recipient_id="' . $facebook->getUser() . /*'AND is_unread = 1' . */ '" AND is_hidden = 0 LIMIT ' . $paramArray['count'];
+                            $attachment['query'] = 'SELECT notification_id, sender_id, object_type, object_id, app_id, created_time, title_html, body_html, href FROM notification WHERE recipient_id="' . $facebook->getUser() . /*'AND is_unread = 1' . */ '" AND is_hidden = 0 LIMIT ' . $paramArray['count'];
                             $attachment['method'] = 'fql.query';
                             $data = $facebook->api($attachment);
                             $isNotifications = true;
@@ -171,7 +171,7 @@ if (isset($_GET['column'])) {
                             $items[$item['time']] = $item['html'];
                         }
 	                } catch (Exception $e) {
-	                    $content .= '<div class="error">Your Facebook session has perished in the murky depths, cap\'n.<br/>Please try to <a href="javascript:location.reload(true)">reload SuccessWhale</a>, and if that doesn\'t work, re-authenticate with Facebook:<br/><a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook" /></a></div>';
+	                    $content .= '<div class="error">Your Facebook session has perished in the murky depths, cap\'n.<br/>Please try to <a href="javascript:location.reload(true)">reload SuccessWhale</a>, and if that doesn\'t work, re-authenticate with Facebook:<br/><a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook" /></a><br/>(' . $e . ')</div>';
 	                }
 	            } else {	
 		            $content .= '<div class="error">Your Facebook session has perished in the murky depths, cap\'n.<br/>Please try to <a href="javascript:location.reload(true)">reload SuccessWhale</a>, and if that doesn\'t work, re-authenticate with Facebook:<br/><a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook" /></a></div>';
