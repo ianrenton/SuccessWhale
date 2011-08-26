@@ -143,7 +143,7 @@ if (isset($_GET['column'])) {
 	                }
 		            
 	            } else {	
-		            $content .= '<div class="tweet">Failwhale sighted off the port bow, cap\'n!  Please try refreshing this page.</div>';
+		            $content .= '<div class="error">Failwhale sighted off the port bow, cap\'n!  Please try to <a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)" class="icon right icon2 refreshcolumnbutton">refresh this column</a>, and if that doesn\'t work, please re-authenticate with Twitter:<br/><a href="./twitter-callback/redirect.php"><img src="./images/lighter.png" border="0" alt="Sign in with Twitter" title="Sign in with Twitter" /></a></div>';
 	            }
 	            
 	        } elseif ($service == "facebook") {
@@ -171,10 +171,10 @@ if (isset($_GET['column'])) {
                             $items[$item['time']] = $item['html'];
                         }
 	                } catch (Exception $e) {
-	                    $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div><div class="tweet"><br/>' . $e . '</div>';
+	                    $content .= '<div class="error">Your Facebook session has perished in the murky depths, cap\'n.<br/>Please try to <a href="javascript:location.reload(true)">reload SuccessWhale</a>, and if that doesn\'t work, re-authenticate with Facebook:<br/><a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook" /></a></div>';
 	                }
 	            } else {	
-		            $content .= '<div class="tweet">I\'m not sure what the Facebook equivalent of a FailWhale is, but I think we just found one.</div>';
+		            $content .= '<div class="error">Your Facebook session has perished in the murky depths, cap\'n.<br/>Please try to <a href="javascript:location.reload(true)">reload SuccessWhale</a>, and if that doesn\'t work, re-authenticate with Facebook:<br/><a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook" /></a></div>';
 	            }
 	        }
 	    }

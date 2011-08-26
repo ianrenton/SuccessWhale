@@ -33,6 +33,21 @@ div.columnheading span.title span.accountname {
     color:#666666;
 }
 
+div.error {
+	color:#000000;
+	background: #ee8888;
+    background: -moz-linear-gradient(top, #ee8888, #ee4444);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#ee8888), to(#ee4444));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#ee8888', EndColorStr='#ee4444', GradientType=0);
+}
+
+div.error a {
+	text-decoration:none;
+	color:#395a9d;
+}
+
 .text {
 	color:#888888;
 }
