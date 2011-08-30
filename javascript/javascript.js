@@ -48,7 +48,7 @@ function submitStatus(status, replyId, postToAccounts) {
 			return false;
 		}
     });
-    return false;
+    return true;
 }
 
 // Fills in the hidden "postToAccounts" field based on which account checkboxes
@@ -140,10 +140,10 @@ $(document).ready(function() {
     });
     
     // Click to submit reply form
-    $('a.submitreplybutton').unbind("click");
-    $('a.submitreplybutton').live("click", function(e) {
-        $success = submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
-        if ($success = true) {
+    $('a#submitreplybutton').unbind("click");
+    $('a#submitreplybutton').live("click", function() {
+        $success = submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());     
+		if ($success == true) {
 			$.fancybox.close();
 		}
         return false;
@@ -154,7 +154,7 @@ $(document).ready(function() {
     $('input.reply').live("keydown", function(e) {
         if (e.keyCode == 13 || e.keyCode == 10) {
             $success = submitStatus($(this).parent().children('input.reply').val(), $(this).parent().children('input.replyid').val(), $(this).parent().children('input.account').val());
-            if ($success = true) {
+            if ($success == true) {
 				$.fancybox.close();
 			}
             return false;
@@ -166,10 +166,11 @@ $(document).ready(function() {
     $('input.reply').unbind("keyup");
     $('input.reply').live("keyup", function(e) {
         $(this).parent().children('span.replycounter').html($(this).val().length);
-	    if ($(this).val().length > 140) {
-	        $(this).parent().children('a.replybutton').html("Twixt");
+		// If the post is long and the counter is visible (i.e. it's Twitter), change the reply button to say "Twixt".
+	    if (($(this).val().length > 140) || ($(this).parent().children('span.replycounter').is(":visible"))) {
+	        $(this).parent().children('a.submitreplybutton').html("Twixt");
 	    } else {
-	        $(this).parent().children('a.replybutton').html("Post");
+	        $(this).parent().children('a.submitreplybutton').html("Post");
 	    }
         return true;
     });
