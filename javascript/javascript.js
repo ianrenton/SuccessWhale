@@ -167,7 +167,7 @@ $(document).ready(function() {
     $('input.reply').live("keyup", function(e) {
         $(this).parent().children('span.replycounter').html($(this).val().length);
 		// If the post is long and the counter is visible (i.e. it's Twitter), change the reply button to say "Twixt".
-	    if (($(this).val().length > 140) || ($(this).parent().children('span.replycounter').is(":visible"))) {
+	    if (($(this).val().length > 140) && ($(this).parent().children('span.replycounter').is(":visible"))) {
 	        $(this).parent().children('a.submitreplybutton').html("Twixt");
 	    } else {
 	        $(this).parent().children('a.submitreplybutton').html("Post");
