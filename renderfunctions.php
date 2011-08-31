@@ -164,7 +164,18 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 	            $statusbody = "&#9654; " . $data["to"]["data"][0]["name"] . "<br/>" . $statusbody;
 	        }
 	    } elseif ($data["type"] == "link") {
-	        $statusbody = '<a href="' . $data["link"] . '">' . $data["name"] . '</a><br/>' . parseLinks($data["description"],$ignore);
+			//var_dump($data); echo("<br><br>");
+			if (isset($data['name'])) {
+				$statusbody = '<a href="' . $data["link"] . '">' . parseLinks($data["name"], $ignore) . '</a>';
+			} else {
+				$statusbody = parseLinks($data["link"], $ignore);
+			}
+			if (isset($data['description'])) {
+	        	$statusbody .= '<br/>' . $data["description"];
+			}
+			if (isset($data['message'])) {
+	        	$statusbody .= '<br/>' . $data["message"];
+			}
 	    } elseif ($data["type"] == "photo") {
 	        $statusbody = '<a href="' . $data["link"] . '">' . $data["name"] . '</a><br/>' . parseLinks($data["message"],$ignore);
 	    } elseif ($data["type"] == "video") {
