@@ -177,8 +177,10 @@ $(document).ready(function() {
     
     // Popup boxes for the main (top-right) menu options
     $("a.popup").live("click", function() {
-        var url = $(this).attr('href');
-        $.fancybox({ 'href': url });
+        var $url = $(this).attr('href');
+        $.fancybox({ 'href': $url,
+						'margin' : '0',
+						'padding' : '0'});
         return false;
     });
     
@@ -365,7 +367,9 @@ $(document).ready(function() {
     // Fancybox images
     $("a.fancybox").live("click", function() {
          var imageurl = $(this).attr('href');
-         $.fancybox({ 'href': imageurl });
+         $.fancybox({ 'href': imageurl,
+						'margin' : '0',
+						'padding' : '0'});
          return false;
     });
     

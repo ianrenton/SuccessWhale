@@ -277,6 +277,16 @@ img {
 	border:0px;
 }
 
+div.settingsheader {
+	padding:5px;
+	margin:0;
+	background-color:#ff0000;
+}
+
+div.settingscontent {
+	padding:20px;
+}
+
 textarea#blocklist {
     width:90%;
 }

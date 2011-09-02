@@ -84,6 +84,15 @@ div.colswitcherform a {
 	border: 1px solid #cccccc;
 }
 
+div.settingsheader {
+	background: #cccccc;
+    background: -moz-linear-gradient(top, #cccccc, #aaaaaa);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#cccccc), to(#aaaaaa));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#cccccc', EndColorStr='#aaaaaa', GradientType=0);
+}
+
 a.button,
 a.icon {
     color: #666666;
