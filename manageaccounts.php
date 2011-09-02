@@ -5,24 +5,34 @@ session_start();
 mysql_connect(DB_SERVER,DB_USER,DB_PASS);
 @mysql_select_db(DB_NAME) or die( "Unable to select database");
 
-// Get blocklist
+// Get data
 $query = "SELECT username FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
 $result = mysql_query($query);
 $hasSWAccount = (mysql_num_rows($result) == 1);
 $username = mysql_result($result,0,"username");
 
+$twitters = $_SESSION['twitters'];
+$facebooks = $_SESSION['facebooks'];
+
 $content .= '<div class="settingsheader">Accounts</div>';
 $content .= '<div class="settingscontent">';
-$content .= '<h4>SuccessWhale</h4>';
+$content .= '<h3>SuccessWhale</h3>';
 if ($hasSWAccount) {
-	$content .= '<p>' . $username . '<br/><a href="unregister.php">Remove Account</a></p>';
+	$content .= '<div class="account">' . $username . '<div class="manageaccountbuttons"><a href="unregister.php">Remove</a></div></div>';
 } else {
-	$content .= '<p><a href="register.php">Register</a></p>';
+	$content .= '<div class="account"><span class="noaccount">None yet</span><div class="manageaccountbuttons"><a href="register.php">Register</a></div></div>';
 }
-$content .= '<h4>Twitter</h4>';
-$content .= '<a href="./twitter-callback/redirect.php">Add Twitter Account</a>';
-$content .= '<h4>Facebook</h4>';
-$content .= '<a href="./facebook-callback/">Add Facebook Account</a></div>';
+$content .= '<h3>Twitter</h3>';
+foreach ($twitters as $name => $object) {
+	$content .= '<div class="account">@' . $name . '<div class="manageaccountbuttons">Remove</div></div>';
+}
+$content .= '<div class="account"><span class="noaccount">&nbsp;</span><div class="manageaccountbuttons"><a href="./twitter-callback/redirect.php">Add Twitter Account</a></div></div>';
+$content .= '<h3>Facebook</h3>';
+foreach ($facebooks as $name => $object) {
+	$content .= '<div class="account">' . $name . '<div class="manageaccountbuttons">Remove</div></div>';
+}
+$content .= '<div class="account"><span class="noaccount">&nbsp;</span><div class="manageaccountbuttons"><a href="./facebook-callback/">Add Facebook Account</a></div></div>';
+
 $content .= '</div>';
 
 echo($content);
