@@ -178,19 +178,23 @@ div.columnnav {
     padding: 10px 0px;
 }
 
-.text {
+.item {
 	margin:20px 20px 40px 20px;
+}
+
+.convo {
+	margin:20px 20px 0px 20px;
 }
 
 div.reply {
 	margin:10px 20px 10px 45px;
 }
 
-div.convohider {
+/*div.convohider {
     float:left;
     position:relative;
     left:4px;
-}
+}*/
 
 span.metatext {
 	display:none;
