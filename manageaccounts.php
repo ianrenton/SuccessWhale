@@ -18,20 +18,20 @@ $content .= '<div class="settingsheader">Accounts</div>';
 $content .= '<div class="settingscontent">';
 $content .= '<h3>SuccessWhale</h3>';
 if ($hasSWAccount) {
-	$content .= '<div class="account">' . $username . '<div class="manageaccountbuttons"><a href="unregister.php">Remove</a></div></div>';
+	$content .= '<div class="account">' . $username . '<div class="manageaccountbuttons"><a href="unregister.php" class="button"><span>Remove</span></a></div></div>';
 } else {
-	$content .= '<div class="account"><span class="noaccount">None yet</span><div class="manageaccountbuttons"><a href="register.php">Register</a></div></div>';
+	$content .= '<div class="account"><span class="noaccount">None yet</span><div class="manageaccountbuttons"><a href="register.php" class="button"><span>Register</span></div></div>';
 }
 $content .= '<h3>Twitter</h3>';
 foreach ($twitters as $name => $object) {
-	$content .= '<div class="account">@' . $name . '<div class="manageaccountbuttons">Remove</div></div>';
+	$content .= '<div class="account">@' . $name . '<div class="manageaccountbuttons"><a class="button"><span>Remove</span></a></div></div>';
 }
-$content .= '<div class="account"><span class="noaccount">&nbsp;</span><div class="manageaccountbuttons"><a href="./twitter-callback/redirect.php">Add Twitter Account</a></div></div>';
+$content .= '<div class="account"><span class="noaccount">&nbsp;</span><div class="manageaccountbuttons"><a href="./twitter-callback/redirect.php" class="button"><span>Add Twitter Account</span></a></div></div>';
 $content .= '<h3>Facebook</h3>';
 foreach ($facebooks as $name => $object) {
-	$content .= '<div class="account">' . $name . '<div class="manageaccountbuttons">Remove</div></div>';
+	$content .= '<div class="account">' . $name . '<div class="manageaccountbuttons"><a class="button"><span>Remove</span></a></div></div>';
 }
-$content .= '<div class="account"><span class="noaccount">&nbsp;</span><div class="manageaccountbuttons"><a href="./facebook-callback/">Add Facebook Account</a></div></div>';
+$content .= '<div class="account"><span class="noaccount">&nbsp;</span><div class="manageaccountbuttons"><a href="./facebook-callback/" class="button"><span>Add Facebook Account</span></a></div></div>';
 
 $content .= '</div>';
 

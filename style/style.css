@@ -567,6 +567,14 @@ a.icon198 span {background:url(button-icons.png) -252px -724px;}
 a.icon199 span {background:url(button-icons.png) -288px -724px;}
 a.icon200 span {background:url(button-icons.png) -324px -724px;}
 
+
+
+div.manageaccountbuttons a {
+	position:relative;
+	top:-7px;
+	left:5px;
+}
+
 /*
 ------------------------------
 	Impromptu
