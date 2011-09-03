@@ -127,6 +127,7 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 	
 	// Get the status body based on what the data contains
 	if ($isNotifications) {
+		//$content .= $data['recipient_id'] . "<br/>" . $data['notification_id'] . "<br/>" . $data['object_type'] . "<br/>" . $data['object_id'] . "<br/><br/>";
 	    $statusbody = $data["title_html"] . '<br/>' . parseLinks($data["body_html"], $ignore);
 	    $avatar = '<a><img class="avatar" src="http://graph.facebook.com/' .$data["sender_id"] . '/picture" border="0" width="48" height="48"></a>';
 	    $time = $data["created_time"]+$_SESSION['utcOffset'];
@@ -141,12 +142,13 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 			$idToFetch = $data['object_id'];
 			try {
 				//var_dump($data); echo("<br/><br/>");
-				if ($data['object_type'] == "stream") {
-					$tmpArray = explode("_", $idToFetch);
-					$idToFetch = $tmpArray[1];
-				}
+				//if ($data['object_type'] == "stream") {
+					//$tmpArray = explode("_", $idToFetch);
+					//$idToFetch = $tmpArray[1];
+				//}
 				//echo($idToFetch . "<br/><br/>");
 				$data = $facebook->api($idToFetch);
+				//var_dump($data); echo ("<br/><br/>");
 				$renderCommentsLikes = true;
 			} catch (Exception $e) {
 				//$content .= $e;
