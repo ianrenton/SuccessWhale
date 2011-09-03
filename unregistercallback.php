@@ -39,9 +39,9 @@ if ((isset($_SESSION['sw_uid'])) && (isset($_POST['password']))) {
 } elseif ((isset($_SESSION['sw_uid'])) && (isset($_GET['service'])) && (isset($_GET['id']))) {
         
         // Get the appropriate row
-		if ($_GET['service']) == "twitter" {
+		if ($_GET['service'] == "twitter") {
 			$table = "twitter_users";
-		} elseif ($_GET['service']) == "facebook" {
+		} elseif ($_GET['service'] == "facebook") {
 			$table = "facebook_users";
 		} else {
             header('Location: ./index.php');
@@ -51,8 +51,9 @@ if ((isset($_SESSION['sw_uid'])) && (isset($_POST['password']))) {
 		mysql_connect(DB_SERVER,DB_USER,DB_PASS);
         @mysql_select_db(DB_NAME) or die( "Unable to select database");
         
-        $query = "SELECT * FROM ' . $table . ' WHERE id='" . mysql_real_escape_string($_GET['id']) . "'";
-        $result = mysql_query($query);
+        $query = "SELECT * FROM " . $table . " WHERE id='" . mysql_real_escape_string($_GET['id']) . "'";
+        echo($query);
+		$result = mysql_query($query);
 
         if (mysql_num_rows($result) > 0) {
             // SW UID check
@@ -60,7 +61,7 @@ if ((isset($_SESSION['sw_uid'])) && (isset($_POST['password']))) {
             if ($row['sw_uid'] == $_SESSION['sw_uid']) {
                 
                 // Delete rows from tables
-                $query = "DELETE FROM ' . $table . ' WHERE id='" . mysql_real_escape_string($_GET['id']) . "'";
+                $query = "DELETE FROM " . $table . " WHERE id='" . mysql_real_escape_string($_GET['id']) . "'";
                 mysql_query($query);
 
                 mysql_close();
