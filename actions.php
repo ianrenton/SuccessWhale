@@ -5,7 +5,6 @@ session_start();
 
 $twitters = $_SESSION['twitters'];
 $facebooks = $_SESSION['facebooks'];
-$fullRefresh = false;
 
 // Wrangles text through Twixt.
 function twixtify($status) {
@@ -119,7 +118,6 @@ if (isset($_GET['newcol'])) {
         $query = "UPDATE sw_users SET columns = '" . mysql_real_escape_string($newColsString) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
         mysql_query($query);
     }
-    $fullRefresh = true;
     mysql_close();
 }
 
@@ -137,7 +135,6 @@ if (isset($_GET['delcol'])) {
         $query = "UPDATE sw_users SET columns = '" . mysql_real_escape_string($newColsString) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
         mysql_query($query);
     }
-    $fullRefresh = true;
 }
 
 
@@ -169,18 +166,5 @@ if (isset($_POST['posttoservices'])) {
     mysql_query($query);
     mysql_close();
 }
-
-
-// Refresh according to whichever action is performed.
-if ($fullRefresh == true) {
-    echo ('<script language="JavaScript">
-        history.go(0);
-    </script>');
-} else {
-    echo ('<script language="JavaScript">
-	    window.onload=refreshAll();
-	</script>');
-}
-
 
 ?>

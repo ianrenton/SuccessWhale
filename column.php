@@ -89,7 +89,7 @@ if (isset($_GET['column'])) {
     $content .= '</span>';
     $content .= '</span>';
     $content .= '<span class="columnbuttons"><a href="#" class="columnoptions icon left icon157"><span>Column Settings</span></a>';
-    $content .= '<a class="confirmactionbutton deletecolumnbutton icon middle icon184" href="actions.php?delcol=' . $thisColNumber . '"><span>Delete Column</span></a>';
+    $content .= '<a class="confirmactionbutton deletecolumnbutton fullreload icon middle icon184" href="actions.php?delcol=' . $_GET['div'] . '"><span>Delete Column</span></a>';
     $content .= '<a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)" class="icon right icon2 refreshcolumnbutton"><span>Refresh Column</span></a></span>';
     $content .= makeNavForm($paramArray["count"], $columnOptions, $_GET['column']);
     $content .= '</div>';

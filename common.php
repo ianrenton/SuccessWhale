@@ -25,7 +25,7 @@ function logInUser($sw_uid) {
 // Adds a new user to the SuccessWhale users table, and returns their ID.
 function addSWUser() {
     $secret = createSecret();
-    $query = "INSERT INTO sw_users (secret, columns) VALUES ('" . $secret . "', 'statuses/home_timeline;statuses/mentions;direct_messages');";
+    $query = "INSERT INTO sw_users (secret, columns) VALUES ('" . $secret . "', 'New Column;New Column;New Column');";
     $result = mysql_query($query) or die(mysql_error());
     return mysql_insert_id();
 }

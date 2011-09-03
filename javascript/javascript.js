@@ -267,14 +267,16 @@ $(document).ready(function() {
     $('a.doactionbutton').unbind("click");
     $('a.doactionbutton').live("click", function(e) {
 		var $originaltext = $(this).html();
-		//alert($originaltext);
-		//$(this).html("<img src=\"/images/ajax-loader.gif\"/>");
-		//$(this).html("  ");
-		//$(this).css("background", "url(/images/ajax-loader.gif) 10px 6px no-repeat");  
+		if ($(this).hasClass("fullreload")) {
+			var $fullReload = true;
+		}
         $.ajax({
 			url: $(this).attr('href'),
 			success: function() {
 				$.growlUI('Done.');
+				if ($fullReload == true) {
+					window.location.reload(true);
+				}
 			},
 			error: function() {
 				$.growlUI('An error occurred, the operation did not complete.');
@@ -287,6 +289,9 @@ $(document).ready(function() {
     $('a.confirmactionbutton').unbind("click");
     $('a.confirmactionbutton').live("click", function(e) {
 		var $url = $(this).attr('href');
+		if ($(this).hasClass("fullreload")) {
+			var $fullReload = true;
+		}
 		$.prompt("Are you sure?",{
 			callback: function(v,m,f) {
 				if (v == true) {
@@ -294,6 +299,9 @@ $(document).ready(function() {
 						url: $url,
 						success: function() {
 							$.growlUI('Done.');
+							if ($fullReload == true) {
+								window.location.reload(true);
+							}
 						},
 						error: function() {
 							$.growlUI('An error occurred, the operation did not complete.');
