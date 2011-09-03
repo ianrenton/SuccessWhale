@@ -13,10 +13,8 @@ $blocklist = mysql_result($result,0,"blocklist");
 $content .= '<div class="settingsheader">Banned Phrases List</div>';
 $content .= '<div class="settingscontent">';
 $content .= '<p>Messages in any timeline that contain one of the following phrases will not be displayed.<br/>Enter one phrase per line.</p>';
-$content .= '<form name="manageblocksform" method="post" action="manageblockscallback.php">
-        <textarea name="blocklist" id="blocklist" rows="10" columns="80">' . $blocklist .'</textarea><br/>
-        <input type="submit" name="Submit" id="setBannedPhrases" value="Set Banned Phrases">
-        </form>';
+$content .= '<textarea name="blocklist" id="blocklist" rows="10" columns="80">' . $blocklist .'</textarea><br/>
+        <p class="setBannedPhrases"><a class="button" id="setBannedPhrases"><span>Set Banned Phrases</span></a></p>';
 $content .= '</div>';
 
 echo($content);

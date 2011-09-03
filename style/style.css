@@ -190,12 +190,6 @@ div.reply {
 	margin:10px 20px 10px 45px;
 }
 
-/*div.convohider {
-    float:left;
-    position:relative;
-    left:4px;
-}*/
-
 span.metatext {
 	display:none;
 	width:100%;
@@ -303,6 +297,14 @@ div.account {
 
 textarea#blocklist {
     width:90%;
+}
+
+p.setBannedPhrases {
+	height:20px;
+}
+
+a#setBannedPhrases {
+	float:right;
 }
 
 a.button,

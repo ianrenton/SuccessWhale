@@ -185,7 +185,7 @@ $(document).ready(function() {
     });
     
     // Click submits popup for Banned Phrases
-    $('input#setBannedPhrases').live("click", function() {
+    $('a#setBannedPhrases').live("click", function() {
             var dataString = 'blocklist=' + $(this).parent().children('textarea#blocklist').val();
             $.ajax({
                 type: "POST",
