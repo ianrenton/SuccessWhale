@@ -127,8 +127,7 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 	
 	// Get the status body based on what the data contains
 	if ($isNotifications) {
-		//$content .= $data['recipient_id'] . "<br/>" . $data['notification_id'] . "<br/>" . $data['object_type'] . "<br/>" . $data['object_id'] . "<br/><br/>";
-	    $statusbody = $data["title_html"] . '<br/>' . parseLinks($data["body_html"], $ignore);
+		$statusbody = $data["title_html"] . '<br/>' . parseLinks($data["body_html"], $ignore);
 	    $avatar = '<a><img class="avatar" src="http://graph.facebook.com/' .$data["sender_id"] . '/picture" border="0" width="48" height="48"></a>';
 	    $time = $data["created_time"]+$_SESSION['utcOffset'];
 		$renderCommentsLikes = false;
@@ -137,18 +136,11 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 		// data for the item that the notification was referring to. So request that from
 		// the API.
 		$facebook = $_SESSION['facebooks'][$thisUser];
-		if (($facebook != null) && ($data['href'] != null)) {
+		if (($facebook != null) && ($data['object_id'] != null)) {
 	        $attachment =  array('access_token' => $facebook->getAccessToken());
 			$idToFetch = $data['object_id'];
 			try {
-				//var_dump($data); echo("<br/><br/>");
-				//if ($data['object_type'] == "stream") {
-					//$tmpArray = explode("_", $idToFetch);
-					//$idToFetch = $tmpArray[1];
-				//}
-				//echo($idToFetch . "<br/><br/>");
-				$data = $facebook->api($idToFetch);
-				//var_dump($data); echo ("<br/><br/>");
+				$data = $facebook->api("/" . $idToFetch);
 				$renderCommentsLikes = true;
 			} catch (Exception $e) {
 				//$content .= $e;
