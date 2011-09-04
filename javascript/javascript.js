@@ -202,7 +202,7 @@ $(document).ready(function() {
     
     // Click submits popup for Banned Phrases
     $('a#setBannedPhrases').live("click", function() {
-            var dataString = 'blocklist=' + $(this).parent().children('textarea#blocklist').val();
+            var dataString = 'blocklist=' + $(this).parent().parent().children('textarea#blocklist').val();
             $.ajax({
                 type: "POST",
                 url: "manageblockscallback.php",
