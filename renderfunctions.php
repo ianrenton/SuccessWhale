@@ -157,9 +157,10 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 			}
 		}
 	} elseif ($isComment) {
+		//var_dump($data);
 	    $statusbody = parseLinks($data["message"], $ignore);
 	    $avatar = '<a><img class="avatar" src="http://graph.facebook.com/' .$data["from"]["id"] . '/picture" border="0" width="48" height="48"></a>';
-	    $time = $data["created_time"]+$_SESSION['utcOffset'];
+	    $time = strtotime($data["created_time"])+$_SESSION['utcOffset'];
 	} else {
         if ($data["type"] == "status") {
 	        $statusbody = parseLinks($data["message"],$ignore);
