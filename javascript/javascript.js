@@ -122,6 +122,22 @@ $(document).ready(function() {
             recheckAccountsSelected();
             submitStatus($("input#status").val(), $("input#replyid").val(), $("input#postToAccounts").val());
             return false;
+        } else if (e.keyCode == 38) {
+            //up
+			document.getElementById('mainarea').scrollTop-=(document.getElementById('mainarea').offsetHeight/10);
+			return false;
+        } else if (e.keyCode == 40) {
+            //down
+			document.getElementById('mainarea').scrollTop+=(document.getElementById('mainarea').offsetHeight/10);
+			return false;
+        } else if (e.keyCode == 33) {
+            //pageup
+			document.getElementById('mainarea').scrollTop-=document.getElementById('mainarea').offsetHeight;
+			return false;
+        } else if (e.keyCode == 34) {
+            //pagedown
+			document.getElementById('mainarea').scrollTop+=document.getElementById('mainarea').offsetHeight;
+			return false;
         }
         return true;
     });
@@ -427,5 +443,5 @@ $(window).resize(function() {
 function init() {
     setDivSize();
     // Focus status entry box
-	document.statusform.status.focus();
+	document.getElementById('status').focus();
 }
