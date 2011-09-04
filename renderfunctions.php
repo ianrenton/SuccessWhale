@@ -136,10 +136,7 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 	
 		// Mark as read
 		if (($facebook != null) && ($data['notification_id'] != null) && ($data['is_unread'] == true)) {
-	        //$attachment =  array('access_token' => $facebook->getAccessToken());
-			$idToFetch = $data['object_id'];
-			try {
-				$content .= "notif_" . $data['recipient_id'] . "_" . $data['notification_id'] . "?unread=0";
+	       	try {
 				$facebook->api("notif_" . $data['recipient_id'] . "_" . $data['notification_id'] . "?unread=0", "POST", array());
 			} catch (Exception $e) {
 				//$content .= $e;
@@ -151,8 +148,7 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 		// data for the item that the notification was referring to. So request that from
 		// the API.
 		if (($facebook != null) && ($data['object_id'] != null)) {
-	        //$attachment =  array('access_token' => $facebook->getAccessToken());
-			try {
+	        try {
 				$data = $facebook->api("/" . $data['object_id']);
 				$renderCommentsLikes = true;
 			} catch (Exception $e) {
