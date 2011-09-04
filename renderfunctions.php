@@ -131,16 +131,29 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 	    $avatar = '<a><img class="avatar" src="http://graph.facebook.com/' .$data["sender_id"] . '/picture" border="0" width="48" height="48"></a>';
 	    $time = $data["created_time"]+$_SESSION['utcOffset'];
 		$renderCommentsLikes = false;
+		
+		$facebook = $_SESSION['facebooks'][$thisUser];
 	
+		// Mark as read
+		if (($facebook != null) && ($data['notification_id'] != null) && ($data['is_unread'] == true)) {
+	        //$attachment =  array('access_token' => $facebook->getAccessToken());
+			$idToFetch = $data['object_id'];
+			try {
+				$content .= "notif_" . $data['recipient_id'] . "_" . $data['notification_id'] . "?unread=0";
+				$facebook->api("notif_" . $data['recipient_id'] . "_" . $data['notification_id'] . "?unread=0", "POST", array());
+			} catch (Exception $e) {
+				//$content .= $e;
+				//$content .= $data['object_id'];
+			}
+		}
+		
 		// We don't need the data for this notification anymore, from here on we want the
 		// data for the item that the notification was referring to. So request that from
 		// the API.
-		$facebook = $_SESSION['facebooks'][$thisUser];
 		if (($facebook != null) && ($data['object_id'] != null)) {
-	        $attachment =  array('access_token' => $facebook->getAccessToken());
-			$idToFetch = $data['object_id'];
+	        //$attachment =  array('access_token' => $facebook->getAccessToken());
 			try {
-				$data = $facebook->api("/" . $idToFetch);
+				$data = $facebook->api("/" . $data['object_id']);
 				$renderCommentsLikes = true;
 			} catch (Exception $e) {
 				//$content .= $e;

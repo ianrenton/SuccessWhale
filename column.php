@@ -153,7 +153,7 @@ if (isset($_GET['column'])) {
                     try {
                         // Catch the Notifications column, which needs to be in FQL
                         if ($name == "notifications") {
-                            $attachment['query'] = 'SELECT notification_id, recipient_id, sender_id, object_type, object_id, app_id, created_time, title_html, body_html, href FROM notification WHERE recipient_id="' . $facebook->getUser() . /*'AND is_unread = 1' . */ '" AND is_hidden = 0 LIMIT ' . $paramArray['count'];
+                            $attachment['query'] = 'SELECT notification_id, recipient_id, sender_id, object_type, object_id, app_id, created_time, title_html, body_html, href, is_unread FROM notification WHERE recipient_id="' . $facebook->getUser() . /*'AND is_unread = 1' . */ '" AND is_hidden = 0 LIMIT ' . $paramArray['count'];
                             $attachment['method'] = 'fql.query';
                             $data = $facebook->api($attachment);
                             $isNotifications = true;
