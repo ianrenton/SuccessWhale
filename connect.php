@@ -3,9 +3,18 @@
 require_once('common.php');
 session_start();
 
+// DB connection
+mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+@mysql_select_db(DB_NAME) or die( "Unable to select database");
+
 $content .= '<div class="centredbluebox">';
 $content .= '<a href="index.php"><img src="images/logo.png" alt="SuccessWhale"/></a>';
 $content .= '</div>';
+
+if( !mysql_num_rows( mysql_query("SHOW TABLES LIKE 'sw_users'")))
+{
+ $content .= '<div class="centredredbox">This looks like a new SuccessWhale install - your database has<br/>not yet been populated with tables.<br/><a href="install.php">Click here to set up SuccessWhale for the first time.</a></div>';
+}
 
 $content .= '<div class="centredgreybox">';
 $content .= 'To begin, sign in with Twitter or Facebook:<br/><a href="./twitter-callback/redirect.php"><img src="./images/lighter.png" border="0" alt="Sign in with Twitter" title="Sign in with Twitter" style="margin-top:15px;" /></a> <a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook"style="margin-bottom:2px;"></a>';
