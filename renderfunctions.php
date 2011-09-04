@@ -174,10 +174,10 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 				$statusbody = parseLinks($data["link"], $ignore);
 			}
 			if (isset($data['description'])) {
-	        	$statusbody .= '<br/>' . $data["description"];
+	        	$statusbody .= '<br/>' . parseLinks($data["description"], $ignore);
 			}
 			if (isset($data['message'])) {
-	        	$statusbody .= '<br/>' . $data["message"];
+	        	$statusbody .= '<br/>' . parseLinks($data["message"], $ignore);
 			}
 	    } elseif ($data["type"] == "photo") {
 	        $statusbody = '<a href="' . $data["link"] . '">' . $data["name"] . '</a><br/>' . parseLinks($data["message"],$ignore);
