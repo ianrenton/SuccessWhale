@@ -41,6 +41,7 @@ if (FACEBOOK_ENABLED) {
         }
     }
 }
+$linkedins = array(); //TODO add db stuff
 
 $content .= '<div class="settingsheader">Accounts</div>';
 $content .= '<div class="settingscontent">';
@@ -63,6 +64,13 @@ if (FACEBOOK_ENABLED) {
 		$content .= '<div class="account">' . $name . '<div class="manageaccountbuttons"><a href="unregistercallback.php?service=facebook&id=' . $id . '" class="button"><span>Remove</span></a></div></div>';
 	}
 	$content .= '<div class="account"><span class="noaccount">&nbsp;</span><div class="manageaccountbuttons"><a href="./facebook-callback/" class="button"><span>Add Facebook Account</span></a></div></div>';
+}
+if (LINKEDIN_ENABLED) {
+	$content .= '<h3>LinkedIn</h3>';
+	foreach ($linkedins as $id => $name) {
+		$content .= '<div class="account">' . $name . '<div class="manageaccountbuttons"><a href="unregistercallback.php?service=linkedin&id=' . $id . '" class="button"><span>Remove</span></a></div></div>';
+	}
+	$content .= '<div class="account"><span class="noaccount">&nbsp;</span><div class="manageaccountbuttons"><a href="./linkedin-callback/" class="button"><span>Add LinkedIn Account</span></a></div></div>';
 }
 $content .= '</div>';
 

@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('UTC');
 
-include('simplehtmldom/simple_html_dom.php');
+include('libraries/simple_html_dom.php');
 
 
 // @tikakino's Twixt/URL expansion code
