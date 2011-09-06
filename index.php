@@ -1,8 +1,7 @@
 <?php
 /* SuccessWhale, by Ian Renton
- * A lightweight, standards-compliant Twitter client written in PHP
+ * A web-based Twitter, Facebook and LinkedIn client written in PHP, MySQL
  * and JavaScript.
- * Based on Abraham's Twitter OAuth PHP example: http://twitter.abrah.am/
  * See http://onlydreaming.net/software/successwhale for details.
 
  * This program is free software: you can redistribute it and/or modify
@@ -98,6 +97,23 @@ if (FACEBOOK_ENABLED) {
     }
     $_SESSION['facebooks'] = $facebooks;
 }
+$linkedins = array();
+if (LINKEDIN_ENABLED) {
+    $query = "SELECT access_token FROM linkedin_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
+    $result = mysql_query($query) or die (mysql_error());
+    while ($row = mysql_fetch_assoc($result)) {
+        // TODO create new linkedin
+        try {
+	         // TODO get name
+             // TODO $linkedins[$name] = $linkedin;
+         }
+         catch (Exception $e) {
+          // We don't have a good session
+          var_dump($e);
+        }
+    }
+    $_SESSION['linkedins'] = $linkedins;
+}
 
 // Build column options list
 $columnOptions = array();
@@ -163,6 +179,12 @@ foreach ($facebooks as $name => $facebook) {
     $columnOptions["facebook:" . $name . ":notifications"] = "Notifications";
     $columnOptions["facebook:" . $name . ":/me/events"] = "Events";
 }
+
+// LinkedIn
+foreach ($linkedins as $name => $linkedin) {
+    //TODO LinkedIn columns
+}
+
 // Session-global the column options (timelines, lists etc.)
 $_SESSION['columnOptions'] = $columnOptions;
 
@@ -259,6 +281,28 @@ function generateServiceSelectors($posttoservices) {
         }
         $content .= '/>';
         $content .= '<span><img src="/images/serviceicons/facebook.png" alt="Facebook" title="Facebook" />&nbsp;&nbsp;' . $username . '</span></a>';
+    }
+	foreach ($_SESSION['linkedins'] as $username => $linkedin) {
+        $counter++;
+        $content .= '<a class="button accountselector';
+        if ($numSelectors != 1) {
+            if ($counter == 1) {
+                $content .= " left";
+            } else if ($counter == $numSelectors) {
+                $content .= " right";
+            } else {
+                $content .= " middle";
+            }
+        }
+        if (strpos($posttoservices, ("linkedin:" . $username)) !== FALSE) {
+            $content .= " pressed";
+        }
+        $content .= '"><input type="checkbox" class="accountSelector" id="accountSelector' . $counter . '" value="linkedin:' . $username . '" ';
+        if (strpos($posttoservices, ("linkedin:" . $username)) !== FALSE) {
+            $content .= "checked ";
+        }
+        $content .= '/>';
+        $content .= '<span><img src="/images/serviceicons/linkedin.gif" alt="LinkedIn" title="LinkedIn" />&nbsp;&nbsp;' . $username . '</span></a>';
     }
     $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     

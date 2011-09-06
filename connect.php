@@ -17,7 +17,7 @@ if( !mysql_num_rows( mysql_query("SHOW TABLES LIKE 'sw_users'")))
 }
 
 $content .= '<div class="centredgreybox">';
-$content .= 'To begin, sign in with Twitter or Facebook:<br/><a href="./twitter-callback/redirect.php"><img src="./images/lighter.png" border="0" alt="Sign in with Twitter" title="Sign in with Twitter" style="margin-top:15px;" /></a> <a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook"style="margin-bottom:2px;"></a>';
+$content .= 'To begin, sign in with one of the supported services:<br/><a href="./twitter-callback/redirect.php"><img src="./images/lighter.png" border="0" alt="Sign in with Twitter" title="Sign in with Twitter" style="margin-top:15px;" /></a> <a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook"style="margin-bottom:2px;"></a> <a href="./linkedin-callback/"><img src="./images/linkedin-signin.png"  alt="Sign in with LinkedIn" title="Sign in with LinkedIn" style="margin-bottom:2px;"></a>';
 $content .= '</div>';
 
 $content .= '<div class="centredgreybox">';

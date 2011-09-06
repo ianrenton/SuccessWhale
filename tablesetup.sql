@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `facebook_users` (
   `access_token` varchar(120) NOT NULL,
   `sig` varchar(80) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `sw_users` (
   `blocklist` varchar(1000) DEFAULT NULL,
   `utcoffset` varchar(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`sw_uid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -70,4 +70,19 @@ CREATE TABLE IF NOT EXISTS `twitter_users` (
   `username` varchar(80) NOT NULL,
   `access_token` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `linkedin_users`
+--
+
+CREATE TABLE IF NOT EXISTS `linkedin_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sw_uid` int(11) NOT NULL,
+  `uid` varchar(80) NOT NULL,
+  `username` varchar(80) NOT NULL,
+  `access_token` varchar(500) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

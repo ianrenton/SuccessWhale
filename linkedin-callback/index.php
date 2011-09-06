@@ -1,8 +1,6 @@
 <?php
 
-require_once('../config.php');
-require_once('../libraries/OAuth.php');
-require_once('../libraries/linkedin_3.1.1.class.php');
+require_once('../common.php');
 session_start();
 
 mysql_connect(DB_SERVER,DB_USER,DB_PASS);
