@@ -41,7 +41,14 @@ if (FACEBOOK_ENABLED) {
         }
     }
 }
-$linkedins = array(); //TODO add db stuff
+$linkedins = array();
+if (LINKEDIN_ENABLED) {
+    $query = "SELECT id, username, access_token FROM linkedin_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
+    $result = mysql_query($query) or die (mysql_error());
+    while ($row = mysql_fetch_assoc($result)) {
+       $linkedins[$row['id']] = $row['username'];
+    }
+}
 
 $content .= '<div class="settingsheader">Accounts</div>';
 $content .= '<div class="settingscontent">';

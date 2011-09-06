@@ -60,10 +60,10 @@ if (LINKEDIN_ENABLED) {
 	        // the request went through without an error, cache the user's tokens
 		    $uidReturn = $OBJ_linkedin->profile('~:(id)');
 		    $nameReturn = $OBJ_linkedin->profile('~:(first-name,last-name)');
-			$uidBlob = json_decode($uidReturn['linkedin'], true);
-			$nameBlob = json_decode($nameReturn['linkedin'], true);
-			$uid = $uidBlob['id'];
-			$name = $nameBlob['firstName'] . " " . $nameBlob['lastName'];
+			$uidBlob = $linkedin->xmlToArray($uidReturn['linkedin'], true);
+			$nameBlob = $linkedin->xmlToArray($nameReturn['linkedin'], true);
+			$uid = $nameBlob['person']['children']['id']['content'];
+			$name = $nameBlob['person']['children']['first-name']['content'] . " " . $nameBlob['person']['children']['last-name']['content'];
 			
 			$query = "SELECT COUNT(*) FROM linkedin_users WHERE uid='" . mysql_real_escape_string($uid) . "';";
 	        $result = mysql_query($query) or die (mysql_error());

@@ -5,6 +5,7 @@ session_start();
 
 $twitters = $_SESSION['twitters'];
 $facebooks = $_SESSION['facebooks'];
+$linkedins = $_SESSION['linkedins'];
 
 // Wrangles text through Twixt.
 function twixtify($status) {
@@ -37,7 +38,7 @@ if (isset($_POST['status'])) {
 	        $parts = explode(":", $account);
 	        $service = $parts[0];
 	        $username = $parts[1];
-	        
+			
 	        if ($service == "twitter") {
 	            $twitter = $twitters[$username];
 	            if (($twitter != null) && (!empty($statusForTwitter))) {
@@ -52,6 +53,24 @@ if (isset($_POST['status'])) {
 					} else {
 						// Posting a comment
 						$facebook->api($replyid . '/comments', 'POST', array('message'=> $status));
+					}
+	            }
+	        } elseif ($service == "linkedin") {
+				$linkedin = $linkedins[$username];
+	            if (($linkedin != null) && (!empty($status))) {
+					if (($replyid == '') || ($replyid == 'undefined')) {
+						// Posting to feed
+						try {
+		                	$response = $linkedin->updateNetwork($status);
+	      					if($response['success'] === TRUE) {
+								// Success
+							}
+						} catch (Exception $e) {
+							//Error
+						}
+					} else {
+						// Posting a comment
+						//$facebook->api($replyid . '/comments', 'POST', array('message'=> $status));
 					}
 	            }
 	        }

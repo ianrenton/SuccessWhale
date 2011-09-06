@@ -102,14 +102,24 @@ if (LINKEDIN_ENABLED) {
     $query = "SELECT access_token FROM linkedin_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
     $result = mysql_query($query) or die (mysql_error());
     while ($row = mysql_fetch_assoc($result)) {
-        // TODO create new linkedin
+        $API_CONFIG = array(
+		    'appKey'       => LINKEDIN_APP_KEY,
+			  'appSecret'    => LINKEDIN_SECRET_KEY,
+			  'callbackUrl'  => LINKEDIN_CALLBACK
+		  );
+		$linkedin = new LinkedIn($API_CONFIG);
+		$linkedin->setToken(unserialize($row['access_token']));
         try {
-	         // TODO get name
-             // TODO $linkedins[$name] = $linkedin;
+	        $nameReturn = $linkedin->profile('~:(first-name,last-name)');
+			$nameBlob = $linkedin->xmlToArray($nameReturn['linkedin'], true);
+			$name = $nameBlob['person']['children']['first-name']['content'] . " " . $nameBlob['person']['children']['last-name']['content'];
+            $linkedins[$name] = $linkedin;
          }
          catch (Exception $e) {
-          // We don't have a good session
-          var_dump($e);
+             // We don't have a good session
+		     if (DEBUG) {
+             	var_dump($e);
+			}
         }
     }
     $_SESSION['linkedins'] = $linkedins;
@@ -128,7 +138,10 @@ foreach ($twitters as $name => $twitter) {
 foreach ($facebooks as $name => $facebook) {
     $mnString .= "facebook:" . $name . ":home|";
 }
-$columnOptions[$mnString] = "Home Timeline & Main Feed";
+foreach ($linkedins as $name => $linkedin) {
+    $mnString .= "linkedin:" . $name . ":type=SHAR|";
+}
+$columnOptions[$mnString] = "Home Feeds";
 // Combined: M&N
 $mnString = "";
 foreach ($twitters as $name => $twitter) {
@@ -182,7 +195,8 @@ foreach ($facebooks as $name => $facebook) {
 
 // LinkedIn
 foreach ($linkedins as $name => $linkedin) {
-    //TODO LinkedIn columns
+    $columnOptions[("linkedin:" . $name)] = "-- LinkedIn: " . $name . " --";
+    $columnOptions["linkedin:" . $name . ":type=SHAR"] = "Connection Updates";
 }
 
 // Session-global the column options (timelines, lists etc.)
@@ -236,7 +250,7 @@ function generateSendBoxes() {
 function generateServiceSelectors($posttoservices) {
 	$content .= '<div id="serviceselectors">';
     
-    $numSelectors = count($_SESSION['twitters']) + count($_SESSION['facebooks']);
+    $numSelectors = count($_SESSION['twitters']) + count($_SESSION['facebooks']) + count($_SESSION['linkedins']);
     $counter = 0;
     foreach ($_SESSION['twitters'] as $username => $twitter) {
         $counter++;

@@ -23,6 +23,8 @@ if ((isset($_SESSION['sw_uid'])) && (isset($_POST['password']))) {
                 mysql_query($query);
                 $query = "DELETE FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
                 mysql_query($query);
+                $query = "DELETE FROM linkedin_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+                mysql_query($query);
 
                 mysql_close();
                 header('Location: ./clearsessions.php');
@@ -43,6 +45,8 @@ if ((isset($_SESSION['sw_uid'])) && (isset($_POST['password']))) {
 			$table = "twitter_users";
 		} elseif ($_GET['service'] == "facebook") {
 			$table = "facebook_users";
+		} elseif ($_GET['service'] == "linkedin") {
+			$table = "linkedin_users";
 		} else {
             header('Location: ./index.php');
             die();

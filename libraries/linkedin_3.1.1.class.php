@@ -129,7 +129,7 @@ class LinkedIn {
   const _API_OAUTH_VERSION           = '1.0';
   
   // the default response format from LinkedIn
-  const _DEFAULT_RESPONSE_FORMAT     = 'JSON';
+  const _DEFAULT_RESPONSE_FORMAT     = 'XML';
     
   // helper constants used to standardize LinkedIn <-> API communication.  See demo page for usage.
   const _GET_RESPONSE                = 'lResponse';
@@ -1957,7 +1957,7 @@ class LinkedIn {
      */
     // get the user data
     $response = self::profile('~:(first-name,last-name,site-standard-profile-request)');
-    if($response['success'] === TRUE) {
+	if($response['success'] === TRUE) {
       /** 
        * We are converting response to usable data.  I'd use SimpleXML here, but
        * to keep the class self-contained, we will use a portable XML parsing

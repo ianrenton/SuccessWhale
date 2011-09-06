@@ -13,6 +13,7 @@ $content = '';
 // Get session vars
 $twitters = $_SESSION['twitters'];
 $facebooks = $_SESSION['facebooks'];
+$linkedins = $_SESSION['linkedins'];
 $columnOptions = $_SESSION['columnOptions'];
 
 // Set session time constants (so we don't have to calculate them for every
@@ -176,6 +177,23 @@ if (isset($_GET['column'])) {
 	            } else {	
 		            $content .= '<div class="error">Your Facebook session has perished in the murky depths, cap\'n.<br/>Please try to <a href="javascript:location.reload(true)">reload SuccessWhale</a>, and if that doesn\'t work, re-authenticate with Facebook:<br/><a href="./facebook-callback/"><img src="./images/facebookconnect.gif"  alt="Sign in with Facebook" title="Sign in with Facebook" /></a></div>';
 	            }
+	
+	        } elseif ($service == "linkedin") {
+	            $linkedin = $linkedins[$username];
+	            if ($linkedin != null) {
+					$query = '?' . $url . '&count=1';// . $paramArray['count'];
+	                $dataBlob = $linkedin->updates($query);
+					$data = $linkedin->xmlToArray($dataBlob['linkedin']);
+	              	var_dump($data);
+	                /*for ($i=0; $i<count($data); $i++) {
+	                    $item = generateTweetItem($data[$i], $isMention, $isDM, false, $username, $blocklist);
+	                    $items[$item['time']] = $item['html'];
+	                }*/
+		            
+	            } else {	
+		            $content .= '<div class="error">Your LinkedIn session has perished in the murky depths, cap\'n.<br/>Please try to <a href="javascript:location.reload(true)">reload SuccessWhale</a>, and if that doesn\'t work, re-authenticate with LinkedIn:<br/><a href="./linkedin-callback/"><img src="./images/linkedin-signin.png"  alt="Sign in with LinkedIn" title="Sign in with LinkedIn" /></a></div>';
+	            }
+	            
 	        }
 	    }
     }
