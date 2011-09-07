@@ -19,6 +19,14 @@ define("FACEBOOK_ENABLED", false);
 define("FACEBOOK_APP_ID", "");
 define("FACEBOOK_SECRET", "");
 
+// LinkedIn API stuff.  If you're hosting your own version of SuccessWhale (or
+// something based on it), register your app with LinkedIn.  Once you're done,
+// an app key and secret key will be given to you.
+define("LINKEDIN_ENABLED", false);
+define("LINKEDIN_APP_KEY", "");
+define("LINKEDIN_SECRET_KEY", "");
+define("LINKEDIN_CALLBACK", "http://www.successwhale.com/linkedin-callback/");
+
 // MySQL Database Stuff.
 define("DB_SERVER", "");
 define("DB_NAME", "");
