@@ -141,6 +141,12 @@ div.columnheading {
 	text-align:left;
 	font-size: 110%;
 	font-weight:bold;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 div.columnheading span.title {
@@ -192,15 +198,15 @@ div.columnnav {
 }
 
 .item {
-	margin:20px 20px 40px 20px;
+    padding:5px;
+	margin:15px 15px 35px 15px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .convo {
-	margin:20px 20px 0px 20px;
-}
-
-div.reply {
-	margin:10px 20px 10px 45px;
+	margin:15px 15px 0px 15px;
 }
 
 span.metatext {

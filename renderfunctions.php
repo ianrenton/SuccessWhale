@@ -94,7 +94,7 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
     	if ($isConvo) {
 		    $content .= '<div class="item twitterstatus convo">';
 		} else {
-		    $content .= '<div class="item twitterstatus">';
+		    $content .= '<div class="item twitterstatus' . (isRecent(strtotime($data["created_at"])+$_SESSION['utcOffset'])?' recent':'') . '">';
 		}
 		$content .= '<div class="text">';
 		if (strtotime($data["created_at"]) == 0) {
@@ -139,8 +139,6 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 	       	try {
 				$facebook->api("notif_" . $data['recipient_id'] . "_" . $data['notification_id'] . "?unread=0", "POST", array());
 			} catch (Exception $e) {
-				//$content .= $e;
-				//$content .= $data['object_id'];
 			}
 		}
 		
@@ -152,12 +150,9 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 				$data = $facebook->api("/" . $data['object_id']);
 				$renderCommentsLikes = true;
 			} catch (Exception $e) {
-				//$content .= $e;
-				//$content .= $data['object_id'];
 			}
 		}
 	} elseif ($isComment) {
-		//var_dump($data);
 	    $statusbody = parseLinks($data["message"], $ignore);
 	    $avatar = '<a><img class="avatar" src="http://graph.facebook.com/' .$data["from"]["id"] . '/picture" border="0" width="48" height="48"></a>';
 	    $time = strtotime($data["created_time"])+$_SESSION['utcOffset'];
@@ -223,7 +218,11 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 	// Display tweet if it didn't match, or (as blocks are only checked for
 	// non-comment threads) if it's a comment thread.
 	if (!$match) {
-		$content .= '<div class="item facebookstatus">';
+	    if ($isComment) {
+	        $content .= '<div class="item facebookstatus convo">';
+	    } else {
+		    $content .= '<div class="item facebookstatus' . ((isRecent($time) && (!$isComment))?' recent':'') . '">';
+		}
 		$content .= '<div class="text">';
         $content .= '<table><tr><td>';
         $content .= $avatar;
@@ -278,6 +277,13 @@ function makeFriendlyTime($time, $midnightYesterday, $oneWeekAgo, $janFirst) {
 		$timeString = date("M j Y", $time);
 	}
 	return $timeString;
+}
+
+
+// Is the time within the last 15 minutes?
+function isRecent($time) {
+    $timeAgo = time() - $time;
+    return ($timeAgo < 900);
 }
 
 

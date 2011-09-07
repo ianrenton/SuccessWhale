@@ -52,6 +52,15 @@ div.error a {
 	color:#666666;
 }
 
+div.recent {
+	background: #e7f0ff;
+    background: -moz-linear-gradient(top, #f0f5ff, #e7f0ff);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#f0f5ff), to(#e7f0ff));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#f0f5ff', EndColorStr='#e7f0ff', GradientType=0);
+}
+
 div.convoarea {
     background-color:#eeeeee;
     background: -moz-linear-gradient(top, #f0f0f0, #eeeeee);
