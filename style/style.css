@@ -318,8 +318,12 @@ textarea#blocklist {
     width:90%;
 }
 
-p.setBannedPhrases {
-	height:20px;
+p.settingsPageButtonRow {
+	padding-bottom:20px;
+}
+
+a.settingsPageButton {
+	float:right;
 }
 
 a#setBannedPhrases {

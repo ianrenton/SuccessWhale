@@ -157,21 +157,18 @@ if (isset($_GET['delcol'])) {
 }
 
 
-// Set the theme
-if (isset($_POST['theme'])) {
+// Set the theme, number of columns per screen, and highlight time.
+if (isset($_POST['theme']) && isset($_POST['colsperscreen']) && isset($_POST['highlighttime'])) {
+
     mysql_connect(DB_SERVER,DB_USER,DB_PASS);
     @mysql_select_db(DB_NAME) or die( "Unable to select database");
     $query = "UPDATE sw_users SET theme = '" . mysql_real_escape_string($_POST['theme']) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
     mysql_query($query);
-    mysql_close();
-}
-
-
-// Set the number of columns per screen
-if (isset($_POST['colsperscreen'])) {
-    mysql_connect(DB_SERVER,DB_USER,DB_PASS);
-    @mysql_select_db(DB_NAME) or die( "Unable to select database");
+    
     $query = "UPDATE sw_users SET colsperscreen = '" . mysql_real_escape_string($_POST['colsperscreen']) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
+    mysql_query($query);
+    
+    $query = "UPDATE sw_users SET highlighttime = '" . mysql_real_escape_string($_POST['highlighttime']) . "' WHERE sw_uid = '" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
     mysql_query($query);
     mysql_close();
 }

@@ -55,6 +55,7 @@ $numColumns = count($columns);
 $colsperscreen = $row['colsperscreen'];
 $posttoservices = $row['posttoservices'];
 $theme = $row['theme'];
+$_SESSION['highlighttime'] = $row['highlighttime'];
 $_SESSION['utcOffset'] = $row['utcoffset'];
 
 

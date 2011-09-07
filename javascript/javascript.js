@@ -200,15 +200,35 @@ $(document).ready(function() {
         return false;
     });
     
+    // Click submits popup for Appearance
+    $('a#setAppearance').live("click", function() {
+            var dataString = 'theme=' + $(this).parent().parent().find('select#theme').val()
+                                + '&colsperscreen=' + $(this).parent().parent().find('input#colsperscreen').val()
+                                + '&highlighttime=' + $(this).parent().parent().find('input#highlighttime').val();
+            $.ajax({
+                type: "POST",
+                url: "actions.php",
+                data: dataString,
+                success: function() {
+                    window.location.reload(true);
+					return false;
+                 }
+            });
+            return false;
+    });
+    
     // Click submits popup for Banned Phrases
     $('a#setBannedPhrases').live("click", function() {
             var dataString = 'blocklist=' + $(this).parent().parent().children('textarea#blocklist').val();
             $.ajax({
                 type: "POST",
                 url: "manageblockscallback.php",
-                data: dataString
+                data: dataString,
+                success: function() {
+                    $.fancybox.close();
+					return false;
+                 }
             });
-            $.fancybox.close();
             return false;
     });
     
@@ -354,37 +374,6 @@ $(document).ready(function() {
 			},
 			buttons: { Like: 'like', Unlike: 'unlike', Cancel: 'cancel' }
 		});
-        return false;
-    });
-    
-    // Enter submits cols-per-screen form
-    $('input#colsperscreen').live("keydown", function(e) {
-        if (e.keyCode == 13 || e.keyCode == 10) {
-            var dataString = 'colsperscreen=' + $(this).val();
-            $.ajax({
-                type: "POST",
-                url: "actions.php",
-                data: dataString,
-                success: function() {
-                    window.location.reload();
-                }
-            });
-            return false;
-        }
-    });
-    
-    // Change submits theme form
-    $('select#theme').live("change", function(e) {
-        var theme = $("select#theme").val();
-        var dataString = 'theme=' + theme;
-        $.ajax({
-            type: "POST",
-            url: "actions.php",
-            data: dataString,
-            success: function() {
-                window.location.reload();
-            }
-        });
         return false;
     });
     

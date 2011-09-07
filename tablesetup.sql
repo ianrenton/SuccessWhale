@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `sw_users` (
   `theme` varchar(50) NOT NULL DEFAULT 'default',
   `blocklist` varchar(1000) DEFAULT NULL,
   `utcoffset` varchar(20) NOT NULL DEFAULT '0',
+  `highlighttime` int(11) NOT NULL DEFAULT '15',
   PRIMARY KEY (`sw_uid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

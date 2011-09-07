@@ -14,7 +14,7 @@ $content .= '<div class="settingsheader">Banned Phrases List</div>';
 $content .= '<div class="settingscontent">';
 $content .= '<p>Messages in any timeline that contain one of the following phrases will not be displayed.<br/>Enter one phrase per line.</p>';
 $content .= '<textarea name="blocklist" id="blocklist" rows="10" columns="80">' . $blocklist .'</textarea><br/>
-        <p class="setBannedPhrases"><a class="button" id="setBannedPhrases"><span>Set Banned Phrases</span></a></p>';
+        <p class="settingsPageButtonRow"><a class="button settingsPageButton" id="setBannedPhrases"><span>Set Banned Phrases</span></a></p>';
 $content .= '</div>';
 
 echo($content);

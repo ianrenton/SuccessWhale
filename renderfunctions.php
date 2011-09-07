@@ -280,10 +280,14 @@ function makeFriendlyTime($time, $midnightYesterday, $oneWeekAgo, $janFirst) {
 }
 
 
-// Is the time within the last 15 minutes?
+// Is the time within the last highlighttime minutes?
 function isRecent($time) {
-    $timeAgo = time() - $time;
-    return ($timeAgo < 900);
+    if ((!isset($_SESSION['highlighttime'])) || ($_SESSION['highlighttime'] == 0)) {
+        return false;
+    } else {
+        $timeAgo = time() - $time;
+        return ($timeAgo < ($_SESSION['highlighttime']*60));
+    }
 }
 
 
