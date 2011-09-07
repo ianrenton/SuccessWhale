@@ -144,7 +144,7 @@ if (isset($_GET['column'])) {
 	                }
 		            
 	            } else {	
-		            $content .= '<div class="error">Failwhale sighted off the port bow, cap\'n!  Please try to <a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)" class="icon right icon2 refreshcolumnbutton">refresh this column</a>, and if that doesn\'t work, please re-authenticate with Twitter:<br/><a href="./twitter-callback/redirect.php"><img src="./images/lighter.png" border="0" alt="Sign in with Twitter" title="Sign in with Twitter" /></a></div>';
+		            $content .= '<div class="error">Failwhale sighted off the port bow, cap\'n!  Please try to <a href="javascript:changeColumn(\'' . substr($_GET['div'], 0) . '\', \'column.php?div=' . substr($_GET['div'], 0) . '&column=' . urlencode($_GET['column']) . '&count=' . $paramArray["count"] . '\', 1)" class="refreshcolumnbutton">refresh this column</a>, and if that doesn\'t work, please re-authenticate with Twitter:<br/><a href="./twitter-callback/redirect.php"><img src="./images/lighter.png" border="0" alt="Sign in with Twitter" title="Sign in with Twitter" /></a></div>';
 	            }
 	            
 	        } elseif ($service == "facebook") {
