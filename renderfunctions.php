@@ -365,7 +365,13 @@ function parseLinks($html, &$numusers) {
 	);
 	$picservers = array(
 		"twitpic.com",
-		"yfrog.com"
+		"yfrog.com",
+		"lockerz.com"
+	);
+	$imageExtensions = array(
+		".png",
+		".jpg",
+		".gif"
 	);
 	
 	// Modify links depending on their type: link up for normal, lengthen for short URLs, inline text for Twixts
@@ -393,7 +399,9 @@ function parseLinks($html, &$numusers) {
 			    $wholeblock = false;
 			    if(in_array($server,$picservers)) {
 					$replacetext = getReplaceTextForPicture($urlParts);
-			    } else {
+			    } elseif (in_array(substr($urlParts[3],-4),$imageExtensions)) {
+					$replacetext = getReplaceTextForPicture($urlParts);
+		        } else {
 			        $replacetext = '<a href="' . $urlParts[0] . '" target="_blank">[' . $urlParts[2] . ']</a>';
 			    }
 		    } else {
@@ -430,7 +438,9 @@ function parseLinks($html, &$numusers) {
 			        //preg_match('/^http[s]?:\/\/([^\/]+)\/?(.*)$/', $loc, $domainMatch);
 					preg_match('/^(http[s]?|ftp|file):\/\/([^\/]+)\/?(.*)$/', $loc, $urlParts);
 				    $wholeblock = false;
-				    if(in_array($urlParts[2],$picservers)) {
+				    if (in_array($urlParts[2],$picservers)) {
+						$replacetext = getReplaceTextForPicture($urlParts);
+		            } elseif (in_array(substr($urlParts[3],-4),$imageExtensions)) {
 						$replacetext = getReplaceTextForPicture($urlParts);
 		            } else {
 				        $replacetext = '<a href="' . $loc . '" target="_blank">[' . $urlParts[2] . ']</a>';
@@ -543,6 +553,9 @@ function getReplaceTextForPicture($urlParts) {
 		    if(preg_match("~^Location: (.+)\r\n~",$line,$locationMatches))
 			    $loc = $locationMatches[1];
 	    }
+	} else {
+		// It was a raw image link, found by file extension (.jpg etc)
+		$loc = $urlParts[0];
 	}
     $text = '<a href="' . $loc . '" class="fancybox">[' . $urlParts[2] . ']</a>';
 	return $text;
