@@ -249,7 +249,7 @@ function generateSendBoxes() {
 }
 
 function generateServiceSelectors($posttoservices) {
-	$content .= '<div id="serviceselectors">';
+	$content .= '<div id="serviceselectors"><span class="postto">Post to:</span>';
     
     $numSelectors = count($_SESSION['twitters']) + count($_SESSION['facebooks']) + count($_SESSION['linkedins']);
     $counter = 0;
