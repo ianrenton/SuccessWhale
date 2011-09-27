@@ -9,7 +9,7 @@ mysql_connect(DB_SERVER,DB_USER,DB_PASS);
 $query = "SELECT username FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
-$hasSWAccount = ((isset($row['username']) && ($row['username'] != null) && ($row['username'] != ""));
+$hasSWAccount = (isset($row['username']) && ($row['username'] != null) && ($row['username'] != ""));
 $username = mysql_result($result,0,"username");
 
 $twitters = array();
