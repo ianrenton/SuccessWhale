@@ -57,7 +57,7 @@ $content .= '<h3>SuccessWhale</h3>';
 if ($hasSWAccount) {
 	$content .= '<div class="account">' . $username . '<div class="manageaccountbuttons"><a href="unregister.php" class="button fancybox"><span>Remove</span></a></div></div>';
 } else {
-	$content .= '<div class="account"><span class="noaccount">None yet</span><div class="manageaccountbuttons"><a href="register.php" class="button fancybox"><span>Create</span></div></div>';
+	$content .= '<div class="account"><span class="noaccount">None yet</span><div class="manageaccountbuttons"><a href="register.php" class="button fancybox"><span>Create</span></a></div></div>';
 }
 if (TWITTER_ENABLED) {
 	$content .= '<h3>Twitter</h3>';
