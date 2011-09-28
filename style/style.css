@@ -127,6 +127,8 @@ span.postto {
 	  font-size:21px;
 	  float:left;
 	  padding-right:5px;
+	position:relative;
+	top:5px;
 }
 
 div#mainarea {
