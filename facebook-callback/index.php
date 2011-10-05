@@ -28,7 +28,7 @@ if (FACEBOOK_ENABLED) {
         $me = $facebook->api('/me');
         
         // Figure out if the Facebook details are already in the database
-        $query = "SELECT COUNT(*) FROM facebook_users WHERE uid='" . $session['uid'] . "';";
+        $query = "SELECT COUNT(*) FROM facebook_users WHERE uid='" . $uid . "';";
         $result = mysql_query($query) or die (mysql_error());
         $row = mysql_fetch_assoc($result);
         if ($row['COUNT(*)'] == 0) {
@@ -50,7 +50,7 @@ if (FACEBOOK_ENABLED) {
                                                 "' WHERE uid='" . mysql_real_escape_string($facebook->getUser()) . "';";
             mysql_query($query) or die (mysql_error());
             // Now log in the appropriate user to SuccessWhale
-            $query = "SELECT sw_uid FROM facebook_users WHERE uid='" . $session['uid'] . "';";
+            $query = "SELECT sw_uid FROM facebook_users WHERE uid='" . mysql_real_escape_string($facebook->getUser()) . "';";
             $result = mysql_query($query) or die (mysql_error());
             $row = mysql_fetch_assoc($result);
             logInUser($row['sw_uid']);

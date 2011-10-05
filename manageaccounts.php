@@ -25,7 +25,7 @@ if (TWITTER_ENABLED) {
 }
 $facebooks = array();
 if (FACEBOOK_ENABLED) {
-    $query = "SELECT id, session FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
+    $query = "SELECT id, access_token FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
     $result = mysql_query($query) or die (mysql_error());
     while ($row = mysql_fetch_assoc($result)) {
         $facebook = new Facebook(array(
