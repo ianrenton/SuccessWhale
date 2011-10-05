@@ -34,7 +34,8 @@ if (FACEBOOK_ENABLED) {
           'cookie' => true,
         ));
         try {
-	         $facebook->setSession(unserialize($row['session']));
+	         //$facebook->setSession(unserialize($row['session']));
+			 $facebook->setAccessToken($row['access_token']);
              $me = $facebook->api('/me', 'GET');
              $facebooks[$row['id']] = $me['name'];
          }

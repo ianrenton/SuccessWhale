@@ -15,10 +15,10 @@ $facebook = new Facebook(array(
 
 // Try to get an existing session.  This exists if this page is being correctly
 // callbacked from Facebook, but won't otherwise.
-$session = $facebook->getSession();
+$accesstoken = $facebook->getAccessToken();
 
 if (FACEBOOK_ENABLED) {
-    if ($session) {
+    if ($accesstoken) {
       // Session is present, so we are being callbacked from Facebook
       try {
         // Attempt to get data for which authentication is required.  This is another

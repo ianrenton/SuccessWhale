@@ -86,14 +86,17 @@ if (FACEBOOK_ENABLED) {
           'cookie' => true,
         ));
         try {
-	         $facebook->setSession(unserialize($row['session']));
+	         //$facebook->setSession(unserialize($row['session']));
+			 $facebook->setAccessToken($row['access_token']);
              $me = $facebook->api('/me', 'GET');
              $name = $me['name'];
              $facebooks[$name] = $facebook;
          }
          catch (Exception $e) {
           // We don't have a good session
-          var_dump($e);
+		  if (DEBUG) {
+            var_dump($e);
+	      }
         }
     }
     $_SESSION['facebooks'] = $facebooks;
