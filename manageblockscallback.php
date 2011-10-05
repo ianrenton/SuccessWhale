@@ -1,9 +1,9 @@
 <?php
-
 /* Start session and load lib */
 session_start();
-require_once('twitteroauth/twitteroauth.php');
+require_once('common.php');
 require_once('config.php');
+		
 
 if ((isset($_SESSION['sw_uid'])) && (isset($_POST['blocklist']))) {
 

@@ -218,14 +218,16 @@ $(document).ready(function() {
     });
     
     // Click submits popup for Banned Phrases
+    $('a#setBannedPhrases').unbind("click");
     $('a#setBannedPhrases').live("click", function() {
-            var dataString = 'blocklist=' + $(this).parent().parent().children('textarea#blocklist').val();
-            $.ajax({
+            var $dataString = 'blocklist=' + $(this).parent().parent().children('textarea#blocklist').val();
+			$.ajax({
                 type: "POST",
                 url: "manageblockscallback.php",
-                data: dataString,
+                data: $dataString,
                 success: function() {
                     $.fancybox.close();
+					refreshAll();
 					return false;
                  }
             });
