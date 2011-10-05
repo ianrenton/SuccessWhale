@@ -39,25 +39,15 @@ if (FACEBOOK_ENABLED) {
             }
             // The user is now logged in, so record their Facebook details alongside
             // their other details.
-            $query="INSERT INTO facebook_users (sw_uid,session,session_key,uid,expires,secret,access_token,sig)
+            $query="INSERT INTO facebook_users (sw_uid,uid,access_token)
                     VALUES ('" . mysql_real_escape_string($_SESSION['sw_uid']) . "', '".
-                                mysql_real_escape_string(serialize($session))."','".
-                                mysql_real_escape_string($session['session_key'])."','".
-                                mysql_real_escape_string($session['uid'])."','".
-                                mysql_real_escape_string($session['expires'])."','".
-                                mysql_real_escape_string($session['secret']) ."','".
-                                mysql_real_escape_string($session['access_token'])."','".
-                                mysql_real_escape_string($session['sig'])."');";
+                                mysql_real_escape_string($facebook->getUser())."','".
+                                mysql_real_escape_string($facebook->getAccessToken())."');";
             mysql_query($query) or die(mysql_error());
         } else {
             // This Facebook account has been seen before, so update details.
-            $query = "UPDATE facebook_users SET session_key='" . mysql_real_escape_string($session['session_key']) . 
-                                                "', session='" . mysql_real_escape_string(serialize($session)) .  
-                                                "', expires='" . mysql_real_escape_string($session['expires']) . 
-                                                "', secret='" . mysql_real_escape_string($session['secret']) . 
-                                                "', access_token='" . mysql_real_escape_string($session['access_token']) . 
-                                                "', sig='" . mysql_real_escape_string($session['sig']) . 
-                                                "' WHERE uid='" . mysql_real_escape_string($session['uid']) . "';";
+            $query = "UPDATE facebook_users SET access_token='" . mysql_real_escape_string($facebook->getAccessToken()) . 
+                                                "' WHERE uid='" . mysql_real_escape_string($facebook->getUser()) . "';";
             mysql_query($query) or die (mysql_error());
             // Now log in the appropriate user to SuccessWhale
             $query = "SELECT sw_uid FROM facebook_users WHERE uid='" . $session['uid'] . "';";

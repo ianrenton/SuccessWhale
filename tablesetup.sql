@@ -14,13 +14,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 CREATE TABLE IF NOT EXISTS `facebook_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sw_uid` int(11) NOT NULL,
-  `session` varchar(5000) NOT NULL,
-  `session_key` varchar(80) NOT NULL,
   `uid` varchar(80) NOT NULL,
-  `expires` varchar(80) NOT NULL,
-  `secret` varchar(80) NOT NULL,
   `access_token` varchar(120) NOT NULL,
-  `sig` varchar(80) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
