@@ -147,7 +147,7 @@ foreach ($twitters as $name => $twitter) {
     $mnString .= "twitter:" . $name . ":statuses/home_timeline|";
 }
 foreach ($facebooks as $name => $facebook) {
-    $mnString .= "facebook:" . $name . ":home|";
+    $mnString .= "facebook:" . $name . ":/me/home|";
 }
 foreach ($linkedins as $name => $linkedin) {
     $mnString .= "linkedin:" . $name . ":type=SHAR|";
