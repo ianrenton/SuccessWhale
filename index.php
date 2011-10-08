@@ -45,6 +45,13 @@ if (!isset($_SESSION['sw_uid'])) {
     header('Location: ./clearsessions.php');
 }
 
+// Check for widget mode demand
+if (isset($_GET['widget'])) {
+	$_SESSION['widget'] = true;
+} else {
+	unset($_SESSION['widget']);
+}
+
 
 // Get user setup
 $query = "SELECT * FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
@@ -145,6 +152,7 @@ foreach ($facebooks as $name => $facebook) {
 foreach ($linkedins as $name => $linkedin) {
     $mnString .= "linkedin:" . $name . ":type=SHAR|";
 }
+$widgetColumn = $mnString;
 $columnOptions[$mnString] = "Home Feeds";
 // Combined: M&N
 $mnString = "";
@@ -206,12 +214,18 @@ foreach ($linkedins as $name => $linkedin) {
 // Session-global the column options (timelines, lists etc.)
 $_SESSION['columnOptions'] = $columnOptions;
 
-
-// Get user column setup
-$query = "SELECT columns FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
-$result = mysql_query($query);
-$row = mysql_fetch_assoc($result);
-$columns = explode(";",$row['columns']);
+if (!isset($_SESSION['widget'])) {
+	// Normal mode - Get user column setup
+	$query = "SELECT columns FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
+	$result = mysql_query($query);
+	$row = mysql_fetch_assoc($result);
+	$columns = explode(";",$row['columns']);
+} else {
+	// Widget mode, force a single column
+	$columns = array();
+	$columns[0] = $widgetColumn;
+	$colsperscreen = 1;
+}
 
 $numColumns = count($columns);
 
@@ -230,9 +244,13 @@ $content .= '</script>';
 
 // Build the main display
 $content .= '<div id="headerplusstatusform">';
-$content .= makeLinksForm();
+if (!isset($_SESSION['widget'])) {
+	$content .= makeLinksForm();
+}
 $content .= generateSendBoxes();
-$content .= '<div id="addcolumndiv"><a href="actions.php?newcol=true" class="icon icon10 doactionbutton fullreload" title="New Column"><span>New Column</span></a></div>';
+if (!isset($_SESSION['widget'])) {
+	$content .= '<div id="addcolumndiv"><a href="actions.php?newcol=true" class="icon icon10 doactionbutton fullreload" title="New Column"><span>New Column</span></a></div>';
+}
 $content .= generateServiceSelectors($posttoservices);
 $content .= '</div></div>';
 $content .= generateTweetTables($numColumns, $colsperscreen);
@@ -252,7 +270,11 @@ function generateSendBoxes() {
 }
 
 function generateServiceSelectors($posttoservices) {
-	$content .= '<div id="serviceselectors"><span class="postto">Post to:</span>';
+	$content .= '<div id="serviceselectors">';
+	
+	if (!isset($_SESSION['widget'])) {
+		$content .= '<span class="postto">Post to:</span>';
+	}
     
     $numSelectors = count($_SESSION['twitters']) + count($_SESSION['facebooks']) + count($_SESSION['linkedins']);
     $counter = 0;
@@ -276,7 +298,7 @@ function generateServiceSelectors($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<span><img src="/images/serviceicons/twitter.png" alt="Twitter" title="Twitter" />&nbsp;&nbsp;' . $username . '</span></a>';
+        $content .= '<span><img src="/images/serviceicons/twitter.png" alt="Twitter: ' . $username . '" title="Twitter: ' . $username . '" />&nbsp;&nbsp;' . $username . '</span></a>';
     }
     foreach ($_SESSION['facebooks'] as $username => $facebook) {
         $counter++;
@@ -298,7 +320,7 @@ function generateServiceSelectors($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<span><img src="/images/serviceicons/facebook.png" alt="Facebook" title="Facebook" />&nbsp;&nbsp;' . $username . '</span></a>';
+        $content .= '<span><img src="/images/serviceicons/facebook.png" alt="Facebook: ' . $username . '" title="Facebook: ' . $username . '" />&nbsp;&nbsp;' . $username . '</span></a>';
     }
 	foreach ($_SESSION['linkedins'] as $username => $linkedin) {
         $counter++;
@@ -320,7 +342,7 @@ function generateServiceSelectors($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<span><img src="/images/serviceicons/linkedin.gif" alt="LinkedIn" title="LinkedIn" />&nbsp;&nbsp;' . $username . '</span></a>';
+        $content .= '<span><img src="/images/serviceicons/linkedin.gif" alt="LinkedIn: ' . $username . '" title="LinkedIn: ' . $username . '" />&nbsp;&nbsp;' . $username . '</span></a>';
     }
     $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     
