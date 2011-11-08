@@ -76,14 +76,17 @@ if (isset($_GET['column'])) {
     if (count($sources) > 1) {
         $content .= 'Combined Feed';
     } else {
-        if (!empty($sources[0])) {
-	        $columnIdentifiers = explode(":", $sources[0]);
-	        $service = $columnIdentifiers[0];
-	        $username = $columnIdentifiers[1];
-	        if ($service == "twitter") {
-	            $content .= '@';
-	        }
-	        $content .= $username;
+            if (!empty($sources[0])) {
+		    $columnIdentifiers = explode(":", $sources[0]);
+		    $service = $columnIdentifiers[0];
+		    $username = $columnIdentifiers[1];
+		    if ($service == "twitter") {
+		        $content .= '@';
+		    }
+		    $content .= $username;
+		    if ($sources[0] == "New Column") {
+		        $content .= "Click the wrench to set up.";
+		    }
 	    }
     }
     
@@ -181,14 +184,22 @@ if (isset($_GET['column'])) {
 	        } elseif ($service == "linkedin") {
 	            $linkedin = $linkedins[$username];
 	            if ($linkedin != null) {
-					$query = '?' . $url . '&count=1';// . $paramArray['count'];
-	                $dataBlob = $linkedin->updates($query);
+					$query = '?count=' . $paramArray['count'];
+					if ($url == "updates") {
+	                	$dataBlob = $linkedin->updates($query);
+					} else {
+						$dataBlob = '';
+					}
+					// This is where the problem is - there are multiple 'update'
+					// elements under 'updates''children' which is valid in XML but
+					// not in a PHP array.
 					$data = $linkedin->xmlToArray($dataBlob['linkedin']);
-	              	var_dump($data);
-	                /*for ($i=0; $i<count($data); $i++) {
-	                    $item = generateTweetItem($data[$i], $isMention, $isDM, false, $username, $blocklist);
+					//$data = $data['updates']['children'];
+					//var_dump($datablob['li']);
+	                for ($i=0; $i<count($data); $i++) {
+	                    $item = generateLinkedInItem($data[$i]['update']['children'], $blocklist);
 	                    $items[$item['time']] = $item['html'];
-	                }*/
+	                }
 		            
 	            } else {	
 		            $content .= '<div class="error">Your LinkedIn session has perished in the murky depths, cap\'n.<br/>Please try to <a href="javascript:location.reload(true)">reload SuccessWhale</a>, and if that doesn\'t work, re-authenticate with LinkedIn:<br/><a href="./linkedin-callback/"><img src="./images/linkedin-signin.png"  alt="Sign in with LinkedIn" title="Sign in with LinkedIn" /></a></div>';

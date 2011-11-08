@@ -23,7 +23,7 @@ function grab($site,$id) {
 	}
 }
 
-// Generates an individual tweet list (one of timeline, mentions or directs) depending on
+// Generates an individual tweet (one of timeline, mentions or directs) depending on
 // the JSON and bool that's passed to it.  $isDM required because while normal tweets have
 // "user", DMs have "sender".  $isMention is required because we only show the Report button
 // on mentions, if you've followed the person already we assume non-spammer.
@@ -122,7 +122,7 @@ function generateTweetItem($data, $isMention, $isDM, $isConvo, $thisUser, $block
 }
 
 
-// Generates an individual facebook status list
+// Generates an individual facebook status
 function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $blocklist) {
 	
 	// Get the status body based on what the data contains
@@ -244,6 +244,104 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 		$content .= '</div>';
 		$content .= '</div><div class="clear"></div>';
 	}
+	$item = array('time' => $time, 'html' => $content);
+	return $item;
+}
+
+
+// Generates an individual LinkedIn post
+function generateLinkedInItem($data, $blocklist) {
+	
+	$time = strtotime($data["timestamp"]['content'])+$_SESSION['utcOffset'];
+			
+	// We do this first so we know how many @users were linked up, if >0
+	// then we can do a reply-all.  User counting happens in parseLinks(),
+	// so we set this to zero before we call it.
+	$numusers = 0;
+	
+	var_dump($data);
+	/*$avatar = '<a><img class="avatar" src="' . $data[$userString]["profile_image_url"] . '" alt="' . $data[$userString]["name"] . '" title="' . $data[$userString]["name"] . '" border="0" width="48" height="48"></a>';
+        
+
+    // Spot truncated RTs and expand them
+    if (isset($data["retweeted_status"])) {
+        $avatar = '<a><img class="avatar" src="' . $data["retweeted_status"][$userString]["profile_image_url"] . '" alt="' . $data["retweeted_status"][$userString]["name"] . '" title="' . $data["retweeted_status"][$userString]["name"] . '" border="0" width="48" height="48"></a>';
+        $nameField = $data["retweeted_status"][$userString]["name"] . ' (<a href="http://www.twitter.com/' . $data["retweeted_status"][$userString]["screen_name"] . '" target="_blank">@' . $data["retweeted_status"][$userString]["screen_name"] . '</a>)<br/>RT by ' . $data[$userString]["name"] . ' (<a href="http://www.twitter.com/' . $data[$userString]["screen_name"] . '" target="_blank">@' . $data[$userString]["screen_name"] . '</a>)';
+        $tweetbody = /*"RT @" . $data["retweeted_status"][$userString]["screen_name"] . " " .*//* $data["retweeted_status"]["text"];
+        // Expand short URLs etc first, so we can apply the blocklist to real URLs.
+	    // A bit of processing overhead, but it stops unwelcome URLs in tweets
+	    // evading the blocker by using a URL shortener.
+	    $tweetbody = parseLinks($tweetbody, $numusers);
+		$isInReplyToAnotherTweet = ($data["retweeted_status"]["in_reply_to_status_id"] > 0);
+		$thisTweetID = $data["retweeted_status"]["id_str"];
+        $operations = makeTwitterOperations($data["retweeted_status"][$userString]["screen_name"], $data["retweeted_status"]["text"], $thisUser, $data["retweeted_status"]["id_str"], $isMention, $isDM, $isConvo, $i, $data["retweeted_status"]["in_reply_to_screen_name"], $data["retweeted_status"]["in_reply_to_status_id"], $numusers);
+    } else {
+        $avatar = '<a><img class="avatar" src="' . $data[$userString]["profile_image_url"] . '" alt="' . $data[$userString]["name"] . '" title="' . $data[$userString]["name"] . '" border="0" width="48" height="48"></a>';
+        if ($isDM && ($data["sender_screen_name"] == $thisUser)) {
+            $nameField = 'Sent to ' . $data["recipient_screen_name"] . ' (<a href="http://www.twitter.com/' . $data["recipient_screen_name"] . '" target="_blank">@' . $data["recipient_screen_name"] . '</a>)';
+        } else {
+            $nameField = $data[$userString]["name"] . ' (<a href="http://www.twitter.com/' . $data[$userString]["screen_name"] . '" target="_blank">@' . $data[$userString]["screen_name"] . '</a>)';
+        }
+        $tweetbody = $data["text"];
+        // Expand short URLs etc first, so we can apply the blocklist to real URLs.
+	    // A bit of processing overhead, but it stops unwelcome URLs in tweets
+	    // evading the blocker by using a URL shortener.
+	    $tweetbody = parseLinks($tweetbody, $numusers);
+		$isInReplyToAnotherTweet = ($data["in_reply_to_status_id"] > 0);
+		$thisTweetID = $data["id_str"];
+	    $operations = makeTwitterOperations($data[$userString]["screen_name"], $data["text"], $thisUser, $data["id_str"], $isMention, $isDM, $isConvo, $i, $data["in_reply_to_screen_name"], $data["in_reply_to_status_id"], $numusers);
+    }	
+
+	// Convo
+	$convo = "";
+	if (($isInReplyToAnotherTweet) && (!$isConvo)) {
+		$convo = '<br/><span class="convolikearea"><span style="display:inline-block;"><a href="convo.php?service=twitter&thisUser=' . $thisUser . '&status=' . $thisTweetID . '" class="convobutton"><img src="images/convo.png" alt="In reply to..." title="In reply to..."></a></span></span>';
+	}
+		
+	// Check blocklist
+	$match = false;
+	$tweetbodyLowerCase = strtolower($tweetbody);
+	foreach ($blocklist as $blockstring) {
+		if ($blockstring != '') {
+			$pos = strpos($tweetbodyLowerCase, $blockstring);
+			if ($pos !== false) {
+				$match = true;
+			}
+		}
+	}		
+	
+	// Display tweet if it didn't match, of if it's part of a convo
+	// (Convos explicitly request a thread, it would look weird if
+	// we hid parts of it.)
+	if ((!$match) || ($isConvo)) {
+	
+    	if ($isConvo) {
+		    $content .= '<div class="item twitterstatus convo">';
+		} else {
+		    $content .= '<div class="item twitterstatus' . (isRecent(strtotime($data["created_at"])+$_SESSION['utcOffset'])?' recent':'') . '">';
+		}
+		$content .= '<div class="text">';
+		if (strtotime($data["created_at"]) == 0) {
+            $content .= '<div class="metatext"><span class="name">Protected or deleted tweet.</span></div>';
+		} else {
+            $content .= '<table><tr><td>';
+            $content .= $avatar;
+            $content .= $convo;
+            $content .= '</td>';
+            $content .= '<td class="tweettextcell"><span class="tweettext wraptext">';
+            $content .= $tweetbody;
+            $content .= '</span>';
+            $content .= '<span class="metatext wraptext">';
+            $content .= $nameField . '<br/>';
+            $content .= makeFriendlyTime(strtotime($data["created_at"])+$_SESSION['utcOffset'], $_SESSION['midnightYesterday'], $_SESSION['oneWeekAgo'], $_SESSION['janFirst']) . '<br/>';
+            $content .= $operations;
+            $content .= '</span>';
+            $content .= '</td></tr></table>';
+		}
+		$content .= '</div>';
+		$content .= '</div><div class="clear"></div>';
+	}*/
+	$content = "";
 	$item = array('time' => $time, 'html' => $content);
 	return $item;
 }

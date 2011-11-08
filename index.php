@@ -150,7 +150,7 @@ foreach ($facebooks as $name => $facebook) {
     $mnString .= "facebook:" . $name . ":/me/home|";
 }
 foreach ($linkedins as $name => $linkedin) {
-    $mnString .= "linkedin:" . $name . ":type=SHAR|";
+    $mnString .= "linkedin:" . $name . ":updates|";
 }
 $widgetColumn = $mnString;
 $columnOptions[$mnString] = "Home Feeds";
@@ -208,7 +208,7 @@ foreach ($facebooks as $name => $facebook) {
 // LinkedIn
 foreach ($linkedins as $name => $linkedin) {
     $columnOptions[("linkedin:" . $name)] = "-- LinkedIn: " . $name . " --";
-    $columnOptions["linkedin:" . $name . ":type=SHAR"] = "Connection Updates";
+    $columnOptions["linkedin:" . $name . ":updates"] = "Connection Updates";
 }
 
 // Session-global the column options (timelines, lists etc.)
@@ -298,7 +298,9 @@ function generateServiceSelectors($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<span><img src="/images/serviceicons/twitter.png" alt="Twitter: ' . $username . '" title="Twitter: ' . $username . '" />&nbsp;&nbsp;' . $username . '</span></a>';
+        $content .= '<span><img src="images/serviceicons/twitter.png" alt="Twitter: ' . $username . '" title="Twitter: ' . $username . '" />';
+	if (!isset($_SESSION['widget'])) { $content .= '&nbsp;&nbsp;' . $username; }
+	$content .= '</span></a>';
     }
     foreach ($_SESSION['facebooks'] as $username => $facebook) {
         $counter++;
@@ -320,7 +322,9 @@ function generateServiceSelectors($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<span><img src="/images/serviceicons/facebook.png" alt="Facebook: ' . $username . '" title="Facebook: ' . $username . '" />&nbsp;&nbsp;' . $username . '</span></a>';
+        $content .= '<span><img src="images/serviceicons/facebook.png" alt="Facebook: ' . $username . '" title="Facebook: ' . $username . '" />';
+	if (!isset($_SESSION['widget'])) { $content .= '&nbsp;&nbsp;' . $username; }
+	$content .= '</span></a>';
     }
 	foreach ($_SESSION['linkedins'] as $username => $linkedin) {
         $counter++;
@@ -342,7 +346,9 @@ function generateServiceSelectors($posttoservices) {
             $content .= "checked ";
         }
         $content .= '/>';
-        $content .= '<span><img src="/images/serviceicons/linkedin.gif" alt="LinkedIn: ' . $username . '" title="LinkedIn: ' . $username . '" />&nbsp;&nbsp;' . $username . '</span></a>';
+        $content .= '<span><img src="images/serviceicons/linkedin.gif" alt="LinkedIn: ' . $username . '" title="LinkedIn: ' . $username . '" />';
+	if (!isset($_SESSION['widget'])) { $content .= '&nbsp;&nbsp;' . $username; }
+	$content .= '</span></a>';
     }
     $content .= '<input type="hidden" name="postToAccounts" id="postToAccounts" value="' . $posttoservices . '"/>';
     
@@ -357,7 +363,7 @@ function generateTweetTables($numColumns, $colsperscreen) {
 	for ($i=0; $i<$numColumns; $i++) {
 	    $content .= '<td width="' . (100/$numColumns) . '%" valign=top>';
 	    $content .= '<div class="column" name="column" id="column' . $i . '"><div class="columnheading"><span class="columnbuttons">';
-	    $content .= '<a class="icon" style="background:url(/images/ajax-loader.gif) 10px 6px no-repeat;"><span>Refresh Column</span></a></span></span>';
+	    $content .= '<a class="icon" style="background:url(images/ajax-loader.gif) 10px 6px no-repeat;"><span>Refresh Column</span></a></span></span>';
 	    $content .= '</div></div>';
 	    $content .= '</td>';
 	}
