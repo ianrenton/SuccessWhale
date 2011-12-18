@@ -141,7 +141,7 @@ $columnOptions = array();
 
 // Combined
 $columnOptions["combined:" . $name] = "-- Combined --";
-// Combined: T&MF
+// Combined: Home Feeds
 $mnString = "";
 foreach ($twitters as $name => $twitter) {
     $mnString .= "twitter:" . $name . ":statuses/home_timeline|";
@@ -152,8 +152,21 @@ foreach ($facebooks as $name => $facebook) {
 foreach ($linkedins as $name => $linkedin) {
     $mnString .= "linkedin:" . $name . ":updates|";
 }
-$widgetColumn = $mnString;
 $columnOptions[$mnString] = "Home Feeds";
+// Combined: Home Feeds and DMs
+$mnString = "";
+foreach ($twitters as $name => $twitter) {
+    $mnString .= "twitter:" . $name . ":statuses/home_timeline|";
+    $mnString .= "twitter:" . $name . ":direct_messages|";
+}
+foreach ($facebooks as $name => $facebook) {
+    $mnString .= "facebook:" . $name . ":/me/home|";
+}
+foreach ($linkedins as $name => $linkedin) {
+    $mnString .= "linkedin:" . $name . ":updates|";
+}
+$widgetColumn = $mnString;
+$columnOptions[$mnString] = "Home Feeds & Inboxes";
 // Combined: M&N
 $mnString = "";
 foreach ($twitters as $name => $twitter) {
@@ -265,7 +278,10 @@ function generateSendBoxes() {
 	$content = '<div id="statusformdiv">';
     $content .= '<div id="statusform" name="statusform">';
     $content .= '<input type="text" autocomplete="off" name="status" id="status" class="status">';
-    $content .= '<a id="submitbutton" class="button right" href="#"><span>Post</span></a><span class="counter">140</span>';
+    $content .= '<a id="submitbutton" class="button right" href="#"><span>Post</span></a>';
+	if (!isset($_SESSION['widget'])) {
+		$content .= '<span class="counter">140</span>';
+	}
     return $content;
 }
 
