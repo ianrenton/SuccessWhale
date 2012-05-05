@@ -21,7 +21,7 @@ if (($_GET['service'] == 'twitter') && isset($_GET['thisUser']) && isset($_GET['
     // Get tweet data and render
     while ($statusID > 0) {
         $data = $twitter->get('statuses/show/' . $statusID, $paramArray);
-        $statusID = $data['in_reply_to_status_id'];
+        $statusID = $data['in_reply_to_status_id_str'];
         // Blank array is for the blocklist. Blocklists aren't obeyed in convo threads.
         $item = generateTweetItem($data, false, false, true, $_GET['thisUser'], array());
         $content .= $item['html'];
