@@ -162,9 +162,9 @@ div.columnheading span.title {
     float:left;
     position:relative;
     top:2px;
-	text-decoration:none;
-    overflow-x: auto;
-    overflow-y: auto;
+    text-decoration:none;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 div.columnheading span.title span.accountname {
