@@ -11,7 +11,7 @@
 Thank you for downloading SuccessWhale, a Twitter client written in
 PHP, MySQL and JavaScript.  This software is free as in beer (i.e. I
 ask for no money in exchange for it) and free as in speech (it is
-licenced under the GNU GPL v3 - see LICENCE.TXT for details).
+licenced under the BSD licence - see LICENCE.TXT for details).
 
 If you use this software on your own website, I'd appreciate a link
 back to me, though it's by no means essential.  If you've got any
