@@ -33,8 +33,8 @@ if (isset($_GET['fail'])) {
 $content .= '</div>';
 
 $content .= '<p align="center" style="margin-top:50px">SuccessWhale is a free, open, cross-platform, web-based Twitter client.</p>';
-$content .= '<p align="center">Find out more at <a href="http://www.onlydreaming.net/software/successwhale">SuccessWhale\'s homepage</a>.</p>';
-$content .= '<p align="center">SuccessWhale is <a href="http://www.gnu.org/licenses/gpl.html">Free Software</a>.</p>';
+$content .= '<p align="center">Find out more at <a href="http://software.ianrenton.com/successwhale">SuccessWhale\'s homepage</a>.</p>';
+$content .= '<p align="center">SuccessWhale is <a href="http://opensource.org/licenses/BSD-2-Clause">Free Software</a>.</p>';
  
 /* Include HTML to display on the page */
 include('html.inc');
