@@ -5,7 +5,7 @@ To run your own copy of SuccessWhale, unpack the ZIP file or clone the github
 repository onto a web server that supports PHP and, MySQL.  Once complete, edit
 config.php with your own settings.
 
-As explained in config.php, you’ll need a variety of bits of information to get
+As explained in config.php, you'll need a variety of bits of information to get
 SuccessWhale up and running.
 
 Each service that SuccessWhale supports has a "x_ENABLED" parameter that sets
@@ -31,4 +31,4 @@ before going live.
 Once config.php is set up just navigate to index.php, log in with your service
 of choice, and you should be up and running!
 
-Please see the file README.TXT for more information.
+Please see the file README.md for more information.
