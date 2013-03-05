@@ -11,7 +11,7 @@ $linkedins = $_SESSION['linkedins'];
 function twixtify($status) {
 	
 	// New code that generates "@user My message including #tags but is too lo... http://is.gd/blah"
-	$newstatus = substr($status,0,116);
+	$newstatus = substr($status,0,110);
 	$newstatus .= "... ";
 	$newstatus .= file_get_contents('http://twixt.successwhale.com/index.php?tweet=' . urlencode($status));
 	
