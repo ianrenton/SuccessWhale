@@ -566,7 +566,7 @@ function parseLinks($html, &$numusers) {
 	// Link up @users and #tags
 	$numusers = 0;
 	$html = preg_replace('/(^|\W)@(\w+)/', '\1<a href="http://www.twitter.com/\2" target="_blank">@\2</a>', $html, -1, $numusers);
-	$html = preg_replace('/(^|[^\&\w\/])#(\w+)/', '\1<a href="http://search.twitter.com/search?q=%23\2" target="_blank">#\2</a>', $html);
+	$html = preg_replace('/(^|[^\&\w\/])#(\w+)/', '\1<a href="https://twitter.com/search?q=%23\2" target="_blank">#\2</a>', $html);
 	
 	return $html;
 }
