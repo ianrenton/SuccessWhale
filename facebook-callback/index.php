@@ -63,7 +63,7 @@ if (FACEBOOK_ENABLED) {
       } catch (FacebookApiException $e) {
         // Exception, so let's request a new session.
 		$params = array();
-        $params['req_perms'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
+        $params['scope'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
         $loginUrl = $facebook->getLoginUrl($params);
          
         header('Location: ' . $loginUrl);
@@ -71,7 +71,7 @@ if (FACEBOOK_ENABLED) {
     } else {
         // No session, redirect to Facebook to get one
         $params = array();
-        $params['req_perms'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
+        $params['scope'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
         $loginUrl = $facebook->getLoginUrl($params);
          
         header('Location: ' . $loginUrl);
