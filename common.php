@@ -11,7 +11,7 @@ require_once('config-import.php');
 session_start();
 
 mysql_connect(DB_SERVER,DB_USER,DB_PASS);
-@mysql_select_db(DB_NAME) or die( "Unable to select database");
+@mysql_select_db(DB_NAME) or die( "Unable to select database " . DB_NAME . " on " . DB_SERVER);
 
 // Logs in the given user
 function logInUser($sw_uid) {
