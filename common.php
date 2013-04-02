@@ -7,7 +7,7 @@ require_once('libraries/twitteroauth.php');
 require_once('libraries/facebook.php');
 require_once('libraries/linkedin_3.1.1.class.php');
 require_once('renderfunctions.php');
-require_once('config.php');
+require_once('config-import.php');
 session_start();
 
 mysql_connect(DB_SERVER,DB_USER,DB_PASS);
@@ -36,7 +36,7 @@ function addSWUser() {
 function createSecret() {
     $length = 100;
     $characters = '0123456789abcdef';
-    $string = '';    
+    $string = '';
     for ($p = 0; $p < $length; $p++) {
         $string .= $characters[mt_rand(0, strlen($characters))];
     }
