@@ -22,24 +22,24 @@ Screenshot
 Status
 ------
 
-SuccessWhale is complete, released software.  Its latest stable version is 2.0.1, and work is underway on the 2.1 branch.
+SuccessWhale is complete, released software.  Its latest stable version is 2.0.2, and work is underway on the 2.1 branch.
 
-http://successwhale.com runs v2.0.1.
-http://test.successwhale.com runs v2.1.
+http://successwhale.com runs v2.0.2.
+http://test.successwhale.com runs v2.1.1.
 
-It’s used by around 50 people — including myself — as their main Twitter and Facebook client, and a number of sites around the internet have used the source code to integrate SuccessWhale into their own sites. As far as I’m aware it has no bugs, but if you find any or would like to request any new features for the next version, you can contact me on Twitter (I'm [@tsuki_chama](http://www.twitter.com/tsuki_chama)) or via the Issues page on GitHub.
+It’s used by around 80 people — including myself — as their main Twitter and Facebook client, and a number of sites around the internet have used the source code to integrate SuccessWhale into their own sites. As far as I’m aware it has no bugs, but if you find any or would like to request any new features for the next version, you can contact me on Twitter (I'm [@tsuki_chama](http://www.twitter.com/tsuki_chama)) or via the Issues page on GitHub.
 
 Libraries
 ---------
 
-SuccessWhale depends on many libraries, including [twitteroauth](http://github.com/abraham/twitteroauth), the [Facebook PHP SDK](https://github.com/facebook/php-sdk), [jQuery](http://jquery.com/), the [jQuery Form Plugin](http://jquery.malsup.com/form/), the [jQuery BlockUI Plugin](http://jquery.malsup.com/block/), the [jQuery Impromptu Plugin](http://trentrichardson.com/Impromptu/), the [jQuery Force Redraw Plugin](http://plugins.jquery.com/project/force_redraw), the [jQuery breakly Plugin](http://plugins.jquery.com/project/Breakly), the [jQuery "put cursor at end" Plugin](http://plugins.jquery.com/project/PutCursorAtEnd), and the [PHP Simple HTML DOM Parser](http://simplehtmldom.sourceforge.net/). (Certain parts of the SuccessWhale download are thus licenced under the MIT licence, which is compatible with the BSD licence that SuccessWhale itself uses.)
+SuccessWhale depends on many libraries, including [twitteroauth](http://github.com/abraham/twitteroauth), the [Facebook PHP SDK](https://github.com/facebook/php-sdk), [Php dotenv](https://github.com/vlucas/phpdotenv), [jQuery](http://jquery.com/), the [jQuery Form Plugin](http://jquery.malsup.com/form/), the [jQuery BlockUI Plugin](http://jquery.malsup.com/block/), the [jQuery Impromptu Plugin](http://trentrichardson.com/Impromptu/), the [jQuery Force Redraw Plugin](http://plugins.jquery.com/project/force_redraw), the [jQuery breakly Plugin](http://plugins.jquery.com/project/Breakly), the [jQuery "put cursor at end" Plugin](http://plugins.jquery.com/project/PutCursorAtEnd), and the [PHP Simple HTML DOM Parser](http://simplehtmldom.sourceforge.net/). (Certain parts of the SuccessWhale download are thus licenced under the MIT licence, which is compatible with the BSD licence that SuccessWhale itself uses.)
 
 Thanks to...
 ------------
 
   * [@abraham](http://www.twitter.com/abraham) for writing [twitteroauth](http://github.com/abraham/twitteroauth), a PHP implementation of the Twitter OAuth API. SuccessWhale uses twitteroauth as its backend.
-  * [@tikakino](http://www.twitter.com/tikakino) for the short URLs and Twixt expansion code, and for my introduction to jQuery.	
+  * [@tikakino](http://www.twitter.com/tikakino) for the short URLs and Twixt expansion code, and for my introduction to jQuery.
   * [@aefaradien](http://www.twitter.com/aefaradien) for hosting successwhale.com in the early days, and for many bug reports.
-  * [@pixify](http://www.twitter.com/pixify) for SuccessWhale version 2's [OSX-inspired button style](http://pixify.com/blog/use-os-x-lion-to-improve-your-ui/).	
+  * [@pixify](http://www.twitter.com/pixify) for SuccessWhale version 2's [OSX-inspired button style](http://pixify.com/blog/use-os-x-lion-to-improve-your-ui/).
   * [@glyphish](http://www.twitter.com/pixify) for the [icons to match the above button style](http://glyphish.com/).
   * [Ibrahim Faour](http://stackoverflow.com/users/337227/ifaour), for modifying the Facebook API docs in response to [my question on StackOverflow](http://stackoverflow.com/questions/7122394/in-the-facebook-api-how-can-i-retrieve-the-source-object-from-a-notification-obj).
