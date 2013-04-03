@@ -6,7 +6,7 @@ date_default_timezone_set('UTC');
 require_once('twitteroauth/twitteroauth.php');
 require_once('facebook-php-sdk/src/facebook.php');
 require_once('renderfunctions.php');
-require_once('config.php');
+require_once('config-import.php');
 session_start();
 
 mysql_connect(DB_SERVER,DB_USER,DB_PASS);
@@ -35,7 +35,7 @@ function addSWUser() {
 function createSecret() {
     $length = 100;
     $characters = '0123456789abcdef';
-    $string = '';    
+    $string = '';
     for ($p = 0; $p < $length; $p++) {
         $string .= $characters[mt_rand(0, strlen($characters))];
     }
