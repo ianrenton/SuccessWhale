@@ -17,7 +17,7 @@ if(file_exists("./.env")) {
 
 // Take an example var and check that it has been set somewhere
 $testVar = getenv("DB_SERVER");
-if (isset($testVar) && !empty($testVar) {
+if (isset($testVar) && !empty($testVar)) {
   define("PASSWORD_SALT", getenv("PASSWORD_SALT"));
   define("TWITTER_ENABLED", getenv("TWITTER_ENABLED"));
   define("CONSUMER_KEY", getenv("CONSUMER_KEY"));
