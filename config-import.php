@@ -26,6 +26,10 @@ if (isset($testVar) && !empty($testVar)) {
   define("FACEBOOK_ENABLED", getenv("FACEBOOK_ENABLED"));
   define("FACEBOOK_APP_ID", getenv("FACEBOOK_APP_ID"));
   define("FACEBOOK_SECRET", getenv("FACEBOOK_SECRET"));
+  define("LINKEDIN_ENABLED", getenv("LINKEDIN_ENABLED"));
+  define("LINKEDIN_APP_KEY", getenv("LINKEDIN_APP_KEY"));
+  define("LINKEDIN_SECRET_KEY", getenv("LINKEDIN_SECRET_KEY"));
+  define("LINKEDIN_CALLBACK", getenv("LINKEDIN_CALLBACK"));
   define("DB_SERVER", getenv("DB_SERVER"));
   define("DB_NAME", getenv("DB_NAME"));
   define("DB_USER", getenv("DB_USER"));
