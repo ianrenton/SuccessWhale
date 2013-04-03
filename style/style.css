@@ -131,8 +131,8 @@ div#mainarea {
 
 div.column {
     margin:0px;
-	height: 100%;
-    overflow-y: auto;
+    height: 100%;
+    overflow: hidden;
 }
 
 div.columnheading {
@@ -148,8 +148,8 @@ div.columnheading span.title {
     position:relative;
     top:2px;
 	text-decoration:none;
-    overflow-x: auto;
-    overflow-y: auto;
+    overflow-x: hiddenx;
+    overflow-y: hidden;
 }
 
 div.columnheading span.title span.accountname {

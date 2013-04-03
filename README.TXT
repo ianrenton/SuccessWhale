@@ -5,7 +5,7 @@
  ____) | |_| | (__| (__|  __|__ \__ \ \  /\  /  | | | | (_| | |  __/
 |_____/ \__,_|\___|\___|\___|___/___/  \/  \/   |_| |_|\__,_|_|\___|
                                                                     
-                                                       VERSION 2.0.1
+                                                       VERSION 2.0.2
 
 
 Thank you for downloading SuccessWhale, a Twitter client written in
@@ -21,7 +21,7 @@ questions or feature requests, I'd love to hear from you - I'm
 You will always be able to find the latest version of SuccessWhale
 as a free download from:
 
-            http://onlydreaming.net/software/successwhale
+              https://github.com/ianrenton/successwhale
 
 This page will also contain the latest information and feature list
 for the software.

@@ -8,7 +8,8 @@ mysql_connect(DB_SERVER,DB_USER,DB_PASS);
 // Get data
 $query = "SELECT username FROM sw_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
 $result = mysql_query($query);
-$hasSWAccount = (mysql_num_rows($result) == 1);
+$row = mysql_fetch_assoc($result);
+$hasSWAccount = (isset($row['username']) && ($row['username'] != null) && ($row['username'] != ""));
 $username = mysql_result($result,0,"username");
 
 $twitters = array();
@@ -24,7 +25,7 @@ if (TWITTER_ENABLED) {
 }
 $facebooks = array();
 if (FACEBOOK_ENABLED) {
-    $query = "SELECT id, session FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
+    $query = "SELECT id, access_token FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
     $result = mysql_query($query) or die (mysql_error());
     while ($row = mysql_fetch_assoc($result)) {
         $facebook = new Facebook(array(
@@ -33,7 +34,8 @@ if (FACEBOOK_ENABLED) {
           'cookie' => true,
         ));
         try {
-	         $facebook->setSession(unserialize($row['session']));
+	         //$facebook->setSession(unserialize($row['session']));
+			 $facebook->setAccessToken($row['access_token']);
              $me = $facebook->api('/me', 'GET');
              $facebooks[$row['id']] = $me['name'];
          }
@@ -48,7 +50,7 @@ $content .= '<h3>SuccessWhale</h3>';
 if ($hasSWAccount) {
 	$content .= '<div class="account">' . $username . '<div class="manageaccountbuttons"><a href="unregister.php" class="button fancybox"><span>Remove</span></a></div></div>';
 } else {
-	$content .= '<div class="account"><span class="noaccount">None yet</span><div class="manageaccountbuttons"><a href="register.php" class="button fancybox"><span>Create</span></div></div>';
+	$content .= '<div class="account"><span class="noaccount">None yet</span><div class="manageaccountbuttons"><a href="register.php" class="button fancybox"><span>Create</span></a></div></div>';
 }
 if (TWITTER_ENABLED) {
 	$content .= '<h3>Twitter</h3>';

@@ -77,7 +77,7 @@ if (TWITTER_ENABLED) {
 }
 $facebooks = array();
 if (FACEBOOK_ENABLED) {
-    $query = "SELECT session FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
+    $query = "SELECT access_token FROM facebook_users WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "';";
     $result = mysql_query($query) or die (mysql_error());
     while ($row = mysql_fetch_assoc($result)) {
         $facebook = new Facebook(array(
@@ -86,14 +86,17 @@ if (FACEBOOK_ENABLED) {
           'cookie' => true,
         ));
         try {
-	         $facebook->setSession(unserialize($row['session']));
+	         //$facebook->setSession(unserialize($row['session']));
+			 $facebook->setAccessToken($row['access_token']);
              $me = $facebook->api('/me', 'GET');
              $name = $me['name'];
              $facebooks[$name] = $facebook;
          }
          catch (Exception $e) {
           // We don't have a good session
-          var_dump($e);
+		  if (DEBUG) {
+            var_dump($e);
+	      }
         }
     }
     $_SESSION['facebooks'] = $facebooks;

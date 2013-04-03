@@ -15,10 +15,10 @@ $facebook = new Facebook(array(
 
 // Try to get an existing session.  This exists if this page is being correctly
 // callbacked from Facebook, but won't otherwise.
-$session = $facebook->getSession();
+$accesstoken = $facebook->getAccessToken();
 
 if (FACEBOOK_ENABLED) {
-    if ($session) {
+    if ($accesstoken) {
       // Session is present, so we are being callbacked from Facebook
       try {
         // Attempt to get data for which authentication is required.  This is another
@@ -28,7 +28,7 @@ if (FACEBOOK_ENABLED) {
         $me = $facebook->api('/me');
         
         // Figure out if the Facebook details are already in the database
-        $query = "SELECT COUNT(*) FROM facebook_users WHERE uid='" . $session['uid'] . "';";
+        $query = "SELECT COUNT(*) FROM facebook_users WHERE uid='" . $uid . "';";
         $result = mysql_query($query) or die (mysql_error());
         $row = mysql_fetch_assoc($result);
         if ($row['COUNT(*)'] == 0) {
@@ -39,28 +39,18 @@ if (FACEBOOK_ENABLED) {
             }
             // The user is now logged in, so record their Facebook details alongside
             // their other details.
-            $query="INSERT INTO facebook_users (sw_uid,session,session_key,uid,expires,secret,access_token,sig)
+            $query="INSERT INTO facebook_users (sw_uid,uid,access_token)
                     VALUES ('" . mysql_real_escape_string($_SESSION['sw_uid']) . "', '".
-                                mysql_real_escape_string(serialize($session))."','".
-                                mysql_real_escape_string($session['session_key'])."','".
-                                mysql_real_escape_string($session['uid'])."','".
-                                mysql_real_escape_string($session['expires'])."','".
-                                mysql_real_escape_string($session['secret']) ."','".
-                                mysql_real_escape_string($session['access_token'])."','".
-                                mysql_real_escape_string($session['sig'])."');";
+                                mysql_real_escape_string($facebook->getUser())."','".
+                                mysql_real_escape_string($facebook->getAccessToken())."');";
             mysql_query($query) or die(mysql_error());
         } else {
             // This Facebook account has been seen before, so update details.
-            $query = "UPDATE facebook_users SET session_key='" . mysql_real_escape_string($session['session_key']) . 
-                                                "', session='" . mysql_real_escape_string(serialize($session)) .  
-                                                "', expires='" . mysql_real_escape_string($session['expires']) . 
-                                                "', secret='" . mysql_real_escape_string($session['secret']) . 
-                                                "', access_token='" . mysql_real_escape_string($session['access_token']) . 
-                                                "', sig='" . mysql_real_escape_string($session['sig']) . 
-                                                "' WHERE uid='" . mysql_real_escape_string($session['uid']) . "';";
+            $query = "UPDATE facebook_users SET access_token='" . mysql_real_escape_string($facebook->getAccessToken()) . 
+                                                "' WHERE uid='" . mysql_real_escape_string($facebook->getUser()) . "';";
             mysql_query($query) or die (mysql_error());
             // Now log in the appropriate user to SuccessWhale
-            $query = "SELECT sw_uid FROM facebook_users WHERE uid='" . $session['uid'] . "';";
+            $query = "SELECT sw_uid FROM facebook_users WHERE uid='" . mysql_real_escape_string($facebook->getUser()) . "';";
             $result = mysql_query($query) or die (mysql_error());
             $row = mysql_fetch_assoc($result);
             logInUser($row['sw_uid']);
@@ -73,7 +63,7 @@ if (FACEBOOK_ENABLED) {
       } catch (FacebookApiException $e) {
         // Exception, so let's request a new session.
 		$params = array();
-        $params['req_perms'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
+        $params['scope'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
         $loginUrl = $facebook->getLoginUrl($params);
          
         header('Location: ' . $loginUrl);
@@ -81,7 +71,7 @@ if (FACEBOOK_ENABLED) {
     } else {
         // No session, redirect to Facebook to get one
         $params = array();
-        $params['req_perms'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
+        $params['scope'] = 'status_update,read_stream,publish_stream,manage_notifications,offline_access';
         $loginUrl = $facebook->getLoginUrl($params);
          
         header('Location: ' . $loginUrl);
