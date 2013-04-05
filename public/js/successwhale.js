@@ -1,31 +1,21 @@
-// Create app
-SuccessWhale = Ember.Application.create();
+$(function(){
+    var AuthModel = Backbone.Model.extend({
+        urlRoot: '/apiproxy/authenticate',
+        defaults: {
+            sw_uid: '',
+            secret: ''
+        }
+    });
 
-// Create Ember Data store for handling models
-SuccessWhale.Store = DS.Store.extend({
-  revision: 12
-});
+    var authUser = new AuthModel();
 
-// Set up API proxy
-DS.RESTAdapter.reopen({
-  namespace: 'apiproxy'
-});
-
-// Set up routes
-SuccessWhale.Router.map(function() {
-  this.route("login");
-  this.route("logout");
-});
-
-// Test index route
-SuccessWhale.IndexRoute = Ember.Route.extend({
-  model: function() {
-    return ['red', 'yellow', 'blue'];
-  }
-});
-
-// Auth Data model
-SuccessWhale.AuthData = DS.Model.extend({
-  sw_uid: DS.attr('string'),
-  secret: DS.attr('string'),
+    authUser.fetch({
+        data: {username: 'tsuki_chama', password: 'XXXXXXX'},
+        success: function (authUser) {
+            alert(JSON.stringify(authUser.toJSON()));
+        },
+        error: function (model, response, options) {
+            alert(response.responseText);
+        }
+    });
 });
