@@ -3,7 +3,6 @@
 /* Start session and load lib */
 session_start();
 require_once('common.php');
-require_once('config.php');
 
 if ((isset($_SESSION['sw_uid'])) && (isset($_POST['blocklist']))) {
 
@@ -16,7 +15,7 @@ if ((isset($_SESSION['sw_uid'])) && (isset($_POST['blocklist']))) {
 		// Update table
 		$query = "UPDATE sw_users SET blocklist='" . mysql_real_escape_string($blocklist) . "' WHERE sw_uid='" . mysql_real_escape_string($_SESSION['sw_uid']) . "'";
 		mysql_query($query);
-		
+
 		mysql_close();
 		header('Location: ./index.php');
 		die();
