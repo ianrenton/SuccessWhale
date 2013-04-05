@@ -1,7 +1,7 @@
 SuccessWhale
 ============
 
-SuccessWhale is a web-based Twitter, Facebook and LinkedIn client written in PHP, MySQL and JavaScript. It’s a multi-column client that will work just the same in any browser – even IE6. (And as far as I know it’s unique in that respect.) You can also use it while on networks that block twitter.com. It’s free to use by anyone, has no advertising, and source code is available right here on GitHub under the BSD licence.
+SuccessWhale is a web-based Twitter, Facebook and LinkedIn client for the SuccessWhale API, written in JavaScript using Backbone.js. It’s a multi-column client that can merge and display feeds from several social networks however you like. It’s free to use by anyone, has no advertising, and source code is available right here on GitHub under the BSD licence.
 
 Visit http://successwhale.com to try it out!
 
@@ -22,7 +22,7 @@ Screenshot
 Status
 ------
 
-SuccessWhale is complete, released software.  Its latest stable version is 2.0.2, and work is underway on the 2.1 branch.
+SuccessWhale is complete, released software.  Its latest stable version is 2.0.2, and a semi-stable 2.1 branch also exists. Work is underway on version 3, which will bring massive improvements.
 
 http://successwhale.com runs v2.0.2.
 http://test.successwhale.com runs v2.1.1.
@@ -32,7 +32,7 @@ It’s used by around 80 people — including myself — as their main Twitter a
 Libraries
 ---------
 
-SuccessWhale depends on many libraries, including [twitteroauth](http://github.com/abraham/twitteroauth), the [Facebook PHP SDK](https://github.com/facebook/php-sdk), [Php dotenv](https://github.com/vlucas/phpdotenv), [jQuery](http://jquery.com/), the [jQuery Form Plugin](http://jquery.malsup.com/form/), the [jQuery BlockUI Plugin](http://jquery.malsup.com/block/), the [jQuery Impromptu Plugin](http://trentrichardson.com/Impromptu/), the [jQuery Force Redraw Plugin](http://plugins.jquery.com/project/force_redraw), the [jQuery breakly Plugin](http://plugins.jquery.com/project/Breakly), the [jQuery "put cursor at end" Plugin](http://plugins.jquery.com/project/PutCursorAtEnd), and the [PHP Simple HTML DOM Parser](http://simplehtmldom.sourceforge.net/). (Certain parts of the SuccessWhale download are thus licenced under the MIT licence, which is compatible with the BSD licence that SuccessWhale itself uses.)
+TBD
 
 Thanks to...
 ------------
