@@ -26,6 +26,11 @@ get '/' do
   send_file File.join(settings.public_folder, 'index.html')
 end
 
+# Serve login page
+get '/login' do
+  send_file File.join(settings.public_folder, 'login.html')
+end
+
 # API proxy
 get '/apiproxy/*' do |path|
   uri = URI.parse("#{API_SERVER}/#{path}")
