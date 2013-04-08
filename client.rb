@@ -10,16 +10,9 @@ require 'rubygems'
 require 'bundler/setup'
 require 'unicorn'
 require 'sinatra'
-require 'rack/throttle'
 require 'net/http'
 
 API_SERVER = 'http://api.successwhale.com/v3'
-
-# Throttle clients to max. 1000 requests per hour
-use Rack::Throttle::Hourly,   :max => 1000
-
-# Enable sessions so that we can store the user's authentication in a cookie
-enable :sessions
 
 # Serve default page
 get '/' do
