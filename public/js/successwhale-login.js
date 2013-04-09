@@ -18,8 +18,7 @@ $('#login').submit(function() {
   var data = ko.toJSON(viewModel);
   var jqxhr = $.post("/apiproxy/authenticate", {username: viewModel.username(), password: viewModel.password()})
   .done(function(returnedData) {
-    createCookie('sw_uid',returnedData.sw_uid,COOKIE_VALIDITY_DAYS);
-    createCookie('secret',returnedData.secret,COOKIE_VALIDITY_DAYS);
+    createCookie('token',returnedData.sw_uid,COOKIE_VALIDITY_DAYS);
     window.location = '/'
   })
   .fail(function(returnedData) {
