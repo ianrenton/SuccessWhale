@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `facebook_users` (
   `uid` varchar(80) NOT NULL,
   `expires` varchar(80) NOT NULL,
   `secret` varchar(80) NOT NULL,
-  `access_token` varchar(120) NOT NULL,
+  `access_token` varchar(500) NOT NULL,
   `sig` varchar(80) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
