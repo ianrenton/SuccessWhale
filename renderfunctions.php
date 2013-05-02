@@ -195,7 +195,7 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 			$commentCount = 0;
 			$likeCount = 0;
 			if (isset($data['comments'])) {
-				$commentCount = $data['comments']['count'];
+				$commentCount = count($data['comments']['data']);
 			}
 			if (isset($data['likes'])) {
 				$likeCount = $data['likes']['count'];
