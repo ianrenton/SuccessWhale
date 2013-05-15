@@ -10,7 +10,14 @@ if (TWITTER_ENABLED) {
     // If the oauth_token is old log out and try again.  This probably never happens.
     if (isset($_REQUEST['oauth_token']) && $_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
       $_SESSION['oauth_status'] = 'oldtoken';
-      header('Location: ../clearsessions.php');
+      if (DEBUG) {
+        echo("Request from Twitter was:<br>");
+        var_dump($_REQUEST);
+        echo("This is an old token, and something has gone horribly wrong.");
+        die();
+    } else {
+        header('Location: ../clearsessions.php');
+    }
     }
 
     // Create TwitterOAuth object with app key/secret and token key/secret from default phase
@@ -53,7 +60,7 @@ if (TWITTER_ENABLED) {
             logInUser($row['sw_uid']);
         }
         
-        // The Facebook account is now up-to-date in the database and the user
+        // The Twitter account is now up-to-date in the database and the user
         // is logged in, so head back to index.php.
         header('Location: ../index.php');
         
