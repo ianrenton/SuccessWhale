@@ -135,8 +135,8 @@ if (isset($_GET['column'])) {
                     // Fix lists for API v1.1
                     if (preg_match("/^([\w-]+)\/lists\/([\w-]+)\/statuses$/", $url, $matches)) {
                         $url = "lists/statuses";
-                        $paramArray['owner_screen_name'] = matches[1];
-                        $paramArray['slug'] = matches[2];
+                        $paramArray['owner_screen_name'] = $matches[1];
+                        $paramArray['slug'] = $matches[2];
                     }
 
 	                $data = $twitter->get($url, $paramArray);
