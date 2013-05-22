@@ -202,7 +202,7 @@ foreach ($twitters as $name => $twitter) {
     $columnOptions["twitter:" . $name . ":direct_messages"] = "DMs Received";
     $columnOptions["twitter:" . $name . ":direct_messages/sent"] = "DMs Sent";
     // Twitter lists
-    $listsFull = $twitter->get($name . '/lists', array());
+    $listsFull = $twitter->get('lists/list', array());
     $lists = $listsFull["lists"];
     for ($i=0; $i<count($lists); $i++) {
         $columnOptions["twitter:" . $name . ":" . $name . '/lists/' . $lists[$i]["slug"] . '/statuses'] = $lists[$i]["name"];
