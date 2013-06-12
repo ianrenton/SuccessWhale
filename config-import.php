@@ -11,7 +11,7 @@
 require_once('libraries/Dotenv.php');
 
 // If .env exists, load from it
-if(file_exists("./.env")) {
+if(file_exists(__DIR__."/.env")) {
   Dotenv::load(__DIR__);
 }
 
