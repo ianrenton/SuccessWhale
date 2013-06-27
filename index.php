@@ -170,7 +170,7 @@ $columnOptions[$mnString] = "Home Feeds & Inboxes";
 // Combined: M&N
 $mnString = "";
 foreach ($twitters as $name => $twitter) {
-    $mnString .= "twitter:" . $name . ":statuses/mentions|";
+    $mnString .= "twitter:" . $name . ":statuses/mentions_timeline|";
 }
 foreach ($facebooks as $name => $facebook) {
     $mnString .= "facebook:" . $name . ":notifications|";
@@ -179,7 +179,7 @@ $columnOptions[$mnString] = "Mentions & Notifications";
 // Combined: M&N&me
 $mnString = "";
 foreach ($twitters as $name => $twitter) {
-    $mnString .= "twitter:" . $name . ":statuses/mentions|";
+    $mnString .= "twitter:" . $name . ":statuses/mentions_timeline|";
     $mnString .= "twitter:" . $name . ":statuses/user_timeline|";
 }
 foreach ($facebooks as $name => $facebook) {
@@ -196,8 +196,8 @@ foreach ($twitters as $name => $twitter) {
     $columnOptions["twitter:" . $name . ":statuses/friends_timeline"] = "Friends Only";
     $columnOptions["twitter:" . $name . ":statuses/user_timeline"] = "My Tweets";
     $columnOptions["twitter:" . $name . ":statuses/public_timeline"] = "All Tweets";
-    $columnOptions["twitter:" . $name . ":statuses/mentions"] = "Mentions";
-    $columnOptions["twitter:" . $name . ":statuses/mentions|twitter:" . $name . ":statuses/user_timeline"] = "Mentions & My Tweets";
+    $columnOptions["twitter:" . $name . ":statuses/mentions_timeline"] = "Mentions";
+    $columnOptions["twitter:" . $name . ":statuses/mentions_timeline|twitter:" . $name . ":statuses/user_timeline"] = "Mentions & My Tweets";
     $columnOptions["twitter:" . $name . ":direct_messages|twitter:" . $name . ":direct_messages/sent"] = "DMs Sent & Received";
     $columnOptions["twitter:" . $name . ":direct_messages"] = "DMs Received";
     $columnOptions["twitter:" . $name . ":direct_messages/sent"] = "DMs Sent";
