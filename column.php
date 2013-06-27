@@ -121,7 +121,7 @@ if (isset($_GET['column'])) {
 	            $listStub = strtolower(str_replace(" ", "-", $matches[2]));
 	            $url = $matches[1] . "/lists/" . $listStub . "/statuses";
 	        } else {
-	            // Doesn't match, assume it's a real URL like "statuses/mentions".
+	            // Doesn't match, assume it's a real URL like "statuses/mentions_timeline".
 	            $url = $name;
 	        }
 	
@@ -133,6 +133,10 @@ if (isset($_GET['column'])) {
                         $url = "lists/statuses";
                         $paramArray['owner_screen_name'] = $matches[1];
                         $paramArray['slug'] = $matches[2];
+                    }
+                    // Fix mentions timeline for API v1.1
+                    if ($url == "statuses/mentions") {
+                        $url = "statuses/mentions_timeline";
                     }
                     
 	                $data = $twitter->get($url, $paramArray);
