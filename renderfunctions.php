@@ -198,7 +198,7 @@ function generateFBStatusItem($data, $isNotifications, $isComment, $thisUser, $b
 				$commentCount = count($data['comments']['data']);
 			}
 			if (isset($data['likes'])) {
-				$likeCount = $data['likes']['count'];
+				$likeCount = count($data['likes']['data']);
 			}
 			$commentsLikes = '<br/><span class="convolikearea"><span style="display:inline-block;"><a href="convo.php?service=facebook&thisUser=' . $thisUser . '&status=' . $data['id'] . '" class="convobutton"><img src="images/convo.png" alt="Comments" title="Comments">' . $commentCount . '</a></span> <span style="display:inline-block;"><a class="likebutton" href="actions.php?likeID=' . $data['id'] . '&thisUser=' . $thisUser . '"><img src="images/like.png" alt="Likes" title="Likes">' . $likeCount . '</a></span></span>';
 		}
