@@ -5,6 +5,14 @@ function SWUserViewModel() {
   this.columns = ko.observableArray();
 }
 
+// Checks the user is logged in (via a cookie) - if not, punts them
+// to the login page
+function checkLoggedIn() {
+  if (!readCookie('token')) {
+    window.location = '/login';
+  }
+}
+
 // Get the user's display settings
 function getDisplaySettings() {
   var jqxhr = $.get("/apiproxy/displaysettings", {token: readCookie('token')})
@@ -45,6 +53,7 @@ viewModel = new SWUserViewModel();
 ko.applyBindings(viewModel);
 
 // Automatic stuff on page load
+checkLoggedIn();
 getDisplaySettings();
 displayPostToAccounts();
 displayColumns();

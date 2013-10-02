@@ -8,9 +8,13 @@ function SWUserViewModel() {
   this.errormessage = ko.observable("");
 }
 
-// Activate knockout.js
-viewModel = new SWUserViewModel();
-ko.applyBindings(viewModel);
+// Checks the user is not logged in (via a cookie) - if they are, punts them
+// to the main page as they do not need to log in again
+function checkLoggedOut() {
+  if (readCookie('token')) {
+    window.location = '/';
+  }
+}
 
 // jQuery bind to Submit button
 // Authenticates, sets cookies and forwards or displays error message as appropriate
@@ -26,3 +30,10 @@ $('#login').submit(function() {
   });
   return false;
 });
+
+// Activate knockout.js
+viewModel = new SWUserViewModel();
+ko.applyBindings(viewModel);
+
+// Automatic stuff on page load
+checkLoggedOut();
