@@ -18,11 +18,11 @@ $('#login').submit(function() {
   var data = ko.toJSON(viewModel);
   var jqxhr = $.post("/apiproxy/authenticate", {username: viewModel.username(), password: viewModel.password()})
   .done(function(returnedData) {
-    createCookie('token',returnedData.sw_uid,COOKIE_VALIDITY_DAYS);
-    window.location = '/'
+    createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
+    window.location = '/';
   })
   .fail(function(returnedData) {
     viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
-  })
+  });
   return false;
 });

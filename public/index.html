@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>SuccessWhale</title>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <div id="header">
+    <form id="postform">
+      <input type="text" id="postentry"/>
+      <div id="accountselector" data-bind="foreach: postToAccounts">
+        <input type="checkbox" data-bind="name: service + '-' + uid, checked: enabled"/>
+        <span data-bind="text: service"></span>
+        <span data-bind="text: username"></span>
+      </div>
+    </form>
+  </div>
+  <div id="columns" data-bind="foreach: columns">
+    <div data-bind="name: fullpath, text: title, style: { width: 100/$parent.colsPerScreen() + '%' }" class="column"></div>
+  </div>
+    
+  <script src="js/libs/cookies.js"></script>
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/knockout-2.2.1.js"></script>
+  <script src="js/successwhale.js"></script>
+
+</body>
+</html>
