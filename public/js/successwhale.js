@@ -5,6 +5,10 @@ function SWUserViewModel() {
   this.columns = ko.observableArray();
 }
 
+// Activate knockout.js
+viewModel = new SWUserViewModel();
+ko.applyBindings(viewModel);
+
 // Checks the user is logged in (via a cookie) - if not, punts them
 // to the login page
 function checkLoggedIn() {
@@ -13,6 +17,26 @@ function checkLoggedIn() {
   }
 }
 
+// Load feed for a single column
+function loadFeedForColumn(j) {
+  var jqxhr = $.get("/apiproxy/feed", {sources: viewModel.columns()[j].fullpath, token: readCookie('token')})
+    .done(function(returnedData) {
+      viewModel.columns()[j].items.removeAll();
+      viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items); 
+    })
+    .fail(function(returnedData) {
+      alert("Failed to fetch column");
+    });
+}
+
+// Fetch and display column content
+function refreshColumns() {
+  var j = 0;
+  for (; j < viewModel.columns().length; j++) {
+    loadFeedForColumn(j);
+  }
+} 
+
 // Get the user's display settings
 function getDisplaySettings() {
   var jqxhr = $.get("/apiproxy/displaysettings", {token: readCookie('token')})
@@ -20,7 +44,7 @@ function getDisplaySettings() {
       viewModel.colsPerScreen(returnedData.colsperscreen);
     })
     .fail(function(returnedData) {
-      alert(returnedData.responseText.error);
+      alert("Failed to fetch display settings");
     });
 }
 
@@ -31,29 +55,41 @@ function displayPostToAccounts() {
       viewModel.postToAccounts.push.apply(viewModel.postToAccounts, returnedData.posttoaccounts);
     })
     .fail(function(returnedData) {
-      alert(returnedData.responseText.error);
+      alert("Failed to fetch account list");
     });
 }
 
-// Fetch and display column info
+// Fetch and display columns
 function displayColumns() {
   var jqxhr = $.get("/apiproxy/columns", {token: readCookie('token')})
     .done(function(returnedData) {
-      viewModel.columns.push.apply(viewModel.columns, returnedData.columns);
+      var cols = returnedData.columns;
+      
+      // Add a dummy observableArray to hold items later
+      var i = 0;
+      for (; i<cols.length; i++) {
+        cols[i].items = ko.observableArray();
+      }
+      
+      // Update the view model
+      viewModel.columns.push.apply(viewModel.columns, cols);
+      
+      // Refresh all columns to pull in items
+      refreshColumns();
     })
     .fail(function(returnedData) {
-      alert(returnedData.responseText.error);
+      alert("Failed to fetch column list");
     });
 }
 
-
-
-// Activate knockout.js
-viewModel = new SWUserViewModel();
-ko.applyBindings(viewModel);
 
 // Automatic stuff on page load
 checkLoggedIn();
 getDisplaySettings();
 displayPostToAccounts();
 displayColumns();
+
+// Focus post entry box
+document.getElementById('postentry').focus();
+// Refresh every 5 minutes
+setInterval( function() { refreshColumns(); }, 300000);

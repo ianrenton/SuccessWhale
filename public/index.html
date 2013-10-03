@@ -18,7 +18,15 @@
     </form>
   </div>
   <div id="columns" data-bind="foreach: columns">
-    <div data-bind="name: fullpath, text: title, style: { width: 100/$parent.colsPerScreen() + '%' }" class="column"></div>
+    <div data-bind="name: fullpath, style: { width: 100/$parent.colsPerScreen() + '%' }" class="column">
+      <h4 data-bind="text: title"></h4>
+      <!-- ko foreach: items -->
+        <div class="item">
+          <div class="item-text" data-bind="text: content.text"></div>
+          <div class="item-fromuser" data-bind="text: content.fromuser"></div>
+        </div>
+      <!-- /ko -->
+    </div>
   </div>
     
   <script src="js/libs/cookies.js"></script>
