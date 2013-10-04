@@ -6,10 +6,6 @@ html, body {
  width: 100%;
 }
 
-body {
-  display: table;
-}
-
 div#header {
   height: 4em;
   width: 100%;
