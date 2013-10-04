@@ -17,6 +17,25 @@ function checkLoggedIn() {
   }
 }
 
+// Turn an item content into proper HTML
+function makeHTML(content) {
+  var html="";
+  var i=0;
+  var startIndex = 0;
+  var endIndex = 0;
+  for (;i<content.links.length; i++)
+  {
+    if (typeof content.links[i].indices !== 'undefined') {
+      startIndex = content.links[i].indices[0];
+      html = html + content.text.substring(endIndex, startIndex);
+      endIndex = content.links[i].indices[1];
+      html = html + '<a href="' + content.links[i].url + '">' + content.links[i].title + '</a>';
+    }
+  }
+  html = html + content.text.substring(endIndex, content.text.length);
+  return html;
+}
+
 // Load feed for a single column
 function loadFeedForColumn(j) {
   var jqxhr = $.get("/apiproxy/feed", {sources: viewModel.columns()[j].fullpath, token: readCookie('token')})

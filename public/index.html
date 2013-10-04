@@ -17,12 +17,12 @@
       </div>
     </form>
   </div>
-  <div id="columns" data-bind="foreach: columns, style: { width: 100*(columns.length/colsPerScreen) + '%' }">
-    <div data-bind="name: fullpath, style: { width: 100/$parent.colsPerScreen() + '%' }" class="column">
-      <h4 data-bind="text: title"></h4>
+  <div id="columns" data-bind="foreach: columns">
+    <div data-bind="name: fullpath, style: { width: 95/$parent.colsPerScreen() + '%' }" class="column">
+      <h4 class="columnheading" data-bind="text: title"></h4>
       <!-- ko foreach: items -->
         <div class="item">
-          <div class="item-text" data-bind="text: content.text"></div>
+          <div class="item-text" data-bind="html: makeHTML(content)"></div>
           <div class="item-fromuser" data-bind="text: content.fromuser"></div>
         </div>
       <!-- /ko -->
