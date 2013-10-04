@@ -11,15 +11,17 @@ body {
 }
 
 div#header {
-  background-color: #ffdddd;
   height: 4em;
-  display: table-row;
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  background-color: #ffdddd;
 }
 
 div#columns {
-  overflow-y: scroll;
+  position: relative;
+  top: 4em;
   overflow-x: auto;
-  display: table-row;
   background-color: #ddddff;
 }
 
@@ -27,5 +29,7 @@ div.column {
   float: left;
   display: inline-block;
   vertical-align:top;
+  overflow: hidden;
+  min-width: 300px;
   background-color: #ddffdd;
 }

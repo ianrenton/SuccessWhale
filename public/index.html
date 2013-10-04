@@ -17,7 +17,7 @@
       </div>
     </form>
   </div>
-  <div id="columns" data-bind="foreach: columns">
+  <div id="columns" data-bind="foreach: columns, style: { width: 100*(columns.length/colsPerScreen) + '%' }">
     <div data-bind="name: fullpath, style: { width: 100/$parent.colsPerScreen() + '%' }" class="column">
       <h4 data-bind="text: title"></h4>
       <!-- ko foreach: items -->
