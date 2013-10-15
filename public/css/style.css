@@ -2,7 +2,6 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
   background-color: #eeeeee;
 }
 
@@ -88,6 +87,16 @@ div.item-fromuser {
   font-size: 0.6em;
   background-color: #f8f8f8;
   color: #666666;
+}
+
+div.item-fromuser-twitter {
+  background-color: #d1f4ff;
+  color: #333333;
+}
+
+div.item-fromuser-facebook {
+  background-color: #dfe3ee;
+  color: #333333;
 }
 
 img.item-fromuseravatar {
