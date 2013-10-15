@@ -19,7 +19,7 @@ function checkLoggedIn() {
 
 // Turn an item's text into proper HTML
 function makeItemTextHTML(content) {
-  var html="";
+  var html='';
   var i=0;
   var startIndex = 0;
   var endIndex = 0;
@@ -52,16 +52,54 @@ function makeItemTextHTML(content) {
 }
 
 // Turn an item's 'from' structures into proper text
-function makeFromUserText(content) {
-  var html="";
+function makeFromUserText(content, service) {
+  var html='';
   if (content.fromusername) {
     html += content.fromusername;
     if (content.fromuser) {
-      html += " (" + content.fromuser + ")";
+      html += ' (';
+      if (service === 'twitter')
+      {
+        html += '@';
+      }
+      html += content.fromuser + ')';
     }
   }
   else if (content.fromuser) {
     html += content.fromuser;
+  }
+  return html;
+}
+
+// Turn an item's 'from' structures into the URL of the 'from' user's profile
+function makeFromUserLink(content, service) {
+  var url='';
+  if (service === 'twitter') {
+    url = 'http://twitter.com/'+content.fromuser;
+  }
+  else if (service === 'facebook') {
+    url = 'http://facebook.com/'+content.fromuserid;
+  }
+  return url;
+}
+
+// Turn an item's metadata (replies, comments...) structures into proper text
+function makeMetadataText(content) {
+  var html="";
+  if (content.numreplied > 0) {
+    html += content.numreplied + " replies ";
+  }
+  if (content.numretweeted > 0) {
+    html += content.numretweeted + " retweets ";
+  }
+  if (content.numfavourited > 0) {
+    html += content.numfavourited + " favourites ";
+  }
+  if (content.numcomments > 0) {
+    html += content.numcomments + " comments ";
+  }
+  if (content.numlikes > 0) {
+    html += content.numlikes + " likes ";
   }
   return html;
 }

@@ -24,9 +24,10 @@
         <div class="item">
           <div class="item-text" data-bind="html: makeItemTextHTML(content)"></div>
           <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
-            <img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" />
-            <div class="item-fromusername" data-bind="text: makeFromUserText(content)"></div>
+            <a data-bind="attr: { href: makeFromUserLink(content, service) }"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a>
+            <div class="item-fromusername" data-bind="text: makeFromUserText(content, service)"></div>
             <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
+            <div class="item-time" data-bind="html: makeMetadataText(content)"></div>
             <div class="clear"></div>
           </div>
         </div>
