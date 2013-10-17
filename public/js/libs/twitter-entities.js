@@ -27,7 +27,7 @@ function linkify_entities(content) {
               index_map[entry.indices[0]] = [entry.indices[1], function(text) {
                   // If there's a preview, this will be handled separately so just remove the section of the text that refers to it. Otherwise, preserve the text and link it up by appling an A tag.
                   if (typeof entry.preview === 'undefined') {
-                    return "<a href='"+escape(entry.url)+"'>"+text+"</a>";
+                    return "<a href='"+entry.url+"'>"+entry.title+"</a>";
                   }
                   else {
                     return "";
@@ -39,7 +39,7 @@ function linkify_entities(content) {
     // Replace hashtags with properly linked HTML
     if (typeof content.hashtags !== 'undefined') {
       $.each(content.hashtags, function(i,entry) {
-          index_map[entry.indices[0]] = [entry.indices[1], function(text) {return "<a href='http://twitter.com/search?q="+escape("#"+entry.text)+"'>"+entry.text+"</a>";}];
+          index_map[entry.indices[0]] = [entry.indices[1], function(text) {return "<a href='http://twitter.com/search?q="+escape("#"+entry.text)+"'>#"+entry.text+"</a>";}];
       });
     }
     
