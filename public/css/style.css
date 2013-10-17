@@ -104,6 +104,18 @@ img.item-fromuseravatar {
   margin-right: 0.5em;
 }
 
+div#errorbox {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  z-index: 20;
+  padding: 0.25em;
+  background: #ffbbbb;
+  color: black;
+  border: 1px solid #ff0000;
+  display: none;
+}
+
 div.clear {
   clear:both;
 }

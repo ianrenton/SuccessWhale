@@ -17,6 +17,16 @@ function checkLoggedIn() {
   }
 }
 
+// Shows an error box for a set time, with the supplied html as content
+function showError(html) {
+  $('#errorbox').html(html);
+  $('#errorbox').show('slow', function hideLater() {
+    setTimeout(function() {
+      $('#errorbox').hide('slow');
+    }, 5000);
+  });
+}
+
 // Turn an item's text into proper HTML
 function makeItemTextHTML(content) {
   return linkify_entities(content);
@@ -56,34 +66,34 @@ function makeFromUserLink(content, service) {
 
 // Turn an item's metadata (replies, comments...) structures into proper text
 function makeMetadataText(content) {
-  var html="";
+  var html='';
   if (content.numreplied > 0) {
-    html += content.numreplied + " replies ";
+    html += content.numreplied + ' replies ';
   }
   if (content.numretweeted > 0) {
-    html += content.numretweeted + " retweets ";
+    html += content.numretweeted + ' retweets ';
   }
   if (content.numfavourited > 0) {
-    html += content.numfavourited + " favourites ";
+    html += content.numfavourited + ' favourites ';
   }
   if (content.numcomments > 0) {
-    html += content.numcomments + " comments ";
+    html += content.numcomments + ' comments ';
   }
   if (content.numlikes > 0) {
-    html += content.numlikes + " likes ";
+    html += content.numlikes + ' likes ';
   }
   return html;
 }
 
 // Load feed for a single column
 function loadFeedForColumn(j) {
-  var jqxhr = $.get("/apiproxy/feed", {sources: viewModel.columns()[j].fullpath, token: readCookie('token')})
+  var jqxhr = $.get('/apiproxy/feed', {sources: viewModel.columns()[j].fullpath, token: readCookie('token')})
     .done(function(returnedData) {
       viewModel.columns()[j].items.removeAll();
       viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items); 
     })
     .fail(function(returnedData) {
-      alert("Failed to fetch column");
+      showError('Failed to fetch column "' + viewModel.columns()[j].title + '"');
     });
 }
 
@@ -97,29 +107,29 @@ function refreshColumns() {
 
 // Get the user's display settings
 function getDisplaySettings() {
-  var jqxhr = $.get("/apiproxy/displaysettings", {token: readCookie('token')})
+  var jqxhr = $.get('/apiproxy/displaysettings', {token: readCookie('token')})
     .done(function(returnedData) {
       viewModel.colsPerScreen(returnedData.colsperscreen);
     })
     .fail(function(returnedData) {
-      alert("Failed to fetch display settings");
+      showError('Failed to fetch display settings');
     });
 }
 
 // Fetch and display the list of accounts to post to
 function displayPostToAccounts() {
-  var jqxhr = $.get("/apiproxy/posttoaccounts", {token: readCookie('token')})
+  var jqxhr = $.get('/apiproxy/posttoaccounts', {token: readCookie('token')})
     .done(function(returnedData) {
       viewModel.postToAccounts.push.apply(viewModel.postToAccounts, returnedData.posttoaccounts);
     })
     .fail(function(returnedData) {
-      alert("Failed to fetch account list");
+      showError('Failed to fetch account list');
     });
 }
 
 // Fetch and display columns
 function displayColumns() {
-  var jqxhr = $.get("/apiproxy/columns", {token: readCookie('token')})
+  var jqxhr = $.get('/apiproxy/columns', {token: readCookie('token')})
     .done(function(returnedData) {
       var cols = returnedData.columns;
       
@@ -136,7 +146,7 @@ function displayColumns() {
       refreshColumns();
     })
     .fail(function(returnedData) {
-      alert("Failed to fetch column list");
+      showError('Failed to fetch column list');
     });
 }
 
