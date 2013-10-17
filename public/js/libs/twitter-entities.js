@@ -72,6 +72,17 @@ function linkify_entities(content) {
     if (i > last_i) {
         result += content.text.substring(last_i, i);
     }
+    
+    // Add a "source" link if we just have a single link with no indices for replacing text
+    if ((typeof content.links !== 'undefined') && (content.links.length===1) && (typeof content.links[0].indices === 'undefined')) {
+      result += '<br/><a href="' + content.links[0].url + '">';
+      if (content.links[0].title !== null) {
+        result += content.links[0].title;
+      } else {
+        result += '(source)';
+      }
+      result += '</a>';
+    }
   
     // Add media previews
     for (i=0; i<content.links.length; i++)
