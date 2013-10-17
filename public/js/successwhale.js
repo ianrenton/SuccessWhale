@@ -19,36 +19,7 @@ function checkLoggedIn() {
 
 // Turn an item's text into proper HTML
 function makeItemTextHTML(content) {
-  var html='';
-  var i=0;
-  var startIndex = 0;
-  var endIndex = 0;
-  
-  // Replace t.co links with properly linked HTML
-  for (;i<content.links.length; i++)
-  {
-    if (typeof content.links[i].indices !== 'undefined') {
-      startIndex = content.links[i].indices[0];
-      html = html + content.text.substring(endIndex, startIndex);
-      endIndex = content.links[i].indices[1];
-      // If there's a preview, this will be handled separately so just remove the section of the text that refers to it. Otherwise, preserve the text and link it up by appling an A tag.
-      if (typeof content.links[i].preview === 'undefined')
-      {
-        html += '<a href="' + content.links[i].url + '">' + content.links[i].title + '</a>';
-      }
-    }
-  }
-  html = html + content.text.substring(endIndex, content.text.length);
-  
-  // Add media previews
-  for (i=0; i<content.links.length; i++)
-  {
-    if (typeof content.links[i].preview !== 'undefined') {
-      html += '<div class="item-mediapreview"><a href="' + content.links[i].url + '"><img class="item-mediapreview" src="' + content.links[i].preview + '" /></a></div>';
-    }
-  }
-  
-  return html;
+  return linkify_entities(content);
 }
 
 // Turn an item's 'from' structures into proper text
