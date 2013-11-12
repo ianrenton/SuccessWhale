@@ -5,6 +5,7 @@
   <title>SuccessWhale</title>
   <link rel="stylesheet" href="css/normalize.css"/>
   <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/jquery.gpopover.css"/>
 </head>
 <body>
   <div id="errorbox"></div>
@@ -12,13 +13,16 @@
     <form id="postform">
       <input type="text" id="postentry"/>
       <span id="postbuttonspan"><a href="#" onclick="post();">Post</a></span>
-      <span id="postbuttondropdownspan"><a id="postbuttondropdown" href="#" onclick="toggleAccountSelector();">&#x25BC;</a></span>
-      <div>
-        <span id="accountselector" data-bind="foreach: postToAccounts">
-          <input type="checkbox" data-bind="name: service + '-' + uid, checked: enabled"/>
-          <img data-bind="attr: { src: '/img/icons/'+service+'.png' }"/>&nbsp;
-          <span data-bind="text: username"></span>
-         </span>
+      <span id="postbuttondropdownspan"><a id="postbuttondropdown" data-popover="accountselector" href="#">&#x25BC;</a></span>
+      <div id="accountselector" class="gpopover">
+        <p>Post to:</p>
+        <ul data-bind="foreach: postToAccounts">
+          <li>
+            <input type="checkbox" data-bind="name: service + '-' + uid, checked: enabled"/>
+            <img data-bind="attr: { src: '/img/icons/'+service+'.png' }"/>&nbsp;
+            <span data-bind="text: username"></span>
+          </li>
+        </ul>
       </div>
     </form>
   </div>
@@ -45,6 +49,7 @@
   <script src="js/libs/knockout-2.2.1.js"></script>
   <script src="js/libs/moment.min.js"></script>
   <script src="js/libs/twitter-entities.js"></script>
+  <script src="js/libs/jquery.gpopover.js"></script>
   <script src="js/successwhale.js"></script>
 
 </body>

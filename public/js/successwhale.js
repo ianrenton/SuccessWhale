@@ -32,17 +32,6 @@ function showError(html, returnedData) {
   });
 }
 
-// Show and hide the account selector div
-function toggleAccountSelector() {
-  // Change arrow direction on the dropdown button first
-  if ($('#accountselector').is(":visible")) {
-    $('#postbuttondropdown').html('&#x25BC;');
-  } else {
-    $('#postbuttondropdown').html('&#x25B2;');
-  }
-  $('#accountselector').toggle('fast');
-}
-
 // Turn an item's text into proper HTML
 function makeItemTextHTML(content) {
   return linkify_entities(content);
@@ -173,6 +162,8 @@ getDisplaySettings();
 displayPostToAccounts();
 displayColumns();
 
+// Bind gpopover items
+$('#postbuttondropdown').gpopover();
 // Focus post entry box
 document.getElementById('postentry').focus();
 // Refresh every 5 minutes
