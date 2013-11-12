@@ -11,10 +11,14 @@
   <div id="header">
     <form id="postform">
       <input type="text" id="postentry"/>
-      <div id="accountselector" data-bind="foreach: postToAccounts">
-        <input type="checkbox" data-bind="name: service + '-' + uid, checked: enabled"/>
-        <span data-bind="text: service"></span>
-        <span data-bind="text: username"></span>
+      <span id="postbuttonspan"><a href="#" onclick="post();">Post</a></span>
+      <span id="postbuttondropdownspan"><a id="postbuttondropdown" href="#" onclick="toggleAccountSelector();">&#x25BC;</a></span>
+      <div>
+        <span id="accountselector" data-bind="foreach: postToAccounts">
+          <input type="checkbox" data-bind="name: service + '-' + uid, checked: enabled"/>
+          <img data-bind="attr: { src: '/img/icons/'+service+'.png' }"/>&nbsp;
+          <span data-bind="text: username"></span>
+         </span>
       </div>
     </form>
   </div>

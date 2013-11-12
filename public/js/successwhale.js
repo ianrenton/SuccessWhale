@@ -17,14 +17,30 @@ function checkLoggedIn() {
   }
 }
 
-// Shows an error box for a set time, with the supplied html as content
-function showError(html) {
+// Shows an error box for a set time, with the supplied HTML and optionally also
+// a SuccessWhale API error message extracted from the returnedData of an unsuccessful
+//  request
+function showError(html, returnedData) {
+  if (typeof(returnedData) != "undefined") {
+    html += "<br/>The SuccessWhale API reported the following error:<br/>" + JSON.parse(returnedData.responseText).error
+  }
   $('#errorbox').html(html);
   $('#errorbox').show('slow', function hideLater() {
     setTimeout(function() {
       $('#errorbox').hide('slow');
     }, 5000);
   });
+}
+
+// Show and hide the account selector div
+function toggleAccountSelector() {
+  // Change arrow direction on the dropdown button first
+  if ($('#accountselector').is(":visible")) {
+    $('#postbuttondropdown').html('&#x25BC;');
+  } else {
+    $('#postbuttondropdown').html('&#x25B2;');
+  }
+  $('#accountselector').toggle('fast');
 }
 
 // Turn an item's text into proper HTML
@@ -93,7 +109,7 @@ function loadFeedForColumn(j) {
       viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items); 
     })
     .fail(function(returnedData) {
-      showError('Failed to fetch column "' + viewModel.columns()[j].title + '"');
+      showError('Failed to fetch column "' + viewModel.columns()[j].title + '"', returnedData);
     });
 }
 
@@ -112,7 +128,7 @@ function getDisplaySettings() {
       viewModel.colsPerScreen(returnedData.colsperscreen);
     })
     .fail(function(returnedData) {
-      showError('Failed to fetch display settings');
+      showError('Failed to fetch display settings', returnedData);
     });
 }
 
@@ -123,7 +139,7 @@ function displayPostToAccounts() {
       viewModel.postToAccounts.push.apply(viewModel.postToAccounts, returnedData.posttoaccounts);
     })
     .fail(function(returnedData) {
-      showError('Failed to fetch account list');
+      showError('Failed to fetch account list', returnedData);
     });
 }
 
@@ -146,7 +162,7 @@ function displayColumns() {
       refreshColumns();
     })
     .fail(function(returnedData) {
-      showError('Failed to fetch column list');
+      showError('Failed to fetch column list', returnedData);
     });
 }
 
