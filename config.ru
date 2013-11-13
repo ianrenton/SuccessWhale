@@ -1,8 +1,24 @@
+
 # encoding: UTF-8
-require './client'
+use Rack::Static,
+  :urls => ["/img", "/js", "/css"],
+  :root => "public"
+  
+headers = {
+  'Content-Type'  => 'text/html',
+  'Cache-Control' => 'public, max-age=86400'
+}
 
-use Rack::ShowExceptions
+run lambda { |env|
+  [
+    200, headers, File.open('public/index.html', File::RDONLY)
+  ]
+}
 
-set :protection, :except => [:http_origin]
-
-run Sinatra::Application
+map "/login" do
+  run lambda { |env|
+  [
+    200, headers, File.open('public/login.html', File::RDONLY)
+  ]
+}
+end

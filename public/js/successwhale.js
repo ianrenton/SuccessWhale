@@ -1,3 +1,6 @@
+// Globals
+var API_SERVER = 'http://api.successwhale.com/v3';
+
 // Viewmodel for SW
 function SWUserViewModel() {
   this.colsPerScreen = ko.observable();
@@ -22,7 +25,7 @@ function checkLoggedIn() {
 //  request
 function showError(html, returnedData) {
   if (typeof(returnedData) != "undefined") {
-    html += "<br/>The SuccessWhale API reported the following error:<br/>" + JSON.parse(returnedData.responseText).error
+    html += "<br/>The SuccessWhale API reported the following error:<br/>" + returnedData.responseText//JSON.parse(returnedData.responseText).error
   }
   $('#errorbox').html(html);
   $('#errorbox').show('slow', function hideLater() {
@@ -92,7 +95,7 @@ function makeMetadataText(content) {
 
 // Load feed for a single column
 function loadFeedForColumn(j) {
-  var jqxhr = $.get('/apiproxy/feed', {sources: viewModel.columns()[j].fullpath, token: readCookie('token')})
+  var jqxhr = $.get(API_SERVER+'/feed', {sources: viewModel.columns()[j].fullpath, token: readCookie('token')})
     .done(function(returnedData) {
       viewModel.columns()[j].items.removeAll();
       viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items); 
@@ -112,7 +115,7 @@ function refreshColumns() {
 
 // Get the user's display settings
 function getDisplaySettings() {
-  var jqxhr = $.get('/apiproxy/displaysettings', {token: readCookie('token')})
+  var jqxhr = $.get(API_SERVER+'/displaysettings', {token: readCookie('token')})
     .done(function(returnedData) {
       viewModel.colsPerScreen(returnedData.colsperscreen);
     })
@@ -123,7 +126,7 @@ function getDisplaySettings() {
 
 // Fetch and display the list of accounts to post to
 function displayPostToAccounts() {
-  var jqxhr = $.get('/apiproxy/posttoaccounts', {token: readCookie('token')})
+  var jqxhr = $.get(API_SERVER+'/posttoaccounts', {token: readCookie('token')})
     .done(function(returnedData) {
       viewModel.postToAccounts.push.apply(viewModel.postToAccounts, returnedData.posttoaccounts);
     })
@@ -134,7 +137,7 @@ function displayPostToAccounts() {
 
 // Fetch and display columns
 function displayColumns() {
-  var jqxhr = $.get('/apiproxy/columns', {token: readCookie('token')})
+  var jqxhr = $.get(API_SERVER+'/columns', {token: readCookie('token')})
     .done(function(returnedData) {
       var cols = returnedData.columns;
       
