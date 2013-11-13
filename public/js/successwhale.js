@@ -165,9 +165,17 @@ getDisplaySettings();
 displayPostToAccounts();
 displayColumns();
 
+// Bind "post item" on button click or textarea Ctrl+Enter
+$('#postentry').keydown(function (e) {
+  if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) { postItem(); }
+});
+$('#postbutton').click(function (e) {
+  postItem();
+});
 // Bind gpopover items
 $('#postbuttondropdown').gpopover();
-// Focus post entry box
-document.getElementById('postentry').focus();
+// Focus and enable autosize on post entry box
+$('#postentry').autosize();
+$('#postentry').focus();
 // Refresh every 5 minutes
 setInterval( function() { refreshColumns(); }, 300000);

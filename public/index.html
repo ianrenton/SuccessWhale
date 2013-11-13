@@ -13,9 +13,9 @@
   <div id="errorbox"></div>
   <div id="header">
     <form id="postform">
-      <input type="text" id="postentry"/>
-      <span id="postbuttonspan"><a href="#" onclick="post();">Post</a></span>
-      <span id="postbuttondropdownspan"><a id="postbuttondropdown" data-popover="accountselector" href="#">&#x25BC;</a></span>
+      <textarea id="postentry" rows="1"></textarea>
+      <span id="postbutton">Post</span>
+      <span id="postbuttondropdown" data-popover="accountselector">&#x25BC;</span>
       <div id="accountselector" class="gpopover">
         <p>Post to:</p>
         <ul data-bind="foreach: postToAccounts">
@@ -53,6 +53,7 @@
   <script src="js/libs/moment.min.js"></script>
   <script src="js/libs/twitter-entities.js"></script>
   <script src="js/libs/jquery.gpopover.js"></script>
+  <script src="js/libs/jquery.autosize.min.js"></script>
   <script src="js/successwhale.js"></script>
 
 </body>

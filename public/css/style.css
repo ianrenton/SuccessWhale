@@ -21,12 +21,12 @@ div#header {
   border-bottom: 1px solid #888888;
 }
 
-input#postentry {
+textarea#postentry {
   margin: 1.1em 0 1em 1em;
-  padding: 0 0.3em;
+  padding: 0.3em 0.3em 0.2em 0.3em;
   width: 70%;
   font-size: 1em;
-  height: 2em;
+  height: 1.5em;
   background-color: white;
   border: 1px solid #6666ff;
   border-right: none;
@@ -40,7 +40,7 @@ input#postentry {
   border-bottom-left-radius: 5px;
 }
 
-span#postbuttonspan {
+span#postbutton {
   margin: 1.1em 0 1em -5px;
   padding: 0 1em;
   display:inline-block;
@@ -56,14 +56,11 @@ span#postbuttonspan {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b5b5b', endColorstr='#070707',GradientType=0 );
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-}
-
-span#postbuttonspan a {
   color: white;
-  text-decoration: none;
+  cursor:default;
 }
 
-span#postbuttondropdownspan {
+span#postbuttondropdown {
   margin: 1.1em 1em 1em -5px;
   padding: 0 0.3em;
   display:inline-block;
@@ -84,11 +81,8 @@ span#postbuttondropdownspan {
   -moz-border-radius-bottomright: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-}
-
-span#postbuttondropdownspan a {
   color: white;
-  text-decoration: none;
+  cursor:default;
 }
 
 div#accountselector {
