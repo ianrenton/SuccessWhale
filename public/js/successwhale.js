@@ -1,5 +1,6 @@
 // Globals
 var API_SERVER = 'http://api.successwhale.com/v3';
+var NARROW_SCREEN_WIDTH = 480;
 
 // Viewmodel for SW
 function SWUserViewModel() {
@@ -117,7 +118,15 @@ function refreshColumns() {
 function getDisplaySettings() {
   var jqxhr = $.get(API_SERVER+'/displaysettings', {token: readCookie('token')})
     .done(function(returnedData) {
-      viewModel.colsPerScreen(returnedData.colsperscreen);
+      // Store the columns-per-screen value for use in rendering, or force it to 1
+      // column per screen and narrow things down if we have a narrow (mobile phone) 
+      // window.
+      if ($(window).width() > NARROW_SCREEN_WIDTH) {
+        viewModel.colsPerScreen(returnedData.colsperscreen);
+      } else {
+        viewModel.colsPerScreen(1);
+        $('#postentry').width('50%');
+      }
     })
     .fail(function(returnedData) {
       showError('Failed to fetch display settings', returnedData);
