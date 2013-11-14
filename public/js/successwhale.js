@@ -1,6 +1,6 @@
 // Globals
 var API_SERVER = 'http://api.successwhale.com/v3';
-var NARROW_SCREEN_WIDTH = 480;
+var NARROW_SCREEN_WIDTH = 600;
 
 // Viewmodel for SW
 function SWUserViewModel() {
