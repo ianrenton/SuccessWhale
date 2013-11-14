@@ -1,3 +1,5 @@
+// Globals
+var API_SERVER = 'http://api.successwhale.com/v3';
 var COOKIE_VALIDITY_DAYS = 365;
 
 // Viewmodel for SW login form
@@ -20,7 +22,7 @@ function checkLoggedOut() {
 // Authenticates, sets cookies and forwards or displays error message as appropriate
 $('#login').submit(function() {
   var data = ko.toJSON(viewModel);
-  var jqxhr = $.post("/apiproxy/authenticate", {username: viewModel.username(), password: viewModel.password()})
+  var jqxhr = $.post(API_SERVER+'/authenticate', {username: viewModel.username(), password: viewModel.password()})
   .done(function(returnedData) {
     createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
     window.location = '/';
