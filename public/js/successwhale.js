@@ -26,7 +26,7 @@ function checkLoggedIn() {
 //  request
 function showError(html, returnedData) {
   if (typeof(returnedData) != "undefined") {
-    html += "<br/>The SuccessWhale API reported the following error:<br/>" + returnedData.responseText//JSON.parse(returnedData.responseText).error
+    html += "<br/>The SuccessWhale API reported the following error:<br/>" + JSON.parse(returnedData.responseText).error
   }
   $('#errorbox').html(html);
   $('#errorbox').show('slow', function hideLater() {
@@ -125,7 +125,6 @@ function getDisplaySettings() {
         viewModel.colsPerScreen(returnedData.colsperscreen);
       } else {
         viewModel.colsPerScreen(1);
-        $('#postentry').width('50%');
       }
     })
     .fail(function(returnedData) {

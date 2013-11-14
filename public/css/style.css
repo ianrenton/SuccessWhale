@@ -40,6 +40,12 @@ textarea#postentry {
   border-bottom-left-radius: 5px;
 }
 
+@media (max-width: 600px) {
+  textarea#postentry {
+    width: 50%;
+  }
+}
+
 span#postbutton {
   margin: 1.1em 0 1em -5px;
   padding: 0 1em;
@@ -108,7 +114,7 @@ div.column {
   white-space: normal;
   min-width: 300px;
   margin: 0;
-  padding: 0.5em;
+  padding: 0.5em 0 0.5em 0.5em;
 }
 
 h4.columnheading {

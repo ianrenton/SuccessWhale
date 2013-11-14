@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
   <title>SuccessWhale</title>
   <link rel="stylesheet" href="css/normalize.css"/>
   <link rel="stylesheet" href="css/style.css"/>
@@ -29,7 +30,7 @@
     </form>
   </div>
   <div id="columns" data-bind="foreach: columns, style: { width: (columns().length/colsPerScreen()*100) + '%'}">
-    <div data-bind="name: fullpath, style: { width: 95/$parent.columns().length + '%' }" class="column">
+    <div data-bind="name: fullpath, style: { width: 100/$parent.columns().length-1 + '%' }" class="column">
       <h4 class="columnheading" data-bind="text: title"></h4>
       <!-- ko foreach: items -->
         <div class="item">
