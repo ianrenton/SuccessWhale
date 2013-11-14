@@ -98,13 +98,14 @@ div#columns {
   position: relative;
   top: 4em;
   overflow-x: auto;
+  white-space: nowrap;
 }
 
 div.column {
-  float: left;
   display: inline-block;
   vertical-align:top;
   overflow: hidden;
+  white-space: normal;
   min-width: 300px;
   margin: 0;
   padding: 0.5em;
