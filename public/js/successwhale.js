@@ -216,8 +216,8 @@ $('#postbutton').click(function (e) {
   postItem();
 });
 // Bind gpopover items
-$('#postbuttondropdown').gpopover();
-$('#attachbutton').gpopover();
+$('#postbuttondropdown').gpopover({preventHide: true});
+$('#attachbutton').gpopover({preventHide: true});
 // Bind other menu buttons
 $('#logoutbutton').click(function (e) {
   eraseCookie('token');
