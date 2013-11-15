@@ -1,5 +1,5 @@
 // Globals
-var API_SERVER = 'http://api.successwhale.com/v3';
+var API_SERVER = 'https://successwhale-api.herokuapp.com/v3';
 var COOKIE_VALIDITY_DAYS = 365;
 
 // Viewmodel for SW login form

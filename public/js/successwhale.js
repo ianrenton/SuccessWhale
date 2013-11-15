@@ -1,5 +1,5 @@
 // Globals
-var API_SERVER = 'http://api.successwhale.com/v3';
+var API_SERVER = 'https://successwhale-api.herokuapp.com/v3';
 var NARROW_SCREEN_WIDTH = 600;
 
 // Viewmodel for SW
