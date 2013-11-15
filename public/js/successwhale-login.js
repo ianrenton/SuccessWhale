@@ -11,10 +11,10 @@ function SWUserViewModel() {
 }
 
 // Checks the user is not logged in (via a cookie) - if they are, punts them
-// to the main page as they do not need to log in again
+// to the main client page as they do not need to log in again
 function checkLoggedOut() {
   if (readCookie('token')) {
-    window.location = '/';
+    window.location = '/client';
   }
 }
 

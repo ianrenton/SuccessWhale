@@ -80,6 +80,7 @@ span#attachbutton {
   background: linear-gradient(to bottom, #5b5b5b 0%,#070707 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b5b5b', endColorstr='#070707',GradientType=0 );
   border: 1px solid black;
+  border-right: none;
   color: white;
   cursor:default;
 }

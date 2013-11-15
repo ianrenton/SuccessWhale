@@ -17,7 +17,7 @@ ko.applyBindings(viewModel);
 // to the login page
 function checkLoggedIn() {
   if (!readCookie('token')) {
-    window.location = '/login';
+    window.location = '/';
   }
 }
 
