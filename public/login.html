@@ -5,19 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
     <title>Log In to SuccessWhale</title>
     <link rel="stylesheet" href="css/normalize.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/style-login.css"/>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
   </head>
 <body>
 
+  <div id="logodiv">
+    <img id="logo" src="img/logo/successwhale.png"/>
+    <h1>Welcome to SuccessWhale!</h1>
+  </div>
+  <div id="intro">
+    <p>SuccessWhale is a multi-column client for Twitter and Facebook that allows you to mix and match feeds however you like!</p>
+  </div>
+  <form id="auth">
+    <div class="title">
+      <h2>Log in with Twitter or Facebook</h2>
+    </div>
+    <div class="content">
+      <p>Start with one account &mdash; you can add others once you're in.</p>
+    </div>
+  </form>
   <form id="login">
-    <p>Username: <input data-bind="value: username" /></p>
-    <p>Password: <input data-bind="value: password" type="password" /></p>
-    <input type="submit" value="Log in" />
+    <div class="title">
+      <h2>Log in with SuccessWhale</h2>
+    </div>
+    <div class="content">
+      <p>Behind a firewall that blocks social networks? If you've created a username and password for your SuccessWhale account, you can enter them here to log in.</p>
+      <p class="userpass">Username: <input data-bind="value: username" class="textbox"/>
+      Password: <input data-bind="value: password" type="password" class="textbox"/>
+      <input type="submit" value="Log in" /></p>
+    </div>
   </form>
 
-  <p>Error: <strong data-bind="text: errormessage"></strong></p>
+  <p><strong data-bind="text: errormessage"></strong></p>
 
   <script src="js/libs/cookies.js"></script>
   <script src="js/libs/jquery-1.9.1.js"></script>

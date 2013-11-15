@@ -1,0 +1,98 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #eeeeee;
+  font-weight: 100;
+}
+
+div#logodiv {
+  width: 20%;
+  margin: 0 auto;
+}
+
+div#logodiv h1 {
+  text-align: center;
+  font-weight: 100;
+  font-size: 2em;
+}
+
+img#logo {
+  width: 100%;
+}
+
+div#intro {
+  width: 40%;
+  margin: 0 auto;
+  font-weight: 300;
+  font-size: 1em;
+}
+
+form#auth {
+  width: 40%;
+  margin: 0 auto 1em auto;
+  padding: 0;
+  background-color: white;
+  border: 1px solid #cccccc;
+}
+
+form#auth div.title {
+  margin: 0;
+  padding: 0.5em;
+  background-color: #dddddd;
+  border-bottom: 1px solid #cccccc;
+}
+
+form#auth div.title h2 {
+  font-weight: 100;
+  margin: 0;
+}
+
+form#auth div.content {
+  margin: 0;
+  padding: 0.5em;
+}
+
+form#login {
+  width: 40%;
+  margin: 0 auto 1em auto;
+  padding: 0;
+  background-color: white;
+  border: 1px solid #cccccc;
+  font-weight: 100;
+}
+
+form#login div.title {
+  margin: 0;
+  padding: 0.5em;
+  background-color: #dddddd;
+  border-bottom: 1px solid #cccccc;
+}
+
+form#login div.title h2 {
+  font-weight: 100;
+  margin: 0;
+}
+
+form#login div.content {
+  margin: 0;
+  padding: 0.5em;
+}
+
+form#login div.content p input.textbox {
+  width: 8em;
+}
+
+div#errorbox {
+  z-index: 20;
+  margin: 1em;
+  padding: 0.25em;
+  background: #ffbbbb;
+  color: black;
+  border: 1px solid #ff0000;
+  display: none;
+}
+
+div.clear {
+  clear:both;
+}

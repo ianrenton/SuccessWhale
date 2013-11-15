@@ -182,6 +182,11 @@ $('#postbutton').click(function (e) {
 });
 // Bind gpopover items
 $('#postbuttondropdown').gpopover();
+// Bind other menu buttons
+$('#logoutbutton').click(function (e) {
+  eraseCookie('token');
+  window.location = '/';
+});
 // Focus and enable autosize on post entry box
 $('#postentry').autosize();
 $('#postentry').focus();

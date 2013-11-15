@@ -25,7 +25,7 @@ $('#login').submit(function() {
   var jqxhr = $.post(API_SERVER+'/authenticate', {username: viewModel.username(), password: viewModel.password()})
   .done(function(returnedData) {
     createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
-    window.location = '/';
+    window.location = '/client';
   })
   .fail(function(returnedData) {
     viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
