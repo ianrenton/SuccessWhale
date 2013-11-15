@@ -6,7 +6,6 @@ var COOKIE_VALIDITY_DAYS = 365;
 function SWUserViewModel() {
   this.username = ko.observable("");
   this.password = ko.observable("");
-
   this.errormessage = ko.observable("");
 }
 
@@ -23,11 +22,17 @@ function checkLoggedOut() {
 $('#login').submit(function() {
   var jqxhr = $.post(API_SERVER+'/authenticate', {username: viewModel.username(), password: viewModel.password()})
   .done(function(returnedData) {
+    // If we were displaying an error message, hide it so the user isn't confused
+    viewModel.errormessage('');
+    $('#loginerrorbox').hide('fast');
+    // Set cookie and advance to main interface
     createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
     window.location = '/client';
   })
   .fail(function(returnedData) {
+    // Display error box
     viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
+    $('#loginerrorbox').show('fast');
   });
   return false;
 });

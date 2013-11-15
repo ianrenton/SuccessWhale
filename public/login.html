@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
   </head>
 <body>
-
+  
   <div id="logodiv">
     <img id="logo" src="img/logo/successwhale.png"/>
     <h1>Welcome to SuccessWhale!</h1>
@@ -24,6 +24,7 @@
     </div>
     <div class="content">
       <p>Start with one account &mdash; you can add others once you're in.</p>
+      <p>#TODO</p>
     </div>
   </form>
   <form id="login">
@@ -36,9 +37,11 @@
       Password: <input data-bind="value: password" type="password" class="textbox"/>
       <input type="submit" value="Log in" /></p>
     </div>
+    <div id="loginerrorbox"><span data-bind="text: errormessage"></span></div>
   </form>
 
-  <p><strong data-bind="text: errormessage"></strong></p>
+  
+  <a href="https://github.com/ianrenton/SuccessWhale"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
   <script src="js/libs/cookies.js"></script>
   <script src="js/libs/jquery-1.9.1.js"></script>
