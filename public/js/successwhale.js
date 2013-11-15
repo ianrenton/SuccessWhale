@@ -5,6 +5,7 @@ var NARROW_SCREEN_WIDTH = 600;
 // Viewmodel for SW
 function SWUserViewModel() {
   this.colsPerScreen = ko.observable();
+  this.postEntryText = ko.observable();
   this.postToAccounts = ko.observableArray();
   this.columns = ko.observableArray();
 }
@@ -36,6 +37,16 @@ function showError(html, returnedData) {
   });
 }
 
+// Shows a success notification for a set time, with the supplied HTML content
+function showSuccess(html) {
+  $('#successbox').html(html);
+  $('#successbox').show('slow', function hideLater() {
+    setTimeout(function() {
+      $('#successbox').hide('slow');
+    }, 5000);
+  });
+}
+
 // Turn an item's text into proper HTML
 function makeItemTextHTML(content) {
   return linkify_entities(content);
@@ -46,14 +57,16 @@ function makeFromUserText(content, service) {
   var html='';
   if (content.fromusername) {
     html += content.fromusername;
-    if (content.fromuser) {
+    // Enable this to put "@username" after Twitter users. Disabled here to reduce
+    // clutter
+    /*if (content.fromuser) {
       html += ' (';
       if (service === 'twitter')
       {
         html += '@';
       }
       html += content.fromuser + ')';
-    }
+    }*/
   }
   else if (content.fromuser) {
     html += content.fromuser;
@@ -77,19 +90,19 @@ function makeFromUserLink(content, service) {
 function makeMetadataText(content) {
   var html='';
   if (content.numreplied > 0) {
-    html += content.numreplied + ' replies ';
+    html +=  ' &#x1f4ac; ' + content.numreplied;
   }
   if (content.numretweeted > 0) {
-    html += content.numretweeted + ' retweets ';
+    html += ' &#9850; ' + content.numretweeted;
   }
   if (content.numfavourited > 0) {
-    html += content.numfavourited + ' favourites ';
+    html +=  ' &#9733; ' + content.numfavourited;
   }
   if (content.numcomments > 0) {
-    html += content.numcomments + ' comments ';
+    html += ' &#x1f4ac; ' + content.numcomments;
   }
   if (content.numlikes > 0) {
-    html += content.numlikes + ' likes ';
+    html += ' &#x1f44d; ' + content.numlikes;
   }
   return html;
 }
@@ -166,6 +179,28 @@ function displayColumns() {
     });
 }
 
+// Post the text from the main entry box (plus an attachment if set) as a new item.
+function postItem() {
+  // Build a list of service/uid:service/uid... for every service we have selected
+  var postToAccountString = '';
+  for (i=0; i<viewModel.postToAccounts().length; i++) {
+    if (viewModel.postToAccounts()[i].enabled) {
+      postToAccountString += viewModel.postToAccounts()[i].service + "/" + viewModel.postToAccounts()[i].uid + ":";
+    }
+  }
+  // send the request
+  var jqxhr = $.post(API_SERVER+'/item', {token: readCookie('token'), text: viewModel.postEntryText(), accounts: postToAccountString})
+  .done(function(returnedData) {
+    showSuccess('Item posted');
+    viewModel.postEntryText('');
+    refreshColumns();
+  })
+  .fail(function(returnedData) {
+    showError('Failed to post item', returnedData);
+  });
+  return false;
+}
+
 
 // Automatic stuff on page load
 checkLoggedIn();
@@ -182,6 +217,7 @@ $('#postbutton').click(function (e) {
 });
 // Bind gpopover items
 $('#postbuttondropdown').gpopover();
+$('#attachbutton').gpopover();
 // Bind other menu buttons
 $('#logoutbutton').click(function (e) {
   eraseCookie('token');

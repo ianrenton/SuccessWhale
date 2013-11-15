@@ -11,21 +11,25 @@
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 </head>
 <body>
+  <div id="successbox"></div>
   <div id="errorbox"></div>
   <div id="header">
     <div id="topmenu">
-      <a id="logoutbutton" href="#">Log out</a>
+      <a id="logoutbutton" href="#">&#x1f6aa;</a>
     </div>
     <form id="postform">
-      <textarea id="postentry" rows="1"></textarea>
+      <textarea id="postentry" rows="1" data-bind="value: postEntryText"></textarea>
       <span id="postbutton">Post</span>
-      <span id="attachbutton" data-popover="attachment"><span class="icon">&#x1f4ce;</span></span>
+      <span id="attachbutton" data-popover="attachmentdialog"><span class="icon">&#x1f4ce;</span></span>
+      <div id="attachmentdialog" class="gpopover">
+        <p>Attach file:</p>
+      </div>
       <span id="postbuttondropdown" data-popover="accountselector">&#x25BC;</span>
       <div id="accountselector" class="gpopover">
         <p>Post to:</p>
         <ul data-bind="foreach: postToAccounts">
           <li>
-            <input type="checkbox" data-bind="name: service + '-' + uid, checked: enabled"/>
+            <input type="checkbox" data-bind="name: service + '/' + uid, checked: enabled"/>
             <img data-bind="attr: { src: '/img/icons/'+service+'.png' }"/>&nbsp;
             <span data-bind="text: username"></span>
           </li>
@@ -38,14 +42,14 @@
       <h4 class="columnheading" data-bind="text: title"></h4>
       <!-- ko foreach: items -->
         <div class="item">
-          <div class="item-text" data-bind="html: makeItemTextHTML(content)"></div>
           <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
             <a data-bind="attr: { href: makeFromUserLink(content, service) }"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a>
             <div class="item-fromusername" data-bind="text: makeFromUserText(content, service)"></div>
             <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
-            <div class="item-time" data-bind="html: makeMetadataText(content)"></div>
+            <div class="item-metadata" data-bind="html: makeMetadataText(content)"></div>
             <div class="clear"></div>
           </div>
+          <div class="item-text" data-bind="html: makeItemTextHTML(content)"></div>
         </div>
       <!-- /ko -->
     </div>

@@ -198,8 +198,11 @@ div.item-fromuser {
   margin: 0;
   padding: 0.5em;
   font-size: 0.75em;
-  background-color: #f8f8f8;
-  color: #666666;
+}
+
+div.item-fromusername {
+  font-weight: normal;
+  font-size: 1.1em;
 }
 
 div.item-fromuser-twitter {
@@ -226,6 +229,18 @@ div#errorbox {
   background: #ffbbbb;
   color: black;
   border: 1px solid #ff0000;
+  display: none;
+}
+
+div#successbox {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  z-index: 20;
+  padding: 0.25em;
+  background: #bbffbb;
+  color: black;
+  border: 1px solid #00bb00;
   display: none;
 }
 

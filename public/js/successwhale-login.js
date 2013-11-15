@@ -21,7 +21,6 @@ function checkLoggedOut() {
 // jQuery bind to Submit button
 // Authenticates, sets cookies and forwards or displays error message as appropriate
 $('#login').submit(function() {
-  var data = ko.toJSON(viewModel);
   var jqxhr = $.post(API_SERVER+'/authenticate', {username: viewModel.username(), password: viewModel.password()})
   .done(function(returnedData) {
     createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
