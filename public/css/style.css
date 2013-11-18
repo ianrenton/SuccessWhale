@@ -44,7 +44,7 @@ div#topmenu a {
 textarea#postentry {
   margin: 1.1em 0 1em 1em;
   padding: 0.3em 0.3em 0.2em 0.3em;
-  width: 70%;
+  width: 60%;
   font-size: 1em;
   height: 1.5em;
   background-color: white;
@@ -107,6 +107,11 @@ span#attachbutton {
 
 span#attachbutton span.icon {
   font-size:1.1em;
+}
+
+form#attachbuttonform {
+  display: inline; 
+  margin: 0;
 }
 
 span#postbuttondropdown {

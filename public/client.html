@@ -17,12 +17,16 @@
     <div id="topmenu">
       <a id="logoutbutton" href="#">&#x1f6aa;</a>
     </div>
-    <form id="postform">
-      <textarea id="postentry" rows="1" data-bind="value: postEntryText"></textarea>
+    <form id="postform" action="https://successwhale-api.herokuapp.com/v3/item" method="post" enctype="multipart/form-data" target="postTarget">
+      <input id="token" name="token" type="hidden" data-bind="value: token"/>
+      <input id="postToAccounts" name="accounts" type="hidden" data-bind="value: getPostToAccountsString()"/>
+      <textarea id="postentry" name="text" rows="1" data-bind="value: postEntryText"></textarea>
       <span id="postbutton">Post</span>
       <span id="attachbutton" data-popover="attachmentdialog"><span class="icon">&#x1f4ce;</span></span>
       <div id="attachmentdialog" class="gpopover">
         <p>Attach file:</p>
+          <input type="file" name="file" id="filetoupload"/>
+          <input type="button" id="fileclearbutton" value="Clear"/>
       </div>
       <span id="postbuttondropdown" data-popover="accountselector">&#x25BC;</span>
       <div id="accountselector" class="gpopover">
@@ -54,11 +58,12 @@
       <!-- /ko -->
     </div>
   </div>
+  <iframe id="postTarget" name="postTarget" style="display: none"></iframe>
     
   <script src="js/libs/cookies.js"></script>
   <script src="js/libs/xdr.js"></script>
   <script src="js/libs/jquery-1.9.1.js"></script>
-  <script src="js/libs/knockout-2.2.1.js"></script>
+  <script src="js/libs/knockout-3.0.0.js"></script>
   <script src="js/libs/moment.min.js"></script>
   <script src="js/libs/twitter-entities.js"></script>
   <script src="js/libs/jquery.gpopover.js"></script>

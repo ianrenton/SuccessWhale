@@ -6,6 +6,7 @@ var NARROW_SCREEN_WIDTH = 600;
 function SWUserViewModel() {
   this.colsPerScreen = ko.observable();
   this.postEntryText = ko.observable();
+  this.token = ko.observable();
   this.postToAccounts = ko.observableArray();
   this.columns = ko.observableArray();
 }
@@ -19,6 +20,8 @@ ko.applyBindings(viewModel);
 function checkLoggedIn() {
   if (!readCookie('token')) {
     window.location = '/';
+  } else {
+    viewModel.token(readCookie('token'));
   }
 }
 
@@ -179,27 +182,46 @@ function displayColumns() {
     });
 }
 
-// Post the text from the main entry box (plus an attachment if set) as a new item.
-function postItem() {
-  // Build a list of service/uid:service/uid... for every service we have selected
+// Build a list of service/uid:service/uid... for every service we have selected
+function getPostToAccountsString() {
   var postToAccountString = '';
   for (i=0; i<viewModel.postToAccounts().length; i++) {
     if (viewModel.postToAccounts()[i].enabled) {
       postToAccountString += viewModel.postToAccounts()[i].service + "/" + viewModel.postToAccounts()[i].uid + ":";
     }
   }
-  // send the request
-  var jqxhr = $.post(API_SERVER+'/item', {token: readCookie('token'), text: viewModel.postEntryText(), accounts: postToAccountString})
+  return postToAccountString;
+}
+  
+  
+// Post the text from the main entry box (plus an attachment if set) as a new item.
+// We have to do this as an IFRAME with a form post because it's
+// the only reliable cross-platform way to submit a file via POST :(
+function postItem() {
+
+  // TODO provide some feedback, success/failure response, move URL of form action into JS
+
+  $('form#postform').submit();
+  
+  /*var jqxhr = $.post(API_SERVER+'/item', {token: readCookie('token'), text: viewModel.postEntryText(), accounts: postToAccountString})
   .done(function(returnedData) {
     showSuccess('Item posted');
-    viewModel.postEntryText('');
+    // Reset all the things
+    //viewModel.postEntryText('');
+    $('form#postform')[0].reset();
     refreshColumns();
   })
   .fail(function(returnedData) {
     showError('Failed to post item', returnedData);
-  });
+  });*/
   return false;
 }
+
+// Resets a single form element.
+function resetFormElement(e) {
+  e.wrap('<form>').closest('form').get(0).reset();
+  e.unwrap();
+}​
 
 
 // Automatic stuff on page load
@@ -214,6 +236,12 @@ $('#postentry').keydown(function (e) {
 });
 $('#postbutton').click(function (e) {
   postItem();
+});
+// Bind Attach File clear button
+$('button#fileclearbutton').click(function (e) {
+  resetFormElement($('input#filetoupload'));
+  return false;
+}
 });
 // Bind gpopover items
 $('#postbuttondropdown').gpopover({preventHide: true});
