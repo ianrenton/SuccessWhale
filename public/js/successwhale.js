@@ -4,11 +4,16 @@ var NARROW_SCREEN_WIDTH = 600;
 
 // Viewmodel for SW
 function SWUserViewModel() {
-  this.colsPerScreen = ko.observable();
-  this.postEntryText = ko.observable();
-  this.token = ko.observable();
-  this.postToAccounts = ko.observableArray();
-  this.columns = ko.observableArray();
+  var self = this;
+  
+  self.colsPerScreen = ko.observable();
+  self.token = ko.observable();
+  self.postToAccounts = ko.observableArray();
+  self.columns = ko.observableArray();
+  
+  self.postToAccountsString = ko.computed(function () {
+     return getPostToAccountsString(self.postToAccounts());
+  });
 }
 
 // Activate knockout.js
@@ -60,16 +65,6 @@ function makeFromUserText(content, service) {
   var html='';
   if (content.fromusername) {
     html += content.fromusername;
-    // Enable this to put "@username" after Twitter users. Disabled here to reduce
-    // clutter
-    /*if (content.fromuser) {
-      html += ' (';
-      if (service === 'twitter')
-      {
-        html += '@';
-      }
-      html += content.fromuser + ')';
-    }*/
   }
   else if (content.fromuser) {
     html += content.fromuser;
@@ -112,7 +107,7 @@ function makeMetadataText(content) {
 
 // Load feed for a single column
 function loadFeedForColumn(j) {
-  var jqxhr = $.get(API_SERVER+'/feed', {sources: viewModel.columns()[j].fullpath, token: readCookie('token')})
+  var jqxhr = $.get(API_SERVER+'/feed', {sources: viewModel.columns()[j].fullpath, token: viewModel.token()})
     .done(function(returnedData) {
       viewModel.columns()[j].items.removeAll();
       viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items); 
@@ -132,7 +127,7 @@ function refreshColumns() {
 
 // Get the user's display settings
 function getDisplaySettings() {
-  var jqxhr = $.get(API_SERVER+'/displaysettings', {token: readCookie('token')})
+  var jqxhr = $.get(API_SERVER+'/displaysettings', {token: viewModel.token()})
     .done(function(returnedData) {
       // Store the columns-per-screen value for use in rendering, or force it to 1
       // column per screen and narrow things down if we have a narrow (mobile phone) 
@@ -150,9 +145,14 @@ function getDisplaySettings() {
 
 // Fetch and display the list of accounts to post to
 function displayPostToAccounts() {
-  var jqxhr = $.get(API_SERVER+'/posttoaccounts', {token: readCookie('token')})
+  var jqxhr = $.get(API_SERVER+'/posttoaccounts', {token: viewModel.token()})
     .done(function(returnedData) {
-      viewModel.postToAccounts.push.apply(viewModel.postToAccounts, returnedData.posttoaccounts);
+      var accounts = returnedData.posttoaccounts
+      var i = 0;
+      for (; i<accounts.length; i++) {
+        accounts[i].enabled = ko.observable(accounts[i].enabled);
+      }
+      viewModel.postToAccounts.push.apply(viewModel.postToAccounts, accounts);
     })
     .fail(function(returnedData) {
       showError('Failed to fetch account list', returnedData);
@@ -161,7 +161,7 @@ function displayPostToAccounts() {
 
 // Fetch and display columns
 function displayColumns() {
-  var jqxhr = $.get(API_SERVER+'/columns', {token: readCookie('token')})
+  var jqxhr = $.get(API_SERVER+'/columns', {token: viewModel.token()})
     .done(function(returnedData) {
       var cols = returnedData.columns;
       
@@ -183,76 +183,71 @@ function displayColumns() {
 }
 
 // Build a list of service/uid:service/uid... for every service we have selected
-function getPostToAccountsString() {
+function getPostToAccountsString(postToAccounts) {
   var postToAccountString = '';
-  for (i=0; i<viewModel.postToAccounts().length; i++) {
-    if (viewModel.postToAccounts()[i].enabled) {
-      postToAccountString += viewModel.postToAccounts()[i].service + "/" + viewModel.postToAccounts()[i].uid + ":";
+  for (i=0; i<postToAccounts.length; i++) {
+    if (postToAccounts[i].enabled()) {
+      postToAccountString += postToAccounts[i].service + "/" + postToAccounts[i].uid + ":";
     }
-  }
+  } 
   return postToAccountString;
 }
-  
-  
-// Post the text from the main entry box (plus an attachment if set) as a new item.
-// We have to do this as an IFRAME with a form post because it's
-// the only reliable cross-platform way to submit a file via POST :(
-function postItem() {
-
-  // TODO provide some feedback, success/failure response, move URL of form action into JS
-
-  $('form#postform').submit();
-  
-  /*var jqxhr = $.post(API_SERVER+'/item', {token: readCookie('token'), text: viewModel.postEntryText(), accounts: postToAccountString})
-  .done(function(returnedData) {
-    showSuccess('Item posted');
-    // Reset all the things
-    //viewModel.postEntryText('');
-    $('form#postform')[0].reset();
-    refreshColumns();
-  })
-  .fail(function(returnedData) {
-    showError('Failed to post item', returnedData);
-  });*/
-  return false;
-}
-
-// Resets a single form element.
-function resetFormElement(e) {
-  e.wrap('<form>').closest('form').get(0).reset();
-  e.unwrap();
-}​
-
 
 // Automatic stuff on page load
-checkLoggedIn();
-getDisplaySettings();
-displayPostToAccounts();
-displayColumns();
+$(document).ready(function() {
 
-// Bind "post item" on button click or textarea Ctrl+Enter
-$('#postentry').keydown(function (e) {
-  if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) { postItem(); }
+  // Bind "post item" on button click or textarea Ctrl+Enter
+  $('#postentry').keydown(function (e) {
+    if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
+      $('form#postform').submit();
+    }
+  });
+  $('#postbutton').click(function (e) {
+    $('form#postform').submit();
+  });
+  
+  // Bind jQuery Form to the main post form so we can submit it in an AJAXy way,
+  // and handle success/failure of the post with callbacks
+  var options = {  
+    url:        API_SERVER+'/item',
+    type:       'POST',
+    dataType:   'json',
+    resetForm:  true,
+    success:    function(jsonResponse) { 
+      showSuccess('Item posted.');
+      refreshColumns();
+    },
+    error:      function(jsonResponse) { 
+      showError('Item could not be posted due to an error.', JSON.stringify(jsonResponse));
+    } 
+  }; 
+  $('form#postform').ajaxForm(options);
+  
+  // Bind Attach File clear button
+  $('input#fileclearbutton').click(function (e) {
+    $('form#postform #filetoupload').clearFields();
+  });
+  
+  // Bind gpopover items
+  $('#postbuttondropdown').gpopover({preventHide: true});
+  $('#attachbutton').gpopover({preventHide: true});
+  
+  // Bind other menu buttons
+  $('#logoutbutton').click(function (e) {
+    eraseCookie('token');
+    window.location = '/';
+  });
+  
+  // Focus and enable autosize on post entry box
+  $('#postentry').autosize();
+  $('#postentry').focus();
+  
+  // Main API calls to display data
+  checkLoggedIn();
+  getDisplaySettings();
+  displayPostToAccounts();
+  displayColumns();
+  
+  // Refresh every 5 minutes
+  setInterval( function() { refreshColumns(); }, 300000);
 });
-$('#postbutton').click(function (e) {
-  postItem();
-});
-// Bind Attach File clear button
-$('button#fileclearbutton').click(function (e) {
-  resetFormElement($('input#filetoupload'));
-  return false;
-}
-});
-// Bind gpopover items
-$('#postbuttondropdown').gpopover({preventHide: true});
-$('#attachbutton').gpopover({preventHide: true});
-// Bind other menu buttons
-$('#logoutbutton').click(function (e) {
-  eraseCookie('token');
-  window.location = '/';
-});
-// Focus and enable autosize on post entry box
-$('#postentry').autosize();
-$('#postentry').focus();
-// Refresh every 5 minutes
-setInterval( function() { refreshColumns(); }, 300000);
