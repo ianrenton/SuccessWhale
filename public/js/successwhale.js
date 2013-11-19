@@ -123,6 +123,9 @@ function refreshColumns() {
   for (; j < viewModel.columns().length; j++) {
     loadFeedForColumn(j);
   }
+  
+  // Hide loading overlay, if it's displayed, as we have now fully loaded the display.
+  $('body').removeClass("loading");
 } 
 
 // Get the user's display settings
@@ -196,6 +199,9 @@ function getPostToAccountsString(postToAccounts) {
 // Automatic stuff on page load
 $(document).ready(function() {
 
+  // Loading overlay. Hidden at the end of displayColumns().
+  $('body').addClass("loading");
+  
   // Bind "post item" on button click or textarea Ctrl+Enter
   $('#postentry').keydown(function (e) {
     if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
