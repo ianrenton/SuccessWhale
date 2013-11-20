@@ -9,12 +9,29 @@ function SWUserViewModel() {
   this.errormessage = ko.observable("");
 }
 
+// Activate knockout.js
+viewModel = new SWUserViewModel();
+ko.applyBindings(viewModel);
+
+
 // Checks the user is not logged in (via a cookie) - if they are, punts them
 // to the main client page as they do not need to log in again
 function checkLoggedOut() {
   if (readCookie('token')) {
     window.location = '/client';
   }
+}
+
+// Checks server status and shows it on-screen
+function checkServerStatus() {
+  var jqxhr = $.get(API_SERVER+'/status')
+  .done(function(returnedData) {
+    $('#serverstatus').html('<p class="statussuccess">Connected to secure server, version ' + returnedData.version + '</p>');
+  })
+  .fail(function(returnedData) {
+    $('#serverstatus').html('<p class="statusfailure">Could not connect to SuccessWhale server.<br/>Please try again later.</p>');
+  });
+  return false;
 }
 
 // jQuery bind to Submit button
@@ -37,9 +54,9 @@ $('#login').submit(function() {
   return false;
 });
 
-// Activate knockout.js
-viewModel = new SWUserViewModel();
-ko.applyBindings(viewModel);
 
 // Automatic stuff on page load
-checkLoggedOut();
+$(document).ready(function() {
+  checkLoggedOut();
+  checkServerStatus();
+});

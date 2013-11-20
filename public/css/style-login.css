@@ -6,9 +6,30 @@ html, body {
   font-weight: 100;
 }
 
+/* Left-right split on landscape screens, up-down split on portrait screens*/
+@media only screen 
+and (min-device-width : 768px)
+and (orientation : landscape) {
+  div#part1 {
+    float:left;
+    width: 45%;
+    padding: 1em;
+  }
+  div#part2 {
+    float:right;
+    width: 45%;
+    padding: 1em;
+  }
+}
+
 div#logodiv {
-  width: 20%;
+  width: 100%;
   margin: 0 auto;
+  text-align: center;
+}
+
+div#logodiv img#logo {
+  width: 50%;
 }
 
 div#logodiv h1 {
@@ -22,14 +43,15 @@ img#logo {
 }
 
 div#intro {
-  width: 40%;
+  width: 80%;
   margin: 0 auto;
+  padding-left: 1em;
   font-weight: 300;
   font-size: 1em;
 }
 
 form#auth {
-  width: 40%;
+  width: 100%;
   margin: 0 auto 1em auto;
   padding: 0;
   background-color: white;
@@ -54,7 +76,7 @@ form#auth div.content {
 }
 
 form#login {
-  width: 40%;
+  width: 100%;
   margin: 0 auto 1em auto;
   padding: 0;
   background-color: white;
@@ -83,6 +105,23 @@ form#login div.content p input.textbox {
   width: 8em;
 }
 
+div#serverstatus {
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 300;
+  font-size: 0.7em;
+  text-align: center;
+}
+
+div#serverstatus p {
+  margin-top: 0;
+}
+
+div#serverstatus p.statusfailure {
+  font-weight: bold;
+  color: red;
+}
+
 div#loginerrorbox {
   margin: 0 0.5em 0.5em 0.5em;
   padding: 0.25em;
@@ -90,6 +129,27 @@ div#loginerrorbox {
   color: black;
   border: 1px solid #ff0000;
   display: none;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba( 235, 235, 235, .8 )
+              50% 50%
+              no-repeat;
+}
+
+.modal .notice {
+  margin: 2em 0 0 0;
+  padding: 1em;
+  background: rgba( 255, 255, 200, .9 );
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.5em;
 }
 
 div.clear {

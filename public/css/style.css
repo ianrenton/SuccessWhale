@@ -62,7 +62,7 @@ textarea#postentry {
 
 @media (max-width: 600px) {
   textarea#postentry {
-    width: 50%;
+    width: 45%;
   }
 }
 

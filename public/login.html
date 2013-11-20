@@ -10,36 +10,42 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
   </head>
 <body>
-  
-  <div id="logodiv">
-    <img id="logo" src="img/logo/successwhale.png"/>
-    <h1>Welcome to SuccessWhale!</h1>
+  <div id="part1">
+    <div id="logodiv">
+      <img id="logo" src="img/logo/successwhale.png"/>
+      <h1>Welcome to SuccessWhale!</h1>
+    </div>
+    <div id="intro">
+      <p>SuccessWhale is a multi-column client for Twitter and Facebook that allows you to mix and match feeds however you like!</p>
+    </div>
   </div>
-  <div id="intro">
-    <p>SuccessWhale is a multi-column client for Twitter and Facebook that allows you to mix and match feeds however you like!</p>
+  <div id="part2">
+    <form id="auth">
+      <div class="title">
+        <h2>Log in with Twitter or Facebook</h2>
+      </div>
+      <div class="content">
+        <p>Start with one account &mdash; you can add others once you're in.</p>
+        <p>#TODO</p>
+      </div>
+    </form>
+    <form id="login">
+      <div class="title">
+        <h2>Log in with SuccessWhale</h2>
+      </div>
+      <div class="content">
+        <p>Behind a firewall that blocks social networks? If you've created a username and password for your SuccessWhale account, you can enter them here to log in.</p>
+        <p class="userpass">Username: <input data-bind="value: username" class="textbox"/>
+        Password: <input data-bind="value: password" type="password" class="textbox"/>
+        <input type="submit" value="Log in" /></p>
+      </div>
+      <div id="loginerrorbox"><span data-bind="text: errormessage"></span></div>
+    </form>
+    <div id="serverstatus">
+      <img src="/img/loading.gif"/>
+      <p>Contacting secure server...</p>
+    </div>
   </div>
-  <form id="auth">
-    <div class="title">
-      <h2>Log in with Twitter or Facebook</h2>
-    </div>
-    <div class="content">
-      <p>Start with one account &mdash; you can add others once you're in.</p>
-      <p>#TODO</p>
-    </div>
-  </form>
-  <form id="login">
-    <div class="title">
-      <h2>Log in with SuccessWhale</h2>
-    </div>
-    <div class="content">
-      <p>Behind a firewall that blocks social networks? If you've created a username and password for your SuccessWhale account, you can enter them here to log in.</p>
-      <p class="userpass">Username: <input data-bind="value: username" class="textbox"/>
-      Password: <input data-bind="value: password" type="password" class="textbox"/>
-      <input type="submit" value="Log in" /></p>
-    </div>
-    <div id="loginerrorbox"><span data-bind="text: errormessage"></span></div>
-  </form>
-
   
   <a href="https://github.com/ianrenton/SuccessWhale"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
@@ -47,6 +53,12 @@
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/knockout-3.0.0.js"></script>
   <script src="js/successwhale-login.js"></script>
+  
+  <noscript>
+    <div class="modal"><div class="notice">
+      <p>SuccessWhale requires JavaScript to function.<br/>Please enable JavaScript in your browser and reload the page.</p>
+    </div></div>
+  </noscript>
 
 </body>
 </html>
