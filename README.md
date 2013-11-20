@@ -29,7 +29,18 @@ SuccessWhale is used by around 180 people — including myself — as their main
 Libraries
 ---------
 
-TBD
+ * UI Icon set by [Gentleface](http://gentleface.com/free_icon_set.html). CC by-nc licenced. (Other icons from Twitter and Facebook.)
+ 
+TODO Link these:
+ * Knockout.js
+ * jQuery
+ * jQuery Autosize
+ * jQuery Forms
+ * jQuery GPopover
+ * Moment
+ * Twitter Entities
+ * XDR
+ * Cookies.js
 
 Thanks to...
 ------------

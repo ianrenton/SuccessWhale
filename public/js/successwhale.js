@@ -88,19 +88,19 @@ function makeFromUserLink(content, service) {
 function makeMetadataText(content) {
   var html='';
   if (content.numreplied > 0) {
-    html +=  ' &#x1f4ac; ' + content.numreplied;
+    html +=  ' <img src="img/actions/reply.png" title="Replies" alt="Replies" /> ' + content.numreplied;
   }
   if (content.numretweeted > 0) {
-    html += ' &#9850; ' + content.numretweeted;
+    html += ' <img src="img/actions/retweet.png" title="Retweets" alt="Retweets" /> ' + content.numretweeted;
   }
   if (content.numfavourited > 0) {
-    html +=  ' &#9733; ' + content.numfavourited;
+    html +=  ' <img src="img/actions/favourite.png" title="Favourites" alt="Favourites" /> ' + content.numfavourited;
   }
   if (content.numcomments > 0) {
-    html += ' &#x1f4ac; ' + content.numcomments;
+    html += ' <img src="img/actions/thread.png" title="Comments" alt="Comments" /> ' + content.numcomments;
   }
   if (content.numlikes > 0) {
-    html += ' &#x1f44d; ' + content.numlikes;
+    html += ' <img src="img/actions/like.png" title="Likes" alt="Likes" /> ' + content.numlikes;
   }
   return html;
 }
