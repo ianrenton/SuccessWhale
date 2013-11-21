@@ -50,6 +50,12 @@
             <a data-bind="attr: { href: makeFromUserLink(content, service) }"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a>
             <div class="item-fromusername" data-bind="text: makeFromUserText(content, service)"></div>
             <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
+            <div class="actionsdropdown" data-bind="attr:{ 'data-popover': 'actions-' + hashCode(service + content.id) }">
+              <img src="img/ui/downarrow2.png" title="Action menu" alt="Action menu" />
+            </div>
+            <div class="gpopover" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
+              <p>Test</p>
+            </div>
             <div class="item-metadata" data-bind="html: makeMetadataText(content)"></div>
             <div class="clear"></div>
           </div>

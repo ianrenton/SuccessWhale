@@ -225,6 +225,10 @@ img.item-fromuseravatar {
   margin-right: 0.5em;
 }
 
+div.actionsdropdown {
+  float:right;
+}
+
 div#errorbox {
   position: fixed;
   top: 1em;

@@ -30,6 +30,18 @@ function checkLoggedIn() {
   }
 }
 
+// JS implementation of Java .hashCode() method
+function hashCode(string) {
+  var hash = 0, i, chara;
+  if (string.length == 0) return hash;
+  for (i = 0, l = string.length; i < l; i++) {
+    chara  = string.charCodeAt(i);
+    hash  = ((hash<<5)-hash)+chara;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
 // Shows an error box for a set time, with the supplied HTML and optionally also
 // a SuccessWhale API error message extracted from the returnedData of an unsuccessful
 //  request
@@ -109,8 +121,13 @@ function makeMetadataText(content) {
 function loadFeedForColumn(j) {
   var jqxhr = $.get(API_SERVER+'/feed', {sources: viewModel.columns()[j].fullpath, token: viewModel.token()})
     .done(function(returnedData) {
+      // Put all the items into the viewmodel for display
       viewModel.columns()[j].items.removeAll();
-      viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items); 
+      viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items);
+      // Add gpopover 
+      $('.actionsdropdown').each(function() {
+        $(this).gpopover();
+      });
     })
     .fail(function(returnedData) {
       showError('Failed to fetch column "' + viewModel.columns()[j].title + '"', returnedData);
