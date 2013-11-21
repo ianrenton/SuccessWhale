@@ -27,7 +27,7 @@ function linkify_entities(content) {
               index_map[entry.indices[0]] = [entry.indices[1], function(text) {
                   // If there's a preview, this will be handled separately so just remove the section of the text that refers to it. Otherwise, preserve the text and link it up by appling an A tag.
                   if (typeof entry.preview === 'undefined') {
-                    return "<a href='"+entry.url+"'>"+entry.title+"</a>";
+                    return "<a href='"+entry.url+"' target='_blank'>"+entry.title+"</a>";
                   }
                   else {
                     return "";
@@ -39,14 +39,14 @@ function linkify_entities(content) {
     // Replace hashtags with properly linked HTML
     if (typeof content.hashtags !== 'undefined') {
       $.each(content.hashtags, function(i,entry) {
-          index_map[entry.indices[0]] = [entry.indices[1], function(text) {return "<a href='http://twitter.com/search?q="+escape("#"+entry.text)+"'>#"+entry.text+"</a>";}];
+          index_map[entry.indices[0]] = [entry.indices[1], function(text) {return "<a href='http://twitter.com/search?q="+escape("#"+entry.text)+"' target='_blank'>#"+entry.text+"</a>";}];
       });
     }
     
     // Replace usernames with properly linked HTML
     if (typeof content.usernames !== 'undefined') {
       $.each(content.usernames, function(i,entry) {
-          index_map[entry.indices[0]] = [entry.indices[1], function(text) {return "<a title='"+entry.user+"' href='http://twitter.com/"+escape(entry.user)+"'>@"+entry.user+"</a>";}];
+          index_map[entry.indices[0]] = [entry.indices[1], function(text) {return "<a title='"+entry.user+"' href='http://twitter.com/"+escape(entry.user)+"' target='_blank'>@"+entry.user+"</a>";}];
       });
     }
     
@@ -75,7 +75,7 @@ function linkify_entities(content) {
     
     // Add a "source" link if we just have a single link with no indices for replacing text
     if ((typeof content.links !== 'undefined') && (content.links.length===1) && (typeof content.links[0].indices === 'undefined')) {
-      result += '<br/><a href="' + content.links[0].url + '">';
+      result += '<br/><a href="' + content.links[0].url + '" target="_blank">';
       if (content.links[0].title !== null) {
         result += content.links[0].title;
       } else {
@@ -88,7 +88,7 @@ function linkify_entities(content) {
     for (i=0; i<content.links.length; i++)
     {
       if (typeof content.links[i].preview !== 'undefined') {
-        result += '<div class="item-mediapreview"><a href="' + content.links[i].url + '"><img class="item-mediapreview" src="' + content.links[i].preview + '" /></a></div>';
+        result += '<div class="item-mediapreview"><a href="' + content.links[i].url + '" target="_blank"><img class="item-mediapreview" src="' + content.links[i].preview + '" /></a></div>';
       }
     }
     
