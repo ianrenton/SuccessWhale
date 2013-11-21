@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/normalize.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="css/jquery.gpopover.css"/>
+  <link rel="stylesheet" href="js/libs/fancybox/jquery.fancybox.css?v=2.1.5" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 </head>
@@ -47,7 +48,7 @@
       <!-- ko foreach: items -->
         <div class="item">
           <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
-            <a data-bind="attr: { href: makeFromUserLink(content, service) }"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a>
+            <a data-bind="attr: { href: makeFromUserLink(content, service) }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a>
             <div class="item-fromusername" data-bind="text: makeFromUserText(content, service)"></div>
             <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
             <div class="actionsdropdown" data-bind="attr:{ 'data-popover': 'actions-' + hashCode(service + content.id) }">
@@ -75,6 +76,7 @@
   <script src="js/libs/jquery.gpopover.js"></script>
   <script src="js/libs/jquery.autosize.min.js"></script>
   <script src="js/libs/jquery.form.min.js"></script>
+  <script src="js/libs/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
   <script src="js/successwhale.js"></script>
 
 </body>

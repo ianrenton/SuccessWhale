@@ -88,7 +88,7 @@ function linkify_entities(content) {
     for (i=0; i<content.links.length; i++)
     {
       if (typeof content.links[i].preview !== 'undefined') {
-        result += '<div class="item-mediapreview"><a href="' + content.links[i].url + '" target="_blank"><img class="item-mediapreview" src="' + content.links[i].preview + '" /></a></div>';
+        result += '<div class="item-mediapreview"><a href="' + content.links[i].preview + '" class="fancybox" rel="group"><img class="item-mediapreview" src="' + content.links[i].preview + '" /></a></div>';
       }
     }
     
