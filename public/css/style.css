@@ -229,6 +229,10 @@ div.actionsdropdown {
   float:right;
 }
 
+div.actionsgpopover {
+  font-size: 1.3em;
+}
+
 div#errorbox {
   position: fixed;
   top: 1em;

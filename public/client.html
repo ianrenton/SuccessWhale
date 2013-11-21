@@ -54,8 +54,13 @@
             <div class="actionsdropdown" data-bind="attr:{ 'data-popover': 'actions-' + hashCode(service + content.id) }">
               <img src="img/ui/downarrow2.png" title="Action menu" alt="Action menu" />
             </div>
-            <div class="gpopover" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
-              <p>Test</p>
+            <div class="gpopover actionsgpopover" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
+              <p>Actions:</p>
+              <ul data-bind="foreach: content.actions">
+                <li>
+                  <span data-bind="text: name"></span>
+                </li>
+              </ul>
             </div>
             <div class="item-metadata" data-bind="html: makeMetadataText(content)"></div>
             <div class="clear"></div>
