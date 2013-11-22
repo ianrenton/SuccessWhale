@@ -233,6 +233,34 @@ div.actionsgpopover {
   font-size: 1.3em;
 }
 
+div.actionsgpopover ul {
+  list-style-type: none;
+}
+
+span.actionbutton {
+  margin: 0 0 0.1em 0;
+  padding: 0 0.3em;
+  width: 10em;
+  display:inline-block;
+  font-size: 1em;
+  line-height: 2em;
+  background: #5b5b5b;
+  background: -moz-linear-gradient(top, #5b5b5b 0%, #070707 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5b5b5b), color-stop(100%,#070707));
+  background: -webkit-linear-gradient(top, #5b5b5b 0%,#070707 100%);
+  background: -o-linear-gradient(top, #5b5b5b 0%,#070707 100%);
+  background: -ms-linear-gradient(top, #5b5b5b 0%,#070707 100%);
+  background: linear-gradient(to bottom, #5b5b5b 0%,#070707 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b5b5b', endColorstr='#070707',GradientType=0 );
+  border: 1px solid black;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none; 
+  cursor:default;
+}
+
 div#errorbox {
   position: fixed;
   top: 1em;

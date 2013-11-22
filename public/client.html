@@ -55,11 +55,37 @@
               <img src="img/ui/downarrow2.png" title="Action menu" alt="Action menu" />
             </div>
             <div class="gpopover actionsgpopover" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
-              <p>Actions:</p>
               <ul data-bind="foreach: content.actions">
+                <!-- ko if: (name == 'reply') -->
                 <li>
-                  <span data-bind="text: name"></span>
+                  <span class="actionbutton" onclick="">Reply</span>
                 </li>
+                <!-- /ko -->
+                <!-- ko if: (name == 'retweet') -->
+                <li>
+                  <span class="actionbutton" data-bind="click: function(action) { performAction(action.params);} ">Retweet</span>
+                </li>
+                <!-- /ko -->
+                <!-- ko if: (name == 'favorite') -->
+                <li>
+                  <span class="actionbutton" onclick="click: function(action) { performAction(action.params);} ">Favorite</span>
+                </li>
+                <!-- /ko -->
+                <!-- ko if: (name == 'like') -->
+                <li>
+                  <span class="actionbutton" onclick="click: function(action) { performAction(action.params);} ">Like</span>
+                </li>
+                <!-- /ko -->
+                <!-- ko if: (name == 'conversation') -->
+                <li>
+                  <span class="actionbutton" onclick="">Conversation</span>
+                </li>
+                <!-- /ko -->
+                <!-- ko if: (name == 'delete') -->
+                <li>
+                  <span class="actionbutton" onclick="">Delete</span>
+                </li>
+                <!-- /ko -->
               </ul>
             </div>
             <div class="item-metadata" data-bind="html: makeMetadataText(content)"></div>

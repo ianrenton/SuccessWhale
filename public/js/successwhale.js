@@ -211,6 +211,22 @@ function displayColumns() {
     });
 }
 
+// Perform an action on an item. 2013 winner of the "most generic function description"
+// award. See https://github.com/ianrenton/successwhale-api/blob/master/docs/action.md
+function performAction(params) {
+  // We have already been given all the params we need, except for the token
+  params['token'] = viewModel.token();
+  // Now make the call
+  var jqxhr = $.post(API_SERVER+'/action', params)
+    .done(function(returnedData) {
+      showError('Item ' + params['action'] + ' successful', returnedData);
+      refreshColumns();
+    })
+    .fail(function(returnedData) {
+      showError('Failed to ' + params['action'] + ' the item', returnedData);
+    });
+}
+
 // Build a list of service/uid:service/uid... for every service we have selected
 function getPostToAccountsString(postToAccounts) {
   var postToAccountString = '';
