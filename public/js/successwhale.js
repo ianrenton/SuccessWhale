@@ -81,6 +81,9 @@ function makeFromUserText(content, service) {
   else if (content.fromuser) {
     html += content.fromuser;
   }
+  if (content.tousername) {
+    html += " > " + content.tousername;
+  }
   return html;
 }
 
