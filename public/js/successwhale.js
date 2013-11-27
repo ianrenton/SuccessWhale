@@ -20,6 +20,20 @@ function SWUserViewModel() {
 viewModel = new SWUserViewModel();
 ko.applyBindings(viewModel);
 
+// Add a Knockout "visible" binding with animation to the handlers list
+ko.bindingHandlers.slideVisible = {
+    init: function(element, valueAccessor) {
+        // Initially set the element to be instantly visible/hidden depending on the value
+        var value = valueAccessor();
+        $(element).toggle(ko.unwrap(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
+    },
+    update: function(element, valueAccessor) {
+        // Whenever the value subsequently changes, slowly fade the element in or out
+        var value = valueAccessor();
+        ko.unwrap(value) ? $(element).slideDown() : $(element).slideUp();
+    }
+};
+
 // Checks the user is logged in (via a cookie) - if not, punts them
 // to the login page
 function checkLoggedIn() {
@@ -101,6 +115,7 @@ function makeFromUserLink(content, service) {
 
 // Load feed for a single column
 function loadFeedForColumn(j) {
+  viewModel.columns()[j].loading(true);
   var jqxhr = $.get(API_SERVER+'/feed', {sources: viewModel.columns()[j].fullpath, token: viewModel.token()})
     .done(function(returnedData) {
       // Put all the items into the viewmodel for display
@@ -112,9 +127,11 @@ function loadFeedForColumn(j) {
           'scrolling'   : 'no'
         });
       });
+      viewModel.columns()[j].loading(false);
     })
     .fail(function(returnedData) {
       showError('Failed to fetch column "' + viewModel.columns()[j].title + '"', returnedData);
+      viewModel.columns()[j].loading(false);
     });
 }
 
@@ -169,10 +186,11 @@ function displayColumns() {
     .done(function(returnedData) {
       var cols = returnedData.columns;
       
-      // Add a dummy observableArray to hold items later
+      // Add a dummy observableArray to hold items later, and tag it as loading
       var i = 0;
       for (; i<cols.length; i++) {
         cols[i].items = ko.observableArray();
+        cols[i].loading = ko.observable(true);
       }
       
       // Update the view model

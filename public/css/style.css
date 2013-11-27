@@ -165,6 +165,15 @@ div.column {
   padding: 0.5em 0 0.5em 0.5em;
 }
 
+div.columnloading {
+    height: 20px;
+    width: 100%;
+    background: #eeeeee
+                url('../img/loading.gif')
+                50% 50%
+                no-repeat;
+}
+
 h4.columnheading {
   margin: 0.5em 0;
   font-weight: 100;
