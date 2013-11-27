@@ -194,7 +194,7 @@ function performAction(params) {
   // Now make the call
   var jqxhr = $.post(API_SERVER+'/action', params)
     .done(function(returnedData) {
-      showError('Item ' + params['action'] + ' successful', returnedData);
+      showSuccess('Item ' + params['action'] + ' successful');
       refreshColumns();
     })
     .fail(function(returnedData) {

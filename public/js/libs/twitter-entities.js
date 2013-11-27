@@ -78,8 +78,6 @@ function linkify_entities(content) {
       result += '<br/><a href="' + content.links[0].url + '" target="_blank">';
       if (content.links[0].title !== null) {
         result += content.links[0].title;
-      } else {
-        result += '[Open original post]';
       }
       result += '</a>';
     }
