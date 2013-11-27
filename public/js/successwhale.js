@@ -127,10 +127,6 @@ function loadFeedForColumn(j) {
       // Put all the items into the viewmodel for display
       viewModel.columns()[j].items.removeAll();
       viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items);
-      // Add gpopover to items that need it
-      $('.actionsdropdown').each(function() {
-        $(this).gpopover();
-      });
       // Add fancybox to items that need it
       $('.fancybox').each(function() {
         $(this).fancybox({
