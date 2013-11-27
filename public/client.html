@@ -93,8 +93,8 @@
                   <a class="actionbutton" onclick="" href="#"><img src="img/actions/delete.png" title="Delete" alt="Delete"></a>
                 </li>
                 <!-- /ko -->
-                <li>
-                  <a class="actionbutton" data-bind="href: content.permalink" target="_blank"><img src="img/actions/permalink.png" title="Permalink" alt="Permalink"></a>
+                <li data-bind="if: content.permalink">
+                  <a class="actionbutton" data-bind="attr: {href: content.permalink }" target="_blank"><img src="img/actions/permalink.png" title="Permalink" alt="Permalink"></a>
                 </li>
               </ul>
               <div class="clear"></div>

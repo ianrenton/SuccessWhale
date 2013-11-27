@@ -79,7 +79,7 @@ function linkify_entities(content) {
       if (content.links[0].title !== null) {
         result += content.links[0].title;
       } else {
-        result += '(source)';
+        result += '[Open original post]';
       }
       result += '</a>';
     }
