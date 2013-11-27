@@ -35,7 +35,7 @@
         <ul data-bind="foreach: postToAccounts">
           <li>
             <input type="checkbox" data-bind="name: service + '/' + uid, checked: enabled"/>
-            <img data-bind="attr: { src: '/img/icons/'+service+'.png' }"/>&nbsp;
+            <img data-bind="attr: { src: '/img/services/'+service+'.png' }"/>&nbsp;
             <span data-bind="text: username"></span>
           </li>
         </ul>
@@ -51,47 +51,54 @@
             <a data-bind="attr: { href: makeFromUserLink(content, service) }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a>
             <div class="item-fromusername" data-bind="text: makeFromUserText(content, service)"></div>
             <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
-            <div class="actionsdropdown" data-bind="attr:{ 'data-popover': 'actions-' + hashCode(service + content.id) }">
-              <img src="img/ui/downarrow2.png" title="Action menu" alt="Action menu" data-bind="click: function(item) { $('div#actions-' + hashCode(item.service + item.content.id)).slideToggle('fast'); }" />
-            </div>
-            <div class="item-metadata" data-bind="html: makeMetadataText(content)"></div>
-            <div class="actionsdiv" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
-              <ul class="actionlist" data-bind="foreach: content.actions">
-                <!-- ko if: (name == 'reply') -->
-                <li>
-                  <span class="actionbutton" onclick="">Reply</span>
-                </li>
-                <!-- /ko -->
-                <!-- ko if: (name == 'conversation') -->
-                <li>
-                  <span class="actionbutton" onclick="">Thread</span>
-                </li>
-                <!-- /ko -->
-                <!-- ko if: (name == 'retweet') -->
-                <li>
-                  <span class="actionbutton" data-bind="click: function(action) { performAction(action.params);} ">RT</span>
-                </li>
-                <!-- /ko -->
-                <!-- ko if: (name == 'favorite') -->
-                <li>
-                  <span class="actionbutton" data-bind="click: function(action) { performAction(action.params);} ">Favorite</span>
-                </li>
-                <!-- /ko -->
-                <!-- ko if: (name == 'like') -->
-                <li>
-                  <span class="actionbutton" data-bind="click: function(action) { performAction(action.params);} ">Like</span>
-                </li>
-                <!-- /ko -->
-                <!-- ko if: (name == 'delete') -->
-                <li>
-                  <span class="actionbutton" onclick="">Delete</span>
-                </li>
-                <!-- /ko -->
-              </ul>
+            <div class="item-metadata">
+              <span data-bind="if: (content.numreplied > 0)">
+                <img src="img/metadata/reply.png" title="Replies" alt="Replies" /> <span data-bind="text: content.numreplied"></span>
+              </span>
+              <span data-bind="if: (content.numretweeted > 0)">
+                <img src="img/metadata/retweet.png" title="Retweets" alt="Retweets" /> <span data-bind="text: content.numretweeted"></span>
+              </span>
+              <span data-bind="if: (content.numfavourited > 0)">
+                <img src="img/metadata/favourite.png" title="Favourites" alt="Favourites" /> <span data-bind="text: content.numfavourited"></span>
+              </span>
+              <span data-bind="if: (content.numcomments > 0)">
+                <img src="img/metadata/thread.png" title="Comments" alt="Comments" /> <span data-bind="text: content.numcomments"></span>
+              </span>
+              <span data-bind="if: (content.numlikes > 0)">
+                <img src="img/metadata/like.png" title="Likes" alt="Likes" /> <span data-bind="text: content.numlikes"></span>
+              </span>
             </div>
             <div class="clear"></div>
           </div>
           <div class="item-text" data-bind="html: makeItemTextHTML(content)"></div>
+          <div class="item-actions" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
+              <ul class="actionlist">
+                <!-- ko foreach: content.actions -->
+                <li data-bind="if: (name == 'reply')">
+                  <a class="actionbutton" onclick="" href="#"><img src="img/actions/reply.png" title="Reply" alt="Reply"></a>
+                </li>
+                <li data-bind="if: (name == 'conversation')">
+                  <a class="actionbutton" onclick="" href="#"><img src="img/actions/thread.png" title="Thread" alt="Thread"></a>
+                </li>
+                <li data-bind="if: (name == 'retweet')">
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><img src="img/actions/retweet.png" title="Retweet" alt="Retweet"></a>
+                </li>
+                <li data-bind="if: (name == 'favorite')">
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><img src="img/actions/favourite.png" title="Favourite" alt="Favourite"></a>
+                </li>
+                <li data-bind="if: (name == 'like')">
+                  <span class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><img src="img/actions/like.png" title="Like" alt="Like"></span>
+                </li>
+                <li data-bind="if: (name == 'delete')">
+                  <a class="actionbutton" onclick="" href="#"><img src="img/actions/delete.png" title="Delete" alt="Delete"></a>
+                </li>
+                <!-- /ko -->
+                <li>
+                  <a class="actionbutton" data-bind="href: content.permalink" target="_blank"><img src="img/actions/permalink.png" title="Permalink" alt="Permalink"></a>
+                </li>
+              </ul>
+              <div class="clear"></div>
+            </div>
         </div>
       <!-- /ko -->
     </div>

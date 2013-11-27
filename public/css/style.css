@@ -225,40 +225,30 @@ img.item-fromuseravatar {
   margin-right: 0.5em;
 }
 
-div.item-metadata {
-  height: 2em;
+div.item-actions {
+  margin: 0;
+  padding: 0.5em;
+  font-size: 0.75em;
+  background-color: #eeeeee;
+  color: #333333;
 }
 
-div.actionsdropdown {
-  float:right;
-}
-
-div.actionsdiv {
-  display:none;
-  clear:both;
-}
-
-div.actionsdiv ul.actionlist {
+div.item-actions ul.actionlist {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 0.1em 0 0 0;
   float:right;
 }
 
-div.actionsdiv ul.actionlist li {
+div.item-actions ul.actionlist li {
   display:inline;
 }
 
-span.actionbutton {
+div.item-actions ul.actionlist li a.actionbutton {
   margin: 0 0.3em 0 0;
   padding: 0.3em;
-  font-size: 1.3em;
-  line-height: 2.2em;
-  background: white;
-  border: 1px solid gray;
   color: gray;
-  text-decoration: none; 
-  cursor:default;
+  text-decoration: none;
 }
 
 div#errorbox {

@@ -99,27 +99,6 @@ function makeFromUserLink(content, service) {
   return url;
 }
 
-// Turn an item's metadata (replies, comments...) structures into proper text
-function makeMetadataText(content) {
-  var html='';
-  if (content.numreplied > 0) {
-    html +=  ' <img src="img/actions/reply.png" title="Replies" alt="Replies" /> ' + content.numreplied;
-  }
-  if (content.numretweeted > 0) {
-    html += ' <img src="img/actions/retweet.png" title="Retweets" alt="Retweets" /> ' + content.numretweeted;
-  }
-  if (content.numfavourited > 0) {
-    html +=  ' <img src="img/actions/favourite.png" title="Favourites" alt="Favourites" /> ' + content.numfavourited;
-  }
-  if (content.numcomments > 0) {
-    html += ' <img src="img/actions/thread.png" title="Comments" alt="Comments" /> ' + content.numcomments;
-  }
-  if (content.numlikes > 0) {
-    html += ' <img src="img/actions/like.png" title="Likes" alt="Likes" /> ' + content.numlikes;
-  }
-  return html;
-}
-
 // Load feed for a single column
 function loadFeedForColumn(j) {
   var jqxhr = $.get(API_SERVER+'/feed', {sources: viewModel.columns()[j].fullpath, token: viewModel.token()})
