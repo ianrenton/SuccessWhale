@@ -225,6 +225,10 @@ img.item-fromuseravatar {
   margin-right: 0.5em;
 }
 
+div.item-metadata {
+  height: 2em;
+}
+
 div.actionsdropdown {
   float:right;
 }
@@ -236,8 +240,9 @@ div.actionsdiv {
 
 div.actionsdiv ul.actionlist {
   list-style-type: none;
-  padding-left: 0;
-  padding-right: 0;
+  margin: 0;
+  padding: 0;
+  float:right;
 }
 
 div.actionsdiv ul.actionlist li {

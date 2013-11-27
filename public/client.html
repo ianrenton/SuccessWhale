@@ -52,7 +52,7 @@
             <div class="item-fromusername" data-bind="text: makeFromUserText(content, service)"></div>
             <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
             <div class="actionsdropdown" data-bind="attr:{ 'data-popover': 'actions-' + hashCode(service + content.id) }">
-              <img src="img/ui/downarrow2.png" title="Action menu" alt="Action menu" data-bind="click: function(item) { $('div#actions-' + hashCode(item.service + item.content.id)).toggle('fast'); }" />
+              <img src="img/ui/downarrow2.png" title="Action menu" alt="Action menu" data-bind="click: function(item) { $('div#actions-' + hashCode(item.service + item.content.id)).slideToggle('fast'); }" />
             </div>
             <div class="item-metadata" data-bind="html: makeMetadataText(content)"></div>
             <div class="actionsdiv" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
