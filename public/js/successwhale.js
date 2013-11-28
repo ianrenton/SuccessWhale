@@ -86,38 +86,18 @@ function makeItemTextHTML(content) {
   return linkify_entities(content);
 }
 
-// Turn an item's 'from' structures into proper text
-function makeFromUserText(content, service) {
-  var html='';
-  if (content.fromusername) {
-    html += content.fromusername;
-  }
-  else if (content.fromuser) {
-    html += content.fromuser;
-  }
-  if (content.tousername) {
-    html += " > " + content.tousername;
-  }
-  return html;
-}
-
-// Turn an item's 'from' structures into the URL of the 'from' user's profile
-function makeFromUserLink(content, service) {
-  var url='';
-  if (service === 'twitter') {
-    url = 'http://twitter.com/'+content.fromuser;
-  }
-  else if (service === 'facebook') {
-    url = 'http://facebook.com/'+content.fromuserid;
-  }
-  return url;
-}
-
 // Load feed for a single column
 function loadFeedForColumn(j) {
   viewModel.columns()[j].loading(true);
   var jqxhr = $.get(API_SERVER+'/feed', {sources: viewModel.columns()[j].fullpath, token: viewModel.token()})
     .done(function(returnedData) {
+      // Add dummy observables to manage the inline display of thread and comment boxes
+      var i = 0;
+      for (; i<returnedData.items.length; i++) {
+        returnedData.items[i].replyvisible = ko.observable(false);
+        returnedData.items[i].threadvisible = ko.observable(false);
+        returnedData.items[i].thread = ko.observableArray();
+      }
       // Put all the items into the viewmodel for display
       viewModel.columns()[j].items.removeAll();
       viewModel.columns()[j].items.push.apply(viewModel.columns()[j].items, returnedData.items);

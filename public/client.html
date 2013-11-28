@@ -49,9 +49,17 @@
       <!-- ko foreach: items -->
         <div class="item">
           <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
-            <a data-bind="attr: { href: makeFromUserLink(content, service) }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a>
-            <div class="item-fromusername" data-bind="text: makeFromUserText(content, service)"></div>
+          
+            <!-- ko if: (service === 'twitter') --><a data-bind="attr: { href: 'http://twitter.com/'+content.fromuser }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
+            <!-- ko if: (service === 'facebook') --><a data-bind="attr: { href: 'http://facebook.com/'+content.fromuserid }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
+            
+            <div class="item-fromusername">
+              <!-- ko if: content.fromusername --><span data-bind="text: content.fromusername"></span><!-- /ko -->
+              <!-- ko ifnot: content.fromusername --><!-- ko if: content.fromuser --><span data-bind="text: content.fromuser"></span><!-- /ko --><!-- /ko -->
+              <!-- ko if: content.tousername --><span data-bind="text: ' > '+content.tousername"></span><!-- /ko -->
+            </div>
             <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
+            
             <div class="item-metadata">
               <span data-bind="if: (content.numreplied > 0)">
                 <img src="img/metadata/reply.png" title="Replies" alt="Replies" /> <span data-bind="text: content.numreplied"></span>
@@ -71,7 +79,9 @@
             </div>
             <div class="clear"></div>
           </div>
+          
           <div class="item-text" data-bind="html: makeItemTextHTML(content)"></div>
+          
           <div class="item-actions" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
               <ul class="actionlist">
                 <!-- ko foreach: content.actions -->
