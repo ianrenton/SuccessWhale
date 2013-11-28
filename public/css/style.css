@@ -166,11 +166,12 @@ div.column {
 }
 
 div.columnloading {
-    height: 20px;
-    width: 100%;
+    height: 30px;
+    width: 30px;
+    float: right;
     background: #eeeeee
-                url('../img/loading.gif')
-                50% 50%
+                url('../img/loading-small.gif')
+                100% 100%
                 no-repeat;
 }
 

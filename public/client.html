@@ -44,8 +44,8 @@
   </div>
   <div id="columns" data-bind="foreach: columns, style: { width: (columns().length/colsPerScreen()*100) + '%'}">
     <div data-bind="name: fullpath, style: { width: 100/$parent.columns().length-1 + '%' }" class="column">
+      <div class="columnloading" data-bind="visible: loading"></div>
       <h4 class="columnheading" data-bind="text: title"></h4>
-      <div class="columnloading" data-bind="slideVisible: loading"></div>
       <!-- ko foreach: items -->
         <div class="item">
           <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
