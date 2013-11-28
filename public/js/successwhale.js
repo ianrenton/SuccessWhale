@@ -115,11 +115,14 @@ function loadFeedForColumn(j) {
     });
 }
 
-// Fetch and display column content
+// Fetch and display column content, with a delay between each load to avoid overloading
+// the browser and the API.
 function refreshColumns() {
   var j = 0;
   for (; j < viewModel.columns().length; j++) {
-    loadFeedForColumn(j);
+    (function(index) {
+        setTimeout(function() { loadFeedForColumn(index); }, 5000*index);
+    })(j);
   }
   
   // Hide loading overlay, if it's displayed, as we have now fully loaded the display.
@@ -166,11 +169,12 @@ function displayColumns() {
     .done(function(returnedData) {
       var cols = returnedData.columns;
       
-      // Add a dummy observableArray to hold items later, and tag it as loading
+      // Add a dummy observableArray to hold items later, and an observable for the
+      // loading state
       var i = 0;
       for (; i<cols.length; i++) {
         cols[i].items = ko.observableArray();
-        cols[i].loading = ko.observable(true);
+        cols[i].loading = ko.observable(false);
       }
       
       // Update the view model
