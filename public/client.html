@@ -91,7 +91,7 @@
                   <a class="actionbutton" data-bind="click: function(action) { $parent.replyvisible(!$parent.replyvisible()); }" href="#"><img src="img/actions/reply.png" title="Reply" alt="Reply"></a>
                 </li>
                 <li data-bind="if: (name == 'conversation')">
-                  <a class="actionbutton" onclick="" href="#"><img src="img/actions/thread.png" title="Thread" alt="Thread"></a>
+                  <a class="actionbutton" data-bind="click: function(action) { loadThreadForItem($parent); $parent.threadvisible(!$parent.threadvisible()); }" href="#"><img src="img/actions/thread.png" title="Thread" alt="Thread"></a>
                 </li>
                 <li data-bind="if: (name == 'retweet')">
                   <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><img src="img/actions/retweet.png" title="Retweet" alt="Retweet"></a>
@@ -110,6 +110,21 @@
                   <a class="actionbutton" data-bind="attr: { href: content.permalink }" target="_blank"><img src="img/actions/permalink.png" title="Permalink" alt="Permalink"></a>
                 </li>
               </ul>
+              <div class="clear"></div>
+              <div class="inlinethread" data-bind="visible: threadvisible">
+                Thread:
+                <!-- ko foreach: thread -->
+                <div class="threaditem">
+                  <div class="threaditem-fromuser">
+                    <div class="threaditem-fromusername">
+                      <!-- ko if: content.fromusername --><span data-bind="text: content.fromusername"></span><!-- /ko -->
+                      <!-- ko ifnot: content.fromusername --><!-- ko if: content.fromuser --><span data-bind="text: content.fromuser"></span><!-- /ko --><!-- /ko -->
+                    </div>
+                  </div>
+                  <div class="threaditem-text" data-bind="html: makeItemTextHTML(content)"></div>
+                </div>
+                <!-- /ko -->
+              </div>
               <div class="clear"></div>
               <div class="inlinereply" data-bind="visible: replyvisible">
                 <form class="replyform" method="post">

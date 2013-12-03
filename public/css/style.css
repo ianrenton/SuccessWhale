@@ -267,11 +267,28 @@ div.item-actions ul.actionlist li a.actionbutton {
   text-decoration: none;
 }
 
+div.threaditem-fromuser {
+  padding: 0.5em 0.5em 0 0.5em;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+div.threaditem-text {
+  padding: 0 0.5em 0.5em 0.5em;
+  overflow: hidden;
+}
+
+div.threaditem-text a {
+  color: #4096ee;
+  text-decoration: none;
+}
+
 textarea.replyentry {
   margin: 1.1em 0 1em 1em;
   padding: 0.3em 0.3em 0.2em 0.3em;
   font-size: 1em;
   height: 1.5em;
+  width: 70%;
   background-color: white;
   border: 1px solid #6666ff;
   border-right: none;

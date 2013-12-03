@@ -65,7 +65,9 @@ function checkLoggedIn() {
 //  request
 function showError(html, returnedData) {
   if (typeof(returnedData) != "undefined") {
-    html += "<br/>The SuccessWhale API reported the following error:<br/>" + JSON.parse(returnedData.responseText).error
+    if (returnedData.responseText) {
+      html += "<br/>The SuccessWhale API reported the following error:<br/>" + JSON.parse(returnedData.responseText).error
+    }
   }
   $('#errorbox').html(html);
   $('#errorbox').show('slow', function hideLater() {
@@ -135,6 +137,18 @@ function loadFeedForColumn(j) {
     .fail(function(returnedData) {
       showError('Failed to fetch column "' + viewModel.columns()[j].title + '"', returnedData);
       viewModel.columns()[j].loading(false);
+    });
+}
+
+// Load the thread for a single item into its "thread" array
+function loadThreadForItem(item) {
+  var jqxhr = $.get(API_SERVER+'/thread', {service: item.service, uid: item.fetchedforuserid, postid: item.content.id, skipfirst: true, token: viewModel.token()})
+    .done(function(returnedData) {
+      item.thread.removeAll();
+      item.thread.push.apply(item.thread, returnedData.items);
+    })
+    .fail(function(returnedData) {
+      showError('Failed to fetch thread for this item.', returnedData);
     });
 }
 
