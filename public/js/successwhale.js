@@ -34,6 +34,22 @@ ko.bindingHandlers.slideVisible = {
     }
 };
 
+// Set up a jQuery Form for the main and reply post forms so we can submit them in an
+// AJAXy way, and handle success/failure of the post with callbacks
+var postItemOptions = {  
+  url:        API_SERVER+'/item',
+  type:       'POST',
+  dataType:   'json',
+  //resetForm:  true, - nope, this resets even static fields. TODO Find a nicer way of resetting only the necessary fields
+  success:    function(jsonResponse) { 
+    showSuccess('Item posted.');
+    refreshColumns();
+  },
+  error:      function(jsonResponse) { 
+    showError('Item could not be posted due to an error.', JSON.stringify(jsonResponse));
+  } 
+}; 
+
 // Checks the user is logged in (via a cookie) - if not, punts them
 // to the login page
 function checkLoggedIn() {
@@ -43,18 +59,6 @@ function checkLoggedIn() {
     viewModel.token(readCookie('token'));
   }
 }
-
-// JS implementation of Java .hashCode() method
-function hashCode(string) {
-  var hash = 0, i, chara;
-  if (string.length == 0) return hash;
-  for (i = 0, l = string.length; i < l; i++) {
-    chara  = string.charCodeAt(i);
-    hash  = ((hash<<5)-hash)+chara;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
-};
 
 // Shows an error box for a set time, with the supplied HTML and optionally also
 // a SuccessWhale API error message extracted from the returnedData of an unsuccessful
@@ -107,6 +111,25 @@ function loadFeedForColumn(j) {
           'scrolling'   : 'no'
         });
       });
+      // Add autosize to items that need it
+      $('.replyentry').each(function() {
+        $(this).autosize();
+      });
+      // Bind the reply forms
+      $('.replyentry').each(function() {
+        $(this).keydown(function (e) {
+          if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
+            $(this).parents('form:first').submit();
+          }
+        });
+      });
+      $('.replybutton').each(function() {
+        $(this).click(function (e) {
+          $(this).parents('form:first').submit();
+        });
+      });
+      $('form.replyform').ajaxForm(postItemOptions);
+      // Set the loading status to false
       viewModel.columns()[j].loading(false);
     })
     .fail(function(returnedData) {
@@ -230,23 +253,7 @@ $(document).ready(function() {
   $('#postbutton').click(function (e) {
     $('form#postform').submit();
   });
-  
-  // Bind jQuery Form to the main post form so we can submit it in an AJAXy way,
-  // and handle success/failure of the post with callbacks
-  var options = {  
-    url:        API_SERVER+'/item',
-    type:       'POST',
-    dataType:   'json',
-    resetForm:  true,
-    success:    function(jsonResponse) { 
-      showSuccess('Item posted.');
-      refreshColumns();
-    },
-    error:      function(jsonResponse) { 
-      showError('Item could not be posted due to an error.', JSON.stringify(jsonResponse));
-    } 
-  }; 
-  $('form#postform').ajaxForm(options);
+  $('form#postform').ajaxForm(postItemOptions);
   
   // Bind Attach File clear button
   $('input#fileclearbutton').click(function (e) {

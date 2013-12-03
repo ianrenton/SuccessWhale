@@ -23,8 +23,10 @@ div#header {
 
 div#topmenu {
   float:right;
-  margin: 0 0 0 2em;
-  padding: 0.1em;
+  display:inline-block;
+  margin: 1em;
+  padding: 0;
+  line-height: 2em;
   background: #5b5b5b;
   background: -moz-linear-gradient(top, #5b5b5b 0%, #070707 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5b5b5b), color-stop(100%,#070707));
@@ -33,6 +35,10 @@ div#topmenu {
   background: -ms-linear-gradient(top, #5b5b5b 0%,#070707 100%);
   background: linear-gradient(to bottom, #5b5b5b 0%,#070707 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b5b5b', endColorstr='#070707',GradientType=0 );
+  border: 1px solid black;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 div#topmenu a {
@@ -259,6 +265,50 @@ div.item-actions ul.actionlist li a.actionbutton {
   padding: 0.3em;
   color: gray;
   text-decoration: none;
+}
+
+textarea.replyentry {
+  margin: 1.1em 0 1em 1em;
+  padding: 0.3em 0.3em 0.2em 0.3em;
+  font-size: 1em;
+  height: 1.5em;
+  background-color: white;
+  border: 1px solid #6666ff;
+  border-right: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+span.replybutton {
+  margin: 1.1em 0 1em -5px;
+  padding: 0 1em;
+  display:inline-block;
+  font-size: 1em;
+  line-height: 2em;
+  background: #5b5b5b;
+  background: -moz-linear-gradient(top, #5b5b5b 0%, #070707 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5b5b5b), color-stop(100%,#070707));
+  background: -webkit-linear-gradient(top, #5b5b5b 0%,#070707 100%);
+  background: -o-linear-gradient(top, #5b5b5b 0%,#070707 100%);
+  background: -ms-linear-gradient(top, #5b5b5b 0%,#070707 100%);
+  background: linear-gradient(to bottom, #5b5b5b 0%,#070707 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b5b5b', endColorstr='#070707',GradientType=0 );
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: white;
+  cursor:default;
 }
 
 div#errorbox {

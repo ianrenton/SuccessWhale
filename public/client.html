@@ -82,11 +82,12 @@
           
           <div class="item-text" data-bind="html: makeItemTextHTML(content)"></div>
           
-          <div class="item-actions" data-bind="attr:{ id: 'actions-' + hashCode(service + content.id) }">
+          <!-- ko if: ((content.actions.length > 0) || content.permalink) -->
+          <div class="item-actions">
               <ul class="actionlist">
                 <!-- ko foreach: content.actions -->
                 <li data-bind="if: (name == 'reply')">
-                  <a class="actionbutton" onclick="" href="#"><img src="img/actions/reply.png" title="Reply" alt="Reply"></a>
+                  <a class="actionbutton" data-bind="click: function(action) { $parent.replyvisible(!$parent.replyvisible()); }" href="#"><img src="img/actions/reply.png" title="Reply" alt="Reply"></a>
                 </li>
                 <li data-bind="if: (name == 'conversation')">
                   <a class="actionbutton" onclick="" href="#"><img src="img/actions/thread.png" title="Thread" alt="Thread"></a>
@@ -105,11 +106,22 @@
                 </li>
                 <!-- /ko -->
                 <li data-bind="if: content.permalink">
-                  <a class="actionbutton" data-bind="attr: {href: content.permalink }" target="_blank"><img src="img/actions/permalink.png" title="Permalink" alt="Permalink"></a>
+                  <a class="actionbutton" data-bind="attr: { href: content.permalink }" target="_blank"><img src="img/actions/permalink.png" title="Permalink" alt="Permalink"></a>
                 </li>
               </ul>
               <div class="clear"></div>
+              <div class="inlinereply" data-bind="visible: replyvisible">
+                <form class="replyform" method="post">
+                  <input class="token" name="token" type="hidden" data-bind="value: $parents[1].token"/>
+                  <input class="replyPostToAccounts" name="accounts" type="hidden" data-bind="value: service+'/'+fetchedforuserid"/>
+                  <input class="replyInReplyToID" name="in_reply_to_id" type="hidden" data-bind="value: content.replytoid"/>
+                  <textarea class="replyentry" name="text" data-bind="value: (service=='twitter') ? '@'+content.fromuser+' ' : ''" rows="1"></textarea>
+                  <span class="replybutton">Post</span>
+                </form>
+              </div>
+              <div class="clear"></div>
             </div>
+            <!-- /ko -->
         </div>
       <!-- /ko -->
     </div>
