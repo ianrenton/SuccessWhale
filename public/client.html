@@ -57,6 +57,7 @@
               <!-- ko if: content.fromusername --><span data-bind="text: content.fromusername"></span><!-- /ko -->
               <!-- ko ifnot: content.fromusername --><!-- ko if: content.fromuser --><span data-bind="text: content.fromuser"></span><!-- /ko --><!-- /ko -->
               <!-- ko if: content.tousername --><span data-bind="text: ' > '+content.tousername"></span><!-- /ko -->
+              <!-- ko if: content.retweetedbyusername --><span data-bind="text: ' (via '+content.retweetedbyusername+')'"></span><!-- /ko -->
             </div>
             <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
             
