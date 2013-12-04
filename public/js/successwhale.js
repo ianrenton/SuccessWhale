@@ -102,6 +102,7 @@ function loadFeedForColumn(j) {
       for (; i<returnedData.items.length; i++) {
         returnedData.items[i].replyvisible = ko.observable(false);
         returnedData.items[i].threadvisible = ko.observable(false);
+        returnedData.items[i].threadloading = ko.observable(false);
         returnedData.items[i].thread = ko.observableArray();
       }
       // Put all the items into the viewmodel for display
@@ -142,13 +143,16 @@ function loadFeedForColumn(j) {
 
 // Load the thread for a single item into its "thread" array
 function loadThreadForItem(item) {
+  item.threadloading(true);
   var jqxhr = $.get(API_SERVER+'/thread', {service: item.service, uid: item.fetchedforuserid, postid: item.content.replytoid, skipfirst: true, token: viewModel.token()})
     .done(function(returnedData) {
       item.thread.removeAll();
       item.thread.push.apply(item.thread, returnedData.items);
+      item.threadloading(false);
     })
     .fail(function(returnedData) {
       showError('Failed to fetch thread for this item.', returnedData);
+      item.threadloading(false);
     });
 }
 

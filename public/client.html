@@ -112,7 +112,7 @@
               </ul>
               <div class="clear"></div>
               <div class="inlinethread" data-bind="slideVisible: threadvisible">
-                Thread:
+                <div class="threadloading" data-bind="visible: threadloading"></div>
                 <!-- ko foreach: thread -->
                 <div class="threaditem">
                   <div class="threaditem-fromuser">
