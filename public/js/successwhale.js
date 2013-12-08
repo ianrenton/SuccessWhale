@@ -142,9 +142,12 @@ function loadFeedForColumn(j) {
 }
 
 // Load the thread for a single item into its "thread" array
-function loadThreadForItem(item) {
+// Set skipfirst = true for items where the original post is already displayed, or false
+// where it isn't (e.g. Facebook notifications, where we need to display the post that
+// the notification was about
+function loadThreadForItem(item, skipfirst) {
   item.threadloading(true);
-  var jqxhr = $.get(API_SERVER+'/thread', {service: item.service, uid: item.fetchedforuserid, postid: item.content.replytoid, skipfirst: true, token: viewModel.token()})
+  var jqxhr = $.get(API_SERVER+'/thread', {service: item.service, uid: item.fetchedforuserid, postid: item.content.replytoid, skipfirst: skipfirst, token: viewModel.token()})
     .done(function(returnedData) {
       item.thread.removeAll();
       item.thread.push.apply(item.thread, returnedData.items);
