@@ -11,14 +11,14 @@ headers = {
 
 run lambda { |env|
   [
-    200, headers, File.open('public/login.html', File::RDONLY)
+    200, headers, File.open('public/client.html', File::RDONLY)
   ]
 }
 
-map "/client" do
+map "/login" do
   run lambda { |env|
   [
-    200, headers, File.open('public/client.html', File::RDONLY)
+    200, headers, File.open('public/login.html', File::RDONLY)
   ]
 }
 end

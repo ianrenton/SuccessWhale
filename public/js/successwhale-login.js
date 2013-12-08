@@ -18,7 +18,7 @@ ko.applyBindings(viewModel);
 // to the main client page as they do not need to log in again
 function checkLoggedOut() {
   if (readCookie('token')) {
-    window.location = '/client';
+    window.location = '/';
   }
 }
 
@@ -44,7 +44,7 @@ $('#login').submit(function() {
     $('#loginerrorbox').hide('fast');
     // Set cookie and advance to main interface
     createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
-    window.location = '/client';
+    window.location = '/';
   })
   .fail(function(returnedData) {
     // Display error box

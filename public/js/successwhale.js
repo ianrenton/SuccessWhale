@@ -54,7 +54,7 @@ var postItemOptions = {
 // to the login page
 function checkLoggedIn() {
   if (!readCookie('token')) {
-    window.location = '/';
+    window.location = '/login';
   } else {
     viewModel.token(readCookie('token'));
   }
