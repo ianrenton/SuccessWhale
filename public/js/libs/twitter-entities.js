@@ -16,6 +16,12 @@
  */
 
 function linkify_entities(content) {
+
+    // If we have an "escaped text", use it for preference as the entities are designed
+    // to line up with this one.
+    if (content.escapedtext) {
+      content.text = content.escapedtext;
+    }
     
     // This is very naive, should find a better way to parse this
     var index_map = {};
