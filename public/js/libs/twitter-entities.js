@@ -19,8 +19,10 @@ function linkify_entities(content) {
 
     // If we have an "escaped text", use it for preference as the entities are designed
     // to line up with this one.
-    if (content.escapedtext) {
-      content.text = content.escapedtext;
+    if (typeof content.escapedtext !== 'undefined') {
+      itemtext = content.escapedtext;
+    } else {
+      itemtext = content.text;
     }
     
     // This is very naive, should find a better way to parse this
@@ -30,7 +32,7 @@ function linkify_entities(content) {
     if (typeof content.links !== 'undefined') {
       $.each(content.links, function(i,entry) {
           if (typeof entry.indices !== 'undefined') {
-              index_map[entry.indices[0]] = [entry.indices[1], function(text) {
+              index_map[entry.indices[0]] = [entry.indices[1], function(itemtext) {
                   // If there's a preview, this will be handled separately so just remove the section of the text that refers to it. Otherwise, preserve the text and link it up by appling an A tag.
                   if (typeof entry.preview === 'undefined') {
                     return "<a href='"+entry.url+"' target='_blank'>"+entry.title+"</a>";
@@ -45,14 +47,14 @@ function linkify_entities(content) {
     // Replace hashtags with properly linked HTML
     if (typeof content.hashtags !== 'undefined') {
       $.each(content.hashtags, function(i,entry) {
-          index_map[entry.indices[0]] = [entry.indices[1], function(text) {return "<a href='http://twitter.com/search?q="+escape("#"+entry.text)+"' target='_blank'>#"+entry.text+"</a>";}];
+          index_map[entry.indices[0]] = [entry.indices[1], function(itemtext) {return "<a href='http://twitter.com/search?q="+escape("#"+entry.text)+"' target='_blank'>#"+entry.text+"</a>";}];
       });
     }
     
     // Replace usernames with properly linked HTML
     if (typeof content.usernames !== 'undefined') {
       $.each(content.usernames, function(i,entry) {
-          index_map[entry.indices[0]] = [entry.indices[1], function(text) {return "<a title='"+entry.user+"' href='http://twitter.com/"+escape(entry.user)+"' target='_blank'>@"+entry.user+"</a>";}];
+          index_map[entry.indices[0]] = [entry.indices[1], function(itemtext) {return "<a title='"+entry.user+"' href='http://twitter.com/"+escape(entry.user)+"' target='_blank'>@"+entry.user+"</a>";}];
       });
     }
     
@@ -61,22 +63,22 @@ function linkify_entities(content) {
     var i = 0;
     
     // iterate through the string looking for matches in the index_map
-    for (i=0; i < content.text.length; ++i) {
+    for (i=0; i < itemtext.length; ++i) {
         var ind = index_map[i];
         if (ind) {
             var end = ind[0];
             var func = ind[1];
             if (i > last_i) {
-                result += content.text.substring(last_i, i);
+                result += itemtext.substring(last_i, i);
             }
-            result += func(content.text.substring(i, end));
+            result += func(itemtext.substring(i, end));
             i = end - 1;
             last_i = end;
         }
     }
     
     if (i > last_i) {
-        result += content.text.substring(last_i, i);
+        result += itemtext.substring(last_i, i);
     }
     
     // Add a "source" link if we just have a single link with no indices for replacing text
