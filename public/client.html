@@ -103,7 +103,7 @@
                   <span class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><img src="img/actions/like.png" title="Like" alt="Like"></span>
                 </li>
                 <li data-bind="if: (name == 'delete')">
-                  <a class="actionbutton" onclick="" href="#"><img src="img/actions/delete.png" title="Delete" alt="Delete"></a>
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} "href="#"><img src="img/actions/delete.png" title="Delete" alt="Delete"></a>
                 </li>
                 <!-- /ko -->
                 <li data-bind="if: content.permalink">
