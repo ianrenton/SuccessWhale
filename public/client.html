@@ -48,7 +48,7 @@
       <div class="columnloading" data-bind="visible: loading"></div>
       <h4 class="columnheading" data-bind="text: title"></h4>
       <!-- ko foreach: items -->
-        <div class="item" data-bind="css: (moment().diff(moment(content.time),'minutes') <= $parents[1].highlightTime()) ? 'item-new' : 'item-old'">
+        <div class="item" data-bind="css: (moment().diff(moment(content.time),'minutes') < $parents[1].highlightTime()) ? 'item-new' : 'item-old'">
           <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
           
             <!-- ko if: (service === 'twitter') --><a data-bind="attr: { href: 'http://twitter.com/'+content.fromuser }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
