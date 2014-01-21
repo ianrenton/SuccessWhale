@@ -34,15 +34,27 @@ ko.bindingHandlers.slideVisible = {
     }
 };
 
+// Reset a single form element
+function resetFormElement(e) {
+  e.wrap('<form>').closest('form').get(0).reset();
+  e.unwrap();
+}
+
 // Set up a jQuery Form for the main and reply post forms so we can submit them in an
 // AJAXy way, and handle success/failure of the post with callbacks
 var postItemOptions = {  
   url:        API_SERVER+'/item',
   type:       'POST',
   dataType:   'json',
-  //resetForm:  true, - nope, this resets even static fields. TODO Find a nicer way of resetting only the necessary fields
-  success:    function(jsonResponse) { 
+  success:    function(jsonResponse) {
     showSuccess('Item posted.');
+    // Clear inputs
+    $('form#postform #postentry').val("");
+    $('form#postform #filetoupload').clearFields();
+    $('.replyentry').each(function() {
+        $(this).val("");
+    });
+    // Reload everything
     refreshColumns();
   },
   error:      function(jsonResponse) { 

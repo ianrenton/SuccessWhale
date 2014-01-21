@@ -11,25 +11,25 @@
   <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 </head>
-<body>
+<body class="loading">
   <div id="successbox"></div>
   <div id="errorbox"></div>
   <div id="header">
     <div id="topmenu">
-      <a id="logoutbutton" href="#"><img src="img/ui/logout.png" title="Logout" alt="Logout" /></a>
+      <a id="logoutbutton" href="#">Log out</a>
     </div>
     <form id="postform" method="post">
       <input id="token" name="token" type="hidden" data-bind="value: token"/>
       <input id="postToAccounts" name="accounts" type="hidden" data-bind="value: postToAccountsString()"/>
       <textarea id="postentry" name="text" rows="1"></textarea>
       <span id="postbutton">Post</span>
-      <span id="attachbutton" data-popover="attachmentdialog"><span class="icon"><img src="img/ui/attach.png" title="Attach Photo" alt="Attach Photo" /></span></span>
+      <span id="attachbutton" data-popover="attachmentdialog">Attach</span>
       <div id="attachmentdialog" class="gpopover">
         <p>Attach file:</p>
           <input type="file" name="file" id="filetoupload"/>
           <input type="button" id="fileclearbutton" value="Clear"/>
       </div>
-      <span id="postbuttondropdown" data-popover="accountselector"><span class="icon"><img src="img/ui/downarrow.png" title="Select accounts to post to" alt="Select accounts to post to" /></span>
+      <span id="postbuttondropdown" data-popover="accountselector">Accounts</span>
       <div id="accountselector" class="gpopover">
         <p>Post to:</p>
         <ul data-bind="foreach: postToAccounts">
@@ -91,7 +91,7 @@
                   <a class="actionbutton" data-bind="click: function(action) { $parent.replyvisible(!$parent.replyvisible()); }" href="#"><img src="img/actions/reply.png" title="Reply" alt="Reply"></a>
                 </li>
                 <li data-bind="if: (name == 'conversation')">
-                  <a class="actionbutton" data-bind="click: function(action) { loadThreadForItem($parent, ($parent.type=='facebook_notification')); $parent.threadvisible(!$parent.threadvisible()); }" href="#"><img src="img/actions/thread.png" title="Thread" alt="Thread"></a>
+                  <a class="actionbutton" data-bind="click: function(action) { loadThreadForItem($parent, ($parent.type!='facebook_notification')); $parent.threadvisible(!$parent.threadvisible()); }" href="#"><img src="img/actions/thread.png" title="Thread" alt="Thread"></a>
                 </li>
                 <li data-bind="if: (name == 'retweet')">
                   <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><img src="img/actions/retweet.png" title="Retweet" alt="Retweet"></a>
