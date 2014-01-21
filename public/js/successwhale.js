@@ -6,9 +6,19 @@ var NARROW_SCREEN_WIDTH = 600;
 function SWUserViewModel() {
   var self = this;
   
-  self.colsPerScreen = ko.observable();
+  // Display setting - number of columns per screen (honoured on wide screens only)
+  self.colsPerScreen = ko.observable(3);
+  // Display setting - user theme
+  self.theme = ko.observable('default');
+  // Display setting - highlight items newer than this (mins)
+  self.highlightTime = ko.observable(0);
+  // Display setting - show inline media
+  self.inlineMedia = ko.observable(true);
+  // SuccessWhale user API token
   self.token = ko.observable();
+  // Which SuccessWhale service accounts to post to
   self.postToAccounts = ko.observableArray();
+  // Giant data blob of all data from all columns
   self.columns = ko.observableArray();
   
   self.postToAccountsString = ko.computed(function () {
@@ -18,7 +28,7 @@ function SWUserViewModel() {
 
 // Activate knockout.js
 viewModel = new SWUserViewModel();
-ko.applyBindings(viewModel);
+ko.applyBindings(viewModel, document.getElementById("htmlTop")); // htmlTop is a hack to allow knockout to data-bind elements in the <head>
 
 // Add a Knockout "visible" binding with animation to the handlers list
 ko.bindingHandlers.slideVisible = {
@@ -33,12 +43,6 @@ ko.bindingHandlers.slideVisible = {
         ko.unwrap(value) ? $(element).slideDown() : $(element).slideUp();
     }
 };
-
-// Reset a single form element
-function resetFormElement(e) {
-  e.wrap('<form>').closest('form').get(0).reset();
-  e.unwrap();
-}
 
 // Set up a jQuery Form for the main and reply post forms so we can submit them in an
 // AJAXy way, and handle success/failure of the post with callbacks
@@ -197,6 +201,10 @@ function getDisplaySettings() {
       } else {
         viewModel.colsPerScreen(1);
       }
+      // Get theme and highlight time
+      viewModel.theme(returnedData.theme);
+      viewModel.highlightTime(returnedData.highlighttime);
+      viewModel.inlineMedia(returnedData.inlineMedia);
     })
     .fail(function(returnedData) {
       showError('Failed to fetch display settings', returnedData);
@@ -294,7 +302,7 @@ $(document).ready(function() {
   });
   
   // Bind gpopover items
-  $('#postbuttondropdown').gpopover({preventHide: true});
+  $('#posttoaccountsbutton').gpopover({preventHide: true});
   $('#attachbutton').gpopover({preventHide: true});
   
   // Bind other menu buttons

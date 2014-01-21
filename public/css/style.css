@@ -2,7 +2,6 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #eeeeee;
 }
 
 div#header {
@@ -10,8 +9,7 @@ div#header {
   width: 100%;
   position: fixed;
   z-index: 10;
-  background: #f8f8f8;
-  border-bottom: 1px solid #888888;
+  background: white;
 }
 
 div#topmenu {
@@ -20,16 +18,10 @@ div#topmenu {
   margin: 1em;
   padding: 0;
   line-height: 2em;
-  background: #8888ff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
 }
 
 div#topmenu a {
   margin: 0 1em;
-  color: white;
-  text-decoration: none;
 }
 
 textarea#postentry {
@@ -38,11 +30,6 @@ textarea#postentry {
   width: 60%;
   font-size: 1em;
   height: 1.4em;
-  background-color: #ddddff;
-  border: 2px solid #6666ff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
 }
 
 @media (max-width: 600px) {
@@ -57,11 +44,6 @@ span#postbutton {
   display:inline-block;
   font-size: 1em;
   line-height: 2em;
-  background: #5b5bff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  color: white;
   cursor: pointer;
 }
 
@@ -70,11 +52,6 @@ span#attachbutton {
   padding: 0 1em;
   display:inline-block;
   line-height: 2em;
-  background: #8888ff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  color: white;
   cursor: pointer;
 }
 
@@ -87,17 +64,12 @@ form#attachbuttonform {
   margin: 0;
 }
 
-span#postbuttondropdown {
+span#posttoaccountsbutton {
   margin: 1.1em 0em 1em 1em;
   padding: 0 1em;
   display:inline-block;
   font-size: 1em;
   line-height: 2em;
-  background: #8888ff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  color: white;
   cursor: pointer;
 }
 
@@ -147,20 +119,17 @@ h4.columnheading {
 div.item {
   margin-bottom: 0.5em;
   padding: 0;
-  background-color: white;
-  border: 1px solid #cccccc;
-  font-weight: 100;
+}
+
+div.item-new {
 }
 
 div.item-text {
   padding: 0.5em;
   overflow: hidden;
-  color: #333333;
 }
 
 div.item-text a {
-  color: #4096ee;
-  text-decoration: none;
 }
 
 div.item-mediapreview {
@@ -184,13 +153,9 @@ div.item-fromusername {
 }
 
 div.item-fromuser-twitter {
-  background-color: #d1f4ff;
-  color: #333333;
 }
 
 div.item-fromuser-facebook {
-  background-color: #dfe3ee;
-  color: #333333;
 }
 
 img.item-fromuseravatar {
@@ -202,8 +167,6 @@ div.item-actions {
   margin: 0;
   padding: 0.5em;
   font-size: 0.75em;
-  background-color: #eeeeee;
-  color: #333333;
 }
 
 div.item-actions ul.actionlist {
@@ -227,10 +190,6 @@ div.item-actions ul.actionlist li a.actionbutton {
 .threadloading {
     height: 30px;
     width: 100%;
-    background: rgba( 235, 235, 235, .8 )
-                url('../img/loading.gif')
-                50% 50%
-                no-repeat;
     text-align: center;
 }
 
@@ -246,8 +205,6 @@ div.threaditem-text {
 }
 
 div.threaditem-text a {
-  color: #4096ee;
-  text-decoration: none;
 }
 
 textarea.replyentry {
@@ -256,11 +213,6 @@ textarea.replyentry {
   font-size: 1em;
   height: 1.5em;
   width: 70%;
-  background-color: #ddddff;
-  border: 2px solid #6666ff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
 }
 
 span.replybutton {
@@ -269,11 +221,6 @@ span.replybutton {
   display:inline-block;
   font-size: 1em;
   line-height: 2.4em;
-  background: #5b5bff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  color: white;
   cursor: pointer;
 }
 
@@ -281,11 +228,8 @@ div#errorbox {
   position: fixed;
   top: 1em;
   right: 1em;
-  z-index: 20;
+  z-index: 2000;
   padding: 0.25em;
-  background: #ffbbbb;
-  color: black;
-  border: 1px solid #ff0000;
   display: none;
 }
 
@@ -293,11 +237,8 @@ div#successbox {
   position: fixed;
   top: 1em;
   right: 1em;
-  z-index: 20;
+  z-index: 2000;
   padding: 0.25em;
-  background: #bbffbb;
-  color: black;
-  border: 1px solid #00bb00;
   display: none;
 }
 

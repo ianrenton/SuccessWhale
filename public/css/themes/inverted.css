@@ -1,0 +1,153 @@
+html, body {
+  background-color: #303030;
+}
+
+div#header {
+  background: #404040;
+  border-bottom: 1px solid #202020;
+}
+
+div#topmenu {
+  background: #404060;
+}
+
+div#topmenu a {
+  color: white;
+  text-decoration: none;
+}
+
+textarea#postentry {
+  background-color: black;
+  border: 2px solid #4040a0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#postbutton {
+  background: #4040a0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#postbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+span#attachbutton {
+  background: #404060;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#attachbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+span#posttoaccountsbutton {
+  background: #404060;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#posttoaccountsbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+div.columnloading {
+  background: #303030
+                url('../../img/loading-small.gif')
+                100% 100%
+                no-repeat;
+}
+
+h4.columnheading {
+  color: white;
+}
+
+div.item {
+  background-color: #101010;
+  border: 1px solid #404040;
+  font-weight: 100;
+}
+
+div.item-new {
+  border: 2px solid #4040a0;
+}
+
+div.item-text {
+  color: #a0a0a0;
+}
+
+div.item-text a {
+  color: #4040a0;
+  text-decoration: none;
+}
+
+div.item-fromuser-twitter {
+  background-color: #006060;
+  color: #c0c0c0;
+}
+
+div.item-fromuser-facebook {
+  background-color: #404060;
+  color: #a0a0a0;
+}
+
+div.item-actions {
+  background-color: #202020;
+  color: #a0a0a0;
+}
+
+.threadloading {
+    background: rgba( 10, 10, 10, .8 )
+                url('../../img/loading.gif')
+                50% 50%
+                no-repeat;
+}
+
+div.threaditem-text a {
+  color: #40a040;
+  text-decoration: none;
+}
+
+textarea.replyentry {
+  background-color: black;
+  border: 2px solid #4040a0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span.replybutton {
+  background: #4040a0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: white;
+}
+
+div#errorbox {
+  background: #ffbbbb;
+  color: black;
+  border: 1px solid #ff0000;
+}
+
+div#successbox {
+  background: #bbffbb;
+  color: black;
+  border: 1px solid #00bb00;
+}
+
+.modal {
+  background: rgba( 10, 10, 10, 1 )
+              url('../../img/loading.gif')
+              50% 50%
+              no-repeat;
+}

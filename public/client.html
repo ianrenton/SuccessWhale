@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html id="htmlTop">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
   <title>SuccessWhale</title>
   <link rel="stylesheet" href="css/normalize.css"/>
   <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" data-bind="attr: { href: 'css/themes/'+theme()+'.css' }"/>
   <link rel="stylesheet" href="css/jquery.gpopover.css"/>
   <link rel="stylesheet" href="js/libs/fancybox/jquery.fancybox.css?v=2.1.5" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
@@ -22,14 +23,14 @@
       <input id="token" name="token" type="hidden" data-bind="value: token"/>
       <input id="postToAccounts" name="accounts" type="hidden" data-bind="value: postToAccountsString()"/>
       <textarea id="postentry" name="text" rows="1"></textarea>
-      <span id="postbutton">Post</span>
-      <span id="attachbutton" data-popover="attachmentdialog">Attach</span>
+      <span id="postbutton"><a href="#">Post</a></span>
+      <span id="attachbutton" data-popover="attachmentdialog"><a href="#">Attach</a></span>
       <div id="attachmentdialog" class="gpopover">
         <p>Attach file:</p>
           <input type="file" name="file" id="filetoupload"/>
           <input type="button" id="fileclearbutton" value="Clear"/>
       </div>
-      <span id="postbuttondropdown" data-popover="accountselector">Accounts</span>
+      <span id="posttoaccountsbutton" data-popover="accountselector"><a href="#">Accounts</a></span>
       <div id="accountselector" class="gpopover">
         <p>Post to:</p>
         <ul data-bind="foreach: postToAccounts">
@@ -47,7 +48,7 @@
       <div class="columnloading" data-bind="visible: loading"></div>
       <h4 class="columnheading" data-bind="text: title"></h4>
       <!-- ko foreach: items -->
-        <div class="item">
+        <div class="item" data-bind="css: (moment().diff(moment(content.time),'minutes') <= $parents[1].highlightTime()) ? 'item-new' : 'item-old'">
           <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
           
             <!-- ko if: (service === 'twitter') --><a data-bind="attr: { href: 'http://twitter.com/'+content.fromuser }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
