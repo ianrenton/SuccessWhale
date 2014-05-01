@@ -41,6 +41,8 @@ textarea#postentry {
 span#postbutton {
   margin: 1.1em 0 1em 1em;
   padding: 0 1em;
+  position: relative;
+  left: -40px;
   display:inline-block;
   font-size: 1em;
   line-height: 2em;
@@ -48,15 +50,13 @@ span#postbutton {
 }
 
 span#attachbutton {
-  margin: 1.1em 0 1em 1em;
-  padding: 0 1em;
+  margin: 1.2em 0 1em 1em;
+  padding: 0;
+  position: relative;
+  left: -50px;
   display:inline-block;
-  line-height: 2em;
   cursor: pointer;
-}
-
-span#attachbutton span.icon {
-  font-size:1.1em;
+  font-size: 1.2em;
 }
 
 form#attachbuttonform {
@@ -67,6 +67,8 @@ form#attachbuttonform {
 span#posttoaccountsbutton {
   margin: 1.1em 0em 1em 1em;
   padding: 0 1em;
+  position: relative;
+  left: -40px;
   display:inline-block;
   font-size: 1em;
   line-height: 2em;
@@ -105,7 +107,7 @@ div.columnloading {
     width: 30px;
     float: right;
     background: #eeeeee
-                url('../img/loading-small.gif')
+                url('../../img/loading-small.gif')
                 100% 100%
                 no-repeat;
 }
@@ -166,7 +168,7 @@ img.item-fromuseravatar {
 div.item-actions {
   margin: 0;
   padding: 0.5em;
-  font-size: 0.75em;
+  font-size: 1em;
 }
 
 div.item-actions ul.actionlist {
@@ -251,7 +253,7 @@ div#successbox {
     height: 100%;
     width: 100%;
     background: rgba( 235, 235, 235, 1 )
-                url('../img/loading.gif')
+                url('../../img/loading.gif')
                 50% 50%
                 no-repeat;
     text-align: center;

@@ -36,15 +36,8 @@ span#postbutton a {
   text-decoration: none;
 }
 
-span#attachbutton {
-  background: #8888ff;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-}
-
 span#attachbutton a {
-  color: white;
+  color: #222222;
   text-decoration: none;
 }
 

@@ -1,7 +1,7 @@
 
 # encoding: UTF-8
 use Rack::Static,
-  :urls => ["/img", "/js", "/css"],
+  :urls => ["/img", "/js", "/css", "/fonts"],
   :root => "public"
   
 headers = {
