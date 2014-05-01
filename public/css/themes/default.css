@@ -55,7 +55,7 @@ span#posttoaccountsbutton a {
 
 div.columnloading {
   background: #eeeeee
-                url('../img/loading-small.gif')
+                url('../../img/loading-small.gif')
                 100% 100%
                 no-repeat;
 }
@@ -100,7 +100,7 @@ div.item-actions {
 
 .threadloading {
     background: rgba( 235, 235, 235, .8 )
-                url('../img/loading.gif')
+                url('../../img/loading.gif')
                 50% 50%
                 no-repeat;
 }
