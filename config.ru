@@ -22,3 +22,11 @@ map "/login" do
   ]
 }
 end
+
+map "/facebookcallback" do
+  run lambda { |env|
+  [
+    200, headers, File.open('public/facebookcallback.html', File::RDONLY)
+  ]
+}
+end

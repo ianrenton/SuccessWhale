@@ -69,4 +69,17 @@ $('#login').submit(function() {
 $(document).ready(function() {
   checkLoggedOut();
   checkServerStatus();
+  
+  // Bind "Log in with Facebook" button
+  $('a#authwithfacebook').click(function (e) {
+    var jqxhr = $.get(API_SERVER+'/authwithfacebook', {callback_url: escape(location.origin+'/facebookcallback')})
+    .done(function(returnedData) {
+      window.location = returnedData.url;
+    })
+    .fail(function(returnedData) {
+      // Display error box
+      viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
+      $('#loginerrorbox').show('fast');
+    });
+  });
 });
