@@ -1,0 +1,27 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 235, 235, 235, 1 )
+                url('../../img/loading.gif')
+                50% 50%
+                no-repeat;
+    text-align: center;
+    font-weight: 100;
+    font-size: 1.2em;
+    padding-bottom: 1.2em;
+}
+
+div.clear {
+  clear:both;
+}
