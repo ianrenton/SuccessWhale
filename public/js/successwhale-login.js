@@ -72,7 +72,7 @@ $(document).ready(function() {
   
   // Bind "Log in with Twitter" button
   $('a#authwithtwitter').click(function (e) {
-    var jqxhr = $.get(API_SERVER+'/authwithtwitter', {callback_url: escape(location.origin+'/twittercallback')})
+    var jqxhr = $.get(API_SERVER+'/authwithtwitter', {callback_url: location.origin+'/twittercallback'})
     .done(function(returnedData) {
       window.location = returnedData.url;
     })
@@ -85,7 +85,7 @@ $(document).ready(function() {
   
   // Bind "Log in with Facebook" button
   $('a#authwithfacebook').click(function (e) {
-    var jqxhr = $.get(API_SERVER+'/authwithfacebook', {callback_url: escape(location.origin+'/facebookcallback')})
+    var jqxhr = $.get(API_SERVER+'/authwithfacebook', {callback_url: location.origin+'/facebookcallback'})
     .done(function(returnedData) {
       window.location = returnedData.url;
     })

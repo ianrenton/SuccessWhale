@@ -23,21 +23,21 @@ var params = getSearchParameters();
 // Automatically submit callback to SW and reload
 $(document).ready(function() {
 
-  var paramsToPassOn = {callback_url: escape(location.origin+'/twittercallback'), oauth_token: params.oauth_token, oauth_verifier: params.oauth_verifier};
+  var paramsToPassOn = {oauth_token: params.oauth_token, oauth_verifier: params.oauth_verifier};
   // Get token from cookie if we're already logged in, so the API binds the new Twitter
   // account to the right user
   if (readCookie('token')) {
     paramsToPassOn[token] = readCookie('token');
   }
   
-  alert(params.code);
-  
   var jqxhr = $.get(API_SERVER+'/authwithtwitter', paramsToPassOn)
     .done(function(returnedData) {
+      // Set cookie and advance to main interface
+      createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
       window.location = '/';
     })
     .fail(function(returnedData) {
-      alert(returnedData.error);
+      alert(returnedData.responseText);
       window.location = '/';
     });
   

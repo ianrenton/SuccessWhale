@@ -30,14 +30,14 @@ $(document).ready(function() {
     paramsToPassOn[token] = readCookie('token');
   }
   
-  alert(params.code);
-  
   var jqxhr = $.get(API_SERVER+'/authwithfacebook', paramsToPassOn)
     .done(function(returnedData) {
+      // Set cookie and advance to main interface
+      createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
       window.location = '/';
     })
     .fail(function(returnedData) {
-      alert(returnedData.error);
+      alert((JSON.parse(returnedData.responseText)).error);
       window.location = '/';
     });
   
