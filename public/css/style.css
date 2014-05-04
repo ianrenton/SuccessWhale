@@ -253,6 +253,18 @@ div#successbox {
   display: none;
 }
 
+a.serviceauth {
+  text-decoration: none;
+}
+
+a.serviceauth img.spinner {
+  display: none;
+}
+
+a.loading img.spinner {
+  display: inline;
+}
+
 .modal {
     display: none;
     position: fixed;

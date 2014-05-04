@@ -23,6 +23,11 @@ var params = getSearchParameters();
 // Automatically submit callback to SW and reload
 $(document).ready(function() {
 
+  // If Twitter access was denied, punt back to the main interface
+  if ('denied' in params) {
+    window.location = '/';
+  }
+
   var paramsToPassOn = {swsessionkey: params.swsessionkey, oauth_token: params.oauth_token, oauth_verifier: params.oauth_verifier};
   // Get token from cookie if we're already logged in, so the API binds the new Twitter
   // account to the right user
@@ -37,7 +42,6 @@ $(document).ready(function() {
       window.location = '/';
     })
     .fail(function(returnedData) {
-      alert(returnedData.responseText);
       window.location = '/';
     });
   

@@ -155,4 +155,30 @@ $(document).ready(function() {
    alert("Not implemented yet! This would call the POST columns API endpoint.");
    return false;
   });
+  $('a#authwithtwitter').click(function (e) {
+    $(this).addClass("loading");
+    var jqxhr = $.get(API_SERVER+'/authwithtwitter', {callback_url: location.origin+'/twittercallback'})
+    .done(function(returnedData) {
+      window.location = returnedData.url;
+    })
+    .fail(function(returnedData) {
+      // Display error box
+      viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
+      $('#loginerrorbox').show('fast');
+      $(this).removeClass("loading");
+    });
+  });
+  $('a#authwithfacebook').click(function (e) {
+    $(this).addClass("loading");
+    var jqxhr = $.get(API_SERVER+'/authwithfacebook', {callback_url: escape(location.origin+'/facebookcallback')})
+    .done(function(returnedData) {
+      window.location = returnedData.url;
+    })
+    .fail(function(returnedData) {
+      // Display error box
+      viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
+      $('#loginerrorbox').show('fast');
+      $(this).removeClass("loading");
+    });
+  });
 });
