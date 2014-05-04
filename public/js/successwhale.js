@@ -6,6 +6,9 @@ var NARROW_SCREEN_WIDTH = 600;
 function SWUserViewModel() {
   var self = this;
   
+  // SuccessWhale user API token
+  self.token = ko.observable();
+  
   // Display setting - number of columns per screen (honoured on wide screens only)
   self.colsPerScreen = ko.observable(3);
   // Display setting - user theme
@@ -14,8 +17,6 @@ function SWUserViewModel() {
   self.highlightTime = ko.observable(0);
   // Display setting - show inline media
   self.inlineMedia = ko.observable(true);
-  // SuccessWhale user API token
-  self.token = ko.observable();
   // Which SuccessWhale service accounts to post to
   self.postToAccounts = ko.observableArray();
   // Giant data blob of all data from all columns

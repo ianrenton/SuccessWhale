@@ -7,6 +7,10 @@ div#header {
   border-bottom: 1px solid #202020;
 }
 
+div#header h2 {
+  color: #dddddd;
+}
+
 div#topmenu {
   background: #404060;
 }

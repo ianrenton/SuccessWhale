@@ -12,6 +12,10 @@ div#header {
   background: white;
 }
 
+div#header h2 {
+  margin-left: 1em;
+}
+
 div#topmenu {
   float:right;
   display:inline-block;
@@ -21,7 +25,7 @@ div#topmenu {
 }
 
 div#topmenu a {
-  margin: 0 1em;
+  margin: 0.5em 1.1em;
 }
 
 textarea#postentry {
@@ -187,6 +191,10 @@ div.item-actions ul.actionlist li a.actionbutton {
   padding: 0.3em;
   color: gray;
   text-decoration: none;
+}
+
+div.item form {
+  margin: 0.5em;
 }
 
 .threadloading {

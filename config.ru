@@ -23,6 +23,14 @@ map "/login" do
 }
 end
 
+map "/config" do
+  run lambda { |env|
+  [
+    200, headers, File.open('public/config.html', File::RDONLY)
+  ]
+}
+end
+
 map "/twittercallback" do
   run lambda { |env|
   [

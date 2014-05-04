@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html id="htmlTop">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+  <title>SuccessWhale Configuration</title>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" data-bind="attr: { href: 'css/themes/'+theme()+'.css' }"/>
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+</head>
+<body class="loading">
+  <div id="successbox"></div>
+  <div id="errorbox"></div>
+  <div id="header">
+    <div id="topmenu">
+      <a id="configbutton" href="/">Back</a>
+    </div>
+    <h2>Configuration</h2>
+  </div>
+  <div id="columns">
+    <div class="column" width="25%">
+      <h4 class="columnheading">Accounts</h4>
+    </div>
+    <div class="column" width="25%">
+      <h4 class="columnheading">Appearance</h4>
+      <div class="item">
+        <form>
+          <p>Theme: <select data-bind="value: theme, options: availableThemes"></select></p>
+          <p>Columns per screen: <input data-bind="value: colsPerScreen" size="4" /></p>
+          <p><label><input type="checkbox" data-bind="checked: inlineMedia"/> Show inline media</label></p>
+          <p>Highlight new items for <input data-bind="value: highlightTime" size="4" /> minutes<br/>(0 = no highlighting)</p>
+          <button type="submit" id="savedisplaysettings">Save</button>
+        </form>
+      </div>
+    </div>
+    <div class="column" width="49%">
+      <h4 class="columnheading">Columns</h4>
+    </div>
+  </div>
+  <div class="modal"></div>
+    
+  <script src="js/libs/cookies.js"></script>
+  <script src="js/libs/xdr.js"></script>
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/knockout-3.0.0.js"></script>
+  <script src="js/libs/jquery.autosize.min.js"></script>
+  <script src="js/libs/jquery.form.min.js"></script>
+  <script src="js/libs/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script src="js/successwhale-config.js"></script>
+
+</body>
+</html>
