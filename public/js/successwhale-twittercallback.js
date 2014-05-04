@@ -23,7 +23,7 @@ var params = getSearchParameters();
 // Automatically submit callback to SW and reload
 $(document).ready(function() {
 
-  var paramsToPassOn = {oauth_token: params.oauth_token, oauth_verifier: params.oauth_verifier};
+  var paramsToPassOn = {swsessionkey: params.swsessionkey, oauth_token: params.oauth_token, oauth_verifier: params.oauth_verifier};
   // Get token from cookie if we're already logged in, so the API binds the new Twitter
   // account to the right user
   if (readCookie('token')) {
