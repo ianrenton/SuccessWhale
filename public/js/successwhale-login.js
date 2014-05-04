@@ -72,6 +72,7 @@ $(document).ready(function() {
   
   // Bind "Log in with Twitter" button
   $('a#authwithtwitter').click(function (e) {
+    $(this).addClass("loading");
     var jqxhr = $.get(API_SERVER+'/authwithtwitter', {callback_url: location.origin+'/twittercallback'})
     .done(function(returnedData) {
       window.location = returnedData.url;
@@ -80,12 +81,14 @@ $(document).ready(function() {
       // Display error box
       viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
       $('#loginerrorbox').show('fast');
+      $(this).removeClass("loading");
     });
   });
   
   // Bind "Log in with Facebook" button
   $('a#authwithfacebook').click(function (e) {
-    var jqxhr = $.get(API_SERVER+'/authwithfacebook', {callback_url: location.origin+'/facebookcallback'})
+    $(this).addClass("loading");
+    var jqxhr = $.get(API_SERVER+'/authwithfacebook', {callback_url: escape(location.origin+'/facebookcallback')})
     .done(function(returnedData) {
       window.location = returnedData.url;
     })
@@ -93,6 +96,7 @@ $(document).ready(function() {
       // Display error box
       viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
       $('#loginerrorbox').show('fast');
+      $(this).removeClass("loading");
     });
   });
 });

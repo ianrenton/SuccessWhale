@@ -131,6 +131,18 @@ div#loginerrorbox {
   display: none;
 }
 
+a.serviceauth {
+  text-decoration: none;
+}
+
+a.serviceauth img.spinner {
+  display: none;
+}
+
+a.loading img.spinner {
+  display: inline;
+}
+
 .modal {
   position: fixed;
   z-index: 1000;
