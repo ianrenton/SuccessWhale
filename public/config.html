@@ -23,6 +23,29 @@
   <div id="columns">
     <div class="column" width="25%">
       <h4 class="columnheading">Accounts</h4>
+      <div class="item">
+        <form>
+          <h4>Service Accounts</h4>
+          <table width="100%">
+            <tbody data-bind="foreach: accounts">
+              <tr>
+                <td><i data-bind="attr: { class: 'fa fa-'+service }"></i></td>
+                <td><span data-bind="text: username"></span></td>
+                <td>Post to: <input type="checkbox" data-bind="name: service + '/' + uid, checked: enabled"/></td>
+                <td><a href="#" class="deleteaccountbutton" data-bind="name: service + '/' + uid"/>Del</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="submit" id="saveaccountsettings">Save</button>
+          <p>Add Twitter, Add Facebook</p>
+        </form>
+      </div>
+      <div class="item">
+        <form>
+          <h4>SuccessWhale Account</h4>
+          <p>New, Delete</p>
+        </form>
+      </div>
     </div>
     <div class="column" width="25%">
       <h4 class="columnheading">Appearance</h4>
@@ -38,6 +61,15 @@
     </div>
     <div class="column" width="49%">
       <h4 class="columnheading">Columns</h4>
+      <div class="item">
+        <form>
+          <ol data-bind="foreach: columns">
+            <li><input data-bind="value: title" /><input data-bind="value: fullpath" /></li>
+          </ol>
+          <p>TODO: Proper UI for this</p>
+          <button type="submit" id="savecolumnsettings">Save</button>
+        </form>
+      </div>
     </div>
   </div>
   <div class="modal"></div>

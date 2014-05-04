@@ -11,13 +11,13 @@ div#header h2 {
   color: #dddddd;
 }
 
-div#topmenu {
-  background: #404060;
-}
-
 div#topmenu a {
+  background: #404060;
   color: white;
   text-decoration: none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
 
 textarea#postentry {

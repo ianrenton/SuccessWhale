@@ -19,9 +19,9 @@ function SWUserViewModel() {
   self.inlineMedia = ko.observable(true);
   
   // Which SuccessWhale service accounts to post to
-  //self.postToAccounts = ko.observableArray();
+  self.accounts = ko.observableArray();
   // Columns list
-  //self.columns = ko.observableArray();
+  self.columns = ko.observableArray();
 }
 
 // Activate knockout.js
@@ -93,7 +93,7 @@ function setDisplaySettings() {
 }
 
 // Fetch and display the list of accounts to post to
-/*function displayPostToAccounts() {
+function getAccounts() {
   var jqxhr = $.get(API_SERVER+'/posttoaccounts', {token: viewModel.token()})
     .done(function(returnedData) {
       var accounts = returnedData.posttoaccounts
@@ -101,7 +101,15 @@ function setDisplaySettings() {
       for (; i<accounts.length; i++) {
         accounts[i].enabled = ko.observable(accounts[i].enabled);
       }
-      viewModel.postToAccounts.push.apply(viewModel.postToAccounts, accounts);
+      viewModel.accounts.push.apply(viewModel.accounts, accounts);
+      
+      // Bind delete buttons for each
+      $('.deleteaccountbutton').each(function() {
+        $(this).click(function (e) {
+          alert("Not implemented yet! This would prompt for confirmation, then call the delete service account API endpoint.");
+          return false;
+        });
+      });
     })
     .fail(function(returnedData) {
       showError('Failed to fetch account list', returnedData);
@@ -109,57 +117,42 @@ function setDisplaySettings() {
 }
 
 // Fetch and display columns
-function displayColumns() {
+function getColumns() {
   var jqxhr = $.get(API_SERVER+'/columns', {token: viewModel.token()})
     .done(function(returnedData) {
-      var cols = returnedData.columns;
-      
-      // Add a dummy observableArray to hold items later, and an observable for the
-      // loading state
-      var i = 0;
-      for (; i<cols.length; i++) {
-        cols[i].items = ko.observableArray();
-        cols[i].loading = ko.observable(false);
-      }
-      
       // Update the view model
-      viewModel.columns.push.apply(viewModel.columns, cols);
-      
-      // Refresh all columns to pull in items
-      refreshColumns();
+      viewModel.columns.push.apply(viewModel.columns, returnedData.columns);
+      // Hide loading overlay.
+      $('body').removeClass("loading");
     })
     .fail(function(returnedData) {
       showError('Failed to fetch column list', returnedData);
     });
 }
 
-// Build a list of service/uid:service/uid... for every service we have selected
-function getPostToAccountsString(postToAccounts) {
-  var postToAccountString = '';
-  for (i=0; i<postToAccounts.length; i++) {
-    if (postToAccounts[i].enabled()) {
-      postToAccountString += postToAccounts[i].service + "/" + postToAccounts[i].uid + ":";
-    }
-  } 
-  return postToAccountString;
-}*/
-
 // Automatic stuff on page load
 $(document).ready(function() {
 
-  // Loading overlay. Hidden when data is retrieved
+  // Loading overlay. Hidden in getColumns(), we just assume that happens last.
   $('body').addClass("loading");
   
   // Main API calls to display data
   checkLoggedIn();
   getDisplaySettings();
+  getAccounts();
+  getColumns();
   
-  // Bind save buttons
+  // Bind buttons
   $('#savedisplaysettings').click(function (e) {
    setDisplaySettings();
    return false;
   });
-  
-  // Hide loading overlay.
-  $('body').removeClass("loading");
+  $('#saveaccountsettings').click(function (e) {
+   alert("Not implemented yet! This would call the POST posttoaccounts API endpoint.");
+   return false;
+  });
+  $('#savecolumnsettings').click(function (e) {
+   alert("Not implemented yet! This would call the POST columns API endpoint.");
+   return false;
+  });
 });
