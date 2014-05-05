@@ -18,7 +18,8 @@ function SWUserViewModel() {
   // Display setting - show inline media
   self.inlineMedia = ko.observable(true);
   
-  // Which SuccessWhale service accounts to post to
+  // Which SuccessWhale service accounts are available, and which of them should
+  // be posted to by default
   self.accounts = ko.observableArray();
   // Columns list
   self.columns = ko.observableArray();
@@ -127,6 +128,18 @@ function getAccounts() {
     });
 }
 
+// Set the user's "default post to" accounts
+function setAccountSettings() {
+  alert(ko.toJSON(viewModel.accounts()));
+  var jqxhr = $.post(API_SERVER+'/posttoaccounts', {token: viewModel.token(), accounts: ko.toJSON(viewModel.accounts())})
+    .done(function(returnedData) {
+      showSuccess('Account settings saved.', returnedData);
+    })
+    .fail(function(returnedData) {
+      showError('Failed to save account settings', returnedData);
+    });
+}
+
 // Fetch and display columns
 function getColumns() {
   var jqxhr = $.get(API_SERVER+'/columns', {token: viewModel.token()})
@@ -159,7 +172,7 @@ $(document).ready(function() {
    return false;
   });
   $('#saveaccountsettings').click(function (e) {
-   alert("Not implemented yet! This would call the POST posttoaccounts API endpoint.");
+   setAccountSettings();
    return false;
   });
   $('#savecolumnsettings').click(function (e) {
