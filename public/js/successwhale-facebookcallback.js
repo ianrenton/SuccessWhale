@@ -27,7 +27,7 @@ $(document).ready(function() {
   // Get token from cookie if we're already logged in, so the API binds the new Facebook
   // account to the right user
   if (readCookie('token')) {
-    paramsToPassOn[token] = readCookie('token');
+    paramsToPassOn['token'] = readCookie('token');
   }
   
   var jqxhr = $.get(API_SERVER+'/authwithfacebook', paramsToPassOn)
