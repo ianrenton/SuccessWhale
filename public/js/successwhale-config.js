@@ -148,7 +148,7 @@ function getAccounts() {
       });
     })
     .fail(function(returnedData) {
-      showError('Failed to fetch account list', returnedData);
+      showError('Failed to fetch account list.', returnedData);
     });
 }
 
@@ -159,7 +159,7 @@ function setAccountSettings() {
       showSuccess('Account settings saved.', returnedData);
     })
     .fail(function(returnedData) {
-      showError('Failed to save account settings', returnedData);
+      showError('Failed to save account settings.', returnedData);
     });
 }
 
@@ -173,8 +173,27 @@ function getColumns() {
       $('body').removeClass("loading");
     })
     .fail(function(returnedData) {
-      showError('Failed to fetch column list', returnedData);
+      showError('Failed to fetch column list.', returnedData);
     });
+}
+
+// Delete all data for the user
+function deleteAllData() {
+  var ok = confirm('This will delete all information SuccessWhale holds about you and your service accounts. This information is gone forever and we cannot retrieve it under any circumstances.\nClick OK if you wish to continue.');
+  if (ok) {
+    var jqxhr = $.post(API_SERVER+'/deletealldata', {token: viewModel.token()})
+      .done(function(returnedData) {
+        showSuccess('All data deleted. Logging out...', returnedData);
+        setTimeout(function() {
+          eraseCookie('token');
+          window.location = '/';
+        }, 2000);
+        
+      })
+      .fail(function(returnedData) {
+        showError('Failed to delete data.', returnedData);
+      });
+  }
 }
 
 // Automatic stuff on page load
@@ -207,6 +226,11 @@ $(document).ready(function() {
    alert("Not implemented yet! This would call the POST columns API endpoint.");
    return false;
   });
+  $('#deletealldata').click(function (e) {
+   deleteAllData();
+   return false;
+  });
+  
   $('a#authwithtwitter').click(function (e) {
     $(this).addClass("loading");
     var jqxhr = $.get(API_SERVER+'/authwithtwitter', {callback_url: location.origin+'/twittercallback'})

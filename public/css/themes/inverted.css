@@ -108,6 +108,10 @@ div.item-actions {
   color: #a0a0a0;
 }
 
+div.item form {
+  color: #a0a0a0;
+}
+
 .threadloading {
     background: rgba( 10, 10, 10, .8 )
                 url('../../img/loading.gif')
