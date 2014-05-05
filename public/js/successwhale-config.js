@@ -23,6 +23,8 @@ function SWUserViewModel() {
   self.accounts = ko.observableArray();
   // Columns list
   self.columns = ko.observableArray();
+  // Banned phrases list
+  self.bannedPhrases = ko.observable();
 }
 
 // Activate knockout.js
@@ -78,7 +80,7 @@ function getDisplaySettings() {
       viewModel.inlineMedia(returnedData.inlineMedia);
     })
     .fail(function(returnedData) {
-      showError('Failed to fetch display settings', returnedData);
+      showError('Failed to fetch display settings.', returnedData);
     });
 }
 
@@ -89,7 +91,29 @@ function setDisplaySettings() {
       showSuccess('Display settings saved.', returnedData);
     })
     .fail(function(returnedData) {
-      showError('Failed to save display settings', returnedData);
+      showError('Failed to save display settings.', returnedData);
+    });
+}
+
+// Get the user's banned phrases list
+function getBannedPhrases() {
+  var jqxhr = $.get(API_SERVER+'/bannedphrases', {token: viewModel.token()})
+    .done(function(returnedData) {
+      viewModel.bannedPhrases(returnedData.bannedphrases.join('\n'));
+    })
+    .fail(function(returnedData) {
+      showError('Failed to fetch banned phrases list.', returnedData);
+    });
+}
+
+// Set the user's banned phrases list
+function setBannedPhrases() {
+  var jqxhr = $.post(API_SERVER+'/bannedphrases', {token: viewModel.token(), bannedphrases: ko.toJSON(viewModel.bannedPhrases().match(/[^\r\n]+/g))})
+    .done(function(returnedData) {
+      showSuccess('Banned phrases saved.', returnedData);
+    })
+    .fail(function(returnedData) {
+      showError('Failed to save banned phrases.', returnedData);
     });
 }
 
@@ -161,17 +185,22 @@ $(document).ready(function() {
   
   // Main API calls to display data
   checkLoggedIn();
-  getDisplaySettings();
   getAccounts();
+  getDisplaySettings();
+  getBannedPhrases();
   getColumns();
   
   // Bind buttons
+  $('#saveaccountsettings').click(function (e) {
+   setAccountSettings();
+   return false;
+  });
   $('#savedisplaysettings').click(function (e) {
    setDisplaySettings();
    return false;
   });
-  $('#saveaccountsettings').click(function (e) {
-   setAccountSettings();
+  $('#savebannedphrases').click(function (e) {
+   setBannedPhrases();
    return false;
   });
   $('#savecolumnsettings').click(function (e) {

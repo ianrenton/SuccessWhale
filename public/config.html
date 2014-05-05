@@ -36,7 +36,7 @@
               </tr>
             </tbody>
           </table>
-          <button type="submit" id="saveaccountsettings">Save</button>
+          <p><button type="submit" id="saveaccountsettings">Save</button></p>
           <p><a id="authwithtwitter" class="serviceauth" href="#">Add Twitter account <img class="spinner" src="img/loading-small.gif" /></a><br/><a id="authwithfacebook"  class="serviceauth" href="#">Add Facebook account <img class="spinner" src="img/loading-small.gif" /></a></p>
         </form>
       </div>
@@ -55,7 +55,15 @@
           <p>Columns per screen: <input data-bind="value: colsPerScreen" size="4" /></p>
           <p><label><input type="checkbox" data-bind="checked: inlineMedia"/> Show inline media</label></p>
           <p>Highlight new items for <input data-bind="value: highlightTime" size="4" /> minutes<br/>(0 = no highlighting)</p>
-          <button type="submit" id="savedisplaysettings">Save</button>
+          <p><button type="submit" id="savedisplaysettings">Save</button></p>
+        </form>
+      </div>
+      <div class="item">
+        <form>
+          <h4>Banned Phrases</h4>
+          <p>Items containing the following phrases will not be displayed:</p>
+          <textarea cols="30" rows="5" id="bannedphrases" data-bind="value: bannedPhrases"></textarea>
+          <p><button type="submit" id="savebannedphrases">Save</button></p>
         </form>
       </div>
     </div>
