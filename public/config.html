@@ -31,8 +31,8 @@
               <tr>
                 <td><i data-bind="attr: { class: 'fa fa-'+service }"></i></td>
                 <td><span data-bind="text: username"></span></td>
-                <td>Post to: <input type="checkbox" data-bind="name: service + '/' + uid, checked: enabled"/></td>
-                <td><a href="#" class="deleteaccountbutton" data-bind="name: service + '/' + uid"/>Del</a></td>
+                <td>Post to: <input type="checkbox" data-bind="attr: { name: (service + '/' + uid) }, checked: enabled"/></td>
+                <td><a href="#" class="deleteaccountbutton" data-bind="attr: { name: (service + '/' + uid + '/' + username) }"/>Del</a></td>
               </tr>
             </tbody>
           </table>

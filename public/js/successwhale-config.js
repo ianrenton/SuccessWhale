@@ -85,7 +85,7 @@ function getDisplaySettings() {
 function setDisplaySettings() {
   var jqxhr = $.post(API_SERVER+'/displaysettings', {token: viewModel.token(), colsPerScreen: viewModel.colsPerScreen(), theme: viewModel.theme(), highlightTime: viewModel.highlightTime(), inlineMedia: viewModel.inlineMedia()})
     .done(function(returnedData) {
-      showMessage('Display settings saved.', returnedData);
+      showSuccess('Display settings saved.', returnedData);
     })
     .fail(function(returnedData) {
       showError('Failed to save display settings', returnedData);
@@ -106,7 +106,18 @@ function getAccounts() {
       // Bind delete buttons for each
       $('.deleteaccountbutton').each(function() {
         $(this).click(function (e) {
-          alert("Not implemented yet! This would prompt for confirmation, then call the delete service account API endpoint.");
+          var serviceAndUIDAndUsername = $(this).attr('name').split('/');
+          var ok = confirm('This will remove the ' + serviceAndUIDAndUsername[0] + ' account "' + serviceAndUIDAndUsername[2] + '" from SuccessWhale. If you wish to use that account with SuccessWhale again, you will have to re-authorise it.\nClick OK to remove the account.');
+          if (ok) {
+            var jqxhr = $.post(API_SERVER+'/deleteaccount', {token: viewModel.token(), service: serviceAndUIDAndUsername[0], uid: serviceAndUIDAndUsername[1]})
+            .done(function(returnedData) {
+              showSuccess('Account deleted.', returnedData);
+              getAccounts();
+            })
+            .fail(function(returnedData) {
+              showError('Failed to delete account.', returnedData);
+            });
+          }
           return false;
         });
       });
