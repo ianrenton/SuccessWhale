@@ -130,8 +130,7 @@ function getAccounts() {
 
 // Set the user's "default post to" accounts
 function setAccountSettings() {
-  alert(ko.toJSON(viewModel.accounts()));
-  var jqxhr = $.post(API_SERVER+'/posttoaccounts', {token: viewModel.token(), accounts: ko.toJSON(viewModel.accounts())})
+  var jqxhr = $.post(API_SERVER+'/posttoaccounts', {token: viewModel.token(), posttoaccounts: ko.toJSON(viewModel.accounts())})
     .done(function(returnedData) {
       showSuccess('Account settings saved.', returnedData);
     })
