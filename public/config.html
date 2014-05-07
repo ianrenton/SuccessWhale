@@ -42,8 +42,24 @@
       </div>
       <div class="item">
         <form>
-          <h4>SuccessWhale Account</h4>
-          <p>New, Delete</p>
+          <h4>Alternative Login</h4>
+          <div data-bind="visible: hasAltLogin()">
+            <div style="float:right;"><a href="#" id="deletealtlogin">Del</a> </div>
+            <img src="img/favicon.png"/> <span data-bind="text: altLoginUsername">
+          </div>
+          <div data-bind="visible: !hasAltLogin()">
+            <p>Creating an alternative login will<br/>
+            allow you to use SuccessWhale from<br/>
+            networks that block Twitter and<br/>
+            Facebook. To set one up, enter a<br/>
+            username and password below.
+            </p>
+            <table>
+            <tr><td>Username: </td><td><input id="altloginusername" data-bind="value: altLoginUsername" /></td></tr>
+            <tr><td>Password: </td><td><input id="altloginpassword" type="password" data-bind="value: altLoginPassword" /></td></tr>
+            </table>
+            <p><button type="submit" id="createaltlogin">Save</button></p>
+          </div>
         </form>
       </div>
       <div class="item">

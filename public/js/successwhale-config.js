@@ -18,6 +18,10 @@ function SWUserViewModel() {
   // Display setting - show inline media
   self.inlineMedia = ko.observable(true);
   
+  self.hasAltLogin = ko.observable(false);
+  self.altLoginUsername = ko.observable('');
+  self.altLoginPassword = ko.observable('');
+  
   // Which SuccessWhale service accounts are available, and which of them should
   // be posted to by default
   self.accounts = ko.observableArray();
@@ -126,6 +130,7 @@ function getAccounts() {
       for (; i<accounts.length; i++) {
         accounts[i].enabled = ko.observable(accounts[i].enabled);
       }
+      viewModel.accounts.removeAll();
       viewModel.accounts.push.apply(viewModel.accounts, accounts);
       
       // Bind delete buttons for each
@@ -146,6 +151,16 @@ function getAccounts() {
           return false;
         });
       });
+    })
+    .fail(function(returnedData) {
+      showError('Failed to fetch account list.', returnedData);
+    });
+    
+    var jqxhr = $.get(API_SERVER+'/altlogin', {token: viewModel.token()})
+    .done(function(returnedData) {
+      viewModel.hasAltLogin(returnedData.hasaltlogin);
+      viewModel.altLoginUsername(returnedData.username);
+      viewModel.altLoginPassword('');
     })
     .fail(function(returnedData) {
       showError('Failed to fetch account list.', returnedData);
@@ -175,6 +190,33 @@ function getColumns() {
     .fail(function(returnedData) {
       showError('Failed to fetch column list.', returnedData);
     });
+}
+
+// Create alternative login for the user
+function createAltLogin() {
+  var jqxhr = $.post(API_SERVER+'/createaltlogin', {token: viewModel.token(), username: viewModel.altLoginUsername(), password: viewModel.altLoginPassword()})
+    .done(function(returnedData) {
+      showSuccess('Alternative login created.', returnedData);
+      getAccounts();
+    })
+    .fail(function(returnedData) {
+      showError('Failed to create alternative login.', returnedData);
+    });
+}
+
+// Delete alternative login for the user
+function deleteAltLogin() {
+  var ok = confirm('This will delete your SuccessWhale alternative login credentials. You will still be able to log in via Twitter and Facebook.\nClick OK if you wish to continue.');
+  if (ok) {
+    var jqxhr = $.post(API_SERVER+'/deletealtlogin', {token: viewModel.token()})
+      .done(function(returnedData) {
+        showSuccess('Alternative login data deleted.', returnedData);
+        getAccounts();
+      })
+      .fail(function(returnedData) {
+        showError('Failed to delete alternative login data.', returnedData);
+      });
+  }
 }
 
 // Delete all data for the user
@@ -224,6 +266,14 @@ $(document).ready(function() {
   });
   $('#savecolumnsettings').click(function (e) {
    alert("Not implemented yet! This would call the POST columns API endpoint.");
+   return false;
+  });
+  $('#createaltlogin').click(function (e) {
+   createAltLogin();
+   return false;
+  });
+  $('#deletealtlogin').click(function (e) {
+   deleteAltLogin();
    return false;
   });
   $('#deletealldata').click(function (e) {
