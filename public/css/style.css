@@ -198,6 +198,19 @@ div.item form {
   margin: 0.5em;
 }
 
+div.draggablebox {
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+div.draggablebox p.title {
+  margin: 0
+}
+
+div.draggablebox select {
+  min-width: 10em;
+}
+
 .threadloading {
     height: 30px;
     width: 100%;

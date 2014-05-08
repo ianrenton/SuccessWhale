@@ -112,6 +112,19 @@ div.item form {
   color: #a0a0a0;
 }
 
+div.draggablebox {
+  border: 1px solid gray;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+div.draggablebox p.title {
+  color: gray;
+  size: 1.2em;
+  font-weight: bold;
+}
+
 .threadloading {
     background: rgba( 10, 10, 10, .8 )
                 url('../../img/loading.gif')

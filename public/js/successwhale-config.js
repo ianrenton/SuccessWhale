@@ -25,10 +25,22 @@ function SWUserViewModel() {
   // Which SuccessWhale service accounts are available, and which of them should
   // be posted to by default
   self.accounts = ko.observableArray();
+  // Possible sources list, used to build columns
+  self.sources = ko.observableArray();
   // Columns list
   self.columns = ko.observableArray();
   // Banned phrases list
   self.bannedPhrases = ko.observable();
+  
+  // Column management
+  self.addColumn = function() {
+    var column = {title: "New Column", sources: [], fullpath: ""};
+    bindToColumn(column);
+    self.columns.push(column);
+  };
+  self.removeColumn = function(item) {
+    self.columns.remove(item);
+  };
 }
 
 // Activate knockout.js
@@ -121,7 +133,7 @@ function setBannedPhrases() {
     });
 }
 
-// Fetch and display the list of accounts to post to
+// Fetch the list of accounts to post to
 function getAccounts() {
   var jqxhr = $.get(API_SERVER+'/posttoaccounts', {token: viewModel.token()})
     .done(function(returnedData) {
@@ -178,17 +190,63 @@ function setAccountSettings() {
     });
 }
 
-// Fetch and display columns
+// Fetch sources for use when building columns
+function getSources() {
+  var jqxhr = $.get(API_SERVER+'/sources', {token: viewModel.token()})
+    .done(function(returnedData) {
+      // Update the view model
+      viewModel.columns.push.apply(viewModel.sources, returnedData.sources);
+    })
+    .fail(function(returnedData) {
+      showError('Failed to fetch sources list.', returnedData);
+    });
+}
+
+// Fetch columns
 function getColumns() {
   var jqxhr = $.get(API_SERVER+'/columns', {token: viewModel.token()})
     .done(function(returnedData) {
+      // Wrap in observables
+      var columns = returnedData.columns
+      var i = 0;
+      for (; i<columns.length; i++) {
+        bindToColumn(columns[i]);
+      }
       // Update the view model
-      viewModel.columns.push.apply(viewModel.columns, returnedData.columns);
+      viewModel.columns.push.apply(viewModel.columns, columns);
       // Hide loading overlay.
       $('body').removeClass("loading");
     })
     .fail(function(returnedData) {
       showError('Failed to fetch column list.', returnedData);
+    });
+}
+
+// Utility function to bind observables to a new column
+function bindToColumn(column) {
+  column.sources = ko.observableArray(column.sources);
+  // Temp var and func for holding a source that the user has selected for adding
+  // from the column
+  column.selectedNewSource = ko.observable();
+  column.addSource = function() {
+    this.sources.push(this.selectedNewSource());
+  };
+  // Temp var and func for holding a source that the user has selected for deletion
+  // from the column
+  column.selectedExistingSource = ko.observable();
+  column.removeSource = function() {
+    this.sources.remove(this.selectedExistingSource());
+  };
+}
+
+// Sets the user's columns
+function setColumns() {
+  var jqxhr = $.post(API_SERVER+'/columns', {token: viewModel.token(), columns: ko.toJSON(viewModel.columns())})
+    .done(function(returnedData) {
+      showSuccess('Columns saved.', returnedData);
+    })
+    .fail(function(returnedData) {
+      showError('Failed to save columns.', returnedData);
     });
 }
 
@@ -249,37 +307,8 @@ $(document).ready(function() {
   getAccounts();
   getDisplaySettings();
   getBannedPhrases();
+  getSources();
   getColumns();
-  
-  // Bind buttons
-  $('#saveaccountsettings').click(function (e) {
-   setAccountSettings();
-   return false;
-  });
-  $('#savedisplaysettings').click(function (e) {
-   setDisplaySettings();
-   return false;
-  });
-  $('#savebannedphrases').click(function (e) {
-   setBannedPhrases();
-   return false;
-  });
-  $('#savecolumnsettings').click(function (e) {
-   alert("Not implemented yet! This would call the POST columns API endpoint.");
-   return false;
-  });
-  $('#createaltlogin').click(function (e) {
-   createAltLogin();
-   return false;
-  });
-  $('#deletealtlogin').click(function (e) {
-   deleteAltLogin();
-   return false;
-  });
-  $('#deletealldata').click(function (e) {
-   deleteAllData();
-   return false;
-  });
   
   $('a#authwithtwitter').click(function (e) {
     $(this).addClass("loading");

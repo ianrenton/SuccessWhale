@@ -36,15 +36,15 @@
               </tr>
             </tbody>
           </table>
-          <p><button type="submit" id="saveaccountsettings">Save</button></p>
           <p><a id="authwithtwitter" class="serviceauth" href="#">Add Twitter account <img class="spinner" src="img/loading-small.gif" /></a><br/><a id="authwithfacebook"  class="serviceauth" href="#">Add Facebook account <img class="spinner" src="img/loading-small.gif" /></a></p>
+          <p><button type="submit" data-bind="click: setAccountSettings">Save</button></p>
         </form>
       </div>
       <div class="item">
         <form>
           <h4>Alternative Login</h4>
           <div data-bind="visible: hasAltLogin()">
-            <div style="float:right;"><a href="#" id="deletealtlogin">Del</a> </div>
+            <div style="float:right;"><a href="#" data-bind="click: deleteAltLogin">Del</a> </div>
             <img src="img/favicon.png"/> <span data-bind="text: altLoginUsername">
           </div>
           <div data-bind="visible: !hasAltLogin()">
@@ -58,7 +58,7 @@
             <tr><td>Username: </td><td><input id="altloginusername" data-bind="value: altLoginUsername" /></td></tr>
             <tr><td>Password: </td><td><input id="altloginpassword" type="password" data-bind="value: altLoginPassword" /></td></tr>
             </table>
-            <p><button type="submit" id="createaltlogin">Save</button></p>
+            <p><button type="submit" data-bind="click: createAltLogin">Save</button></p>
           </div>
         </form>
       </div>
@@ -70,7 +70,7 @@
              All your settings and the details<br/>
              of all your service accounts will<br/>
              be deleted.</p>
-          <p><a id="deletealldata" href="#">Delete All Data</a></p>
+          <p><a data-bind="click: deleteAllData" href="#">Delete All Data</a></p>
         </form>
       </div>
     </div>
@@ -82,7 +82,7 @@
           <p>Columns per screen: <input data-bind="value: colsPerScreen" size="4" /></p>
           <p><label><input type="checkbox" data-bind="checked: inlineMedia"/> Show inline media</label></p>
           <p>Highlight new items for <input data-bind="value: highlightTime" size="4" /> minutes<br/>(0 = no highlighting)</p>
-          <p><button type="submit" id="savedisplaysettings">Save</button></p>
+          <p><button type="submit" data-bind="click: setDisplaySettings">Save</button></p>
         </form>
       </div>
       <div class="item">
@@ -90,7 +90,7 @@
           <h4>Banned Phrases</h4>
           <p>Items containing the following phrases<br/>will not be displayed:</p>
           <textarea cols="30" rows="5" id="bannedphrases" data-bind="value: bannedPhrases"></textarea>
-          <p><button type="submit" id="savebannedphrases">Save</button></p>
+          <p><button type="submit" data-bind="click: setBannedPhrases">Save</button></p>
         </form>
       </div>
     </div>
@@ -98,11 +98,32 @@
       <h4 class="columnheading">Columns</h4>
       <div class="item">
         <form>
-          <ol data-bind="foreach: columns">
-            <li><input data-bind="value: title" /><input data-bind="value: fullpath" /></li>
-          </ol>
-          <p>TODO: Proper UI for this</p>
-          <button type="submit" id="savecolumnsettings">Save</button>
+          <div class="container" data-bind="sortable: columns">
+            <div class="draggablebox">
+                <a style="float:right" data-bind="click: $parent.removeColumn" href="#">Del</a>
+                <p class="title"><i class="fa fa-arrows"></i><span data-bind="text: title"></span></p>
+                <p>
+                  <span style="display: inline-block">
+                    All sources:<br/>
+                    <select size="5" data-bind="options: $parent.sources, optionsText: 'fullname', value: selectedNewSource">
+                    </select>
+                  </span>
+                  <span style="display: inline-block">
+                    <button data-bind="click: addSource">&gt;&gt;</button>
+                    <br/><br/>
+                    <button data-bind="click: removeSource">&lt;&lt;</button>
+                    <br/>
+                  </span>
+                  <span style="display: inline-block">
+                    Included in this column:<br/>
+                    <select size="5" data-bind="options: sources, optionsText: 'fullname', value: selectedExistingSource">
+                    </select>
+                  </span>
+                </p>
+            </div>
+          </div>
+          <p><a href="#" data-bind="click: addColumn">Add Column</a></p>
+          <p><button type="submit" data-bind="click: setColumns">Save</button></p>
         </form>
       </div>
     </div>
@@ -112,7 +133,9 @@
   <script src="js/libs/cookies.js"></script>
   <script src="js/libs/xdr.js"></script>
   <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/jquery-ui-1.9.2.min.js"></script>
   <script src="js/libs/knockout-3.0.0.js"></script>
+  <script src="js/libs/knockout-sortable.js"></script>
   <script src="js/libs/jquery.autosize.min.js"></script>
   <script src="js/libs/jquery.form.min.js"></script>
   <script src="js/libs/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
