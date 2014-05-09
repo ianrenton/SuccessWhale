@@ -143,6 +143,31 @@ a.loading img.spinner {
   display: inline;
 }
 
+.button {
+	text-indent:0;
+	padding: 0 0.5em 0;
+	display:inline-block;
+	height:35px !important;
+	line-height:40px !important;
+	text-decoration:none;
+	text-align:center;
+	cursor: pointer;
+  -moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) ) !important;
+	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5') !important;
+	background-color:#79bbff !important;
+	border:1px solid #84bbf3;
+	color:#ffffff !important;
+	text-shadow:1px 1px 0px #528ecc;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
 .modal {
   position: fixed;
   z-index: 1000;

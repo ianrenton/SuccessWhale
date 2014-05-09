@@ -26,10 +26,10 @@ function checkLoggedOut() {
 function checkServerStatus() {
   var jqxhr = $.get(API_SERVER+'/status')
   .done(function(returnedData) {
-    $('#serverstatus').html('<p class="statussuccess">Connected to secure server, version ' + returnedData.version + '</p>');
+    $('#serverstatusinner').html('<p class="statussuccess">Connected to secure server, version ' + returnedData.version + '</p>');
   })
   .fail(function(returnedData) {
-    $('#serverstatus').html('<p class="statusfailure">Could not connect to SuccessWhale server.<br/>Please try again later.</p>');
+    $('#serverstatusinner').html('<p class="statusfailure">Could not connect to SuccessWhale server.<br/>Please try again later.</p>');
   });
   return false;
 }

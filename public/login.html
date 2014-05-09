@@ -27,7 +27,7 @@
       </div>
       <div class="content">
         <p>Start with one account &mdash; you can add others once you're in.</p>
-        <p><a id="authwithtwitter" class="serviceauth" href="#"><img src="img/twitterlogin.png"/> <img class="spinner" src="img/loading-small.gif" /></a>&nbsp;&nbsp;&nbsp;<a id="authwithfacebook"  class="serviceauth" href="#"><img src="img/facebooklogin.gif"/> <img class="spinner" src="img/loading-small.gif" /></a></p>
+        <p><a id="authwithtwitter" class="button serviceauth" href="#"><i class="fa fa-twitter"></i> Log in with Twitter <img class="spinner" src="img/loading-small.gif" /></a>&nbsp;&nbsp;&nbsp;<a id="authwithfacebook"  class="button serviceauth" href="#"><i class="fa fa-facebook"></i> Log in with Facebook <img class="spinner" src="img/loading-small.gif" /></a></p>
       </div>
     </form>
     <form id="login">
@@ -36,15 +36,18 @@
       </div>
       <div class="content">
         <p>Behind a firewall that blocks social networks? If you've created a username and password for your SuccessWhale account, you can enter them here to log in.</p>
-        <p class="userpass">Username: <input id="username" data-bind="value: username" class="textbox"/>
-        Password: <input id="password" data-bind="value: password" type="password" class="textbox"/>
+        <p class="userpass"><span style="display: inline-block;">Username: <input id="username" data-bind="value: username" class="textbox"/></span>
+        <span style="display: inline-block;">Password: <input id="password" data-bind="value: password" type="password" class="textbox"/></span>
         <input type="submit" value="Log in" /></p>
       </div>
       <div id="loginerrorbox"><span data-bind="text: errormessage"></span></div>
     </form>
     <div id="serverstatus">
-      <img src="/img/loading.gif"/>
-      <p>Contacting secure server...</p>
+      <div id="serverstatusinner">
+        <img src="/img/loading.gif"/>
+        <p>Contacting secure server...</p>
+      </div>
+      <p>Client version 3.0.0-beta1</p>
     </div>
   </div>
   
