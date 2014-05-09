@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html id="htmlTop">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+  <title>SuccessWhale</title>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" data-bind="attr: { href: 'css/themes/'+theme()+'.css' }"/>
+  <link rel="stylesheet" href="css/jquery.gpopover.css"/>
+  <link rel="stylesheet" href="js/libs/fancybox/jquery.fancybox.css?v=2.1.5" />
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+</head>
+<body class="loading">
+  <div id="successbox"></div>
+  <div id="errorbox"></div>
+  <div id="header">
+    <div id="topmenu">
+      <a id="configbutton" class="button topmenuitem" href="/config"><i class="fa fa-gear"></i><span class="buttontext"> Config</span></a>
+      <a id="logoutbutton" class="button topmenuitem" href="#"><i class="fa fa-power-off"></i><span class="buttontext"> Exit</span></a>
+    </div>
+    <form id="postform" method="post">
+      <input id="token" name="token" type="hidden" data-bind="value: token"/>
+      <input id="postToAccounts" name="accounts" type="hidden" data-bind="value: postToAccountsString()"/>
+      <textarea id="postentry" name="text" rows="1"></textarea>
+      <span id="attachbutton" data-popover="attachmentdialog"><a href="#"><i class="fa fa-paperclip"></i></a></span>
+      <div id="attachmentdialog" class="gpopover">
+        <p>Attach file:</p>
+          <input type="file" name="file" id="filetoupload"/>
+          <input type="button" id="fileclearbutton" value="Clear"/>
+      </div>
+      <span id="postbutton" class="button buttonnexttotextbox"><a href="#"><i class="fa fa-pencil"></i><span class="buttontext"> Post</span></a></span>
+      <span id="posttoaccountsbutton" class="button buttonnexttotextbox" data-popover="accountselector"><a href="#"><i class="fa fa-th-list"></i><span class="buttontext"> Accounts</span></a></span>
+      <div id="accountselector" class="gpopover">
+        <p>Post to:</p>
+        <ul data-bind="foreach: postToAccounts">
+          <li>
+            <input type="checkbox" data-bind="name: service + '/' + uid, checked: enabled"/>
+            <i data-bind="attr: { class: 'fa fa-'+service }"></i>&nbsp;
+            <span data-bind="text: username"></span>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+  <div id="columns" data-bind="foreach: columns, style: { width: (columns().length/colsPerScreen()*100)-1 + '%'}">
+    <div data-bind="name: fullpath, style: { width: 100/$parent.columns().length-1 + '%' }" class="column">
+      <div class="columnloading" data-bind="visible: loading"></div>
+      <h4 class="columnheading" data-bind="text: title"></h4>
+      <!-- ko foreach: items -->
+        <div class="item" data-bind="css: (moment().diff(moment(content.time),'minutes') < $parents[1].highlightTime()) ? 'item-new' : 'item-old'">
+          <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
+          
+            <!-- ko if: (service === 'twitter') --><a data-bind="attr: { href: 'http://twitter.com/'+content.fromuser }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
+            <!-- ko if: (service === 'facebook') --><a data-bind="attr: { href: 'http://facebook.com/'+content.fromuserid }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
+            
+            <div class="item-fromusername">
+              <!-- ko if: content.fromusername --><span data-bind="text: content.fromusername"></span><!-- /ko -->
+              <!-- ko ifnot: content.fromusername --><!-- ko if: content.fromuser --><span data-bind="text: content.fromuser"></span><!-- /ko --><!-- /ko -->
+              <!-- ko if: content.tousername --><span data-bind="text: ' > '+content.tousername"></span><!-- /ko -->
+              <!-- ko if: content.retweetedbyusername --><span data-bind="text: ' (via '+content.retweetedbyusername+')'"></span><!-- /ko -->
+            </div>
+            <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
+            
+            <div class="item-metadata">
+              <span data-bind="if: (content.numreplied > 0)">
+                <i class="fa fa-reply"></i><span data-bind="text: content.numreplied"></span>
+              </span>
+              <span data-bind="if: (content.numretweeted > 0)">
+                <i class="fa fa-retweet"></i> <span data-bind="text: content.numretweeted"></span>
+              </span>
+              <span data-bind="if: (content.numfavourited > 0)">
+                <i class="fa fa-star"></i> <span data-bind="text: content.numfavourited"></span>
+              </span>
+              <span data-bind="if: (content.numcomments > 0)">
+                <i class="fa fa-comments"></i> <span data-bind="text: content.numcomments"></span>
+              </span>
+              <span data-bind="if: (content.numlikes > 0)">
+                <i class="fa fa-thumbs-o-up"></i> <span data-bind="text: content.numlikes"></span>
+              </span>
+            </div>
+            <div class="clear"></div>
+          </div>
+          
+          <div class="item-text" data-bind="html: makeItemTextHTML(content)"></div>
+          
+          <!-- ko if: ((content.actions.length > 0) || content.permalink) -->
+          <div class="item-actions">
+              <ul class="actionlist">
+                <!-- ko foreach: content.actions -->
+                <li data-bind="if: (name == 'reply')">
+                  <a class="actionbutton" data-bind="click: function(action) { $parent.replyvisible(!$parent.replyvisible()); }" href="#"><i class="fa fa-reply"></i></a>
+                </li>
+                <li data-bind="if: (name == 'conversation')">
+                  <a class="actionbutton" data-bind="click: function(action) { loadThreadForItem($parent, ($parent.type!='facebook_notification')); $parent.threadvisible(!$parent.threadvisible()); }" href="#"><i class="fa fa-comments"></i></a>
+                </li>
+                <li data-bind="if: (name == 'retweet')">
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><i class="fa fa-retweet"></i></a>
+                </li>
+                <li data-bind="if: (name == 'favorite')">
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><i class="fa fa-star"></i></a>
+                </li>
+                <li data-bind="if: (name == 'like')">
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><i class="fa fa-thumbs-o-up"></i></a>
+                </li>
+                <li data-bind="if: (name == 'delete')">
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><i class="fa fa-trash-o"></i></a>
+                </li>
+                <!-- /ko -->
+                <li data-bind="if: content.permalink">
+                  <a class="actionbutton" data-bind="attr: { href: content.permalink }" target="_blank"><i class="fa fa-link"></i></a>
+                </li>
+              </ul>
+              <div class="clear"></div>
+              <div class="inlinethread" data-bind="slideVisible: threadvisible">
+                <div class="threadloading" data-bind="visible: threadloading"></div>
+                <!-- ko foreach: thread -->
+                <div class="threaditem">
+                  <div class="threaditem-fromuser">
+                    <div class="threaditem-fromusername">
+                      <!-- ko if: content.fromusername --><span data-bind="text: content.fromusername"></span><!-- /ko -->
+                      <!-- ko ifnot: content.fromusername --><!-- ko if: content.fromuser --><span data-bind="text: content.fromuser"></span><!-- /ko --><!-- /ko -->
+                    </div>
+                  </div>
+                  <div class="threaditem-text" data-bind="html: makeItemTextHTML(content)"></div>
+                </div>
+                <!-- /ko -->
+              </div>
+              <div class="clear"></div>
+              <div class="inlinereply" data-bind="slideVisible: replyvisible">
+                <form class="replyform" method="post">
+                  <input class="token" name="token" type="hidden" data-bind="value: $parents[1].token"/>
+                  <input class="replyPostToAccounts" name="accounts" type="hidden" data-bind="value: service+'/'+fetchedforuserid"/>
+                  <input class="replyInReplyToID" name="in_reply_to_id" type="hidden" data-bind="value: content.replytoid"/>
+                  <textarea class="replyentry" name="text" data-bind="value: (service=='twitter') ? '@'+content.fromuser+' ' : ''" rows="1"></textarea>
+                  <span class="button replybutton">Post</span>
+                </form>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <!-- /ko -->
+        </div>
+      <!-- /ko -->
+    </div>
+  </div>
+  <div class="modal"></div>
+    
+  <script src="js/libs/cookies.js"></script>
+  <script src="js/libs/xdr.js"></script>
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/knockout-3.0.0.js"></script>
+  <script src="js/libs/moment.min.js"></script>
+  <script src="js/libs/twitter-entities.js"></script>
+  <script src="js/libs/jquery.gpopover.js"></script>
+  <script src="js/libs/jquery.autosize.min.js"></script>
+  <script src="js/libs/jquery.form.min.js"></script>
+  <script src="js/libs/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script src="js/successwhale.js"></script>
+
+</body>
+</html>

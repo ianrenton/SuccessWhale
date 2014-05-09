@@ -1,0 +1,196 @@
+html, body {
+  background-color: #eeeeee;
+}
+
+div#header {
+  background: #f8f8f8;
+  border-bottom: 1px solid #888888;
+}
+
+div#header h2 {
+  color: #4096ee;
+}
+
+div#topmenu a {
+  background: #8888ff;
+  color: white;
+  text-decoration: none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+textarea#postentry {
+  background-color: #ddddff;
+  border: 2px solid #6666ff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#postbutton {
+  background: #5b5bff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#postbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+span#attachbutton a {
+  color: #222222;
+  text-decoration: none;
+}
+
+span#posttoaccountsbutton {
+  background: #8888ff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#posttoaccountsbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+div.columnloading {
+  background: #eeeeee
+                url('../../img/loading-small.gif')
+                100% 100%
+                no-repeat;
+}
+
+h4.columnheading {
+  color: black;
+}
+
+div.item {
+  background-color: white;
+  border: 1px solid #cccccc;
+  font-weight: 100;
+}
+
+div.item a {
+  color: #4096ee;
+  text-decoration: none;
+}
+
+div.item-new {
+  border: 2px solid #6666ff;
+}
+
+div.item-text {
+  color: #333333;
+}
+
+div.item-text a {
+  color: #4096ee;
+  text-decoration: none;
+}
+
+div.item-fromuser-twitter {
+  background-color: #d1f4ff;
+  color: #333333;
+}
+
+div.item-fromuser-facebook {
+  background-color: #dfe3ee;
+  color: #333333;
+}
+
+div.item-actions {
+  background-color: #eeeeee;
+  color: #333333;
+}
+
+div.item-actions ul.actionlist li a.actionbutton:hover {
+  color: #4096ee;
+}
+
+div.item form {
+  color: #333333;
+}
+
+div.draggablebox {
+  background-color: #eeeeee;
+  border: 1px solid gray;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+div.draggablebox p.title {
+  color: gray;
+  size: 1.2em;
+  font-weight: bold;
+}
+
+.threadloading {
+    background: rgba( 235, 235, 235, .8 )
+                url('../../img/loading.gif')
+                50% 50%
+                no-repeat;
+}
+
+div.threaditem-text a {
+  color: #4096ee;
+  text-decoration: none;
+}
+
+textarea.replyentry {
+  background-color: #ddddff;
+  border: 2px solid #6666ff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span.replybutton {
+  background: #5b5bff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: white;
+}
+
+.button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) ) !important;
+	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5') !important;
+	background-color:#79bbff !important;
+	border:1px solid #84bbf3;
+	color:#ffffff !important;
+	text-shadow:1px 1px 0px #528ecc;
+}
+
+.deletebutton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f) ) !important;
+	background:-moz-linear-gradient( center top, #f24537 5%, #c62d1f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f') !important;
+	background-color:#f24537 !important;
+	border:1px solid #d02718;
+	color:#ffffff !important;
+	text-shadow:1px 1px 0px #810e05;
+}
+
+div#errorbox {
+  background: #ffbbbb;
+  color: black;
+  border: 1px solid #ff0000;
+}
+
+div#successbox {
+  background: #bbffbb;
+  color: black;
+  border: 1px solid #00bb00;
+}

@@ -1,0 +1,205 @@
+html, body {
+  background-color: #303030;
+}
+
+div#header {
+  background: #404040;
+  border-bottom: 1px solid #202020;
+}
+
+div#header h2 {
+  color: #dddddd;
+}
+
+div#topmenu a {
+  background: #404060;
+  color: white;
+  text-decoration: none;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+textarea#postentry {
+  background-color: black;
+  color: white;
+  border: 2px solid #4040a0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#postbutton {
+  background: #4040a0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#postbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+span#attachbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+span#posttoaccountsbutton {
+  background: #404060;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span#posttoaccountsbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+div.columnloading {
+  background: #303030
+                url('../../img/loading-small.gif')
+                100% 100%
+                no-repeat;
+}
+
+h4.columnheading {
+  color: white;
+}
+
+div.item {
+  background-color: #101010;
+  border: 1px solid #404040;
+  font-weight: 100;
+}
+
+div.item a {
+  color: #4040a0;
+  text-decoration: none;
+}
+
+div.item-new {
+  border: 2px solid #4040a0;
+}
+
+div.item-text {
+  color: #a0a0a0;
+}
+
+div.item-text a {
+  color: #4040a0;
+  text-decoration: none;
+}
+
+div.item-fromuser-twitter {
+  background-color: #006060;
+  color: #c0c0c0;
+}
+
+div.item-fromuser-facebook {
+  background-color: #404060;
+  color: #a0a0a0;
+}
+
+div.item-actions {
+  background-color: #202020;
+  color: #a0a0a0;
+}
+
+div.item-actions ul.actionlist li a.actionbutton:hover {
+  color: #d0d0d0;
+}
+
+div.item form {
+  color: #a0a0a0;
+}
+
+div.draggablebox {
+  background-color: #404040;
+  border: 1px solid gray;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+div.draggablebox p.title {
+  color: gray;
+  size: 1.2em;
+  font-weight: bold;
+}
+
+.threadloading {
+    background: rgba( 10, 10, 10, .8 )
+                url('../../img/loading.gif')
+                50% 50%
+                no-repeat;
+}
+
+div.threaditem-text a {
+  color: #40a040;
+  text-decoration: none;
+}
+
+textarea.replyentry {
+  background-color: black;
+  color: white;
+  border: 2px solid #4040a0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+span.replybutton {
+  background: #4040a0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: white;
+}
+
+.button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #202020;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #202020;
+	box-shadow:inset 0px 1px 0px 0px #202020;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #404040), color-stop(1, #202020) ) !important;
+	background:-moz-linear-gradient( center top, #404040 5%, #202020 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#404040', endColorstr='#202020') !important;
+	background-color:#202020 !important;
+	border:1px solid #101010;
+	color:#ffffff !important;
+	text-shadow:1px 1px 0px #303030;
+}
+
+.deletebutton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f) ) !important;
+	background:-moz-linear-gradient( center top, #f24537 5%, #c62d1f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f') !important;
+	background-color:#f24537 !important;
+	border:1px solid #d02718;
+	color:#ffffff !important;
+	text-shadow:1px 1px 0px #810e05;
+}
+
+div#errorbox {
+  background: #ffbbbb;
+  color: black;
+  border: 1px solid #ff0000;
+}
+
+div#successbox {
+  background: #bbffbb;
+  color: black;
+  border: 1px solid #00bb00;
+}
+
+.modal {
+  background: rgba( 10, 10, 10, 1 )
+              url('../../img/loading.gif')
+              50% 50%
+              no-repeat;
+}

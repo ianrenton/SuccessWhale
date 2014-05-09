@@ -1,0 +1,330 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+div#header {
+  min-height: 4em;
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  background: white;
+}
+
+div#header h2 {
+  margin-left: 1em;
+}
+
+div#topmenu {
+  float:right;
+  display:inline-block;
+  margin-top: 1em;
+  padding: 0;
+}
+
+.topmenuitem {
+  margin: 0 1em 0 0;
+}
+
+textarea#postentry {
+  margin: 1.1em 0 1em 1em;
+  padding: 0.4em 0.3em 0.1em 0.3em;
+  width: 60%;
+  font-size: 1em;
+  height: 1.4em;
+}
+
+.buttonnexttotextbox {
+  margin: 1em 0 1em 1em;
+  position: relative;
+  left: -40px;
+}
+
+@media (max-width: 600px) {
+  textarea#postentry {
+    width: 45%;
+  }
+  div#topmenu {
+    margin-right: 0.5em;
+  }
+  .topmenuitem {
+    margin: 0;
+  }
+  .buttonnexttotextbox {
+    margin: 1em 0 1em 0;
+  }
+  .buttontext {
+    display: none;
+  }
+}
+
+span#attachbutton {
+  margin: 1.1em 0 1em 1em;
+  padding: 0;
+  position: relative;
+  left: -50px;
+  display:inline-block;
+  font-size: 1.2em;
+}
+
+form#attachbuttonform {
+  display: inline; 
+  margin: 0;
+}
+
+div#accountselector {
+  padding: 0 1em;
+  margin: 0;
+}
+
+div#accountselector ul {
+  list-style-type: none;
+}
+
+div#columns {
+  position: relative;
+  top: 4em;
+  overflow-x: auto;
+  overflow-y: hidden; // Prevent extra scrollbar in WebKit
+  white-space: nowrap;
+}
+
+div.column {
+  display: inline-block;
+  vertical-align:top;
+  overflow: hidden;
+  white-space: normal;
+  min-width: 300px;
+  margin: 0;
+  padding: 0.5em 0 0.5em 0.5em;
+}
+
+div.columnloading {
+    height: 30px;
+    width: 30px;
+    float: right;
+    background: #eeeeee
+                url('../../img/loading-small.gif')
+                100% 100%
+                no-repeat;
+}
+
+h4.columnheading {
+  margin: 0.5em 0;
+  font-weight: 100;
+  font-size: 1.2em;
+}
+
+div.item {
+  margin-bottom: 0.5em;
+  padding: 0;
+}
+
+div.item-new {
+}
+
+div.item-text {
+  padding: 0.5em;
+  overflow: hidden;
+}
+
+div.item-text a {
+}
+
+div.item-mediapreview {
+  margin: 0.5em 0 0 0;
+  max-width: 100%;
+}
+
+div.item-mediapreview a img {
+  max-width: 100%;
+}
+
+div.item-fromuser {
+  margin: 0;
+  padding: 0.5em;
+  font-size: 0.75em;
+}
+
+div.item-fromusername {
+  font-weight: normal;
+  font-size: 1.1em;
+}
+
+div.item-fromuser-twitter {
+}
+
+div.item-fromuser-facebook {
+}
+
+img.item-fromuseravatar {
+  float: left;
+  margin-right: 0.5em;
+}
+
+div.item-actions {
+  margin: 0;
+  padding: 0.5em;
+  font-size: 1em;
+}
+
+div.item-actions ul.actionlist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0.1em 0 0 0;
+  float:right;
+}
+
+div.item-actions ul.actionlist li {
+  display:inline;
+}
+
+div.item-actions ul.actionlist li a.actionbutton {
+  margin: 0 0.3em 0 0;
+  padding: 0.3em;
+  color: gray;
+  text-decoration: none;
+}
+
+div.item form {
+  margin: 0.5em;
+}
+
+div.draggablebox {
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+div.draggablebox p.title {
+  margin: 0;
+}
+
+div.draggablebox select {
+  min-width: 10em;
+}
+
+.threadloading {
+    height: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+div.threaditem-fromuser {
+  padding: 0.5em 0.5em 0 0.5em;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+div.threaditem-text {
+  padding: 0 0.5em 0.5em 0.5em;
+  overflow: hidden;
+}
+
+div.threaditem-text a {
+}
+
+textarea.replyentry {
+  margin: 0;
+  padding: 0.4em 0.3em 0.1em 0.3em;
+  font-size: 1em;
+  height: 1.5em;
+  width: 70%;
+}
+
+.replybutton {
+  margin: 0 0 0 0.5em;
+}
+
+.button {
+	text-indent:0;
+	padding: 0 0.5em 0;
+	display:inline-block;
+	height:35px !important;
+	line-height:40px !important;
+	text-decoration:none;
+	text-align:center;
+	cursor: pointer;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+.smallbutton {
+	text-indent:0;
+	display:inline-block;
+	font-size:12px;
+	padding: 0 0.5em 0;
+	font-weight:bold;
+	font-style:normal;
+	height:18px !important;
+	line-height:18px !important;
+	text-decoration:none;
+	text-align:center;
+	cursor: pointer;
+}
+.smallbutton:active {
+	position:relative;
+	top:1px;
+}
+
+div#errorbox {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  z-index: 2000;
+  padding: 0.25em;
+  display: none;
+}
+
+div#successbox {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  z-index: 2000;
+  padding: 0.25em;
+  display: none;
+}
+
+a.serviceauth {
+  text-decoration: none;
+}
+
+a.serviceauth img.spinner {
+  display: none;
+}
+
+a.loading img.spinner {
+  display: inline;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 235, 235, 235, 1 )
+                url('../../img/loading.gif')
+                50% 50%
+                no-repeat;
+    text-align: center;
+    font-weight: 100;
+    font-size: 1.2em;
+    padding-bottom: 1.2em;
+}
+
+body.loading {
+    overflow: hidden;
+}
+
+body.loading .modal {
+    display: block;
+}
+
+div.clear {
+  clear:both;
+}
