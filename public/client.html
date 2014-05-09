@@ -18,21 +18,21 @@
   <div id="errorbox"></div>
   <div id="header">
     <div id="topmenu">
-      <a id="configbutton" href="/config">Config</a>
-      <a id="logoutbutton" href="#">Log out</a>
+      <a id="configbutton" class="button topmenuitem" href="/config"><i class="fa fa-gear"></i><span class="buttontext"> Config</span></a>
+      <a id="logoutbutton" class="button topmenuitem" href="#"><i class="fa fa-power-off"></i><span class="buttontext"> Exit</span></a>
     </div>
     <form id="postform" method="post">
       <input id="token" name="token" type="hidden" data-bind="value: token"/>
       <input id="postToAccounts" name="accounts" type="hidden" data-bind="value: postToAccountsString()"/>
       <textarea id="postentry" name="text" rows="1"></textarea>
       <span id="attachbutton" data-popover="attachmentdialog"><a href="#"><i class="fa fa-paperclip"></i></a></span>
-      <span id="postbutton"><a href="#">Post</a></span>
       <div id="attachmentdialog" class="gpopover">
         <p>Attach file:</p>
           <input type="file" name="file" id="filetoupload"/>
           <input type="button" id="fileclearbutton" value="Clear"/>
       </div>
-      <span id="posttoaccountsbutton" data-popover="accountselector"><a href="#">Accounts</a></span>
+      <span id="postbutton" class="button buttonnexttotextbox"><a href="#"><i class="fa fa-pencil"></i><span class="buttontext"> Post</span></a></span>
+      <span id="posttoaccountsbutton" class="button buttonnexttotextbox" data-popover="accountselector"><a href="#"><i class="fa fa-th-list"></i><span class="buttontext"> Accounts</span></a></span>
       <div id="accountselector" class="gpopover">
         <p>Post to:</p>
         <ul data-bind="foreach: postToAccounts">
@@ -135,7 +135,7 @@
                   <input class="replyPostToAccounts" name="accounts" type="hidden" data-bind="value: service+'/'+fetchedforuserid"/>
                   <input class="replyInReplyToID" name="in_reply_to_id" type="hidden" data-bind="value: content.replytoid"/>
                   <textarea class="replyentry" name="text" data-bind="value: (service=='twitter') ? '@'+content.fromuser+' ' : ''" rows="1"></textarea>
-                  <span class="replybutton">Post</span>
+                  <span class="button replybutton">Post</span>
                 </form>
               </div>
               <div class="clear"></div>

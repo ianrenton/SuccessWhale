@@ -16,7 +16,7 @@
   <div id="errorbox"></div>
   <div id="header">
     <div id="topmenu">
-      <a id="configbutton" href="/">Back</a>
+      <a id="configbutton" class="button topmenuitem" href="/">Back</a>
     </div>
     <h2>Configuration</h2>
   </div>
@@ -32,19 +32,19 @@
                 <td><i data-bind="attr: { class: 'fa fa-'+service }"></i></td>
                 <td><span data-bind="text: username"></span></td>
                 <td>Post to: <input type="checkbox" data-bind="attr: { name: (service + '/' + uid) }, checked: enabled"/></td>
-                <td><a href="#" class="deleteaccountbutton" data-bind="attr: { name: (service + '/' + uid + '/' + username) }"/>Del</a></td>
+                <td><a href="#" class="deleteaccountbutton smallbutton deletebutton" data-bind="attr: { name: (service + '/' + uid + '/' + username) }"/><i class="fa fa-trash-o"></i></a></td>
               </tr>
             </tbody>
           </table>
-          <p><a id="authwithtwitter" class="serviceauth" href="#">Add Twitter account <img class="spinner" src="img/loading-small.gif" /></a><br/><a id="authwithfacebook"  class="serviceauth" href="#">Add Facebook account <img class="spinner" src="img/loading-small.gif" /></a></p>
-          <p><button type="submit" data-bind="click: setAccountSettings">Save</button></p>
+          <p><a id="authwithtwitter" class="button serviceauth" href="#"><i class="fa fa-plus"></i><i class="fa fa-twitter"></i> Add Twitter <img class="spinner" src="img/loading-small.gif" /></a> <a id="authwithfacebook"  class="button serviceauth" href="#"><i class="fa fa-plus"></i><i class="fa fa-facebook"></i> Add Facebook <img class="spinner" src="img/loading-small.gif" /></a></p>
+          <p><a href="#" class="button" data-bind="click: setAccountSettings"><i class="fa fa-save"></i> Save</a></p>
         </form>
       </div>
       <div class="item">
         <form>
           <h4>Alternative Login</h4>
           <div data-bind="visible: hasAltLogin()">
-            <div style="float:right;"><a href="#" data-bind="click: deleteAltLogin">Del</a> </div>
+            <div style="float:right;"><a href="#" class="smallbutton deletebutton" data-bind="click: deleteAltLogin"><i class="fa fa-trash-o"></i></a> </div>
             <img src="img/favicon.png"/> <span data-bind="text: altLoginUsername">
           </div>
           <div data-bind="visible: !hasAltLogin()">
@@ -58,7 +58,7 @@
             <tr><td>Username: </td><td><input id="altloginusername" data-bind="value: altLoginUsername" /></td></tr>
             <tr><td>Password: </td><td><input id="altloginpassword" type="password" data-bind="value: altLoginPassword" /></td></tr>
             </table>
-            <p><button type="submit" data-bind="click: createAltLogin">Save</button></p>
+            <p><a href="#" class="button" data-bind="click: createAltLogin"><i class="fa fa-save"></i> Save</a></p>
           </div>
         </form>
       </div>
@@ -70,7 +70,7 @@
              All your settings and the details<br/>
              of all your service accounts will<br/>
              be deleted.</p>
-          <p><a data-bind="click: deleteAllData" href="#">Delete All Data</a></p>
+          <p><a data-bind="click: deleteAllData" class="button deletebutton" href="#"><i class="fa fa-trash-o"></i> Delete All Data</a></p>
         </form>
       </div>
     </div>
@@ -82,7 +82,7 @@
           <p>Columns per screen: <input data-bind="value: colsPerScreen" size="4" /></p>
           <p><label><input type="checkbox" data-bind="checked: inlineMedia"/> Show inline media</label></p>
           <p>Highlight new items for <input data-bind="value: highlightTime" size="4" /> minutes<br/>(0 = no highlighting)</p>
-          <p><button type="submit" data-bind="click: setDisplaySettings">Save</button></p>
+          <p><a href="#" class="button" data-bind="click: setDisplaySettings"><i class="fa fa-save"></i> Save</a></p>
         </form>
       </div>
       <div class="item">
@@ -90,7 +90,7 @@
           <h4>Banned Phrases</h4>
           <p>Items containing the following phrases<br/>will not be displayed:</p>
           <textarea cols="30" rows="5" id="bannedphrases" data-bind="value: bannedPhrases"></textarea>
-          <p><button type="submit" data-bind="click: setBannedPhrases">Save</button></p>
+          <p><a href="#" class="button" data-bind="click: setBannedPhrases"><i class="fa fa-save"></i> Save</a></p>
         </form>
       </div>
     </div>
@@ -100,8 +100,8 @@
         <form>
           <div class="container" data-bind="sortable: columns">
             <div class="draggablebox">
-                <a style="float:right" data-bind="click: $parent.removeColumn" href="#">Del</a>
-                <p class="title"><i class="fa fa-arrows"></i><span data-bind="text: title"></span></p>
+                <a style="float:right" class="smallbutton deletebutton" data-bind="click: $parent.removeColumn" href="#"><i class="fa fa-trash-o"></i></a>
+                <p class="title"><i class="fa fa-arrows"></i> <span data-bind="text: title"></span></p>
                 <p>
                   <span style="display: inline-block">
                     All sources:<br/>
@@ -109,10 +109,10 @@
                     </select>
                   </span>
                   <span style="display: inline-block">
-                    <button data-bind="click: addSource">&gt;&gt;</button>
+                    <a href="#" class="button smallbutton" data-bind="click: addSource">&gt;&gt;</a>
                     <br/><br/>
-                    <button data-bind="click: removeSource">&lt;&lt;</button>
-                    <br/>
+                    <a href="#" class="button smallbutton" data-bind="click: removeSource">&lt;&lt;</a>
+                    <br/><br/>
                   </span>
                   <span style="display: inline-block">
                     Included in this column:<br/>
@@ -122,8 +122,7 @@
                 </p>
             </div>
           </div>
-          <p><a href="#" data-bind="click: addColumn">Add Column</a></p>
-          <p><button type="submit" data-bind="click: setColumns">Save</button></p>
+          <p><a href="#" class="button" data-bind="click: addColumn"><i class="fa fa-plus"></i> Add Column</a> <a href="#" class="button" data-bind="click: setColumns"><i class="fa fa-save"></i> Save</a></p>
         </form>
       </div>
     </div>

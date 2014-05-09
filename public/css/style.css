@@ -19,65 +19,58 @@ div#header h2 {
 div#topmenu {
   float:right;
   display:inline-block;
-  margin-top: 1.2em;
+  margin-top: 1em;
   padding: 0;
-  line-height: 2em;
 }
 
-div#topmenu a {
-  margin: 0.5em 1em 0 0;
-  padding: 0.5em 1em;
+.topmenuitem {
+  margin: 0 1em 0 0;
 }
 
 textarea#postentry {
   margin: 1.1em 0 1em 1em;
-  padding: 0.3em 0.3em 0.2em 0.3em;
+  padding: 0.4em 0.3em 0.1em 0.3em;
   width: 60%;
   font-size: 1em;
   height: 1.4em;
+}
+
+.buttonnexttotextbox {
+  margin: 1em 0 1em 1em;
+  position: relative;
+  left: -40px;
 }
 
 @media (max-width: 600px) {
   textarea#postentry {
     width: 45%;
   }
-}
-
-span#postbutton {
-  margin: 1.1em 0 1em 1em;
-  padding: 0 1em;
-  position: relative;
-  left: -40px;
-  display:inline-block;
-  font-size: 1em;
-  line-height: 2em;
-  cursor: pointer;
+  div#topmenu {
+    margin-right: 0.5em;
+  }
+  .topmenuitem {
+    margin: 0;
+  }
+  .buttonnexttotextbox {
+    margin: 1em 0 1em 0;
+  }
+  .buttontext {
+    display: none;
+  }
 }
 
 span#attachbutton {
-  margin: 1.2em 0 1em 1em;
+  margin: 1.1em 0 1em 1em;
   padding: 0;
   position: relative;
   left: -50px;
   display:inline-block;
-  cursor: pointer;
   font-size: 1.2em;
 }
 
 form#attachbuttonform {
   display: inline; 
   margin: 0;
-}
-
-span#posttoaccountsbutton {
-  margin: 1.1em 0em 1em 1em;
-  padding: 0 1em;
-  position: relative;
-  left: -40px;
-  display:inline-block;
-  font-size: 1em;
-  line-height: 2em;
-  cursor: pointer;
 }
 
 div#accountselector {
@@ -204,7 +197,7 @@ div.draggablebox {
 }
 
 div.draggablebox p.title {
-  margin: 0
+  margin: 0;
 }
 
 div.draggablebox select {
@@ -232,20 +225,48 @@ div.threaditem-text a {
 }
 
 textarea.replyentry {
-  margin: 1.1em 0 1em 1em;
-  padding: 0.3em 0.3em 0.2em 0.3em;
+  margin: 0;
+  padding: 0.4em 0.3em 0.1em 0.3em;
   font-size: 1em;
   height: 1.5em;
   width: 70%;
 }
 
-span.replybutton {
-  margin: 1.1em 0 1em 0.5em;
-  padding: 0 1em;
-  display:inline-block;
-  font-size: 1em;
-  line-height: 2.4em;
-  cursor: pointer;
+.replybutton {
+  margin: 0 0 0 0.5em;
+}
+
+.button {
+	text-indent:0;
+	padding: 0 0.5em 0;
+	display:inline-block;
+	height:35px !important;
+	line-height:40px !important;
+	text-decoration:none;
+	text-align:center;
+	cursor: pointer;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+.smallbutton {
+	text-indent:0;
+	display:inline-block;
+	font-size:12px;
+	padding: 0 0.5em 0;
+	font-weight:bold;
+	font-style:normal;
+	height:18px !important;
+	line-height:18px !important;
+	text-decoration:none;
+	text-align:center;
+	cursor: pointer;
+}
+.smallbutton:active {
+	position:relative;
+	top:1px;
 }
 
 div#errorbox {
