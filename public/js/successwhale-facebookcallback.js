@@ -23,7 +23,7 @@ var params = getSearchParameters();
 // Automatically submit callback to SW and reload
 $(document).ready(function() {
 
-  var paramsToPassOn = {callback_url: escape(location.origin+'/facebookcallback'), code: params.code};
+  var paramsToPassOn = {callback_url: location.origin+'/facebookcallback', code: params.code};
   // Get token from cookie if we're already logged in, so the API binds the new Facebook
   // account to the right user
   if (readCookie('token')) {

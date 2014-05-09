@@ -325,7 +325,7 @@ $(document).ready(function() {
   });
   $('a#authwithfacebook').click(function (e) {
     $(this).addClass("loading");
-    var jqxhr = $.get(API_SERVER+'/authwithfacebook', {callback_url: escape(location.origin+'/facebookcallback')})
+    var jqxhr = $.get(API_SERVER+'/authwithfacebook', {callback_url: location.origin+'/facebookcallback'})
     .done(function(returnedData) {
       window.location = returnedData.url;
     })
