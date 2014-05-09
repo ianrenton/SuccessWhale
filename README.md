@@ -17,7 +17,7 @@ Features
 Screenshot
 ----------
 
-[![Successwhale 3 Screenshot](http://i.imgur.com/1ZdabqO.png)](http://i.imgur.com/1ZdabqO.png)
+[![Successwhale 3 Screenshot](http://files.ianrenton.com/successwhale-screenshot.png)](http://files.ianrenton.com/successwhale-screenshot.png)
 
 Status
 ------
@@ -29,21 +29,23 @@ SuccessWhale is used by around 180 people — including myself — as their main
 Libraries
 ---------
 
- * UI Icon set by [Gentleface](http://gentleface.com/free_icon_set.html). CC by-nc licenced. (Other icons from Twitter and Facebook.)
- 
-TODO Link these:
- * Knockout.js
- * jQuery
- * jQuery Autosize
- * jQuery Forms
- * jQuery GPopover
- * Moment
- * Twitter Entities
- * XDR
- * Cookies.js
+ * [Cookies.js](https://github.com/ScottHamper/Cookies)
+ * [Fancybox](http://fancybox.net/)
+ * [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
+ * [Knockout.js](http://knockoutjs.com/)
+ * [Knockout Sortable](https://github.com/rniemeyer/knockout-sortable)
+ * [jQuery](http://jquery.com/)
+ * [jQuery Autosize](http://www.jacklmoore.com/autosize/)
+ * [jQuery Forms](http://malsup.com/jquery/form/)
+ * [jQuery GPopover](https://github.com/markembling/jquery-gpopover)
+ * [jQuery UI](http://jqueryui.com/)
+ * [Moment.js](http://momentjs.com/)
+ * [Normalise.css](http://git.io/normalize)
+ * [Twitter Entities](https://gist.github.com/wadey/442463)
+ * [XDR](https://gist.github.com/michaelcox/2655118)
 
 Thanks to...
 ------------
 
-  * My early beta testers [@aefaradien](http://www.twitter.com/aefaradien) and [@tikakino](http://www.twitter.com/tikakino)
-  * [Ibrahim Faour](http://stackoverflow.com/users/337227/ifaour), for modifying the Facebook API docs in response to [my question on StackOverflow](http://stackoverflow.com/questions/7122394/in-the-facebook-api-how-can-i-retrieve-the-source-object-from-a-notification-obj).
+  * My early beta testers [@aefaradien](http://www.twitter.com/aefaradien) and [@tikakino](http://www.twitter.com/tikakino)!
+  * Everyone who's helped out over the years
