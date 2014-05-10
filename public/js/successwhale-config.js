@@ -11,7 +11,7 @@ function SWUserViewModel() {
   // Display setting - number of columns per screen (honoured on wide screens only)
   self.colsPerScreen = ko.observable(3);
   // Display setting - user theme
-  self.availableThemes = ko.observableArray(['default', 'inverted'])
+  self.availableThemes = ko.observableArray(['default', 'inverted', 'minimal'])
   self.theme = ko.observable('default');
   // Display setting - highlight items newer than this (mins)
   self.highlightTime = ko.observable(0);
