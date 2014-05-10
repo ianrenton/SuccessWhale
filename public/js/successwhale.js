@@ -22,6 +22,9 @@ function SWUserViewModel() {
   // Giant data blob of all data from all columns
   self.columns = ko.observableArray();
   
+  // Content of the post entry box
+  self.postEntryText = ko.observable('');
+  
   self.postToAccountsString = ko.computed(function () {
      return getPostToAccountsString(self.postToAccounts());
   });

@@ -24,13 +24,14 @@
     <form id="postform" method="post">
       <input id="token" name="token" type="hidden" data-bind="value: token"/>
       <input id="postToAccounts" name="accounts" type="hidden" data-bind="value: postToAccountsString()"/>
-      <textarea id="postentry" name="text" rows="1"></textarea>
+      <textarea id="postentry" data-bind="value: postEntryText, valueUpdate: 'afterkeydown'" name="text" rows="1"></textarea>
       <span id="attachbutton" data-popover="attachmentdialog"><a href="#"><i class="fa fa-paperclip"></i></a></span>
       <div id="attachmentdialog" class="gpopover">
         <p>Attach file:</p>
           <input type="file" name="file" id="filetoupload"/>
           <input type="button" id="fileclearbutton" value="Clear"/>
       </div>
+      <span class="charcount" data-bind="text: postEntryText().length"></span>
       <span id="postbutton" class="button buttonnexttotextbox"><a href="#"><i class="fa fa-pencil"></i><span class="buttontext"> Post</span></a></span>
       <span id="posttoaccountsbutton" class="button buttonnexttotextbox" data-popover="accountselector"><a href="#"><i class="fa fa-th-list"></i><span class="buttontext"> Accounts</span></a></span>
       <div id="accountselector" class="gpopover">

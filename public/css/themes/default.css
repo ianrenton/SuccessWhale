@@ -45,6 +45,11 @@ span#attachbutton a {
   text-decoration: none;
 }
 
+span.charcount {
+  color: gray;
+  font-weight: bold;
+}
+
 span#posttoaccountsbutton {
   background: #8888ff;
   -webkit-border-radius: 2px;

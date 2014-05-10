@@ -42,7 +42,7 @@ textarea#postentry {
 .buttonnexttotextbox {
   margin: 1em 0 1em 1em;
   position: relative;
-  left: -40px;
+  left: -80px;
 }
 
 @media (max-width: 600px) {
@@ -75,6 +75,16 @@ span#attachbutton {
 form#attachbuttonform {
   display: inline; 
   margin: 0;
+}
+
+span.charcount {
+  position: relative;
+  left: -70px;
+  top: 23px;
+  font-size: 0.8em;
+  display: inline-block;
+  padding: 0;
+  width: 40px;
 }
 
 div#accountselector {
