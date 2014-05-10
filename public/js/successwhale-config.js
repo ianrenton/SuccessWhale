@@ -93,7 +93,7 @@ function getDisplaySettings() {
       viewModel.colsPerScreen(returnedData.colsperscreen);
       viewModel.theme(returnedData.theme);
       viewModel.highlightTime(returnedData.highlighttime);
-      viewModel.inlineMedia(returnedData.inlineMedia);
+      viewModel.inlineMedia(returnedData.inlinemedia);
     })
     .fail(function(returnedData) {
       showError('Failed to fetch display settings.', returnedData);
@@ -102,7 +102,7 @@ function getDisplaySettings() {
 
 // Set the user's display settings
 function setDisplaySettings() {
-  var jqxhr = $.post(API_SERVER+'/displaysettings', {token: viewModel.token(), colsPerScreen: viewModel.colsPerScreen(), theme: viewModel.theme(), highlightTime: viewModel.highlightTime(), inlineMedia: viewModel.inlineMedia()})
+  var jqxhr = $.post(API_SERVER+'/displaysettings', {token: viewModel.token(), colsperscreen: viewModel.colsPerScreen(), theme: viewModel.theme(), highlighttime: viewModel.highlightTime(), inlinemedia: viewModel.inlineMedia()})
     .done(function(returnedData) {
       showSuccess('Display settings saved.', returnedData);
     })
