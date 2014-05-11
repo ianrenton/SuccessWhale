@@ -38,6 +38,7 @@ Libraries
  * [jQuery Autosize](http://www.jacklmoore.com/autosize/)
  * [jQuery Forms](http://malsup.com/jquery/form/)
  * [jQuery GPopover](https://github.com/markembling/jquery-gpopover)
+ * [jQuery TouchSwipe](https://github.com/mattbryson/TouchSwipe-Jquery-Plugin)
  * [jQuery UI](http://jqueryui.com/)
  * [Moment.js](http://momentjs.com/)
  * [Normalise.css](http://git.io/normalize)
