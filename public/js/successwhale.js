@@ -340,11 +340,13 @@ $(document).ready(function() {
       swipeLeft:function(event, direction, distance, duration, fingerCount) {
         if (viewModel.mobileCurrentColumn() < viewModel.columns().length-1) {
           viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()+1);
+          window.scrollTo(0, 0);
         }
       },
       swipeRight:function(event, direction, distance, duration, fingerCount) {
         if (viewModel.mobileCurrentColumn() > 0) {
           viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()-1);
+          window.scrollTo(0, 0);
         }
       },
       threshold:25
