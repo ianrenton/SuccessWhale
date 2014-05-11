@@ -61,8 +61,8 @@
         <div class="item" data-bind="css: (moment().diff(moment(content.time),'minutes') < $parents[1].highlightTime()) ? 'item-new' : 'item-old'">
           <div class="item-fromuser" data-bind="css: 'item-fromuser-'+service">
           
-            <!-- ko if: (service === 'twitter') --><a data-bind="attr: { href: 'http://twitter.com/'+content.fromuser }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
-            <!-- ko if: (service === 'facebook') --><a data-bind="attr: { href: 'http://facebook.com/'+content.fromuserid }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
+            <!-- ko if: (service === 'twitter') --><a data-bind="attr: { href: 'https://twitter.com/'+content.fromuser }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
+            <!-- ko if: (service === 'facebook') --><a data-bind="attr: { href: 'https://facebook.com/'+content.fromuserid }" target="_blank"><img class="item-fromuseravatar" data-bind="attr:{src: content.fromuseravatar}" /></a><!-- /ko -->
             
             <div class="item-fromusername">
               <!-- ko if: content.fromusername --><span data-bind="text: content.fromusername"></span><!-- /ko -->
