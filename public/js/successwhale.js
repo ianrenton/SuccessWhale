@@ -1,6 +1,6 @@
 // Globals
 var API_SERVER = 'https://successwhale-api.herokuapp.com/v3';
-var NARROW_SCREEN_WIDTH = 600;
+var NARROW_SCREEN_WIDTH = 800;
 
 // Viewmodel for SW
 function SWUserViewModel() {
@@ -24,6 +24,10 @@ function SWUserViewModel() {
   
   // Content of the post entry box
   self.postEntryText = ko.observable('');
+  // Using mobile view?
+  self.mobileView = ko.observable(false);
+  // Currently shown column in mobile view
+  self.mobileCurrentColumn = ko.observable(0);
   
   self.postToAccountsString = ko.computed(function () {
      return getPostToAccountsString(self.postToAccounts());
@@ -197,14 +201,9 @@ function refreshColumns() {
 function getDisplaySettings() {
   var jqxhr = $.get(API_SERVER+'/displaysettings', {token: viewModel.token()})
     .done(function(returnedData) {
-      // Store the columns-per-screen value for use in rendering, or force it to 1
-      // column per screen and narrow things down if we have a narrow (mobile phone) 
-      // window.
-      if ($(window).width() > NARROW_SCREEN_WIDTH) {
-        viewModel.colsPerScreen(returnedData.colsperscreen);
-      } else {
-        viewModel.colsPerScreen(1);
-      }
+      // Store the columns-per-screen value for use in rendering
+      // (ignored in mobile view)
+      viewModel.colsPerScreen(returnedData.colsperscreen);
       // Get theme and highlight time
       viewModel.theme(returnedData.theme);
       viewModel.highlightTime(returnedData.highlighttime);
@@ -289,6 +288,9 @@ $(document).ready(function() {
   // Loading overlay. Hidden at the end of displayColumns().
   $('body').addClass("loading");
   
+  // Check window size
+  viewModel.mobileView($(window).width() <= NARROW_SCREEN_WIDTH);
+  
   // Bind "post item" on button click or textarea Ctrl+Enter
   $('#postentry').keydown(function (e) {
     if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
@@ -318,6 +320,23 @@ $(document).ready(function() {
   // Focus and enable autosize on post entry box
   $('#postentry').autosize();
   $('#postentry').focus();
+  
+  // Bind swipe actions for mobile
+  if (viewModel.mobileView()) {
+    $("#columns").swipe( {
+      swipeLeft:function(event, direction, distance, duration, fingerCount) {
+        if (viewModel.mobileCurrentColumn() < viewModel.columns().length) {
+          viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()+1);
+        }
+      },
+      swipeRight:function(event, direction, distance, duration, fingerCount) {
+        if (viewModel.mobileCurrentColumn() > 0) {
+          viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()-1);
+        }
+      },
+      threshold:25
+    });
+  }
   
   // Main API calls to display data
   checkLoggedIn();

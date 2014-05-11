@@ -46,8 +46,15 @@
       </div>
     </form>
   </div>
-  <div id="columns" data-bind="foreach: columns, style: { width: (columns().length/colsPerScreen()*100)-1 + '%'}">
-    <div data-bind="name: fullpath, style: { width: 100/$parent.columns().length-1 + '%' }" class="column">
+  <!-- Column sizing rules summary: 
+       Desktop view: * 'columns' width: num columns / cols per screen * 100% 
+                     * column width: 'columns' width / num columns
+                     * all columns visible
+       Mobile view:  * 'columns width: 100%
+                     * column width: 97% (to allow for possible scrollbar)
+                     * one column visible, selected by swipe. Rest invisible -->
+  <div id="columns" data-bind="foreach: columns, style: { width: mobileView() ? '100%' : ((columns().length/colsPerScreen()*100)-1 + '%') }">
+    <div data-bind="name: fullpath, css: {mcc: $parent.mobileCurrentColumn(), ind: $index}, visible: (!($parent.mobileView()) || ($parent.mobileCurrentColumn()==$index())), style: { width: $parent.mobileView() ? '97%' : (100/$parent.columns().length-1 + '%') }" class="column">
       <div class="columnloading" data-bind="visible: loading"></div>
       <h4 class="columnheading" data-bind="text: title"></h4>
       <!-- ko foreach: items -->
@@ -157,6 +164,7 @@
   <script src="js/libs/jquery.gpopover.js"></script>
   <script src="js/libs/jquery.autosize.min.js"></script>
   <script src="js/libs/jquery.form.min.js"></script>
+  <script src="js/libs/jquery.touchSwipe.min.js"></script>
   <script src="js/libs/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
   <script src="js/successwhale.js"></script>
 
