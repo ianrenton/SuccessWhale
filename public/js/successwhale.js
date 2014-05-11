@@ -292,15 +292,29 @@ $(document).ready(function() {
   viewModel.mobileView($(window).width() <= NARROW_SCREEN_WIDTH);
   
   // Bind "post item" on button click or textarea Ctrl+Enter
+  // and remove focus on Escape
   $('#postentry').keydown(function (e) {
     if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
       $('form#postform').submit();
+    } else if (e.keyCode == 27) {
+      $('#postentry').blur();
     }
   });
   $('#postbutton').click(function (e) {
     $('form#postform').submit();
   });
   $('form#postform').ajaxForm(postItemOptions);
+  
+  // Bind the "T" key when an input is unfocussed to focus on the
+  // text entry box.
+  $(document).keydown(function (e) {
+    if ($(e.target).is('input')) { 
+      return;
+    } else if (e.keyCode == 84) {
+      $('#postentry').focus();
+      return false; // prevent 't' being typed in post entry box
+    }
+  });
   
   // Bind Attach File clear button
   $('input#fileclearbutton').click(function (e) {
@@ -317,15 +331,14 @@ $(document).ready(function() {
     window.location = '/';
   });
   
-  // Focus and enable autosize on post entry box
+  // Enable autosize on post entry box
   $('#postentry').autosize();
-  $('#postentry').focus();
   
   // Bind swipe actions for mobile
   if (viewModel.mobileView()) {
     $("#columns").swipe( {
       swipeLeft:function(event, direction, distance, duration, fingerCount) {
-        if (viewModel.mobileCurrentColumn() < viewModel.columns().length) {
+        if (viewModel.mobileCurrentColumn() < viewModel.columns().length-1) {
           viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()+1);
         }
       },
