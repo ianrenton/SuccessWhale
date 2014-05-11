@@ -15,7 +15,7 @@
  * Requires jQuery
  */
 
-function linkify_entities(content) {
+function linkify_entities(content, inlineMedia) {
 
     // If we have an "escaped text", use it for preference as the entities are designed
     // to line up with this one.
@@ -33,8 +33,8 @@ function linkify_entities(content) {
       $.each(content.links, function(i,entry) {
           if (typeof entry.indices !== 'undefined') {
               index_map[entry.indices[0]] = [entry.indices[1], function(itemtext) {
-                  // If there's a preview, this will be handled separately so just remove the section of the text that refers to it. Otherwise, preserve the text and link it up by appling an A tag.
-                  if (typeof entry.preview === 'undefined') {
+                  // If there's a preview and inlineMedia is set, this will be displayed separately as an image so just remove the section of the text that refers to it. Otherwise, preserve the text and link it up by appling an A tag.
+                  if (typeof entry.preview === 'undefined' || !inlineMedia) {
                     return "<a href='"+entry.url+"' target='_blank'>"+entry.title+"</a>";
                   }
                   else {
@@ -91,7 +91,7 @@ function linkify_entities(content) {
     }
   
     // Add media previews
-    if (content.links) {
+    if (content.links && inlineMedia) {
       for (i=0; i<content.links.length; i++)
       {
         if (typeof content.links[i].preview !== 'undefined') {

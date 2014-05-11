@@ -113,7 +113,7 @@ function showSuccess(html) {
 
 // Turn an item's text into proper HTML
 function makeItemTextHTML(content) {
-  return linkify_entities(content);
+  return linkify_entities(content, viewModel.inlineMedia());
 }
 
 // Load feed for a single column
@@ -204,10 +204,10 @@ function getDisplaySettings() {
       // Store the columns-per-screen value for use in rendering
       // (ignored in mobile view)
       viewModel.colsPerScreen(returnedData.colsperscreen);
-      // Get theme and highlight time
+      // Get theme, highlight time and inline media setting
       viewModel.theme(returnedData.theme);
       viewModel.highlightTime(returnedData.highlighttime);
-      viewModel.inlineMedia(returnedData.inlineMedia);
+      viewModel.inlineMedia(returnedData.inlinemedia);
     })
     .fail(function(returnedData) {
       showError('Failed to fetch display settings', returnedData);
