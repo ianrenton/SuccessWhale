@@ -1,7 +1,3 @@
-// Globals
-var API_SERVER = 'https://successwhale-api.herokuapp.com/v3';
-var NARROW_SCREEN_WIDTH = 800;
-
 // Viewmodel for SW
 function SWUserViewModel() {
   var self = this;

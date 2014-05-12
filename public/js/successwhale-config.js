@@ -1,6 +1,3 @@
-// Globals
-var API_SERVER = 'https://successwhale-api.herokuapp.com/v3';
-
 // Viewmodel for SW
 function SWUserViewModel() {
   var self = this;
@@ -18,6 +15,7 @@ function SWUserViewModel() {
   // Display setting - show inline media
   self.inlineMedia = ko.observable(true);
   
+  // Alternative login
   self.hasAltLogin = ko.observable(false);
   self.altLoginUsername = ko.observable('');
   self.altLoginPassword = ko.observable('');
@@ -31,6 +29,9 @@ function SWUserViewModel() {
   self.columns = ko.observableArray();
   // Banned phrases list
   self.bannedPhrases = ko.observable();
+  
+  // Using mobile view?
+  self.mobileView = ko.observable(false);
   
   // Column management
   self.addColumn = function() {
@@ -302,6 +303,9 @@ $(document).ready(function() {
   // Loading overlay. Hidden in getColumns(), we just assume that happens last.
   $('body').addClass("loading");
   
+  // Check window size
+  viewModel.mobileView($(window).width() <= NARROW_SCREEN_WIDTH);
+  
   // Main API calls to display data
   checkLoggedIn();
   getAccounts();
@@ -337,3 +341,9 @@ $(document).ready(function() {
     });
   });
 });
+
+// Recalculate the mobile view logic on window resize
+$( window ).resize(function() {
+  viewModel.mobileView($(window).width() <= NARROW_SCREEN_WIDTH);
+});
+

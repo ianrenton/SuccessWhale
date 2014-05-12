@@ -21,7 +21,7 @@
     <h2>Configuration</h2>
   </div>
   <div id="columns">
-    <div class="column" width="25%">
+    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '24%' }">
       <h4 class="columnheading">Accounts</h4>
       <div class="item">
         <form>
@@ -74,7 +74,7 @@
         </form>
       </div>
     </div>
-    <div class="column" width="25%">
+    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '24%' }">
       <h4 class="columnheading">Appearance</h4>
       <div class="item">
         <form>
@@ -94,7 +94,7 @@
         </form>
       </div>
     </div>
-    <div class="column" width="49%">
+    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '48%' }">
       <h4 class="columnheading">Columns</h4>
       <div class="item">
         <form>
@@ -137,6 +137,7 @@
   <script src="js/libs/knockout-sortable.js"></script>
   <script src="js/libs/jquery.autosize.min.js"></script>
   <script src="js/libs/jquery.form.min.js"></script>
+  <script src="js/common.js"></script>
   <script src="js/successwhale-config.js"></script>
 
 </body>

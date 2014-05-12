@@ -1,7 +1,3 @@
-// Globals
-var API_SERVER = 'https://successwhale-api.herokuapp.com/v3';
-var COOKIE_VALIDITY_DAYS = 365;
-
 // Get GET params
 function getSearchParameters() {
       var prmstr = window.location.search.substr(1);
