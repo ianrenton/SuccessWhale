@@ -362,3 +362,8 @@ $(document).ready(function() {
   // Refresh every 5 minutes
   setInterval( function() { refreshColumns(); }, 300000);
 });
+
+// Recalculate the mobile view logic on window resize
+$( window ).resize(function() {
+  viewModel.mobileView($(window).width() <= NARROW_SCREEN_WIDTH);
+});
