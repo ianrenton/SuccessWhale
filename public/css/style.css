@@ -18,6 +18,8 @@ div#header h2 {
 
 div#topmenu {
   float:right;
+  position: relative;
+  z-index: 10;
   display:inline-block;
   margin-top: 1em;
   padding: 0;

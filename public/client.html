@@ -17,11 +17,11 @@
   <div id="successbox"></div>
   <div id="errorbox"></div>
   <div id="header">
-    <div id="topmenu">
-      <a id="configbutton" class="button topmenuitem" href="/config"><i class="fa fa-gear"></i><span class="buttontext"> Config</span></a>
-      <a id="logoutbutton" class="button topmenuitem" href="#"><i class="fa fa-power-off"></i><span class="buttontext"> Exit</span></a>
-    </div>
     <form id="postform" method="post">
+      <div id="topmenu">
+        <a id="configbutton" class="button topmenuitem" href="/config"><i class="fa fa-gear"></i><span class="buttontext"> Config</span></a>
+        <a id="logoutbutton" class="button topmenuitem" href="#"><i class="fa fa-power-off"></i><span class="buttontext"> Exit</span></a>
+      </div>
       <input id="token" name="token" type="hidden" data-bind="value: token"/>
       <input id="postToAccounts" name="accounts" type="hidden" data-bind="value: postToAccountsString()"/>
       <textarea id="postentry" data-bind="value: postEntryText, valueUpdate: 'afterkeydown'" name="text" rows="1"></textarea>
