@@ -304,8 +304,8 @@ $(document).ready(function() {
   // Bind the "T" key when an input is unfocussed to focus on the
   // text entry box.
   $(document).keydown(function (e) {
-    if ($(e.target).is('input')) { 
-      return;
+    if ($(e.target).is("textarea")) {
+      return true;
     } else if (e.keyCode == 84) {
       $('#postentry').focus();
       return false; // prevent 't' being typed in post entry box
