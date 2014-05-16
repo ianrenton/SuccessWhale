@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html id="htmlTop">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+  <title>SuccessWhale Privacy & Security Information</title>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/style-staticpage.css"/>
+  <link rel="stylesheet" href="css/font-awesome.min.css"/>
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+</head>
+<body>
+  <div id="header">
+    <div id="topmenu">
+      <a id="configbutton" class="button topmenuitem" href="/"><i class="fa fa-arrow-left"></i> Back</a>
+    </div>
+    <h2>SuccessWhale Privacy & Security</h2>
+  </div>
+  <div id="main">
+    <h2>Privacy</h2>
+    <p>SuccessWhale is a Twitter and Facebook client &mdash; to use it, you must give it access to the Twitter and Facebook accounts you would like to use it with. This process is done using OAuth, which means that at no point does SuccessWhale see your Twitter or Facebook passwords.</p>
+    <p>We ask the services for the following permissions. For Twitter:</p>
+    <ul>
+        <li>To post as you</li>
+        <li>To read your timelines</li>
+        <li>To read your private messages</li>
+    </ul>
+    <p>For Facebook:</p>
+    <ul>
+        <li>To update your status</li>
+        <li>To publish to your wall</li>
+        <li>To read your feeds and wall</li>
+        <li>To manage your notifications</li>
+        <li>To see your groups</li>
+        <li>To access your account without needing authorisation every time</li>
+    </ul>
+    <p>SuccessWhale doesn't do anything with your accounts unless you ask it to.</p>
+    <p>Aside from access tokens for these services, SuccessWhale stores your user preferences, such as your column setup and preferred theme. It does not store any personal data, and does not log your activities.</p>
+    <p>At any time, you can disconnect one or more of your accounts from SuccessWhale, which will prevent SuccessWhale from accessing them. You may also delete all your SuccessWhale data at once if you leave the service, which will remove all accounts and user preferences. No records of your account will be retained.</p>
+    
+    <h2>Security</h2>
+    <p>SuccessWhale is a Javascript-based web application that communicates with an API. All this communication is conducted using HTTPS, and the web application is also available via HTTPS. (Please note that I do not have my own certificate for the successwhale.com domain. SuccessWhale is hosted on <a href="https://heroku.com">Heroku</a>, and the HTTPS certificate used is Heroku's free one. This means that your browser is likely to warn you when visiting <a href="https://www.successwhale.com">https://www.successwhale.com</a> that the connection is untrusted. If you prefer to avoid this potential issue, the application can be accessed at <a href="https://successwhale.heroku-app.com">https://successwhale.heroku-app.com</a>.</p>
+    <p>Authentication between the web application and the API uses a complex token string stored in a cookie on your computer. You must therefore allow cookies from SuccessWhale's domain in order to use it.</p>
+    <p>For users who often use networks that block Twitter and Facebook, SuccessWhale offers an alternative method of logging in (other than authenticating with one of those services). SuccessWhale users can create a username and password with which they can authenticate directly with SuccessWhale. The username is salted and hashed before it is stored in the database.</p>
+    <p>(For security reasons, the salt string cannot be known to the client as the client code (Javascript) is executed on the user's computer. Therefore, when creating and logging in with a SuccessWhale username and password, the password is sent to the API unsalted and unhashed. This communication does happen over HTTPS, so is normally considered secure.</p>
+  </div>
+</body>
+</html>

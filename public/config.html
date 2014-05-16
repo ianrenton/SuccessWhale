@@ -16,7 +16,7 @@
   <div id="errorbox"></div>
   <div id="header">
     <div id="topmenu">
-      <a id="configbutton" class="button topmenuitem" href="/">Back</a>
+      <a id="configbutton" class="button topmenuitem" href="/"><i class="fa fa-arrow-left"></i> Back</a>
     </div>
     <h2>Configuration</h2>
   </div>
@@ -88,7 +88,7 @@
       <div class="item">
         <form>
           <h4>Banned Phrases</h4>
-          <p>Items containing the following phrases<br/>will not be displayed:</p>
+          <p>Items containing the following phrases<br/>will not be displayed.<br/>(One per line)</p>
           <textarea cols="30" rows="5" id="bannedphrases" data-bind="value: bannedPhrases"></textarea>
           <p><a href="#" class="button" data-bind="click: setBannedPhrases"><i class="fa fa-save"></i> Save</a></p>
         </form>
@@ -109,9 +109,9 @@
                     </select>
                   </span>
                   <span style="display: inline-block">
-                    <a href="#" class="button smallbutton" data-bind="click: addSource">&gt;&gt;</a>
+                    <a href="#" class="button smallbutton" data-bind="click: addSource"><i class="fa fa-arrow-right"></i></a>
                     <br/><br/>
-                    <a href="#" class="button smallbutton" data-bind="click: removeSource">&lt;&lt;</a>
+                    <a href="#" class="button smallbutton" data-bind="click: removeSource"><i class="fa fa-arrow-left"></i></a>
                     <br/><br/>
                   </span>
                   <span style="display: inline-block">

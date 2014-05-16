@@ -95,4 +95,9 @@ $(document).ready(function() {
       $(this).removeClass("loading");
     });
   });
+  
+  // Show What's New box
+  setTimeout(function() {
+    $('#whatsnewbox').fadeIn();
+  }, 1000);
 });

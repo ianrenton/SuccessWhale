@@ -46,3 +46,27 @@ map "/facebookcallback" do
   ]
 }
 end
+
+map "/about" do
+  run lambda { |env|
+  [
+    200, headers, File.open('public/about.html', File::RDONLY)
+  ]
+}
+end
+
+map "/whatsnew" do
+  run lambda { |env|
+  [
+    200, headers, File.open('public/whatsnew.html', File::RDONLY)
+  ]
+}
+end
+
+map "/privacy" do
+  run lambda { |env|
+  [
+    200, headers, File.open('public/privacy.html', File::RDONLY)
+  ]
+}
+end

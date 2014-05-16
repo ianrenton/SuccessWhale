@@ -50,6 +50,15 @@ div#intro {
   font-size: 1em;
 }
 
+div#intro p#readmore {
+  text-align: right;
+}
+
+
+div#intro p#readmore a {
+  color: #378de5;
+}
+
 form#auth {
   width: 100%;
   margin: 0 auto 1em auto;
@@ -122,6 +131,23 @@ div#serverstatus p.statusfailure {
   color: red;
 }
 
+div#whatsnewbox {
+  position: fixed;
+  top: 0;
+  margin: 1em;
+  display: none;
+  padding: 0.25em 1em;
+  background: #ffbbbb;
+  color: black;
+  border: 2px solid #ff4444;
+  font-size: 1.2em;
+}
+
+div#whatsnewbox a {
+  color: black;
+  text-decoration: underline;
+}
+
 div#loginerrorbox {
   margin: 0 0.5em 0.5em 0.5em;
   padding: 0.25em;
@@ -129,6 +155,19 @@ div#loginerrorbox {
   color: black;
   border: 1px solid #ff0000;
   display: none;
+}
+
+div#footer {
+  clear: both;
+  padding: 4em 0 1em 0;
+  text-align: center;
+  font-size: 0.7em;
+  color: #888888;
+}
+
+div#footer a {
+  text-decoration: underline;
+  color: #666666;
 }
 
 a.serviceauth {
