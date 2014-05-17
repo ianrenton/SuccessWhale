@@ -70,7 +70,7 @@
               <!-- ko if: content.tousername --><span data-bind="text: ' > '+content.tousername"></span><!-- /ko -->
               <!-- ko if: content.retweetedbyusername --><span data-bind="text: ' (via '+content.retweetedbyusername+')'"></span><!-- /ko -->
             </div>
-            <div class="item-time" data-bind="text: moment(content.time).fromNow()"></div>
+            <div class="item-time" data-bind="text: moment(content.time, 'YYYY-MM-DD HH:mm Z').fromNow()"></div>
             
             <div class="item-metadata">
               <span data-bind="if: (content.numreplied > 0)">
