@@ -50,10 +50,10 @@
        Desktop view: * 'columns' width: num columns / cols per screen * 100% 
                      * column width: 'columns' width / num columns
                      * all columns visible
-       Mobile view:  * 'columns width: 100%
+       Mobile view:  * 'columns' width: 100%
                      * column width: 97% (to allow for possible scrollbar)
                      * one column visible, selected by swipe. Rest invisible -->
-  <div id="columns" data-bind="foreach: columns, style: { width: mobileView() ? '100%' : ((columns().length/colsPerScreen()*100)-1 + '%') }">
+  <div id="columns" data-bind="foreach: columns, style: { width: mobileView() ? '100%' : ((columns().length/colsPerScreen()*100) + '%') }">
     <div data-bind="name: fullpath, attr: {id: 'column'+$index}, visible: (!($parent.mobileView()) || ($parent.mobileCurrentColumn()==$index())), style: { width: $parent.mobileView() ? '97%' : (100/$parent.columns().length-1 + '%') }" class="column">
       <div class="columnloading" data-bind="visible: loading"></div>
       <h4 class="columnheading" data-bind="text: title"></h4>
