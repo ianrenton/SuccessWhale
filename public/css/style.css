@@ -316,7 +316,7 @@ a.loading img.spinner {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 5;
     top: 0;
     left: 0;
     height: 100%;

@@ -220,6 +220,8 @@ function getColumns() {
     })
     .fail(function(returnedData) {
       showError('Failed to fetch column list.', returnedData);
+      // Hide loading overlay.
+      $('body').removeClass("loading");
     });
 }
 
