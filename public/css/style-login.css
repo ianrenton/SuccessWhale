@@ -201,6 +201,7 @@ a.loading img.spinner {
 	border:1px solid #84bbf3;
 	color:#ffffff !important;
 	text-shadow:1px 1px 0px #528ecc;
+  font-weight: 500;
 }
 .button:active {
 	position:relative;
