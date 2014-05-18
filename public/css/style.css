@@ -258,6 +258,7 @@ textarea.replyentry {
 	text-decoration:none;
 	text-align:center;
 	cursor: pointer;
+  font-weight: 500;
 }
 .button:active {
 	position:relative;
