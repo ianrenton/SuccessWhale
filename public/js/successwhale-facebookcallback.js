@@ -34,6 +34,7 @@ $(document).ready(function() {
     })
     .fail(function(returnedData) {
       alert((JSON.parse(returnedData.responseText)).error);
+      alert((JSON.parse(returnedData.responseText)).trace);
       window.location = '/';
     });
   
