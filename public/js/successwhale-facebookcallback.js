@@ -33,8 +33,7 @@ $(document).ready(function() {
       window.location = '/';
     })
     .fail(function(returnedData) {
-      alert((JSON.parse(returnedData.responseText)).error);
-      alert((JSON.parse(returnedData.responseText)).trace);
+      alert("Error: " + (JSON.parse(returnedData.responseText)).error);
       window.location = '/';
     });
   
