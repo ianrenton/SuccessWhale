@@ -109,7 +109,7 @@ function showSuccess(html) {
 
 // Turn an item's text into proper HTML
 function makeItemTextHTML(content) {
-  return linkify_entities(content, viewModel.inlineMedia());
+  return linkify_entities(content, viewModel.inlineMedia()).replace(/\n/g, '<br />');
 }
 
 // Load feed for a single column
