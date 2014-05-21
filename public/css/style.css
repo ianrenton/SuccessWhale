@@ -39,6 +39,7 @@ textarea#postentry {
   width: 60%;
   font-size: 1em;
   height: 1.4em;
+  min-height: 24px;
 }
 
 .buttonnexttotextbox {
@@ -102,7 +103,7 @@ div#columns {
   position: relative;
   top: 4em;
   overflow-x: auto;
-  overflow-y: hidden; // Prevent extra scrollbar in WebKit
+  overflow-y: hidden;
   white-space: nowrap;
 }
 
@@ -238,11 +239,21 @@ div.threaditem-text a {
 }
 
 textarea.replyentry {
-  margin: 0;
+  margin: 0 0 5px 0;
   padding: 0.4em 0.3em 0.1em 0.3em;
   font-size: 1em;
   height: 1.5em;
   width: 70%;
+  min-height: 24px;
+}
+
+span.replycharcount {
+  position: relative;
+  left: -70px;
+  top: 25px;
+  font-size: 0.8em;
+  display: inline-block;
+  padding: 0;
 }
 
 .replybutton {

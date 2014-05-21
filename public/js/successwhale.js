@@ -124,6 +124,16 @@ function loadFeedForColumn(j) {
         returnedData.items[i].threadvisible = ko.observable(false);
         returnedData.items[i].threadloading = ko.observable(false);
         returnedData.items[i].thread = ko.observableArray();
+        returnedData.items[i].replyText = ko.observable('');
+        
+        // Pre-populate replyText for tweets
+        if (returnedData.items[i].service=='twitter') {
+          var text = '@'+returnedData.items[i].content.fromuser+' ';
+          for (var n=0; n<returnedData.items[i].content.usernames.length; n++) {
+            text = text + '@' + returnedData.items[i].content.usernames[n].user + ' ';
+          }
+          returnedData.items[i].replyText(text);
+        }
       }
       // Put all the items into the viewmodel for display
       viewModel.columns()[j].items.removeAll();
@@ -149,6 +159,7 @@ function loadFeedForColumn(j) {
       $('.replybutton').each(function() {
         $(this).click(function (e) {
           $(this).parents('form:first').submit();
+          $(this).parents('div.inlinereply').hide(fast);
         });
       });
       $('form.replyform').ajaxForm(postItemOptions);

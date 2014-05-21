@@ -99,10 +99,10 @@
               <ul class="actionlist">
                 <!-- ko foreach: content.actions -->
                 <li data-bind="if: (name == 'reply')">
-                  <a class="actionbutton" data-bind="click: function(action) { $parent.replyvisible(!$parent.replyvisible()); }" href="#"><i class="fa fa-reply"></i></a>
+                  <a class="actionbutton" data-bind="click: function(data, event) { $parent.replyvisible(!$parent.replyvisible()); var replybox = $(event.currentTarget).parents('div.item-actions').find('textarea.replyentry'); replybox.focus(); replybox.val($parent.replyText()); }" href="#"><i class="fa fa-reply"></i></a>
                 </li>
                 <li data-bind="if: (name == 'conversation')">
-                  <a class="actionbutton" data-bind="click: function(action) { loadThreadForItem($parent, ($parent.type!='facebook_notification')); $parent.threadvisible(!$parent.threadvisible()); }" href="#"><i class="fa fa-comments"></i></a>
+                  <a class="actionbutton" data-bind="click: function() { loadThreadForItem($parent, ($parent.type!='facebook_notification')); $parent.threadvisible(!$parent.threadvisible()); }" href="#"><i class="fa fa-comments"></i></a>
                 </li>
                 <li data-bind="if: (name == 'retweet')">
                   <a class="actionbutton" data-bind="click: function(action) { performAction(action.params);} " href="#"><i class="fa fa-retweet"></i></a>
@@ -142,8 +142,9 @@
                   <input class="token" name="token" type="hidden" data-bind="value: $parents[1].token"/>
                   <input class="replyPostToAccounts" name="accounts" type="hidden" data-bind="value: service+'/'+fetchedforuserid"/>
                   <input class="replyInReplyToID" name="in_reply_to_id" type="hidden" data-bind="value: content.replytoid"/>
-                  <textarea class="replyentry" name="text" data-bind="value: (service=='twitter') ? '@'+content.fromuser+' ' : ''" rows="1"></textarea>
-                  <span class="button replybutton">Post</span>
+                  <textarea class="replyentry" name="text" data-bind="value: replyText, valueUpdate: 'afterkeydown'" rows="1"></textarea>
+                  <span class="button replybutton"><i class="fa fa-pencil"></i></span>
+                  <span class="replycharcount" data-bind="text: replyText().length"></span>
                 </form>
               </div>
               <div class="clear"></div>

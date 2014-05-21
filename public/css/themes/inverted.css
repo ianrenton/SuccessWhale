@@ -164,6 +164,11 @@ span.replybutton {
   color: white;
 }
 
+span.replycharcount {
+  color: gray;
+  font-weight: bold;
+}
+
 .button {
 	-moz-box-shadow:inset 0px 1px 0px 0px #202020;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #202020;
