@@ -130,7 +130,9 @@ function loadFeedForColumn(j) {
         if (returnedData.items[i].service=='twitter') {
           var text = '@'+returnedData.items[i].content.fromuser+' ';
           for (var n=0; n<returnedData.items[i].content.usernames.length; n++) {
-            text = text + '@' + returnedData.items[i].content.usernames[n].user + ' ';
+            if (returnedData.items[i].content.usernames[n].user != returnedData.items[i].fetchedforuser) {
+              text = text + '@' + returnedData.items[i].content.usernames[n].user + ' ';
+            }
           }
           returnedData.items[i].replyText(text);
         }

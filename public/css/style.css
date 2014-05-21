@@ -248,9 +248,6 @@ textarea.replyentry {
 }
 
 span.replycharcount {
-  position: relative;
-  left: -70px;
-  top: 25px;
   font-size: 0.8em;
   display: inline-block;
   padding: 0;
