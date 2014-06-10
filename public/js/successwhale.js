@@ -291,6 +291,46 @@ function getPostToAccountsString(postToAccounts) {
   return postToAccountString;
 }
 
+// METAL easter egg
+function metallise(textarea) {
+  var text = textarea.val().toUpperCase();
+  var newText = '';
+  for (var i = 0; i < text.length; i++) {
+    if ((text[i] == "A") || (text[i] == "Ä"))
+    {
+      if (Math.random() < 0.3)
+      {
+        newText = newText + "Ä";
+      } else {
+        newText = newText + "A";
+      }
+    }
+    else if ((text[i] == "O") || (text[i] == "Ö"))
+    {
+      if (Math.random() < 0.3)
+      {
+        newText = newText + "Ö";
+      } else {
+        newText = newText + "O";
+      }
+    }
+    else if ((text[i] == "U") || (text[i] == "Ü"))
+    {
+      if (Math.random() < 0.3)
+      {
+        newText = newText + "Ü";
+      } else {
+        newText = newText + "U";
+      }
+    }
+    else
+    {
+      newText = newText + text[i];
+    }
+  }
+  textarea.val(newText);
+}
+
 // Automatic stuff on page load
 $(document).ready(function() {
 
@@ -307,6 +347,12 @@ $(document).ready(function() {
       $('form#postform').submit();
     } else if (e.keyCode == 27) {
       $('#postentry').blur();
+    }
+  });
+  // Easter egg
+  $('#postentry').keyup(function (e) {
+    if (viewModel.theme() == 'METAL') {
+      metallise($('#postentry'));
     }
   });
   $('#postbutton').click(function (e) {
