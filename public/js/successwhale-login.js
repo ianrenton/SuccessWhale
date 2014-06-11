@@ -54,7 +54,7 @@ $('#login').submit(function() {
   })
   .fail(function(returnedData) {
     // Display error box
-    viewModel.errormessage((JSON.parse(returnedData.responseText)).error);
+    viewModel.errormessage((JSON.parse(returnedData.responseText)).error + "<br/>Using a password from an older version of SuccessWhale?<br/>You will need to recreate it.<br/>See <a href=\"/privacy\">Privacy & Security</a> for more information.");
     $('#loginerrorbox').show('fast');
   });
   return false;
