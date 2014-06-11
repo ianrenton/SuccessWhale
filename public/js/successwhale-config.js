@@ -48,17 +48,6 @@ function SWUserViewModel() {
 viewModel = new SWUserViewModel();
 ko.applyBindings(viewModel, document.getElementById("htmlTop")); // htmlTop is a hack to allow knockout to data-bind elements in the <head>
 
-
-// Checks the user is logged in (via a cookie) - if not, punts them
-// to the login page
-function checkLoggedIn() {
-  if (!readCookie('token')) {
-    window.location = '/login';
-  } else {
-    viewModel.token(readCookie('token'));
-  }
-}
-
 // Shows an error box for a set time, with the supplied HTML and optionally also
 // a SuccessWhale API error message extracted from the returnedData of an unsuccessful
 //  request

@@ -68,17 +68,7 @@ var postItemOptions = {
   error:      function(jsonResponse) { 
     showError('Item could not be posted due to an error.', JSON.stringify(jsonResponse));
   } 
-}; 
-
-// Checks the user is logged in (via a cookie) - if not, punts them
-// to the login page
-function checkLoggedIn() {
-  if (!readCookie('token')) {
-    window.location = '/login';
-  } else {
-    viewModel.token(readCookie('token'));
-  }
-}
+};
 
 // Shows an error box for a set time, with the supplied HTML and optionally also
 // a SuccessWhale API error message extracted from the returnedData of an unsuccessful
@@ -383,7 +373,7 @@ $(document).ready(function() {
   // Bind other menu buttons
   $('#logoutbutton').click(function (e) {
     eraseCookie('token');
-    window.location = '/';
+    window.location = '/login';
   });
   
   // Enable autosize on post entry box
