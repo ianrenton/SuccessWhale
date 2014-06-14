@@ -209,6 +209,14 @@ div.headerbar p {
   margin: 0.7em 0 0.5em;
 }
 
+div.headerbar p img.spinner {
+  display: none;
+}
+
+div.loading p img.spinner {
+  display: inline !important;
+}
+
 div.headerbar a {
   color: black;
 }

@@ -63,13 +63,15 @@ $('#login').submit(function() {
 // Install SW as a Firefox OS App
 function installFirefoxOSApp(e) {
   e.preventDefault();
+  $('#firefoxinstallheader').addClass("loading");
   var manifest_url = location.origin + '/manifest.webapp';
   var installLocFind = navigator.mozApps.install(manifest_url);
   installLocFind.onsuccess = function(data) {
     $('#firefoxinstallheader').html("<p>SuccessWhale App installed! You should now see an icon on your homescreen.</p>");
   };
   installLocFind.onerror = function() {
-    alert(installLocFind.error.name);
+    $('#firefoxinstallheader').removeClass("loading");
+    alert("Installation failed. Please report this error: " + installLocFind.error.name);
   };
 };
 
