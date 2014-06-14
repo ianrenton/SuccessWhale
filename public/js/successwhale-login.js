@@ -60,11 +60,38 @@ $('#login').submit(function() {
   return false;
 });
 
+// Install SW as a Firefox OS App
+function installFirefoxOSApp(e) {
+  e.preventDefault();
+  var manifest_url = location.href + 'manifest.webapp';
+  var installLocFind = navigator.mozApps.install(manifest_url);
+  installLocFind.onsuccess = function(data) {
+    $('#firefoxinstallheader').html("<p>SuccessWhale App installed! You should now see an icon on your homescreen.</p>");
+  };
+  installLocFind.onerror = function() {
+    alert(installLocFind.error.name);
+  };
+};
+
+// Check if browser supports installing this as an app, if so, show the install header bar
+function checkFirefoxOSInstall() {
+  if('mozApps' in navigator) {
+    var manifest_url = location.href + 'manifest.webapp';
+    var installCheck = navigator.mozApps.checkInstalled(manifest_url);
+    installCheck.onsuccess = function() {
+      if(!installCheck.result) {
+        $('#firefoxinstallheader').fadeIn();
+        $('a#firefoxinstalllink').click(installFirefoxOSApp);
+      };
+    };
+  }
+}
 
 // Automatic stuff on page load
 $(document).ready(function() {
   checkLoggedOut();
   checkServerStatus();
+  checkFirefoxOSInstall();
   
   // Bind "Log in with Twitter" button
   $('a#authwithtwitter').click(function (e) {

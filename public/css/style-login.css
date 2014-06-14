@@ -131,23 +131,6 @@ div#serverstatus p.statusfailure {
   color: red;
 }
 
-div#whatsnewbox {
-  position: fixed;
-  top: 0;
-  margin: 1em;
-  display: none;
-  padding: 0.25em 1em;
-  background: #ffbbbb;
-  color: black;
-  border: 2px solid #ff4444;
-  font-size: 1.2em;
-}
-
-div#whatsnewbox a {
-  color: black;
-  text-decoration: underline;
-}
-
 div#loginerrorbox {
   margin: 0 0.5em 0.5em 0.5em;
   padding: 0.25em;
@@ -206,6 +189,32 @@ a.loading img.spinner {
 .button:active {
 	position:relative;
 	top:1px;
+}
+
+div.headerbar {
+	text-align:center;
+  -moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) ) !important;
+	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5') !important;
+	background-color:#79bbff !important;
+	border:1px solid #378de5;
+	color:black !important;
+	font-weight: 500;
+}
+
+div.headerbar p {
+  margin: 0.7em 0 0.5em;
+}
+
+div.headerbar a {
+  color: black;
+}
+
+div#firefoxinstallheader {
+  display:none;
 }
 
 .modal {

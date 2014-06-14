@@ -8,6 +8,11 @@ headers = {
   'Content-Type'  => 'text/html',
   'Cache-Control' => 'public, max-age=86400'
 }
+  
+manifestHeaders = {
+  'Content-Type'  => 'application/x-web-app-manifest+json',
+  'Cache-Control' => 'public, max-age=86400'
+}
 
 run lambda { |env|
   [
@@ -67,6 +72,14 @@ map "/privacy" do
   run lambda { |env|
   [
     200, headers, File.open('public/privacy.html', File::RDONLY)
+  ]
+}
+end
+
+map "/manifest.webapp" do
+  run lambda { |env|
+  [
+    200, manifestHeaders, File.open('public/manifest.webapp', File::RDONLY)
   ]
 }
 end
