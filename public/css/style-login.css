@@ -50,12 +50,13 @@ div#intro {
   font-size: 1em;
 }
 
-div#intro p#readmore {
+div#intro p.readmore {
+  margin-top: 0.5em;
   text-align: right;
 }
 
 
-div#intro p#readmore a {
+div#intro p.readmore a {
   color: #378de5;
 }
 
