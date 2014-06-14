@@ -63,7 +63,7 @@ $('#login').submit(function() {
 // Install SW as a Firefox OS App
 function installFirefoxOSApp(e) {
   e.preventDefault();
-  var manifest_url = location.href + 'manifest.webapp';
+  var manifest_url = location.origin + '/manifest.webapp';
   var installLocFind = navigator.mozApps.install(manifest_url);
   installLocFind.onsuccess = function(data) {
     $('#firefoxinstallheader').html("<p>SuccessWhale App installed! You should now see an icon on your homescreen.</p>");
@@ -76,7 +76,7 @@ function installFirefoxOSApp(e) {
 // Check if browser supports installing this as an app, if so, show the install header bar
 function checkFirefoxOSInstall() {
   if('mozApps' in navigator) {
-    var manifest_url = location.href + 'manifest.webapp';
+    var manifest_url = location.origin + '/manifest.webapp';
     var installCheck = navigator.mozApps.checkInstalled(manifest_url);
     installCheck.onsuccess = function() {
       if(!installCheck.result) {
