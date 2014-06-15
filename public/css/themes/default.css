@@ -67,6 +67,7 @@ div.columnloading {
                 url('../../img/loading-small.gif')
                 100% 100%
                 no-repeat;
+  margin-right: 10px;
 }
 
 h4.columnheading {

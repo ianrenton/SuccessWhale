@@ -281,6 +281,22 @@ function getPostToAccountsString(postToAccounts) {
   return postToAccountString;
 }
 
+// In mobile view, move one column to left if able
+function mobileColumnLeft() {
+  if (viewModel.mobileCurrentColumn() > 0) {
+    viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()-1);
+    window.scrollTo(0, 0);
+  }
+}
+
+// In mobile view, move one column to right if able
+function mobileColumnRight() {
+  if (viewModel.mobileCurrentColumn() < viewModel.columns().length-1) {
+    viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()+1);
+    window.scrollTo(0, 0);
+  }
+}
+
 // METAL easter egg
 function metallise(textarea) {
   var text = textarea.val().toUpperCase();
@@ -383,18 +399,12 @@ $(document).ready(function() {
   if (viewModel.mobileView()) {
     $("#columns").swipe( {
       swipeLeft:function(event, direction, distance, duration, fingerCount) {
-        if (viewModel.mobileCurrentColumn() < viewModel.columns().length-1) {
-          viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()+1);
-          window.scrollTo(0, 0);
-        }
+        mobileColumnRight();
       },
       swipeRight:function(event, direction, distance, duration, fingerCount) {
-        if (viewModel.mobileCurrentColumn() > 0) {
-          viewModel.mobileCurrentColumn(viewModel.mobileCurrentColumn()-1);
-          window.scrollTo(0, 0);
-        }
+        mobileColumnLeft();
       },
-      threshold:25
+      threshold:40
     });
   }
   
