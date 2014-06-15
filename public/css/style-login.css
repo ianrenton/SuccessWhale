@@ -60,6 +60,11 @@ div#intro p.readmore a {
   color: #378de5;
 }
 
+p.authbuttons {
+  text-align:center;
+  line-height: 3em;
+}
+
 form#auth {
   width: 100%;
   margin: 0 auto 1em auto;
@@ -111,9 +116,20 @@ form#login div.content {
   padding: 0.5em;
 }
 
-form#login div.content p input.textbox {
-  width: 8em;
+form#login div.content table {
+  margin: 0 auto;
 }
+
+form#login div.content input.textbox {
+  width: 14em;
+  padding: 0.4em 0.3em 0.1em 0.3em;
+  background-color: #bbdaf7;
+  border: 2px solid #378de5;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
 
 div#serverstatus {
   width: 80%;

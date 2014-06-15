@@ -21,8 +21,8 @@ div#topmenu a {
 }
 
 textarea#postentry {
-  background-color: #ddddff;
-  border: 2px solid #6666ff;
+  background-color: #bbdaf7;
+  border: 2px solid #378de5;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -147,8 +147,8 @@ div.threaditem-text a {
 }
 
 textarea.replyentry {
-  background-color: #ddddff;
-  border: 2px solid #6666ff;
+  background-color: #bbdaf7;
+  border: 2px solid #378de5;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;

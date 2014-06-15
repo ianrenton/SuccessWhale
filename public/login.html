@@ -36,7 +36,7 @@
       </div>
       <div class="content">
         <p>Start with one account &mdash; you can add others once you're in.</p>
-        <p><a id="authwithtwitter" class="button serviceauth" href="#"><i class="fa fa-twitter"></i> Log in with Twitter <img class="spinner" src="img/loading-small.gif" /></a>&nbsp;&nbsp;&nbsp;<a id="authwithfacebook"  class="button serviceauth" href="#"><i class="fa fa-facebook"></i> Log in with Facebook <img class="spinner" src="img/loading-small.gif" /></a></p>
+        <p class="authbuttons"><a id="authwithtwitter" class="button serviceauth" href="#"><i class="fa fa-twitter"></i> Log in with Twitter <img class="spinner" src="img/loading-small.gif" /></a>&nbsp;&nbsp;&nbsp;<a id="authwithfacebook"  class="button serviceauth" href="#"><i class="fa fa-facebook"></i> Log in with Facebook <img class="spinner" src="img/loading-small.gif" /></a></p>
       </div>
     </form>
     <form id="login">
@@ -45,9 +45,9 @@
       </div>
       <div class="content">
         <p>Behind a firewall that blocks social networks? If you've created a username and password for your SuccessWhale account, you can enter them here to log in.</p>
-        <p class="userpass"><span style="display: inline-block;">Username: <input id="username" data-bind="value: username" class="textbox"/></span>
-        <span style="display: inline-block;">Password: <input id="password" data-bind="value: password" type="password" class="textbox"/></span>
-        <input type="submit" value="Log in" /></p>
+        <table class="userpass"><tr><td>Username: </td><td><input id="username" data-bind="value: username" class="textbox"/></td></tr>
+        <tr><td>Password: </td><td><input id="password" data-bind="value: password" type="password" class="textbox"/></td></tr>
+        <tr><td></td><td><input type="submit" value="Log in" class="button" /></td></tr></table>
       </div>
       <div id="loginerrorbox"><span data-bind="html: errormessage"></span></div>
     </form>
