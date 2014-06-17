@@ -170,7 +170,11 @@ function loadFeedForColumn(j) {
 // the notification was about
 function loadThreadForItem(item, skipfirst) {
   item.threadloading(true);
-  var jqxhr = $.get(API_SERVER+'/thread', {service: item.service, uid: item.fetchedforuserid, postid: item.content.replytoid, skipfirst: skipfirst, token: viewModel.token()})
+  var id = item.content.replytoid;
+  if (id == null) {
+    id = item.content.id;
+  }
+  var jqxhr = $.get(API_SERVER+'/thread', {service: item.service, uid: item.fetchedforuserid, postid: id, skipfirst: skipfirst, token: viewModel.token()})
     .done(function(returnedData) {
       item.thread.removeAll();
       item.thread.push.apply(item.thread, returnedData.items);
