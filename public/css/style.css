@@ -76,7 +76,7 @@ span#attachbutton {
 }
 
 form#attachbuttonform {
-  display: inline; 
+  display: inline-block; 
   margin: 0;
 }
 

@@ -62,6 +62,19 @@ span#posttoaccountsbutton a {
   text-decoration: none;
 }
 
+.gpopover {
+  background: #378de5;
+  color: white;
+}
+
+.gpopover .gpopover-arrow {
+  border-bottom-color: #378de5;
+}
+
+.gpopover .gpopover-arrow-shadow {
+    border-bottom-color: #378de5;
+}
+
 div.columnloading {
   background: #eeeeee
                 url('../../img/loading-small.gif')

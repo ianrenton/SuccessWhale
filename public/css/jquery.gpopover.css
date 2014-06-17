@@ -10,19 +10,16 @@
  */
 
 .gpopover {
-    background: #8888ff;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: none;
     padding: 12px;
     position: absolute;
     z-index: 998;
-    color: white;
 }
 
 .gpopover .gpopover-arrow {
     border: 8px solid transparent;
-    border-bottom-color: #8888ff;
     border-top-width: 0;
     height: 0;
     position: absolute;
@@ -32,8 +29,6 @@
 
 .gpopover .gpopover-arrow-shadow {
     border: 8px solid transparent;
-    border-bottom-color: #C0C0C0;
-    border-bottom-color: rgba(0, 0, 0, 0.275);
     border-top-width: 0;
     height: 0;
     position: absolute;

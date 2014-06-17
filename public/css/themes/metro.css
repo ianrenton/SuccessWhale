@@ -1,0 +1,187 @@
+html, body {
+  background-color: #7e3878;
+  font-family: "Segoe UI", "Segoe WP", "Helvetica Neue", "Arial", sans-serif;
+  font-size: 1.1em;
+  font-weight: 100;
+}
+
+div#header {
+  background: #7e3878;
+  border-bottom: none;
+}
+
+div#header h2 {
+  color: white;
+}
+
+div#topmenu a {
+  background: #2b5797;
+  color: white;
+  text-decoration: none;
+}
+
+textarea#postentry {
+  background-color: #1d1d1d;
+  color: white;
+  border: 2px solid #1d1d1d;
+}
+
+span#postbutton {
+  background: #2b5797;
+}
+
+span#postbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+span#posttoaccountsbutton {
+  background: #2b5797;
+}
+
+span#posttoaccountsbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+span#attachbutton a {
+  color: white;
+  text-decoration: none;
+}
+
+span.charcount {
+  color: white;
+  font-weight: bold;
+}
+
+.gpopover {
+  background: #1d1d1d;
+  color: white;
+}
+
+.gpopover .gpopover-arrow {
+  border-bottom-color: #1d1d1d;
+}
+
+.gpopover .gpopover-arrow-shadow {
+    border-bottom-color: #1d1d1d;
+}
+
+div.columnloading {
+  background: #7e3878
+                url('../../img/loading-small.gif')
+                100% 100%
+                no-repeat;
+}
+
+h4.columnheading {
+  color: white;
+}
+
+div.item {
+  background-color: white;
+  color: black;
+}
+
+div.item-fromuser-twitter {
+  background-color: #2d89ef;
+  color: black;
+}
+
+div.item-fromuser-facebook {
+  background-color: #2b5797;
+  color: white;
+}
+
+div.item a {
+  color: #2b5797;
+  text-decoration: none;
+}
+
+div.item-new {
+  border: 1px solid #1d1d1d;
+}
+
+div.item-text {
+  color: #1d1d1d;
+}
+
+div.item-text a {
+  color: #2b5797;
+  text-decoration: none;
+}
+
+
+div.item-actions {
+  color: white;
+  background-color: #1d1d1d;
+}
+
+div.item-actions ul.actionlist li a.actionbutton:hover {
+  color: white;
+}
+
+div.item form {
+  color: black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+div.item form h4 {
+  font-weight: 100;
+  font-size: 1.5em;
+  margin: 0.4em 0 1em;
+}
+
+div.draggablebox {
+  background-color: #dddddd;
+}
+
+div.draggablebox p.title {
+  color: black;
+  size: 1.4em;
+}
+
+.threadloading {
+    background: rgba( 255, 255, 255, .8 )
+                url('../../img/loading.gif')
+                50% 50%
+                no-repeat;
+}
+
+div.threaditem-text a {
+  color: #2b5797;
+  text-decoration: none;
+}
+
+textarea.replyentry {
+  width: 95%;
+  background-color: #2d2d2d;
+  color: white;
+  border: 2px solid #2d2d2d;
+}
+
+span.replycharcount {
+  color: white;
+  font-weight: bold;
+}
+
+.button {
+	background-color:#2b5797 !important;
+	color:white !important;
+}
+
+.deletebutton {
+	background-color:#ee1111 !important;
+	color:white !important;
+}
+
+div#errorbox {
+  background: #ee1111;
+  color: white;
+}
+
+div#successbox {
+  background: #00a300;
+  color: white;
+}
