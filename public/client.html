@@ -55,8 +55,8 @@
                      * one column visible, selected by swipe. Rest invisible -->
   <div id="columns" data-bind="foreach: columns, style: { width: mobileView() ? '100%' : ((columns().length/colsPerScreen()*100) + '%') }">
     <div data-bind="name: fullpath, attr: {id: 'column'+$index()}, visible: (!($parent.mobileView()) || ($parent.mobileCurrentColumn()==$index())), style: { width: $parent.mobileView() ? '97%' : (100/$parent.columns().length-1 + '%') }" class="column">
-      <div class="colleft" data-bind="visible: $parent.mobileView()"><a href="#" data-bind="click: mobileColumnLeft()">&#9664;</a></div>
-      <div class="colright" data-bind="visible: $parent.mobileView()"><a href="#" data-bind="click: mobileColumnRight()">&#9654;</a></div>
+      <div class="colleft" data-bind="visible: ($parent.mobileView() && ($index()!=0))"><a href="#" data-bind="click: function() {mobileColumnLeft();}">&#9664;</a></div>
+      <div class="colright" data-bind="visible: ($parent.mobileView() && ($index()!=$parent.columns().length-1))"><a href="#" data-bind="click: function() {mobileColumnRight();}">&#9654;</a></div>
       <div class="columnloading" data-bind="visible: loading"></div>
       <h4 class="columnheading" data-bind="text: title"></h4>
       <!-- ko foreach: items -->
