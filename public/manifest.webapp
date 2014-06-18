@@ -4,7 +4,8 @@
   "version": "3.0.5",
   "launch_path": "/",
   "icons": {
-    "128": "/img/appicon-128.png"
+    "60": "/img/icons/firefox-60.png",
+    "128": "/img/icons/firefox-128.png"
   },
   "developer": {
     "name": "Ian Renton",

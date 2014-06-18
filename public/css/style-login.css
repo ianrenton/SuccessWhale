@@ -6,6 +6,14 @@ html, body {
   font-weight: 100;
 }
 
+img.github {
+  position: absolute;
+  top: 0;
+  right: 0; 
+  border: 0;
+  display: none;
+}
+
 /* Left-right split on landscape screens, up-down split on portrait screens*/
 @media only screen 
 and (min-device-width : 768px)
@@ -19,6 +27,9 @@ and (orientation : landscape) {
     float:right;
     width: 45%;
     padding: 1em;
+  }
+  img.github {
+    display: block;
   }
 }
 
@@ -121,7 +132,7 @@ form#login div.content table {
 }
 
 form#login div.content input.textbox {
-  width: 14em;
+  width: 12em;
   padding: 0.4em 0.3em 0.1em 0.3em;
   background-color: #bbdaf7;
   border: 2px solid #378de5;
