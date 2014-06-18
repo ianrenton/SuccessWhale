@@ -58,6 +58,7 @@ var postItemOptions = {
     showSuccess('Item posted.');
     // Clear inputs
     $('form#postform #postentry').val("");
+    $('form#postform #postentry').trigger('autosize.resize');
     $('form#postform #filetoupload').clearFields();
     $('.replyentry').each(function() {
         $(this).val("");
