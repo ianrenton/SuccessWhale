@@ -153,6 +153,7 @@ function loadFeedForColumn(j) {
         $(this).click(function (e) {
           $(this).parents('form:first').submit();
           $(this).parents('div.inlinereply').hide(fast);
+          return false;
         });
       });
       $('form.replyform').ajaxForm(postItemOptions);

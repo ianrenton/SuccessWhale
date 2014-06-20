@@ -108,6 +108,7 @@ $(document).ready(function() {
       $('#loginerrorbox').show('fast');
       $(this).removeClass("loading");
     });
+    return false;
   });
   
   // Bind "Log in with Facebook" button
@@ -123,6 +124,7 @@ $(document).ready(function() {
       $('#loginerrorbox').show('fast');
       $(this).removeClass("loading");
     });
+    return false;
   });
   
   // Show What's New box
