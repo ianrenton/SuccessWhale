@@ -1,7 +1,7 @@
 {
   "name": "SuccessWhale",
   "description": "A multi-column client for Twitter and Facebook, offering many advanced features.",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "app": {
     "urls": [
       "*://*.successwhale.com/"
