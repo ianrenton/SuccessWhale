@@ -1,0 +1,197 @@
+html, body {
+  background-color: black;
+  font-family: 'Consolas','Lucida Sans Mono','Ubuntu Mono',monospace;
+}
+
+div#header {
+  border-bottom: 2px solid lime;
+  background-color: black;
+}
+
+div#header h2 {
+  color: white;
+}
+
+div#topmenu a {
+  background: black;
+  color: lime;
+  text-decoration: none;
+}
+
+textarea#postentry {
+  background-color: black;
+  color: white;
+  border: 2px solid lime;
+}
+
+span#postbutton {
+  background: lime;
+}
+
+span#postbutton a {
+  color: lime;
+  text-decoration: none;
+}
+
+span#attachbutton a {
+  color: lime;
+  text-decoration: none;
+}
+
+span.charcount {
+  color: lime;
+  font-weight: bold;
+}
+
+span#posttoaccountsbutton {
+  background: black;
+}
+
+span#posttoaccountsbutton a {
+  color: lime;
+  text-decoration: none;
+}
+
+.gpopover {
+  background: black;
+  border: 1px solid white;
+  color: white;
+}
+
+.gpopover .gpopover-arrow {
+  border-bottom-color: black;
+}
+
+.gpopover .gpopover-arrow-shadow {
+    border-bottom-color: black;
+}
+
+div.columnloading {
+  background: black
+                url('../../img/loading-small.gif')
+                100% 100%
+                no-repeat;
+}
+
+h4.columnheading {
+  color: white;
+}
+
+div.item {
+  background-color: black;
+  border-bottom: 2px solid white;
+}
+
+div.item a {
+  color: lime;
+  text-decoration: none;
+}
+
+div.item-new {
+  border: 2px solid lime;
+}
+
+div.item-text {
+  color: white;
+}
+
+div.item-text a {
+  color: lime;
+  text-decoration: none;
+}
+
+div.item-fromuser-twitter {
+  background-color: black;
+  color: lime;
+}
+
+div.item-fromuser-facebook {
+  background-color: black;
+  color: lime;
+}
+
+div.item-actions {
+  background-color: black;
+  color: white;
+}
+
+div.item-actions ul.actionlist li a.actionbutton {
+  color: white;
+}
+
+div.item-actions ul.actionlist li a.actionbutton:hover {
+  color: lime;
+}
+
+div.item form {
+  color: white;
+}
+
+div.draggablebox {
+  background-color: black;
+  border: 2px solid lime;
+}
+
+div.draggablebox p.title {
+  color: lime;
+  size: 1.2em;
+}
+
+.threadloading {
+    background: rgba( 0, 0, 0, 1 )
+                url('../../img/loading.gif')
+                50% 50%
+                no-repeat;
+}
+
+div.threaditem-text a {
+  color: lime;
+  text-decoration: none;
+}
+
+textarea.replyentry {
+  background-color: black;
+  color: white;
+  border: 2px solid lime;
+}
+
+span.replybutton {
+  background: lime;
+  color: black;
+}
+
+span.replycharcount {
+  color: gray;
+  font-weight: bold;
+}
+
+.button {
+	background-color:black !important;
+	border:2px solid lime;
+	color:lime !important;
+}
+
+.deletebutton {
+	background-color:black !important;
+	border:2px solid #FF0000;
+	color:#FF0000 !important;
+}
+
+div#errorbox {
+  background: #ff0000;
+  color: black;
+  border: 2px solid #ff0000;
+}
+
+div#successbox {
+  background: lime;
+  color: black;
+  border: 2px solid lime;
+}
+
+.modal {
+  background: rgba( 0, 0, 0, 1 )
+              url('../../img/loading.gif')
+              50% 50%
+              no-repeat;
+}
