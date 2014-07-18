@@ -134,7 +134,12 @@ function loadFeedForColumn(j) {
       // Add fancybox to items that need it
       $('.fancybox').each(function() {
         $(this).fancybox({
-          'scrolling'   : 'no'
+          'scrolling'   : 'no',
+          helpers: {
+            overlay: {
+              locked: false
+            }
+          }
         });
       });
       // Add autosize to items that need it
