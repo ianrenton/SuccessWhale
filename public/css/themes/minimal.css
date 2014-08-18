@@ -3,8 +3,7 @@ html, body {
 }
 
 div#header {
-  background: #f8f8f8;
-  border-bottom: 1px solid #888888;
+  background-color: white;
 }
 
 div#header h2 {
@@ -20,6 +19,8 @@ div#topmenu a {
 textarea#postentry {
   background-color: white;
   color: black;
+  border: 1px solid gray;
+  height: 27px;
 }
 
 span#postbutton {
@@ -141,6 +142,7 @@ div.threaditem-text a {
 
 textarea.replyentry {
   background-color: white;
+  color: black;
 }
 
 span.replycharcount {

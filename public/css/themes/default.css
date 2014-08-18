@@ -163,6 +163,7 @@ div.threaditem-text a {
 
 textarea.replyentry {
   background-color: #bbdaf7;
+  color: black;
   border: 2px solid #378de5;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
