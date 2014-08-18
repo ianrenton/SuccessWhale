@@ -33,16 +33,6 @@ function checkServerStatus() {
 // jQuery bind to Submit button
 // Authenticates, sets cookies and forwards or displays error message as appropriate
 $('#login').submit(function() {
-  // Set the values of the observables based on the content of the
-  // login form. This kind of defeats the point of observables,
-  // but is required to handle the case where the browser auto-
-  // fills the login boxes but does not throw a change event to
-  // the JS.
-  // See https://github.com/knockout/knockout/issues/648
-  viewModel.username($('#username').val());
-  viewModel.password($('#password').val());
-  
-  // Now proceed with the API call.
   var jqxhr = $.post(API_SERVER+'/authenticate', {username: viewModel.username(), password: viewModel.password()})
   .done(function(returnedData) {
     // If we were displaying an error message, hide it so the user isn't confused
