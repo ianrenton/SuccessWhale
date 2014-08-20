@@ -104,7 +104,7 @@
                   <a class="actionbutton" data-bind="click: function(data, event) { $parent.replyvisible(!$parent.replyvisible()); var replybox = $(event.currentTarget).parents('div.item-actions').find('textarea.replyentry'); replybox.focus(); replybox.val($parent.replyText()); }" href="#"><i class="fa fa-reply"></i></a>
                 </li>
                 <li data-bind="if: (name == 'conversation')">
-                  <a class="actionbutton" data-bind="click: function() { loadThreadForItem($parent, ($parent.type!='facebook_notification')); $parent.threadvisible(!$parent.threadvisible());return false; }" href="#"><i class="fa fa-comments"></i></a>
+                  <a class="actionbutton" data-bind="click: function() { loadThreadForItem($parent, ($parent.content.type!='facebook_notification')); $parent.threadvisible(!$parent.threadvisible());return false; }" href="#"><i class="fa fa-comments"></i></a>
                 </li>
                 <li data-bind="if: (name == 'retweet')">
                   <a class="actionbutton" data-bind="click: function(action) { performAction(action.params); return false;} " href="#"><i class="fa fa-retweet"></i></a>
