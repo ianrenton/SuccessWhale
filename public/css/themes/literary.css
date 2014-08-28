@@ -1,0 +1,166 @@
+html, body {
+  background-color: white;
+  font-family: serif;
+  font-size: 18px;
+}
+
+div#header {
+  background-color: white;
+}
+
+div#header h2 {
+  color: #4096ee;
+}
+
+div#topmenu a {
+  color: #4096ee;
+  text-decoration: none;
+}
+
+textarea#postentry {
+  background-color: white;
+  color: black;
+  border: none;
+  border-bottom: 1px solid gray;
+  height: 27px;
+}
+
+span#postbutton a {
+  color: #4096ee;
+  text-decoration: none;
+}
+
+span#posttoaccountsbutton a {
+  color: #4096ee;
+  text-decoration: none;
+}
+
+span#attachbutton a {
+  color: #222222;
+  text-decoration: none;
+}
+
+span.charcount {
+  color: gray;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.gpopover {
+  background: #cccccc;
+  color: black;
+}
+
+.gpopover .gpopover-arrow {
+  border-bottom-color: #cccccc;
+}
+
+.gpopover .gpopover-arrow-shadow {
+    border-bottom-color: #cccccc;
+}
+
+div.columnloading {
+  background: #ffffff
+                url('../../img/loading-small.gif')
+                100% 100%
+                no-repeat;
+}
+
+h4.columnheading {
+  color: black;
+  font-style: italic;
+  text-decoration: underline;
+  text-align: center;
+}
+
+div.item {
+  background-color: white;
+  padding-bottom: 2em;
+  margin-bottom: 2em;
+  border-bottom: 1px solid black;
+}
+
+div.item-fromuser {
+  font-style: italic;
+}
+
+div.item a {
+  color: #4096ee;
+  text-decoration: underline;
+}
+
+div.item-text {
+  color: #333333;
+}
+
+div.item-text a {
+  color: #4096ee;
+  text-decoration: underline;
+}
+
+div.item-actions {
+  color: #aaaaaa;
+}
+
+div.item-actions ul.actionlist li a.actionbutton:hover {
+  color: #4096ee;
+}
+
+div.item form {
+  color: black;
+}
+
+div.draggablebox {
+  background-color: #eeeeee;
+  border: 1px solid gray;
+}
+
+div.draggablebox p.title {
+  color: gray;
+  size: 1.2em;
+  font-weight: bold;
+}
+
+.threadloading {
+    background: rgba( 255, 255, 255, .8 )
+                url('../../img/loading.gif')
+                50% 50%
+                no-repeat;
+}
+
+div.threaditem-text a {
+  color: #4096ee;
+  text-decoration: underline;
+}
+
+textarea.replyentry {
+  background-color: white;
+  color: black;
+  border: none;
+  border-bottom: 0px solid black;
+}
+
+span.replycharcount {
+  color: gray;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.deletebutton {
+  background-color:#f24537 !important;
+  border:1px solid #d02718;
+  color:#ffffff !important;
+  font-family: sans-serif;
+}
+
+div#errorbox {
+  background: #ffbbbb;
+  color: black;
+  border: 1px solid #ff0000;
+}
+
+div#successbox {
+  background: #bbffbb;
+  color: black;
+  border: 1px solid #00bb00;
+}
