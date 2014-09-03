@@ -120,6 +120,7 @@ div.column {
 div.columnloading {
   float: right;
   padding-top: 10px;
+  padding-right: 5px;
   font-size: 1.5em;
 }
 

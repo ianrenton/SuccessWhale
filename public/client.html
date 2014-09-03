@@ -117,12 +117,22 @@
                 <!-- /ko -->
                 <!-- ko if: (name == 'favorite') -->
                 <li>
-                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params); return false;} " href="#" title="Favorite"><i class="fa fa-star"></i></a>
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params); return false;} " href="#" title="Favorite"><i class="fa fa-star-o"></i></a>
+                </li>
+                <!-- /ko -->
+                <!-- ko if: (name == 'unfavorite') -->
+                <li>
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params); return false;} " href="#" title="Unmark as Favorite"><i class="fa fa-star"></i></a>
                 </li>
                 <!-- /ko -->
                 <!-- ko if: (name == 'like') -->
                 <li>
                   <a class="actionbutton" data-bind="click: function(action) { performAction(action.params); return false;} " href="#" title="Like"><i class="fa fa-thumbs-o-up"></i></a>
+                </li>
+                <!-- /ko -->
+                <!-- ko if: (name == 'unlike') -->
+                <li>
+                  <a class="actionbutton" data-bind="click: function(action) { performAction(action.params); return false;} " href="#" title="Unlike"><i class="fa fa-thumbs-o-down"></i></a>
                 </li>
                 <!-- /ko -->
                 <!-- ko if: (name == 'delete') -->
