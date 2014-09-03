@@ -76,13 +76,6 @@ span#posttoaccountsbutton a {
     border-bottom-color: #404040;
 }
 
-div.columnloading {
-  background: #303030
-                url('../../img/loading-small.gif')
-                100% 100%
-                no-repeat;
-}
-
 h4.columnheading {
   color: white;
 }

@@ -66,13 +66,6 @@ span#posttoaccountsbutton a {
     border-bottom-color: black;
 }
 
-div.columnloading {
-  background: black
-                url('../../img/loading-small.gif')
-                100% 100%
-                no-repeat;
-}
-
 h4.columnheading {
   color: white;
 }

@@ -67,13 +67,6 @@ span.charcount {
     border-bottom-color: #1d1d1d;
 }
 
-div.columnloading {
-  background: #7e3878
-                url('../../img/loading-small.gif')
-                100% 100%
-                no-repeat;
-}
-
 h4.columnheading {
   color: white;
 }

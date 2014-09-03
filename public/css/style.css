@@ -118,17 +118,13 @@ div.column {
 }
 
 div.columnloading {
-  height: 30px;
-  width: 30px;
   float: right;
-  background: #eeeeee
-              url('../../img/loading-small.gif')
-              100% 100%
-              no-repeat;
+  padding-top: 10px;
+  font-size: 1.5em;
 }
 
 div.colleft {
-  padding-top: 5px;
+  padding-top: 10px;
   height: 30px;
   width: 30px;
   float: left;
@@ -137,11 +133,11 @@ div.colleft {
 div.colleft a {
   text-decoration: none;
   font-size: 1.5em;
-  color: gray;
 }
 
 div.colright {
-  padding-top: 5px;
+  padding-top: 10px;
+  padding-left: 20px;
   height: 30px;
   width: 30px;
   float: right;
@@ -150,7 +146,6 @@ div.colright {
 div.colright a {
   text-decoration: none;
   font-size: 1.5em;
-  color: gray;
 }
 
 h4.columnheading {
