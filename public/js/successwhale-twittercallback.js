@@ -21,7 +21,7 @@ $(document).ready(function() {
 
   // If Twitter access was denied, punt back to the main interface
   if ('denied' in params) {
-    window.location = '/';
+    window.location = '/client';
   }
 
   var paramsToPassOn = {swsessionkey: params.swsessionkey, oauth_token: params.oauth_token, oauth_verifier: params.oauth_verifier};
@@ -35,10 +35,10 @@ $(document).ready(function() {
     .done(function(returnedData) {
       // Set cookie and advance to main interface
       createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
-      window.location = '/';
+      window.location = '/client';
     })
     .fail(function(returnedData) {
-      window.location = '/';
+      window.location = '/client';
     });
   
 });

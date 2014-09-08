@@ -30,11 +30,11 @@ $(document).ready(function() {
     .done(function(returnedData) {
       // Set cookie and advance to main interface
       createCookie('token',returnedData.token,COOKIE_VALIDITY_DAYS);
-      window.location = '/';
+      window.location = '/client';
     })
     .fail(function(returnedData) {
       alert("Error: " + (JSON.parse(returnedData.responseText)).error);
-      window.location = '/';
+      window.location = '/client';
     });
   
 });

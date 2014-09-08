@@ -400,7 +400,7 @@ $(document).ready(function() {
   // Bind other menu buttons
   $('#logoutbutton').click(function (e) {
     eraseCookie('token');
-    window.location = '/login';
+    window.location = '/';
   });
   
   // Enable autosize on post entry box
