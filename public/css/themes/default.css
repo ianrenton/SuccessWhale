@@ -76,6 +76,11 @@ span#posttoaccountsbutton a {
     border-bottom-color: #378de5;
 }
 
+div.columnheading {
+  background-color: #eeeeee;
+}
+
+
 h4.columnheading {
   color: black;
 }

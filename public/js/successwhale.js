@@ -415,7 +415,7 @@ $(document).ready(function() {
       swipeRight:function(event, direction, distance, duration, fingerCount) {
         mobileColumnLeft();
       },
-      threshold:40
+      threshold:200
     });
   }
   

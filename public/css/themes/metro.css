@@ -67,6 +67,11 @@ span.charcount {
     border-bottom-color: #1d1d1d;
 }
 
+div.columnheading {
+  background-color: #7e3878;
+}
+
+
 h4.columnheading {
   color: white;
 }

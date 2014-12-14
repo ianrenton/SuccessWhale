@@ -70,6 +70,11 @@ span.charcount {
     border-bottom-color: #cccccc;
 }
 
+div.columnheading {
+  background-color: white;
+}
+
+
 h4.columnheading {
   color: black;
 }
