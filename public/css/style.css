@@ -119,7 +119,9 @@ div.column {
 
 div.columnheading {
   position: fixed;
-  top: 4.2em;
+  top: 4em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
   min-width: 300px;
 }
 
