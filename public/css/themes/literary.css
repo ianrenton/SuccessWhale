@@ -71,6 +71,18 @@ h4.columnheading {
   text-align: center;
 }
 
+div.columnloading {
+  color: gray;
+}
+
+div.colleft a {
+  color: gray;
+}
+
+div.colright a {
+  color: gray;
+}
+
 div.item {
   background-color: white;
   padding-bottom: 2em;

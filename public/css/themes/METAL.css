@@ -85,6 +85,18 @@ h4.columnheading {
   color: white;
 }
 
+div.columnloading {
+  color: #c62d1f;
+}
+
+div.colleft a {
+  color: #c62d1f;
+}
+
+div.colright a {
+  color: #c62d1f;
+}
+
 div.item {
   background-color: #101010;
   border: 1px solid #404040;

@@ -74,6 +74,18 @@ h4.columnheading {
   color: white;
 }
 
+div.columnloading {
+  color: lime;
+}
+
+div.colleft a {
+  color: lime;
+}
+
+div.colright a {
+  color: lime;
+}
+
 div.item {
   background-color: black;
   border-bottom: 2px solid white;

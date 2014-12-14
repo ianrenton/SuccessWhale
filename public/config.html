@@ -20,8 +20,8 @@
     </div>
     <h2>Configuration</h2>
   </div>
-  <div id="columns">
-    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '24%' }">
+  <div id="columns" style="width: 100%;">
+    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '24%', display: mobileView() ? 'block' : 'inline-block' }">
       <h4 class="columnheading">Accounts</h4>
       <div class="item">
         <form>
@@ -74,7 +74,7 @@
         </form>
       </div>
     </div>
-    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '24%' }">
+    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '24%', display: mobileView() ? 'block' : 'inline-block' }">
       <h4 class="columnheading">Appearance</h4>
       <div class="item">
         <form>
@@ -94,7 +94,7 @@
         </form>
       </div>
     </div>
-    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '48%' }">
+    <div class="column" data-bind="style: { width: mobileView() ? '97%' : '48%', display: mobileView() ? 'block' : 'inline-block' }">
       <h4 class="columnheading">Columns</h4>
       <div class="item">
         <form>
