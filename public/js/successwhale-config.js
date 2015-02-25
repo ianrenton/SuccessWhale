@@ -114,7 +114,7 @@ function getBannedPhrases() {
 
 // Set the user's banned phrases list
 function setBannedPhrases() {
-  var jqxhr = $.post(API_SERVER+'/bannedphrases', {token: viewModel.token(), bannedphrases: ko.toJSON(viewModel.bannedPhrases().match(/[^\r\n]+/g))})
+  var jqxhr = $.post(API_SERVER+'/bannedphrases', {token: viewModel.token(), bannedphrases: ko.toJSON(viewModel.bannedPhrases().split("\n"))})
     .done(function(returnedData) {
       showSuccess('Banned phrases saved.', returnedData);
     })
