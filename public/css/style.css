@@ -101,7 +101,7 @@ div#accountselector ul {
 
 div#columns {
   position: relative;
-  top: 6.5em;
+  top: 4em;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
@@ -118,8 +118,6 @@ div.column {
 }
 
 div.columnheading {
-  position: fixed;
-  top: 4em;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   min-width: 300px;
