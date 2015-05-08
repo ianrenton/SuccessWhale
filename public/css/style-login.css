@@ -71,6 +71,11 @@ div#intro p.readmore a {
   color: #378de5;
 }
 
+div#intro p.readmore a.important {
+  color: #ff0000;
+  font-weight: bold;
+}
+
 p.authbuttons {
   text-align:center;
   line-height: 3em;
