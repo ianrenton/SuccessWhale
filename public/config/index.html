@@ -4,19 +4,19 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
   <title>SuccessWhale Configuration</title>
-  <link rel="stylesheet" href="css/normalize.css"/>
-  <link rel="stylesheet" href="css/style.css"/>
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link rel="stylesheet" data-bind="attr: { href: 'css/themes/'+theme()+'.css' }"/>
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+  <link rel="stylesheet" href="/css/normalize.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" data-bind="attr: { href: '/css/themes/'+theme()+'.css' }"/>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon"/>
 </head>
 <body class="loading">
   <div id="successbox"></div>
   <div id="errorbox"></div>
   <div id="header">
     <div id="topmenu">
-      <a id="configbutton" class="button topmenuitem" href="/client"><i class="fa fa-arrow-left"></i> Back</a>
+      <a id="configbutton" class="button topmenuitem" href="/client/"><i class="fa fa-arrow-left"></i> Back</a>
     </div>
     <h2>Configuration</h2>
   </div>
@@ -36,7 +36,7 @@
               </tr>
             </tbody>
           </table>
-          <p><a id="authwithtwitter" class="button serviceauth" href="#"><i class="fa fa-plus"></i><i class="fa fa-twitter"></i> Add Twitter <img class="spinner" src="img/loading-small.gif" /></a> <a id="authwithfacebook"  class="button serviceauth" href="#"><i class="fa fa-plus"></i><i class="fa fa-facebook"></i> Add Facebook <img class="spinner" src="img/loading-small.gif" /></a></p>
+          <p><a id="authwithtwitter" class="button serviceauth" href="#"><i class="fa fa-plus"></i><i class="fa fa-twitter"></i> Add Twitter <img class="spinner" src="/img/loading-small.gif" /></a> <a id="authwithfacebook"  class="button serviceauth" href="#"><i class="fa fa-plus"></i><i class="fa fa-facebook"></i> Add Facebook <img class="spinner" src="/img/loading-small.gif" /></a></p>
           <p><a href="#" class="button" data-bind="click: setAccountSettings"><i class="fa fa-save"></i> Save</a></p>
         </form>
       </div>
@@ -45,7 +45,7 @@
           <h4>Alternative Login</h4>
           <div data-bind="visible: hasAltLogin()">
             <div style="float:right;"><a href="#" class="smallbutton deletebutton" data-bind="click: deleteAltLogin"><i class="fa fa-trash-o"></i></a> </div>
-            <img src="img/favicon.png"/> <span data-bind="text: altLoginUsername">
+            <img src="/img/favicon.png"/> <span data-bind="text: altLoginUsername">
           </div>
           <div data-bind="visible: !hasAltLogin()">
             <p>Creating an alternative login will<br/>
@@ -129,16 +129,16 @@
   </div>
   <div class="modal"></div>
     
-  <script src="js/libs/cookies.js"></script>
-  <script src="js/libs/xdr.js"></script>
-  <script src="js/libs/jquery-1.9.1.js"></script>
-  <script src="js/libs/jquery-ui-1.9.2.min.js"></script>
-  <script src="js/libs/knockout-3.2.0.js"></script>
-  <script src="js/libs/knockout-sortable.js"></script>
-  <script src="js/libs/jquery.autosize.min.js"></script>
-  <script src="js/libs/jquery.form.min.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/successwhale-config.js"></script>
+  <script src="/js/libs/cookies.js"></script>
+  <script src="/js/libs/xdr.js"></script>
+  <script src="/js/libs/jquery-1.9.1.js"></script>
+  <script src="/js/libs/jquery-ui-1.9.2.min.js"></script>
+  <script src="/js/libs/knockout-3.2.0.js"></script>
+  <script src="/js/libs/knockout-sortable.js"></script>
+  <script src="/js/libs/jquery.autosize.min.js"></script>
+  <script src="/js/libs/jquery.form.min.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/successwhale-config.js"></script>
 
 </body>
 </html>

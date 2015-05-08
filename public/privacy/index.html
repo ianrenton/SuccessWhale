@@ -4,11 +4,11 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
   <title>SuccessWhale Privacy & Security Information</title>
-  <link rel="stylesheet" href="css/normalize.css"/>
-  <link rel="stylesheet" href="css/style-staticpage.css"/>
-  <link rel="stylesheet" href="css/font-awesome.min.css"/>
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+  <link rel="stylesheet" href="/css/normalize.css"/>
+  <link rel="stylesheet" href="/css/style-staticpage.css"/>
+  <link rel="stylesheet" href="/css/font-awesome.min.css"/>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon"/>
 </head>
 <body>
   <div id="header">
@@ -44,7 +44,7 @@
     <p>At any time, you can disconnect one or more of your accounts from SuccessWhale, which will prevent SuccessWhale from accessing them. You may also delete all your SuccessWhale data at once if you leave the service, which will remove all accounts and user preferences. No records of your account will be retained.</p>
     
     <h2>Security</h2>
-    <p>SuccessWhale is a Javascript-based web application that communicates with an API. All this communication is conducted using HTTPS, and the web application is also available via HTTPS. (Please note that I do not have my own certificate for the successwhale.com domain. SuccessWhale is hosted on <a href="https://heroku.com">Heroku</a>, and the HTTPS certificate used is Heroku's free one. This means that your browser is likely to warn you when visiting <a href="https://www.successwhale.com">https://www.successwhale.com</a> that the connection is untrusted. If you prefer to avoid this potential issue, the application can be accessed at <a href="https://successwhale.heroku-app.com">https://successwhale.heroku-app.com</a>.)</p>
+    <p>SuccessWhale is a Javascript-based web application that communicates with an API. All this communication is conducted using HTTPS, and the web application is also available via HTTPS. (Please note that I do not have a CA-signed certificate for the successwhale.com domain. SuccessWhale is hosted on my own server using a self-signed certificate. This means that your browser is likely to warn you when visiting <a href="https://www.successwhale.com">https://www.successwhale.com</a> that the connection is untrusted. If you prefer to avoid this potential issue, the application can be accessed at <a href="https://successwhale.heroku-app.com">https://successwhale.heroku-app.com</a>.)</p>
     <p>Authentication between the web application and the API uses a complex token string stored in a cookie on your computer. You must therefore allow cookies from SuccessWhale's domain in order to use it.</p>
     <p>The token string remains valid for one month once it is generated. After a month, the token becomes invalid and the user must log in again to continue using SuccessWhale.</p>
     <p>For users who often use networks that block Twitter and Facebook, SuccessWhale offers an alternative method of logging in (other than authenticating with one of those services). SuccessWhale users can create a username and password with which they can authenticate directly with SuccessWhale. When creating an alternative login and when using it to log in, the password is only ever transmitted over HTTPS. On the server side, passwords are salted and hashed using bcrypt before being added to the database.</p>
