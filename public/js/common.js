@@ -1,5 +1,5 @@
 // Globals
-var API_SERVER = 'https://successwhale-api.herokuapp.com/v3';
+var API_SERVER = 'https://api.successwhale.com/v3';
 var NARROW_SCREEN_WIDTH = 800;
 var COOKIE_VALIDITY_DAYS = 365;
 
@@ -8,7 +8,7 @@ var COOKIE_VALIDITY_DAYS = 365;
 function checkLoggedIn() {
   if (!readCookie('token')) {
     // No cookie, so no token
-    window.location = '/login';
+    window.location = '/';
   } else {
     viewModel.token(readCookie('token'));
     // Check token is valid
@@ -18,14 +18,14 @@ function checkLoggedIn() {
       if (!returnedData.authenticated) {
         showError('Failed to check authentication token', returnedData);
         eraseCookie('token'); // Cookie token no longer valid
-        window.location = '/login';
+        window.location = '/';
       }
     })
     .fail(function(returnedData) {
       // Server problems, back to login as this page will be pretty useless anyway
       showError('Failed to check authentication token', returnedData);
         eraseCookie('token'); // Cookie token may be invalid, clear it to prevent endless loops
-      window.location = '/login';
+      window.location = '/';
     });
   }
 }
