@@ -25,7 +25,7 @@ function checkServerStatus() {
     $('#serverstatusinner').html('<p class="statussuccess">Connected to secure server, version ' + returnedData.version + '</p>');
   })
   .fail(function(returnedData) {
-    $('#serverstatusinner').html('<p class="statusfailure">Could not connect to SuccessWhale server.<br/>Please try again later.</p>');
+    $('#serverstatusinner').html('<p class="statusfailure">Could not connect to SuccessWhale server.<br/>This might be because your browser doesn\'t accept my self-signed certificate. Please <a href="https://api.successwhale.com/certtest">click here</a> and allow your browser to trust the certificate when the warning is presented.</p>');
   });
   return false;
 }
