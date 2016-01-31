@@ -1,7 +1,7 @@
 SuccessWhale
 ============
 
-SuccessWhale is a web-based Twitter and (formerly) Facebook client using the SuccessWhale API, written in JavaScript using Knockout.js. It’s a multi-column client that can merge and display feeds from several social networks however you like. It’s free to use by anyone, has no advertising, and source code is available right here on GitHub under the BSD licence.
+SuccessWhale is a web-based Twitter and (formerly) Facebook client using the SuccessWhale API, written in JavaScript using Knockout.js. It’s a multi-column client that can merge and display feeds from several social networks however you like. It’s free to use by anyone, has no advertising, and source code is available on GitHub under the BSD licence.
 
 Facebook support has been broken since Facebook denied stream-reading permissions to third-party apps in May 2015. The code to support Facebook remains in SuccessWhale in case they reverse this decision, but currently no Facebook use is possible from SuccessWhale.
 
