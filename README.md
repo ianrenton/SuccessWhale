@@ -5,7 +5,7 @@ SuccessWhale is a web-based Twitter and (formerly) Facebook client using the Suc
 
 Facebook support has been broken since Facebook denied stream-reading permissions to third-party apps in May 2015. The code to support Facebook remains in SuccessWhale in case they reverse this decision, but currently no Facebook use is possible from SuccessWhale.
 
-Visit [https://successwhale.com](https://successwhale.com) to try it out!
+Visit [http://sw.onlydreaming.net/](http://sw.onlydreaming.net/) to try it out!
 
 Features
 --------
@@ -19,7 +19,7 @@ Features
 Screenshot
 ----------
 
-[![Successwhale 3 Screenshot](http://ianrenton.com/software/successwhale-screenshot.png)](http://files.ianrenton.com/successwhale-screenshot.png)
+[![Successwhale 3 Screenshot](https://ianrenton.com/wp-content/uploads/software/successwhale-screenshot.png)](https://ianrenton.com/wp-content/uploads/software/successwhale-screenshot.png)
 
 Status
 ------
